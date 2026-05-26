@@ -19,7 +19,7 @@ const container = {
 
 const item = {
   hidden: { opacity: 0, scale: 0.85, y: 8 },
-  show: { opacity: 1, scale: 1, y: 0, transition: { type: "spring", stiffness: 300, damping: 22 } },
+  show: { opacity: 1, scale: 1, y: 0, transition: { type: "spring" as const, stiffness: 300, damping: 22 } },
 };
 
 const SkillPill: React.FC<{ skill: string }> = ({ skill }) => {
