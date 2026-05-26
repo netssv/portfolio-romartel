@@ -1,0 +1,93 @@
+@import "tailwindcss";
+
+/* ─── Design Tokens (Default: Day Light) ──────────────── */
+:root {
+  --bg-base:        #F4F4F6;
+  --bg-surface:     #FFFFFF;
+  --bg-raised:      #EAEAEC;
+  --text-primary:   #1C1C1E;
+  --text-secondary: #48484A;
+  --text-muted:     #6A6A6E;
+  --accent:         #FF9500;
+  --text-accent:    #B84A00;
+  --border-subtle:  rgba(0, 0, 0, 0.05);
+  --border-base:    rgba(0, 0, 0, 0.08);
+  
+  --bg-glass:       rgba(255, 255, 255, 0.70);
+  --grid-color:     rgba(0, 0, 0, 0.04);
+}
+
+/* ─── Design Tokens (Night Light Mode) ────────────────── */
+.theme-dark {
+  --bg-base:        #050505;
+  --bg-surface:     #0B0B0B;
+  --bg-raised:      #111111;
+  --text-primary:   #FFFFFF;
+  --text-secondary: #B3B3B3;
+  --text-muted:     #52525B;
+  --accent:         #FF9500;
+  --text-accent:    #FF9500;
+  --border-subtle:  rgba(255, 255, 255, 0.06);
+  --border-base:    rgba(255, 255, 255, 0.10);
+  
+  --bg-glass:       rgba(11, 11, 11, 0.45);
+  --grid-color:     rgba(255, 255, 255, 0.08);
+}
+
+/* ─── Tailwind v4 Theme Extension ─────────────────────── */
+@theme inline {
+  --color-bg-base:        var(--bg-base);
+  --color-bg-surface:     var(--bg-surface);
+  --color-bg-raised:      var(--bg-raised);
+  --color-text-primary:   var(--text-primary);
+  --color-text-secondary: var(--text-secondary);
+  --color-text-muted:     var(--text-muted);
+  --color-accent:         var(--accent);
+  --color-text-accent:    var(--text-accent);
+  --color-border-subtle:  var(--border-subtle);
+  --color-border-base:    var(--border-base);
+  --color-bg-glass:       var(--bg-glass);
+  --color-grid-color:     var(--grid-color);
+
+  --font-heading: var(--font-space-grotesk);
+  --font-body:    var(--font-inter);
+  --font-mono:    var(--font-geist-mono);
+}
+
+/* ─── Base Styles ─────────────────────────────────────── */
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--bg-base);
+  color: var(--text-secondary);
+  font-family: var(--font-inter), system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-space-grotesk), system-ui, sans-serif;
+  color: var(--text-primary);
+}
+
+::selection {
+  background-color: var(--accent);
+  color: #000;
+}
+
+/* ─── Smooth scroll offset for sticky nav ─────────────── */
+:target {
+  scroll-margin-top: 72px;
+}
+
+/* ─── Animation utilities ─────────────────────────────── */
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0);    }
+}
+
+.animate-fade-up {
+  animation: fade-up 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+}

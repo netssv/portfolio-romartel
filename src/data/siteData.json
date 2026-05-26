@@ -1,0 +1,258 @@
+{
+  "metadata": {
+    "title": "Rodrigo Martel | Technical Solutions, Automation & Data Analytics",
+    "description": "Portfolio of Rodrigo Martel specializing in technical systems architecture, automated workflows, and business intelligence analytics.",
+    "keywords": [
+      "Rodrigo Martel",
+      "Technical Solutions",
+      "Automation",
+      "Data Analytics",
+      "Python",
+      "Bash",
+      "Power BI",
+      "Next.js",
+      "Kotlin",
+      "Developer Portfolio"
+    ],
+    "author": "Rodrigo Martel",
+    "email": "rop.martel@gmail.com",
+    "location": "San Salvador, El Salvador",
+    "socialLinks": {
+      "linkedin": "https://linkedin.com/in/ropmartel",
+      "github": "https://github.com/netssv/",
+      "twitter": "https://x.com/netssv"
+    }
+  },
+  "navigation": [
+    { "name": "Resume", "path": "/" },
+    { "name": "Projects", "path": "#projects" },
+    { "name": "Experience", "path": "#experience" },
+    { "name": "Skills", "path": "#skills" },
+    { "name": "Contact", "path": "/contact" }
+  ],
+  "profile": {
+    "name": "Rodrigo Martel",
+    "title": "Technical Solutions, Automation & Data Analytics",
+    "location": "San Salvador, El Salvador",
+    "tagline": "Bridging engineering, automated systems, and data analytics to solve practical business problems.",
+    "bio": "Technology and operations professional with experience supporting digital solutions, business reporting, and process improvement initiatives. Skilled in technical support, data analysis, dashboard creation, and workflow automation using tools such as Power BI, Excel, SQL, and Python. Focused on helping businesses improve operational visibility, streamline repetitive tasks, and enhance customer and user experiences.",
+    "avatar": {
+      "src": "/avatar.webp",
+      "alt": "Rodrigo Martel Profile Portrait"
+    },
+    "portfolioButton": {
+      "text": "My Portfolio (Adobe Express)",
+      "url": "https://new.express.adobe.com/id/urn:aaid:sc:VA6C2:e1687bdb-3b5a-54b5-91ab-01b2afbc65d3"
+    }
+  },
+  "experience": [
+    {
+      "company": "HostPapa",
+      "role": "CX Specialist – Infrastructure & Web Hosting",
+      "period": "2025 - Present",
+      "location": "Remote",
+      "description": "Front-line technical support for web hosting clients — bridging complex infrastructure issues and customer needs through clear communication and automation-assisted diagnostics.",
+      "impact": [
+        "Deployed Python and Bash scripts to automate website audit tasks and repetitive validation workflows.",
+        "Contributed to internal knowledge base improvements, reducing customer self-service friction.",
+        "Coordinated escalations with Tier 2 teams by providing structured diagnostics and replication steps."
+      ],
+      "operations": [
+        "Provided technical support for WordPress, DNS, SSL, cPanel, and domain management across B2B and B2C clients.",
+        "Troubleshot hosting incidents in Linux-based environments including email issues, plugin conflicts, and accessibility errors.",
+        "Translated technical configurations into business-oriented language to support customer success."
+      ]
+    },
+    {
+      "company": "Independent Consulting",
+      "role": "Digital Operations & Marketing Support",
+      "period": "2024 - 2025",
+      "location": "Remote",
+      "isSecondary": true,
+      "description": "Supported SMEs in digital adoption efforts — from workflow organization and reporting to e-commerce setup and project coordination.",
+      "impact": [
+        "Built KPI tracking dashboards in Google Sheets and Power BI to improve visibility into marketing and operational performance.",
+        "Assisted in implementing e-commerce solutions and digital tools for small business operations.",
+        "Coordinated deliverables across multiple clients simultaneously in remote, bilingual environments."
+      ],
+      "operations": [
+        "Managed tasks and project timelines using Trello and Asana for remote client coordination.",
+        "Supported digital communication strategy improvements and online customer engagement processes.",
+        "Participated in bilingual coordination (EN/ES) between clients and collaborators."
+      ]
+    },
+    {
+      "company": "Banco Central de Reserva",
+      "role": "Field Project Supervisor Consultant",
+      "period": "2023",
+      "location": "El Salvador",
+      "isSecondary": true,
+      "description": "Weekend engagement supporting a national cartographic and data collection initiative — managing field teams and deploying mobile data tools.",
+      "impact": [
+        "Trained field personnel on mobile data capture tools including Survey123 and geolocation systems.",
+        "Monitored KPI tracking and operational follow-up to ensure project progress alignment.",
+        "Optimized logistics, reporting, and communication between field teams and project coordinators."
+      ],
+      "operations": [
+        "Coordinated and supervised field teams during on-site data collection activities.",
+        "Supported multi-platform digital tools including Google Workspace and secure collaboration apps.",
+        "Maintained consistent operational reporting and team coordination throughout the project duration."
+      ]
+    },
+    {
+      "company": "Laboratorios ROMAChemical",
+      "role": "Business & Market Data Analyst",
+      "period": "2023 - 2025",
+      "location": "El Salvador",
+      "description": "Supported business reporting and digital transformation efforts — connecting data from multiple departments into centralized dashboards and more streamlined workflows.",
+      "impact": [
+        "Built dashboards and reports in Power BI and Excel to support operational monitoring and business decision-making.",
+        "Contributed to ERP-related process documentation and coordination during digitalization initiatives.",
+        "Assisted in marketing analytics and campaign reporting to inform budget optimization discussions."
+      ],
+      "operations": [
+        "Collaborated across Sales, Customer Service, and Operations to improve data accessibility and reporting consistency.",
+        "Supported CRM adoption and internal digital tool usage through cross-department coordination.",
+        "Helped migrate manual workflows into more centralized and trackable digital processes."
+      ]
+    },
+    {
+      "company": "HP (via SmartFriend)",
+      "role": "Technical Customer Support Supervisor",
+      "period": "2021 - 2024",
+      "location": "Remote",
+      "description": "Supervised night-shift technical support operations — supporting team performance, escalation management, and SLA compliance in a high-volume remote environment.",
+      "impact": [
+        "Assisted team members with escalated technical cases and customer communication during high-volume shifts.",
+        "Contributed to onboarding and coaching processes for new support agents.",
+        "Helped document recurring technical issues and contributed to process improvement discussions."
+      ],
+      "operations": [
+        "Monitored SLA compliance, ticket handling performance, and workflow organization.",
+        "Worked with customers to identify appropriate technical solutions for hardware, software, and connectivity issues.",
+        "Assisted in warranty-related support workflows and service coordination processes."
+      ]
+    },
+    {
+      "company": "INTELITECSA",
+      "role": "Business & Marketing Coordinator",
+      "period": "2018 - 2022",
+      "location": "El Salvador",
+      "description": "Coordinated marketing campaigns, customer engagement initiatives, and business reporting across different areas of a tech and sales-focused organization.",
+      "impact": [
+        "Contributed to campaign performance analysis and customer interaction metrics reporting.",
+        "Supported digital organization efforts and documentation workflows using collaborative tools.",
+        "Participated in customer retention initiatives and follow-up processes."
+      ],
+      "operations": [
+        "Helped prepare operational and sales performance reports for internal use and management review.",
+        "Coordinated administrative and client follow-up processes across different business areas.",
+        "Participated in social media management and digital communication strategy activities."
+      ]
+    }
+  ],
+  "sideProjects": [
+    {
+      "id": "webaudit",
+      "title": "WebAudit",
+      "subtitle": "Chrome Extension",
+      "description": "A lightweight Chrome extension designed for web developers, designers, and marketers to perform instant on-page audits, checking semantic HTML, meta tag structures, load performance indicators, and basic SEO compliance.",
+      "category": "Website Design & SEO Optimization",
+      "status": "Production",
+      "links": {
+        "github": "https://github.com/netssv/webaudit",
+        "demo": "https://chromewebstore.google.com/detail/web-audit-tool/jnjaijaodpngdckabfkmjokllnohmcii?hl=en&authuser=3"
+      }
+    },
+    {
+      "id": "whathappened",
+      "title": "WhatHappened",
+      "subtitle": "Chrome Extension",
+      "description": "An advanced web diagnostic tool that emulates a virtual Linux terminal interface within the browser. Designed to help technical support engineers perform deep frontend diagnostics, check server response simulated feeds, and inspect DOM structures through CLI commands.",
+      "category": "Systems & Dev Tools",
+      "status": "Production",
+      "links": {
+        "github": "https://github.com/netssv/whathappened",
+        "demo": "https://chromewebstore.google.com/detail/whathappened/jkohefabbnobompohkedfaodcnfdplom?authuser=3&hl=en"
+      }
+    },
+    {
+      "id": "rebusca",
+      "title": "Rebusca",
+      "subtitle": "Modular Android Application",
+      "description": "A modular, clean-architecture Android application leveraging web scraping algorithms and semantic searching to compare consumer goods prices across major supermarkets. Focused on providing real-time price comparisons to optimize family savings in El Salvador.",
+      "category": "Mobile & Scraping Algorithms",
+      "status": "In Development",
+      "links": {
+        "github": "https://github.com/netssv/rebusca-app",
+        "demo": "/rebusca.mp4",
+        "preview": "/rebusca-preview.gif"
+      }
+    }
+  ],
+  "skillsMatrix": {
+    "businessCore": {
+      "title": "Business Core & Client Operations",
+      "icon": "🎯",
+      "skills": [
+        "Escalation & Critical Incident Management",
+        "Tier 2/3 Technical Support & Systems Diagnostics",
+        "SLA & KPI Performance Monitoring",
+        "Customer Experience (CX) Strategy",
+        "Cross-functional Team Coordination",
+        "Process Documentation & Runbook Writing"
+      ]
+    },
+    "dataIntelligence": {
+      "title": "Data & Business Intelligence",
+      "icon": "📊",
+      "skills": [
+        "Power BI Dashboard Design & DAX",
+        "Excel & Google Sheets Reporting",
+        "Data Migration & ETL Coordination",
+        "SQL & Relational Database Basics",
+        "Marketing Analytics & Campaign Reporting",
+        "KPI Tracking & Operational Visibility"
+      ]
+    },
+    "technicalTooling": {
+      "title": "Technical Tooling & Automation",
+      "icon": "⚙️",
+      "skills": [
+        "Python Scripting (Automation & Auditing)",
+        "Bash & Unix Shell Scripting",
+        "Next.js & React Frontend Development",
+        "Kotlin (Android Clean Architecture)",
+        "Trello, Asana & Remote Project Coordination",
+        "Git & Agile (Scrum) Workflows"
+      ]
+    }
+  },
+  "trustedStack": [
+    "Python", "SQL", "Power BI", "Bash", "Android · Kotlin", "Next.js", "Data Engineering", "AI Tools"
+  ],
+
+  "metrics": [
+    { "value": "70%", "label": "Reduction in reporting time" },
+    { "value": "40+",  "label": "Documented incident patterns" },
+    { "value": "3",    "label": "2 Chrome extensions + 1 Android App" },
+    { "value": "12%", "label": "SLA improvement at HP" }
+  ],
+
+  "philosophy": {
+    "quote": "Technology without strategy is just overhead. I build systems that reduce friction, expose data, and let organizations move faster — not louder.",
+    "focus": ["Automation", "Data Architecture", "Digital Transformation", "Operational Efficiency"]
+  },
+
+  "contact": {
+    "title": "Let's Connect",
+    "description": "Interested in automating workflows, scaling data pipelines, or optimizing your digital transformation strategies? Get in touch to discuss technical solutions.",
+    "email": "rop.martel@gmail.com",
+    "location": "San Salvador, El Salvador",
+    "social": [
+      { "name": "LinkedIn", "url": "https://linkedin.com/in/ropmartel", "display": "linkedin.com/in/ropmartel" },
+      { "name": "GitHub", "url": "https://github.com/netssv/", "display": "github.com/netssv/" },
+      { "name": "Twitter / X", "url": "https://x.com/netssv", "display": "x.com/netssv" }
+    ]
+  }
+}

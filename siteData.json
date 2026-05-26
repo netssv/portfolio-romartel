@@ -1,0 +1,373 @@
+{
+  "metadata": {
+    "title": "Rodrigo P. Martel | Data Strategy Marketing and Digital Transformation",
+    "description": "Discover Rodrigo P. Martel's expertise in digital strategy, data analysis, and business intelligence. Transforming data into actionable insights for business growth.",
+    "keywords": [
+      "Rodrigo Martel",
+      "data-driven marketing",
+      "business intelligence",
+      "digital strategy",
+      "data analysis",
+      "analytics professional",
+      "Rodrigo Palacios"
+    ],
+    "author": "Rodrigo P. Martel",
+    "email": "rop.martel@gmail.com",
+    "location": "San Salvador, El Salvador",
+    "socialLinks": {
+      "linkedin": "https://linkedin.com/in/ropmartel",
+      "github": "https://github.com/netssv/",
+      "twitter": "https://x.com/netssv"
+    }
+  },
+  "navigation": [
+    { "name": "Resume", "path": "/" },
+    { "name": "Certifications", "path": "/certifications" },
+    { "name": "Testimonials", "path": "/testimonials" },
+    { "name": "Portfolio", "path": "/portfolio" },
+    { "name": "FAQ", "path": "/faq" },
+    { "name": "Templates", "path": "/templates" },
+    { "name": "Contact", "path": "/contact" }
+  ],
+  "pages": {
+    "home": {
+      "hero": {
+        "name": "Rodrigo P. Martel",
+        "role": "Data-Driven Digital Marketer Strategist",
+        "bio": "I'm a marketing graduate from El Salvador with 5+ years' experience in content creation, social media, email campaigns, and data analysis. I help brands tell their story, grow online, and make data-driven decisions.",
+        "button": {
+          "text": "My Portfolio",
+          "url": "https://new.express.adobe.com/id/urn:aaid:sc:VA6C2:e1687bdb-3b5a-54b5-91ab-01b2afbc65d3"
+        },
+        "avatar": {
+          "src": "https://d456631b80.cbaul-cdnwnd.com/81ec83ccd07ef7dabc4b16fd69a6ac4e/200000034-8380083803/Foto_Rodrigo_Martel-removebg-preview-Photoroom-2.jpeg",
+          "alt": "Rodrigo P. Martel"
+        }
+      },
+      "education": {
+        "title": "Education",
+        "description": "My journey in Marketing Actionable data and finance began with a Bachelor's Degree in Marketing (emphasis in Analysis) from Universidad Francisco Gavidia. I deepened my technical foundation with:",
+        "degrees": [
+          {
+            "title": "Diploma in Digital Transformation & Open Government",
+            "institution": "OEA",
+            "year": "2024"
+          },
+          {
+            "title": "Diploma in Data Analysis",
+            "institution": "Google, Microsoft & Kodigo",
+            "year": "2024"
+          },
+          {
+            "title": "Specialization in Logistics",
+            "institution": "Universidad Francisco Gavidia",
+            "year": "2020"
+          }
+        ],
+        "footnote": "To stay at the forefront of technology and analytics, I continuously expand my expertise through advanced certifications in SQL, Python for Data Analysis, Advanced Excel, Power BI, Agile Methodologies, Scrum Master, and ongoing Google Project Management. I believe lifelong learning drives innovation and efficiency in marketing, finance, and data strategies.",
+        "logoExplanation": "The RoMartel logo symbolizes my commitment to data analysis and business strategy. The computer screen reflects the tech-driven nature of my work, while the line graph highlights my focus on turning data into actionable insights."
+      },
+      "experience": {
+        "title": "Experience",
+        "description": "I create data insights, visualizations, and improve business workflows. I train teams on digital tools, conduct market research, and manage projects using agile methods.",
+        "jobs": [
+          {
+            "company": "Laboratorios Roma Chemical",
+            "role": "Business Intelligence Analyst",
+            "details": "Designed Power BI dashboards for financial KPIs and sales forecasts, trained departments on digital reporting processes, and optimized marketing budgets."
+          },
+          {
+            "company": "HP",
+            "role": "Support Team Manager (Remote)",
+            "details": "Managed a 15-person support team, analyzed performance metrics to reduce operational costs and introduced efficiency processes that improved the business."
+          },
+          {
+            "company": "Intelitecsa",
+            "role": "Project Manager",
+            "details": "Managed projects, performed risk assessments, and provided strategic decision support to improve business performance."
+          },
+          {
+            "company": "Upwork & Fiverr",
+            "role": "Marketing Consultant (Remote)",
+            "details": "Executed digital marketing strategies, managed content across platforms, tracked KPIs using Power BI and Google Sheets, and optimized workflows with Trello and Asana. Conducted cost-benefit analyses to support senior management."
+          },
+          {
+            "company": "Outlier / Testlio / uTest",
+            "role": "AI Training & Tester (Remote)",
+            "details": "Develop and implement predictive analytics models to optimize resource allocation, evaluate AI-generated outputs for reporting accuracy, and test AI systems for data consistency."
+          },
+          {
+            "company": "TechAmericas",
+            "role": "Project Manager",
+            "details": "Oversaw budgets and financial KPIs for large-scale IT projects with Ooma Granite, MetTel, VikingCloud, and AireSpring, coordinated cross-functional teams, and delivered reports on budget variance, cost-per-ticket, and ROI."
+          },
+          {
+            "company": "Banco Central de Reserva",
+            "role": "Consultant",
+            "details": "Supervised GIS-based mobile data capture teams, streamlined data collection processes, and produced financial and geographic analyses for central bank studies."
+          },
+          {
+            "company": "Universidad de El Salvador",
+            "role": "Moodle Coach",
+            "details": "Conducted platform adoption workshops, analyzed learner engagement metrics, and trained professors on data-driven course improvements."
+          }
+        ]
+      },
+      "personalProjects": {
+        "title": "Personal Projects",
+        "description": "I love tackling creative and technical challenges through personal projects that combine data, marketing, and technology.",
+        "projects": [
+          {
+            "title": "Game-Based Training for Holcim (prototype)",
+            "highlights": [
+              "Developed an interactive simulation to train logistics teams.",
+              "Increased training efficiency by 25% using gamification."
+            ]
+          },
+          {
+            "title": "Sustainable Tech Game Development",
+            "highlights": [
+              "Developed a solar-powered vehicle simulation game, merging sustainability with interactive media.",
+              "Showcased problem-solving and creative application of game mechanics in tech projects."
+            ]
+          },
+          {
+            "title": "Python Mini-Project: Guess the Number",
+            "highlights": [
+              "Built a simple interactive game in Python to enhance logical thinking and coding skills.",
+              "Demonstrated adaptability in learning new technologies."
+            ]
+          }
+        ],
+        "button": {
+          "text": "github.com/netssv/",
+          "url": "https://github.com/netssv/"
+        }
+      },
+      "cta": {
+        "text": "Looking to transform your business with data-driven marketing and analytics? Let’s connect and discuss how we can drive growth together!",
+        "button": {
+          "text": "Get in touch",
+          "url": "/contact"
+        }
+      }
+    },
+    "certifications": {
+      "title": "Certifications",
+      "description": "On this page, you can explore some of my certifications, particularly in data analytics. I also hold certifications in social topics, human mobility, and government. I’ve highlighted a few of my data-related certifications. Click the button to access my OneDrive folder and see all of them.",
+      "button": {
+        "text": "CLICK TO VIEW ALL MY CERTIFICATIONS",
+        "url": "http://www.bit.ly/ROPMcerts"
+      },
+      "items": [
+        {
+          "name": "Remote Work Professional",
+          "issuer": "CertiProf"
+        },
+        {
+          "name": "Diploma in Digital Transformation & Open Government",
+          "issuer": "OEA",
+          "year": "2024"
+        },
+        {
+          "name": "Scrum Master",
+          "issuer": "ESIT"
+        },
+        {
+          "name": "Content Marketing",
+          "issuer": "HubSpot"
+        },
+        {
+          "name": "Social Media Marketing",
+          "issuer": "HubSpot"
+        },
+        {
+          "name": "Human Mobility and Government",
+          "issuer": "Gobierno de Ecuador"
+        },
+        {
+          "name": "Microsoft Power BI Data Analyst",
+          "issuer": "Microsoft"
+        },
+        {
+          "name": "Microsoft 365 Data Management",
+          "issuer": "LinkedIn"
+        },
+        {
+          "name": "Coding Foundation",
+          "issuer": "SoloLearn"
+        },
+        {
+          "name": "Coding Data",
+          "issuer": "SoloLearn"
+        },
+        {
+          "name": "SQL Intermediate",
+          "issuer": "SoloLearn"
+        },
+        {
+          "name": "Excel Analyst",
+          "issuer": "Microsoft, Google & Kodigo"
+        },
+        {
+          "name": "Professional in Business English and Communication",
+          "issuer": "MTF Institute"
+        }
+      ]
+    },
+    "testimonials": {
+      "title": "Testimonials",
+      "items": [
+        {
+          "name": "Jimmy Neyib",
+          "company": "Roma Chemical",
+          "quote": "“His knowledge in technology and market trends significantly boosted the efficiency of our internal processes.”",
+          "url": "https://www.romachemical.com/"
+        },
+        {
+          "name": "Marco Tulio",
+          "company": "Universidad de El Salvador",
+          "quote": "“His participation in the migration process to Moodle was essential for better understanding the new data processing flow on the platform.”",
+          "url": "https://www.ues.edu.sv/"
+        },
+        {
+          "name": "Moises Larin",
+          "company": "Intelitecsa",
+          "quote": "“A versatile professional with diverse skills, adaptable to various roles. His expertise integration drives effective team contributions and innovative solutions.”",
+          "url": "https://www.intelitecsa.com"
+        },
+        {
+          "name": "Carolina Hernandez",
+          "company": "Banco Central de Reserva",
+          "quote": "“The leadership demonstrated were outstanding. Never leaving a teammate behind are values that are essential today.”",
+          "url": "https://www.bcr.gob.sv/"
+        },
+        {
+          "name": "Wilber Nerio",
+          "company": "El Pital Restaurante y Hostal",
+          "quote": "“Implementing the ERP system has been transformative for El Pital. Their expertise in digitalizing our processes has significantly improved our data management and operational efficiency.”",
+          "url": "https://www.facebook.com/HostalElPitalRestaurante/"
+        }
+      ]
+    },
+    "portfolio": {
+      "title": "Portfolio",
+      "description": "Browse through Rodrigo P. Martel's portfolio showcasing projects in data visualization, digital transformation, Website Design, and strategic growth.",
+      "button": {
+        "text": "PORTAFOLIO ADOBE EXPRESS",
+        "url": "https://new.express.adobe.com/id/urn:aaid:sc:VA6C2:e1687bdb-3b5a-54b5-91ab-01b2afbc65d3?invite=true&accept=true&promoid=Z2G1FQKR&mv=other"
+      }
+    },
+    "faq": {
+      "title": "FAQ",
+      "items": [
+        {
+          "question": "What is your competitive advantage?",
+          "answer": "My competitive advantage is my mix of marketing expertise, data analysis and IT skills. I can turn complex data into clear insights that support business goals. Plus, I possess a strong commitment to continuous learning and a proactive approach to embracing new challenges."
+        },
+        {
+          "question": "What is your background in data analysis?",
+          "answer": "I hold a degree in Marketing with specializations and diplomas in Business Intelligence. I use tools such as Power BI, SQL, and Python to develop data-driven solutions. Additionally, I have certifications in social and humanitarian fields, which help me apply data analysis in ways that positively impact society."
+        },
+        {
+          "question": "How do you keep your skills up to date?",
+          "answer": "I believe in lifelong learning and regularly take courses to stay current with the latest trends and technologies in data analysis. I also engage in social and humanitarian projects, continuously expanding my knowledge in these areas to ensure my skills are relevant and impactful."
+        },
+        {
+          "question": "How do your technical skills complement your interest in humanitarian work?",
+          "answer": "My technical background in data analysis and project management equips me to approach humanitarian projects with a data-driven mindset, ensuring that efforts are efficient, scalable, and impactful."
+        }
+      ]
+    },
+    "templates": {
+      "title": "FREE Templates",
+      "description": "This is a new section launching in 2025! Please be patient and thank you for your interest in my website.",
+      "items": [
+        {
+          "name": "Dashboard KPI",
+          "status": "I'm working on providing a free feature!"
+        },
+        {
+          "name": "Dashboard Market",
+          "status": "I'm working on providing a free feature!"
+        },
+        {
+          "name": "Dashboard Performance",
+          "status": "I'm working on providing a free feature!"
+        },
+        {
+          "name": "Budget Sheets",
+          "status": "I'm working on providing a free feature!"
+        },
+        {
+          "name": "Planner",
+          "status": "I'm working on providing a free feature!"
+        },
+        {
+          "name": "Media Campaign",
+          "status": "I'm working on providing a free feature!"
+        }
+      ]
+    },
+    "contact": {
+      "title": "Contact",
+      "map": {
+        "query": "san salvador, san salvador",
+        "iframeUrl": "https://web-2022.webnode.it/widgets/googlemaps/?z=15&a=san+salvador%2C+san+salvador"
+      },
+      "form": {
+        "fields": [
+          {
+            "name": "name",
+            "label": "Your Name",
+            "type": "text",
+            "required": true
+          },
+          {
+            "name": "email",
+            "label": "Email",
+            "type": "email",
+            "required": true
+          },
+          {
+            "name": "message",
+            "label": "Message",
+            "type": "textarea",
+            "required": true
+          },
+          {
+            "name": "confirmHuman",
+            "label": "I confirm that I am human and not a robot",
+            "type": "checkbox",
+            "required": true
+          }
+        ],
+        "submitText": "Submit"
+      },
+      "infoList": [
+        {
+          "type": "location",
+          "title": "El Salvador",
+          "value": "San Salvador, El Salvador"
+        },
+        {
+          "type": "email",
+          "title": "Email Address",
+          "value": "rop.martel@gmail.com"
+        },
+        {
+          "type": "linkedin",
+          "title": "LinkedIn Profile",
+          "value": "https://linkedin.com/in/ropmartel",
+          "display": "linkedin.com/in/ropmartel"
+        },
+        {
+          "type": "twitter",
+          "title": "Twitter / X Profile",
+          "value": "https://x.com/netssv",
+          "display": "x.com/netssv"
+        }
+      ]
+    }
+  }
+}

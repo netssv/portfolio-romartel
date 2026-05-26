@@ -1,0 +1,5 @@
+# HTTrack Website Copier Cookie File
+# This file format is compatible with Netscape cookies
+romartel.webnode.page	TRUE	/	FALSE	1999999999	PHPSESSID	55o6367q624k55jfbp94tqbdi2
+romartel.webnode.page	TRUE	/	FALSE	1999999999	SameSite	Lax
+
