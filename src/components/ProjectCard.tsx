@@ -145,23 +145,35 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
           {meta.valueProp}
         </p>
 
-        {/* Highlighted Outcome */}
-        <p className="text-xs font-body font-semibold text-text-primary mb-6 flex items-center gap-1.5">
-          <span className="text-accent">→</span>
-          <span>{meta.outcome}</span>
-        </p>
+        {/* Animated Analytics & Tech Stack (Reveals on Hover) */}
+        <motion.div
+          initial={{ height: 0, opacity: 0, x: 20 }}
+          animate={{
+            height: isHovered ? "auto" : 0,
+            opacity: isHovered ? 1 : 0,
+            x: isHovered ? 0 : 20,
+          }}
+          transition={{ type: "spring", stiffness: 260, damping: 20 }}
+          className="overflow-hidden flex flex-col"
+        >
+          {/* Highlighted Outcome */}
+          <p className="text-xs font-body font-semibold text-text-primary mb-6 mt-4 flex items-center gap-1.5">
+            <span className="text-accent">→</span>
+            <span>{meta.outcome}</span>
+          </p>
 
-        {/* Technology chips */}
-        <div className="flex flex-wrap gap-1.5 mb-6">
-          {meta.stack.map((tech) => (
-            <span
-              key={tech}
-              className="px-2 py-0.5 rounded-md text-[10px] font-body text-text-muted bg-bg-raised border border-border-subtle"
-            >
-              {tech}
-            </span>
-          ))}
-        </div>
+          {/* Technology chips */}
+          <div className="flex flex-wrap gap-1.5 mb-6">
+            {meta.stack.map((tech) => (
+              <span
+                key={tech}
+                className="px-2 py-0.5 rounded-md text-[10px] font-body text-text-muted bg-bg-raised border border-border-subtle"
+              >
+                {tech}
+              </span>
+            ))}
+          </div>
+        </motion.div>
 
         {/* Footer dynamic links */}
         <div className="mt-auto flex items-center gap-4 pt-4 border-t border-border-subtle">
