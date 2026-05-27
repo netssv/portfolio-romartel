@@ -13,13 +13,13 @@ interface PCBBoardProps {
 
 export const PCBBoard: React.FC<PCBBoardProps> = ({ avatarSrc, avatarAlt }) => {
   const boardRef = useRef<HTMLDivElement>(null);
-  const [size, setSize] = useState({ w: 560, h: 520 });
+  const [size, setSize] = useState({ w: 0, h: 0 });
 
   const update = useCallback(() => {
     if (boardRef.current) {
       const w = boardRef.current.offsetWidth;
       const h = boardRef.current.offsetHeight;
-      setSize({ w, h });
+      if (w > 0 && h > 0) setSize({ w, h });
     }
   }, []);
 
@@ -29,6 +29,9 @@ export const PCBBoard: React.FC<PCBBoardProps> = ({ avatarSrc, avatarAlt }) => {
     if (boardRef.current) ro.observe(boardRef.current);
     return () => ro.disconnect();
   }, [update]);
+
+  // Don't render SVG until we have real dimensions
+  const ready = size.w > 0 && size.h > 0;
 
   const cx = size.w / 2;
   const cy = size.h / 2;
@@ -41,15 +44,18 @@ export const PCBBoard: React.FC<PCBBoardProps> = ({ avatarSrc, avatarAlt }) => {
 
   return (
     <div ref={boardRef} className="relative w-full h-full">
-      {/* Circuit lines */}
-      <PCBCircuitLines width={size.w} height={size.h} radius={radius} />
+      {/* Circuit lines + nodes — only once we have real dimensions */}
+      {ready && (
+        <>
+          <PCBCircuitLines width={size.w} height={size.h} radius={radius} />
+          <div className="absolute inset-0">
+            <PCBNodes width={size.w} height={size.h} radius={radius} />
+          </div>
+        </>
+      )}
 
-      {/* Node chips */}
-      <div className="absolute inset-0">
-        <PCBNodes width={size.w} height={size.h} radius={radius} />
-      </div>
-
-      {/* Center hub — photo */}
+      {/* Center hub — photo (only when dimensions are known) */}
+      {ready && (
       <div className="absolute" style={{ left: cx, top: cy, transform: "translate(-50%, -50%)" }}>
 
         {/* Outer rotating ring */}
@@ -133,6 +139,7 @@ export const PCBBoard: React.FC<PCBBoardProps> = ({ avatarSrc, avatarAlt }) => {
           </div>
         </motion.div>
       </div>
+      )}
     </div>
   );
 };
