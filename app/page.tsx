@@ -15,6 +15,7 @@ import { SectionLabel } from "@/src/components/ui/SectionLabel";
 import { useDesign } from "@/src/context/DesignContext";
 import { PCBLayout } from "@/src/components/pcb/PCBLayout";
 import { DesignSelector } from "@/src/components/ui/DesignSelector";
+import { ScrollIndicator } from "@/src/components/layout/ScrollIndicator";
 
 const {
   profile, experience, sideProjects,
@@ -39,7 +40,9 @@ export default function Home() {
 
   return (
     <>
+      <ScrollIndicator />
       <Navbar 
+
         authorName={profile.name} 
         navItems={[
           { name: "Home", path: "#top" },

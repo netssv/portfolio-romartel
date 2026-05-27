@@ -21,16 +21,27 @@ export const PCBLayout: React.FC<PCBLayoutProps> = ({
   return (
     <div className="min-h-screen font-mono" style={{ background: "#0a1628" }}>
       {/* Scanline overlay */}
-      <div className="pointer-events-none fixed inset-0 z-10 opacity-[0.025]"
-        style={{ backgroundImage: "repeating-linear-gradient(0deg, #00ff41 0px, transparent 1px, transparent 3px)", backgroundSize: "100% 4px" }} />
+      <div
+        className="pointer-events-none fixed inset-0 z-10 opacity-[0.022]"
+        style={{
+          backgroundImage: "repeating-linear-gradient(0deg, #00ff41 0px, transparent 1px, transparent 3px)",
+          backgroundSize: "100% 4px",
+        }}
+      />
 
       {/* Background grid */}
-      <div className="pointer-events-none fixed inset-0 opacity-[0.06]"
-        style={{ backgroundImage: "linear-gradient(#00ff41 1px,transparent 1px),linear-gradient(90deg,#00ff41 1px,transparent 1px)", backgroundSize: "40px 40px" }} />
+      <div
+        className="pointer-events-none fixed inset-0 opacity-[0.055]"
+        style={{
+          backgroundImage:
+            "linear-gradient(#00ff41 1px,transparent 1px),linear-gradient(90deg,#00ff41 1px,transparent 1px)",
+          backgroundSize: "40px 40px",
+        }}
+      />
 
       {/* Header bar */}
       <header className="sticky top-0 z-20 border-b border-[#00ff41]/20 bg-[#0a1628]/95 backdrop-blur-sm">
-        <div className="max-w-7xl mx-auto px-6 h-12 flex items-center justify-between">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 h-12 flex items-center justify-between">
           <div className="flex items-center gap-3">
             <div className="w-2 h-2 rounded-full bg-[#00ff41] animate-pulse" />
             <span className="text-[11px] font-mono text-[#f4fbf7] tracking-widest uppercase font-bold">
@@ -39,21 +50,40 @@ export const PCBLayout: React.FC<PCBLayoutProps> = ({
           </div>
           <nav className="hidden md:flex items-center gap-6">
             {["#projects", "#experience", "#skills", "#contact"].map((href) => (
-              <a key={href} href={href}
-                className="text-[10px] font-mono text-[#a9e2c1] hover:text-[#00ff41] transition-colors uppercase tracking-widest font-bold">
+              <a
+                key={href}
+                href={href}
+                className="text-[10px] font-mono text-[#a9e2c1] hover:text-[#00ff41] transition-colors uppercase tracking-widest font-bold"
+              >
                 {href.replace("#", "")}
+              </a>
+            ))}
+          </nav>
+          {/* Mobile nav dots */}
+          <nav className="flex md:hidden items-center gap-3">
+            {["#projects", "#experience", "#skills", "#contact"].map((href) => (
+              <a
+                key={href}
+                href={href}
+                className="text-[9px] font-mono text-[#a9e2c1] hover:text-[#00ff41] transition-colors uppercase tracking-widest font-bold"
+              >
+                {href.replace("#", "").slice(0, 3)}
               </a>
             ))}
           </nav>
         </div>
       </header>
 
-      {/* Hero board section */}
-      <div className="relative overflow-hidden" style={{ minHeight: "100vh" }}>
-        {/* Two-column layout: info + board */}
-        <div className="max-w-7xl mx-auto px-6 py-12 flex flex-col lg:flex-row gap-8 items-center min-h-[calc(100vh-3rem)]">
-          {/* Left: Info panel */}
-          <div className="lg:w-[380px] flex-none z-10 order-2 lg:order-1">
+      {/* Hero section */}
+      <div className="relative" style={{ minHeight: "100svh" }}>
+        {/*
+          Mobile: info panel on top, board below (full-width square canvas)
+          Desktop: side-by-side, board takes ~60% width
+        */}
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8 flex flex-col lg:flex-row gap-6 lg:gap-10 items-center min-h-[calc(100svh-3rem)]">
+
+          {/* Info panel — on mobile comes FIRST so user reads name/bio before board */}
+          <div className="w-full lg:w-[360px] flex-none z-10 order-1">
             <PCBInfoPanel
               name={profile.name}
               title={profile.title}
@@ -65,19 +95,26 @@ export const PCBLayout: React.FC<PCBLayoutProps> = ({
             />
           </div>
 
-          {/* Right: Circuit board canvas */}
-          <div className="flex-1 relative order-1 lg:order-2" style={{ minHeight: "560px" }}>
-            <PCBBoard
-              avatarSrc={profile.avatar.src}
-              avatarAlt={profile.avatar.alt}
-            />
+          {/* Board canvas — responsive square that fills available space */}
+          <div
+            className="flex-1 relative order-2 w-full"
+            style={{
+              /**
+               * On mobile: square based on viewport width minus padding.
+               * On desktop: min-height so canvas is large enough.
+               */
+              height: "min(90vw, 560px)",
+              minHeight: 320,
+            }}
+          >
+            <PCBBoard avatarSrc={profile.avatar.src} avatarAlt={profile.avatar.alt} />
           </div>
         </div>
 
         {/* Scroll indicator */}
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 animate-bounce">
+        <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 animate-bounce">
           <span className="text-[9px] font-mono text-[#a9e2c1] tracking-widest">SCROLL</span>
-          <div className="w-px h-8 bg-gradient-to-b from-[#00ff41]/40 to-transparent" />
+          <div className="w-px h-7 bg-gradient-to-b from-[#00ff41]/40 to-transparent" />
         </div>
       </div>
 
@@ -99,7 +136,6 @@ export const PCBLayout: React.FC<PCBLayoutProps> = ({
         </div>
       </footer>
 
-      {/* Design selector */}
       <DesignSelector />
     </div>
   );

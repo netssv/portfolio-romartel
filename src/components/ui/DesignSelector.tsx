@@ -1,8 +1,9 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useDesign, DesignTheme } from "@/src/context/DesignContext";
+import { Sun, Moon } from "lucide-react";
 
 const DESIGNS: { id: DesignTheme; label: string; desc: string; preview: string }[] = [
   {
@@ -50,6 +51,24 @@ const PCBPreview = () => (
 export const DesignSelector = () => {
   const { design, setDesign } = useDesign();
   const [open, setOpen] = useState(false);
+  const [theme, setTheme] = useState<"day" | "night">("day");
+
+  useEffect(() => {
+    const isDark = document.documentElement.classList.contains("theme-dark");
+    setTheme(isDark ? "night" : "day");
+  }, [open]);
+
+  const toggleTheme = () => {
+    const nextTheme = theme === "day" ? "night" : "day";
+    setTheme(nextTheme);
+    if (nextTheme === "night") {
+      document.documentElement.classList.add("theme-dark");
+      localStorage.setItem("theme-override", "night");
+    } else {
+      document.documentElement.classList.remove("theme-dark");
+      localStorage.setItem("theme-override", "day");
+    }
+  };
 
   return (
     <div className="fixed bottom-24 right-4 lg:bottom-8 lg:right-6 z-50">
@@ -78,11 +97,10 @@ export const DesignSelector = () => {
                 <button
                   key={d.id}
                   onClick={() => { setDesign(d.id); setOpen(false); }}
-                  className={`text-left rounded-xl border p-3 transition-all duration-200 cursor-pointer ${
-                    design === d.id
+                  className={`text-left rounded-xl border p-3 transition-all duration-200 cursor-pointer ${design === d.id
                       ? "border-accent bg-accent/5"
                       : "border-border-subtle hover:border-border-base"
-                  }`}
+                    }`}
                 >
                   {d.id === "editorial" ? <EditorialPreview /> : <PCBPreview />}
                   <div className="mt-2">
@@ -91,6 +109,34 @@ export const DesignSelector = () => {
                   </div>
                 </button>
               ))}
+            </div>
+
+            <div className="mt-4 pt-4 border-t border-border-base">
+              <p className="text-xs font-body font-bold uppercase tracking-wider text-text-muted mb-3">Theme</p>
+              <button
+                onClick={toggleTheme}
+                className="w-full flex items-center justify-between bg-bg-base border border-border-subtle hover:border-border-base rounded-xl p-3 cursor-pointer transition-all"
+              >
+                <div className="flex items-center gap-2">
+                  {theme === "night" ? (
+                    <Moon size={16} className="text-accent" />
+                  ) : (
+                    <Sun size={16} className="text-accent" />
+                  )}
+                  <span className="text-sm font-body font-semibold text-text-primary">
+                    {theme === "night" ? "Nightlight" : "Daylight"}
+                  </span>
+                </div>
+                <div className="w-8 h-4 rounded-full bg-border-base relative">
+                  <motion.div
+                    className="absolute top-0.5 w-3 h-3 rounded-full bg-accent"
+                    animate={{ left: theme === "night" ? "1.125rem" : "0.125rem" }}
+                  />
+                </div>
+              </button>
+              <p className="text-[10px] text-text-muted mt-2 italic font-body">
+                💡 Tip: This changes according to the time of day.
+              </p>
             </div>
           </motion.div>
         )}

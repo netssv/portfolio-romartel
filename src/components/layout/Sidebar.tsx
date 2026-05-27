@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from "react";
 import { Home, Briefcase, FolderGit2, Compass, Mail, Sun, Moon } from "lucide-react";
 import { motion } from "framer-motion";
+import { MobileNav } from "./MobileNav";
 
 interface SidebarProps {
   authorName: string;
@@ -21,61 +22,35 @@ export const Sidebar: React.FC<SidebarProps> = ({ authorName }) => {
   const [theme, setTheme] = useState<"day" | "night">("day");
 
   useEffect(() => {
-    const sections = NAV_ITEMS.map((item) => {
-      const id = item.path.substring(1);
-      return id === "top" ? document.body : document.getElementById(id);
-    });
-
-    const observerOptions = {
-      root: null,
-      rootMargin: "-40% 0px -50% 0px",
-      threshold: 0,
-    };
-
+    const sections = NAV_ITEMS.map(i => i.path === "#top" ? document.body : document.getElementById(i.path.substring(1)));
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
           const id = entry.target.id || "top";
           const match = NAV_ITEMS.find((item) => item.path === `#${id}`);
-          if (match) {
-            setActiveSection(match.name);
-          }
+          if (match) setActiveSection(match.name);
         }
       });
-    }, observerOptions);
+    }, { root: null, rootMargin: "-40% 0px -50% 0px", threshold: 0 });
 
-    sections.forEach((section) => {
-      if (section) observer.observe(section);
-    });
+    sections.forEach((section) => section && observer.observe(section));
 
     // Detect initial theme on client mount
-    const isDark = document.documentElement.classList.contains("theme-dark");
-    setTimeout(() => {
-      setTheme(isDark ? "night" : "day");
-    }, 0);
-
+    setTimeout(() => setTheme(document.documentElement.classList.contains("theme-dark") ? "night" : "day"), 0);
     return () => observer.disconnect();
   }, []);
 
   const toggleTheme = () => {
-    const nextTheme = theme === "day" ? "night" : "day";
-    setTheme(nextTheme);
-    if (nextTheme === "night") {
-      document.documentElement.classList.add("theme-dark");
-      localStorage.setItem("theme-override", "night");
-    } else {
-      document.documentElement.classList.remove("theme-dark");
-      localStorage.setItem("theme-override", "day");
-    }
+    const isNight = theme === "day";
+    setTheme(isNight ? "night" : "day");
+    document.documentElement.classList.toggle("theme-dark", isNight);
+    localStorage.setItem("theme-override", isNight ? "night" : "day");
   };
 
   const handleClick = (e: React.MouseEvent<HTMLAnchorElement>, path: string) => {
     e.preventDefault();
-    const id = path.substring(1);
-    const target = id === "top" ? document.body : document.getElementById(id);
-    if (target) {
-      target.scrollIntoView({ behavior: "smooth" });
-    }
+    const target = path === "#top" ? document.body : document.getElementById(path.substring(1));
+    if (target) target.scrollIntoView({ behavior: "smooth" });
   };
 
   return (
@@ -85,12 +60,32 @@ export const Sidebar: React.FC<SidebarProps> = ({ authorName }) => {
         <div>
           {/* Logo / Brand Name */}
           <a href="#top" onClick={(e) => handleClick(e, "#top")} className="group block mb-16">
-            <h2 className="text-xl font-heading font-bold text-text-primary tracking-tight">
-              {authorName}
-            </h2>
-            <span className="text-[10px] font-body tracking-[0.2em] uppercase text-text-accent font-semibold block mt-1">
+            <div className="text-xl font-heading font-bold text-text-primary tracking-tight flex">
+              {authorName.split("").map((char, index) => (
+                <motion.span
+                  key={index}
+                  initial={{ opacity: 0, y: 10, filter: "blur(4px)" }}
+                  animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                  transition={{
+                    duration: 0.4,
+                    delay: index * 0.05,
+                    type: "spring",
+                    stiffness: 120
+                  }}
+                  className={char === " " ? "w-1.5" : "inline-block"}
+                >
+                  {char}
+                </motion.span>
+              ))}
+            </div>
+            <motion.span 
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.8, delay: 0.5 }}
+              className="text-[10px] font-body tracking-[0.2em] uppercase text-text-accent font-semibold block mt-1"
+            >
               Technology Architecture
-            </span>
+            </motion.span>
           </a>
 
           {/* Nav Items */}
@@ -158,48 +153,24 @@ export const Sidebar: React.FC<SidebarProps> = ({ authorName }) => {
       {/* ── Mobile Floating Theme Toggle (Top Right) ─────── */}
       <button
         onClick={toggleTheme}
-        className="lg:hidden fixed top-6 right-6 z-40 w-11 h-11 bg-bg-glass backdrop-blur-md border border-border-base rounded-xl flex items-center justify-center shadow-lg active:scale-95 cursor-pointer transition-all duration-200"
+        className="lg:hidden fixed top-6 right-6 z-40 h-11 px-4 bg-bg-glass backdrop-blur-md border border-border-base rounded-xl flex items-center gap-2 shadow-lg active:scale-95 cursor-pointer transition-all duration-200"
         aria-label="Toggle Theme"
       >
         {theme === "night" ? (
-          <Sun size={16} className="text-accent" />
+          <>
+            <span className="text-xs font-semibold text-text-secondary">Daylight</span>
+            <Sun size={16} className="text-accent" />
+          </>
         ) : (
-          <Moon size={16} className="text-accent" />
+          <>
+            <span className="text-xs font-semibold text-text-secondary">Night</span>
+            <Moon size={16} className="text-accent" />
+          </>
         )}
       </button>
 
       {/* ── Mobile Sticky Navigation Bar (Bottom Float) ──── */}
-      <nav className="lg:hidden fixed bottom-6 left-1/2 -translate-x-1/2 w-[90%] max-w-sm h-14 bg-bg-glass backdrop-blur-lg border border-border-base rounded-2xl flex items-center justify-around px-4 shadow-[0_8px_32px_rgba(0,0,0,0.15)] z-40">
-        {NAV_ITEMS.map((item) => {
-          const Icon = item.icon;
-          const isActive = activeSection === item.name;
-
-          return (
-            <a
-              key={item.name}
-              href={item.path}
-              onClick={(e) => handleClick(e, item.path)}
-              className="relative flex flex-col items-center justify-center w-12 h-12 rounded-xl"
-              aria-label={item.name}
-            >
-              <Icon
-                size={20}
-                className={`transition-colors duration-200 ${
-                  isActive ? "text-text-accent" : "text-text-muted"
-                }`}
-              />
-              
-              {isActive && (
-                <motion.span
-                  layoutId="mobileActiveDot"
-                  className="absolute bottom-1 w-1 h-1 rounded-full bg-accent"
-                  transition={{ type: "spring", stiffness: 380, damping: 30 }}
-                />
-              )}
-            </a>
-          );
-        })}
-      </nav>
+      <MobileNav navItems={NAV_ITEMS} activeSection={activeSection} onNavigate={handleClick} />
     </>
   );
 };

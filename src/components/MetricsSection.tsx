@@ -20,12 +20,16 @@ const AnimatedCounter: React.FC<{ value: string }> = ({ value }) => {
     return match ? "0" : value;
   });
   const ref = useRef<HTMLSpanElement>(null);
-  const isInView = useInView(ref, { once: true, margin: "-50px" });
+  const isInView = useInView(ref, { once: false, margin: "-50px" });
 
   useEffect(() => {
-    if (!isInView) return;
-
     const match = value.match(/^([+-]?\d+)(.*)$/);
+    
+    if (!isInView) {
+      if (match) setDisplayValue("0");
+      return;
+    }
+
     if (!match) return;
 
     const targetNum = parseInt(match[1], 10);
@@ -33,6 +37,7 @@ const AnimatedCounter: React.FC<{ value: string }> = ({ value }) => {
 
     const duration = 1400; // ms
     const startTime = performance.now();
+    let animationFrameId: number;
 
     const animate = (currentTime: number) => {
       const elapsed = currentTime - startTime;
@@ -45,13 +50,15 @@ const AnimatedCounter: React.FC<{ value: string }> = ({ value }) => {
       setDisplayValue(`${currentVal}${suffix}`);
 
       if (progress < 1) {
-        requestAnimationFrame(animate);
+        animationFrameId = requestAnimationFrame(animate);
       } else {
         setDisplayValue(value);
       }
     };
 
-    requestAnimationFrame(animate);
+    animationFrameId = requestAnimationFrame(animate);
+
+    return () => cancelAnimationFrame(animationFrameId);
   }, [value, isInView]);
 
   return <span ref={ref}>{displayValue}</span>;
@@ -77,7 +84,7 @@ export const MetricsSection: React.FC<MetricsSectionProps> = ({ metrics }) => {
                     className="flex flex-col items-center text-center max-w-[220px]"
                     initial={{ opacity: 0, y: 15 }}
                     whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true, margin: "-10%" }}
+                    viewport={{ once: false, margin: "-10%" }}
                     transition={{ duration: 0.5, delay: i * 0.1 }}
                   >
                     <div className="flex items-center gap-3 mb-3">

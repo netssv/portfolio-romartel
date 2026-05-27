@@ -12,45 +12,126 @@ interface SkillCategory {
 }
 interface SkillsMatrixData { [key: string]: SkillCategory; }
 
-const container = {
-  hidden: {},
-  show: { transition: { staggerChildren: 0.055, delayChildren: 0.05 } },
+const PROFICIENCY: Record<string, { level: number; label: string; color: string }> = {
+  businessCore:    { level: 92, label: "Expert",       color: "#FF9500" },
+  dataIntelligence:{ level: 80, label: "Advanced",     color: "#34d399" },
+  technicalTooling:{ level: 72, label: "Proficient",   color: "#60a5fa" },
 };
 
-const item = {
-  hidden: { opacity: 0, scale: 0.85, y: 8 },
-  show: { opacity: 1, scale: 1, y: 0, transition: { type: "spring" as const, stiffness: 300, damping: 22 } },
+const cardVariants = {
+  initial: { opacity: 0, y: 24 },
+  visible: (i: number) => ({ opacity: 1, y: 0, transition: { delay: i * 0.1, type: "spring", stiffness: 200, damping: 22 } }),
 };
 
-const SkillPill: React.FC<{ skill: string }> = ({ skill }) => {
+const pillVariants = {
+  hidden: { opacity: 0, scale: 0.85 },
+  show: (i: number) => ({ opacity: 1, scale: 1, transition: { delay: i * 0.04, type: "spring", stiffness: 280, damping: 20 } }),
+  exit:   { opacity: 0, scale: 0.85, transition: { duration: 0.1 } },
+};
+
+const SkillCard: React.FC<{ catKey: string; cat: SkillCategory; index: number }> = ({ catKey, cat, index }) => {
   const [hovered, setHovered] = useState(false);
+  const meta = PROFICIENCY[catKey] ?? { level: 70, label: "Proficient", color: "#FF9500" };
 
   return (
-    <motion.span
-      variants={item}
+    <motion.div
+      custom={index}
+      variants={cardVariants}
+      initial="initial"
+      whileInView="visible"
+      viewport={{ once: true, amount: 0.2 }}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
-      className="relative inline-flex items-center px-3.5 py-2 rounded-xl text-xs font-body font-medium cursor-default select-none overflow-hidden
-                 border border-border-subtle text-text-secondary transition-colors duration-200
-                 hover:text-text-primary hover:border-accent/40"
+      className="relative group flex flex-col gap-5 p-6 rounded-2xl border border-border-subtle bg-bg-surface overflow-hidden cursor-default
+                 hover:border-accent/40 hover:shadow-[0_0_32px_rgba(255,149,0,0.08)] transition-all duration-300"
     >
-      {/* Glow background on hover */}
-      <motion.span
-        className="absolute inset-0 rounded-xl bg-accent/8 pointer-events-none"
-        initial={{ opacity: 0 }}
+      {/* Ambient glow */}
+      <motion.div
+        className="absolute inset-0 pointer-events-none rounded-2xl"
         animate={{ opacity: hovered ? 1 : 0 }}
-        transition={{ duration: 0.2 }}
+        transition={{ duration: 0.3 }}
+        style={{ background: `radial-gradient(280px circle at 50% 0%, ${meta.color}10, transparent 70%)` }}
       />
-      <span className="relative z-10">{skill}</span>
-    </motion.span>
+
+      {/* Header */}
+      <div className="flex items-start justify-between gap-4 relative z-10">
+        <div>
+          <span className="text-2xl leading-none">{cat.icon}</span>
+          <h3 className="text-sm font-heading font-bold text-text-primary mt-2 leading-tight">{cat.title}</h3>
+          <p className="text-[10px] font-body text-text-muted mt-0.5">{cat.skills.length} capabilities</p>
+        </div>
+        {/* Level badge */}
+        <span
+          className="shrink-0 px-2.5 py-1 rounded-full text-[10px] font-body font-bold tracking-wide border"
+          style={{ color: meta.color, borderColor: `${meta.color}30`, background: `${meta.color}0D` }}
+        >
+          {meta.label}
+        </span>
+      </div>
+
+      {/* Proficiency bar */}
+      <div className="relative z-10 flex flex-col gap-1.5">
+        <div className="flex justify-between items-center">
+          <span className="text-[10px] font-body text-text-muted uppercase tracking-widest">Proficiency</span>
+          <span className="text-[11px] font-body font-bold" style={{ color: meta.color }}>{meta.level}%</span>
+        </div>
+        <div className="h-1.5 w-full rounded-full bg-bg-raised overflow-hidden">
+          <motion.div
+            className="h-full rounded-full"
+            style={{ background: `linear-gradient(90deg, ${meta.color}CC, ${meta.color})` }}
+            initial={{ width: 0 }}
+            whileInView={{ width: `${meta.level}%` }}
+            viewport={{ once: true }}
+            transition={{ duration: 1, delay: index * 0.15 + 0.3, ease: "easeOut" }}
+          />
+        </div>
+      </div>
+
+      {/* Expandable Skill Pills */}
+      <div className="relative z-10 min-h-[60px]">
+        <AnimatePresence mode="wait">
+          {hovered ? (
+            <motion.div key="expanded" className="flex flex-wrap gap-1.5">
+              {cat.skills.map((skill, i) => (
+                <motion.span
+                  key={skill}
+                  custom={i}
+                  variants={pillVariants}
+                  initial="hidden"
+                  animate="show"
+                  exit="exit"
+                  className="px-2.5 py-1 rounded-lg text-[10px] font-body text-text-secondary border border-border-subtle bg-bg-raised"
+                >
+                  {skill}
+                </motion.span>
+              ))}
+            </motion.div>
+          ) : (
+            <motion.div
+              key="preview"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="flex flex-wrap gap-1.5"
+            >
+              {cat.skills.slice(0, 2).map((skill) => (
+                <span key={skill} className="px-2.5 py-1 rounded-lg text-[10px] font-body text-text-muted border border-border-subtle bg-bg-raised">
+                  {skill}
+                </span>
+              ))}
+              <span className="px-2.5 py-1 rounded-lg text-[10px] font-body text-text-muted/60 border border-dashed border-border-subtle">
+                +{cat.skills.length - 2} more — hover to expand
+              </span>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
+    </motion.div>
   );
 };
 
 export const SkillsGrid: React.FC<{ skillsMatrix: SkillsMatrixData }> = ({ skillsMatrix }) => {
   const categories = Object.entries(skillsMatrix);
-  const [activeKey, setActiveKey] = useState(categories[0][0]);
-
-  const activeCategory = skillsMatrix[activeKey];
 
   return (
     <section id="skills" className="py-24 border-b border-border-subtle bg-bg-surface">
@@ -63,67 +144,16 @@ export const SkillsGrid: React.FC<{ skillsMatrix: SkillsMatrixData }> = ({ skill
           />
         </FadeIn>
 
-        <FadeIn delay={100}>
-          {/* Category Tabs */}
-          <div className="flex flex-wrap gap-3 mt-12 mb-10">
-            {categories.map(([key, cat]) => {
-              const isActive = key === activeKey;
-              return (
-                <button
-                  key={key}
-                  onClick={() => setActiveKey(key)}
-                  onMouseEnter={() => setActiveKey(key)}
-                  className={`relative flex items-center gap-2.5 px-5 py-2.5 rounded-2xl text-sm font-body font-semibold
-                              transition-all duration-300 focus:outline-none border overflow-hidden
-                              ${isActive
-                                ? "text-text-primary border-accent/50 shadow-[0_0_16px_rgba(255,149,0,0.15)]"
-                                : "text-text-muted border-border-subtle hover:text-text-secondary hover:border-border-base"
-                              }`}
-                >
-                  {/* Active tab fill */}
-                  <motion.span
-                    className="absolute inset-0 bg-accent/10 pointer-events-none"
-                    initial={false}
-                    animate={{ opacity: isActive ? 1 : 0 }}
-                    transition={{ duration: 0.25 }}
-                  />
-                  <span className="relative z-10 text-base leading-none">{cat.icon}</span>
-                  <span className="relative z-10">{cat.title}</span>
+        <div className="mt-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+          {categories.map(([key, cat], index) => (
+            <SkillCard key={key} catKey={key} cat={cat} index={index} />
+          ))}
+        </div>
 
-                  {/* Active underline indicator */}
-                  {isActive && (
-                    <motion.span
-                      layoutId="tab-indicator"
-                      className="absolute bottom-0 left-0 right-0 h-[2px] bg-accent rounded-full"
-                      transition={{ type: "spring", stiffness: 400, damping: 30 }}
-                    />
-                  )}
-                </button>
-              );
-            })}
-          </div>
-
-          {/* Skill Pills Panel */}
-          <div className="relative min-h-[160px]">
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={activeKey}
-                variants={container}
-                initial="hidden"
-                animate="show"
-                exit={{ opacity: 0, transition: { duration: 0.1 } }}
-                className="flex flex-wrap gap-3"
-              >
-                {activeCategory.skills.map((skill) => (
-                  <SkillPill key={skill} skill={skill} />
-                ))}
-              </motion.div>
-            </AnimatePresence>
-          </div>
-
-          {/* Skill count hint */}
-          <p className="mt-8 text-xs font-body text-text-muted/50">
-            {activeCategory.skills.length} capabilities in this domain
+        {/* Footer hint */}
+        <FadeIn delay={400}>
+          <p className="mt-8 text-xs font-body text-text-muted/40 text-center">
+            Hover each card to explore all capabilities in that domain
           </p>
         </FadeIn>
       </div>
