@@ -20,12 +20,12 @@ const PROFICIENCY: Record<string, { level: number; label: string; color: string 
 
 const cardVariants = {
   initial: { opacity: 0, y: 24 },
-  visible: (i: number) => ({ opacity: 1, y: 0, transition: { delay: i * 0.1, type: "spring", stiffness: 200, damping: 22 } }),
+  visible: (i: number) => ({ opacity: 1, y: 0, transition: { delay: i * 0.1, type: "spring" as const, stiffness: 200, damping: 22 } }),
 };
 
 const pillVariants = {
   hidden: { opacity: 0, scale: 0.85 },
-  show: (i: number) => ({ opacity: 1, scale: 1, transition: { delay: i * 0.04, type: "spring", stiffness: 280, damping: 20 } }),
+  show: (i: number) => ({ opacity: 1, scale: 1, transition: { delay: i * 0.04, type: "spring" as const, stiffness: 280, damping: 20 } }),
   exit:   { opacity: 0, scale: 0.85, transition: { duration: 0.1 } },
 };
 
