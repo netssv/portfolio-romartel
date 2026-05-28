@@ -28,6 +28,7 @@
     { "name": "Projects", "path": "#projects" },
     { "name": "Experience", "path": "#experience" },
     { "name": "Skills", "path": "#skills" },
+    { "name": "Architecture", "path": "#architecture" },
     { "name": "Contact", "path": "/contact" }
   ],
   "profile": {

@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { Home, Briefcase, FolderGit2, Compass, Mail, Sun, Moon } from "lucide-react";
+import { Home, Briefcase, FolderGit2, Compass, Mail, Sun, Moon, Cpu } from "lucide-react";
 import { motion } from "framer-motion";
 import { MobileNav } from "./MobileNav";
 
@@ -14,6 +14,7 @@ const NAV_ITEMS = [
   { name: "Projects", path: "#projects", icon: FolderGit2 },
   { name: "Experience", path: "#experience", icon: Briefcase },
   { name: "Insights", path: "#skills", icon: Compass },
+  { name: "Architecture", path: "#architecture", icon: Cpu },
   { name: "Contact", path: "#contact", icon: Mail },
 ];
 
@@ -99,24 +100,37 @@ export const Sidebar: React.FC<SidebarProps> = ({ authorName }) => {
                   key={item.name}
                   href={item.path}
                   onClick={(e) => handleClick(e, item.path)}
-                  className={`group relative flex items-center gap-4 py-2 text-sm font-body font-medium transition-colors duration-200 ${
-                    isActive ? "text-text-primary" : "text-text-muted hover:text-text-secondary"
+                  className={`group relative flex items-center gap-4 py-2.5 px-3 rounded-xl text-sm font-body font-medium transition-all duration-300 ${
+                    isActive
+                      ? "text-text-primary bg-accent/8"
+                      : "text-text-muted hover:text-text-secondary hover:bg-bg-raised/50"
                   }`}
                 >
+                  {/* Active left accent bar */}
+                  {isActive && (
+                    <motion.span
+                      layoutId="activeBar"
+                      className="absolute left-0 top-1/2 -translate-y-1/2 w-[3px] h-6 rounded-r-full bg-accent shadow-[0_0_10px_rgba(255,149,0,0.6)]"
+                      transition={{ type: "spring", stiffness: 400, damping: 32 }}
+                    />
+                  )}
+
                   <Icon
                     size={16}
-                    className={`transition-colors duration-200 ${
-                      isActive ? "text-text-accent" : "text-text-muted group-hover:text-text-secondary"
+                    className={`transition-colors duration-200 flex-shrink-0 ${
+                      isActive ? "text-accent" : "text-text-muted group-hover:text-text-secondary"
                     }`}
                   />
                   <span>{item.name}</span>
-                  
-                  {/* Subtle hover glow / active bar */}
+
+                  {/* Active pill badge on right */}
                   {isActive && (
                     <motion.span
-                      layoutId="activeIndicator"
-                      className="absolute right-0 top-1/2 -translate-y-1/2 w-1.5 h-6 rounded-l-full bg-accent shadow-[0_0_12px_rgba(255,149,0,0.5)]"
-                      transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                      layoutId="activePill"
+                      initial={{ opacity: 0, scale: 0.8 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      className="ml-auto w-1.5 h-1.5 rounded-full bg-accent shadow-[0_0_6px_rgba(255,149,0,0.8)]"
+                      transition={{ type: "spring", stiffness: 400, damping: 32 }}
                     />
                   )}
                 </a>

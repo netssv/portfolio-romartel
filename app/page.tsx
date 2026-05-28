@@ -9,6 +9,7 @@ import { MetricsSection } from "@/src/components/MetricsSection";
 import { ExperienceTimeline } from "@/src/components/ExperienceTimeline";
 import { SkillsGrid } from "@/src/components/SkillsGrid";
 import { PhilosophySection } from "@/src/components/PhilosophySection";
+import { ArchitectureSection } from "@/src/components/ArchitectureSection";
 import { ContactSection } from "@/src/components/ContactSection";
 import { FadeIn } from "@/src/components/ui/FadeIn";
 import { SectionLabel } from "@/src/components/ui/SectionLabel";
@@ -42,13 +43,13 @@ export default function Home() {
     <>
       <ScrollIndicator />
       <Navbar 
-
         authorName={profile.name} 
         navItems={[
           { name: "Home", path: "#top" },
           { name: "Projects", path: "#projects" },
           { name: "Experience", path: "#experience" },
-          { name: "Insights", path: "#skills" }
+          { name: "Insights", path: "#skills" },
+          { name: "Architecture", path: "#architecture" },
         ]} 
       />
       <main className="flex-1 w-full flex flex-col min-w-0">
@@ -93,6 +94,9 @@ export default function Home() {
 
         {/* ── Skills ─────────────────────────────────── */}
         <SkillsGrid skillsMatrix={skillsMatrix} />
+
+        {/* ── Architecture ───────────────────────────── */}
+        <ArchitectureSection />
 
         {/* ── Philosophy ─────────────────────────────── */}
         <PhilosophySection quote={philosophy.quote} focus={philosophy.focus} />

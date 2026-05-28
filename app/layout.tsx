@@ -18,16 +18,52 @@ export const metadata: Metadata = {
   description: siteData.metadata.description,
   keywords: siteData.metadata.keywords,
   authors: [{ name: siteData.metadata.author }],
+  openGraph: {
+    title: siteData.metadata.title,
+    description: siteData.metadata.description,
+    url: 'https://romartel.vercel.app',
+    siteName: siteData.metadata.title,
+    locale: 'en_US',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: siteData.metadata.title,
+    description: siteData.metadata.description,
+    creator: '@netssv',
+  },
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Person',
+    name: siteData.profile.name,
+    jobTitle: siteData.profile.title,
+    url: 'https://romartel.vercel.app',
+    sameAs: [
+      siteData.metadata.socialLinks.linkedin,
+      siteData.metadata.socialLinks.github,
+      siteData.metadata.socialLinks.twitter,
+    ],
+    alumniOf: '',
+    worksFor: {
+      '@type': 'Organization',
+      name: siteData.experience[0].company
+    }
+  };
+
   return (
     <html
       lang="en"
       className={`${inter.variable} ${spaceGrotesk.variable} ${geistMono.variable} h-full antialiased`}
       suppressHydrationWarning
     >
-      <body className="min-h-full flex flex-col bg-bg-base text-text-secondary overflow-x-hidden relative">
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
         <script
           id="theme-override"
           dangerouslySetInnerHTML={{
@@ -50,6 +86,8 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
             `,
           }}
         />
+      </head>
+      <body className="min-h-full flex flex-col bg-bg-base text-text-secondary overflow-x-hidden relative">
         <ClarityTracker projectId={process.env.NEXT_PUBLIC_CLARITY_PROJECT_ID || ""} />
         <DesignProvider>
           <NoiseOverlay />

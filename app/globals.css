@@ -34,6 +34,26 @@
   --grid-color:     rgba(255, 255, 255, 0.08);
 }
 
+/* ─── Design Tokens (PCB Mode) ────────────────────────── */
+.theme-pcb {
+  --bg-base:        #05101a;
+  --bg-surface:     #0a1929;
+  --bg-raised:      #0d2238;
+  --text-primary:   #FFFFFF;
+  --text-secondary: #e6f6ec;
+  --text-muted:     #80d8a5;
+  --accent:         #00ff41;
+  --text-accent:    #00ff41;
+  --border-subtle:  rgba(0, 255, 65, 0.15);
+  --border-base:    rgba(0, 255, 65, 0.3);
+  
+  --bg-glass:       rgba(10, 25, 41, 0.45);
+  --grid-color:     rgba(0, 255, 65, 0.08);
+
+  --font-heading:   var(--font-geist-mono);
+  --font-body:      var(--font-geist-mono);
+}
+
 /* ─── Tailwind v4 Theme Extension ─────────────────────── */
 @theme inline {
   --color-bg-base:        var(--bg-base);

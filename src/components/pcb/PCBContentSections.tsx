@@ -11,7 +11,7 @@ interface PCBSectionProps {
 }
 
 const PCBSection: React.FC<PCBSectionProps> = ({ id, eyebrow, heading, children }) => (
-  <section id={id} className="py-16 border-b border-[#00ff41]/10">
+  <section id={id} className="py-16 border-b border-green-500/10">
     <div className="max-w-5xl mx-auto px-6">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
@@ -19,8 +19,8 @@ const PCBSection: React.FC<PCBSectionProps> = ({ id, eyebrow, heading, children 
         viewport={{ once: true }}
         transition={{ duration: 0.5 }}
       >
-        <p className="text-xs font-mono text-[#00ff41]/40 uppercase tracking-[0.18em] mb-1">{"// "}{eyebrow}</p>
-        <h2 className="text-2xl font-heading font-bold text-[#00ff41] mb-8 tracking-tight">{heading}</h2>
+        <p className="text-xs font-mono text-green-500/80 uppercase tracking-[0.18em] mb-1 font-bold">{"// "}{eyebrow}</p>
+        <h2 className="text-3xl font-heading font-bold text-white mb-8 tracking-tight">{heading}</h2>
       </motion.div>
       {children}
     </div>
@@ -48,14 +48,14 @@ export const PCBContentSections: React.FC<PCBContentProps> = ({
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: i * 0.1 }}
-            className="group block p-4 bg-[#0d1f30] border border-[#00ff41]/30 rounded-sm hover:border-[#00ff41] transition-all duration-200 relative overflow-hidden"
+            className="group block p-4 bg-slate-900 border border-green-500/30 rounded-sm hover:border-green-400 transition-all duration-200 relative overflow-hidden"
           >
             <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-              style={{ background: "radial-gradient(circle at 50% 0%, rgba(0,255,65,0.08), transparent 70%)" }} />
-            <p className="text-xs font-mono text-[#a9e2c1] tracking-wider mb-2 font-bold">{p.category}</p>
-            <h3 className="text-base font-mono font-bold text-[#00ff41] group-hover:text-[#f4fbf7] transition-colors mb-1">{p.title}</h3>
-            <p className="text-xs font-mono text-[#a9e2c1]/80">{p.subtitle}</p>
-            <p className="text-sm font-mono text-[#f4fbf7]/90 mt-2 leading-relaxed line-clamp-2">{p.description}</p>
+              style={{ background: "radial-gradient(circle at 50% 0%, rgba(34,197,94,0.1), transparent 70%)" }} />
+            <p className="text-xs font-mono text-emerald-300 tracking-wider mb-2 font-bold">{p.category}</p>
+            <h3 className="text-base font-mono font-bold text-green-400 group-hover:text-white transition-colors mb-1">{p.title}</h3>
+            <p className="text-xs font-mono text-emerald-300/80">{p.subtitle}</p>
+            <p className="text-sm font-mono text-gray-100 mt-2 leading-relaxed line-clamp-2">{p.description}</p>
           </motion.a>
         ))}
       </div>
@@ -70,16 +70,16 @@ export const PCBContentSections: React.FC<PCBContentProps> = ({
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ delay: i * 0.1 }}
-            className="flex gap-4 p-4 bg-[#0d1f30] border border-[#00ff41]/20 rounded-sm"
+            className="flex gap-4 p-4 bg-slate-900 border border-green-500/20 rounded-sm"
           >
-            <div className="w-1 flex-none bg-[#00ff41] rounded-full" />
+            <div className="w-1 flex-none bg-green-500 rounded-full" />
             <div>
               <div className="flex items-center gap-3 mb-1">
-                <h3 className="text-base font-mono font-bold text-[#00ff41]">{job.role}</h3>
-                <span className="text-xs font-mono text-[#a9e2c1] font-bold border border-[#00ff41]/40 px-2 py-0.5 rounded-sm">{job.period}</span>
+                <h3 className="text-base font-mono font-bold text-green-400">{job.role}</h3>
+                <span className="text-xs font-mono text-emerald-300 font-bold border border-green-500/40 px-2 py-0.5 rounded-sm">{job.period}</span>
               </div>
-              <p className="text-sm font-mono text-[#00ff41] font-bold mb-1">{job.company}</p>
-              <p className="text-sm font-mono text-[#f4fbf7]/90 leading-relaxed">{job.description}</p>
+              <p className="text-sm font-mono text-green-400 font-bold mb-1">{job.company}</p>
+              <p className="text-sm font-mono text-gray-100 leading-relaxed">{job.description}</p>
             </div>
           </motion.div>
         ))}
@@ -88,14 +88,14 @@ export const PCBContentSections: React.FC<PCBContentProps> = ({
 
     {/* Skills */}
     <PCBSection id="skills" eyebrow="STACK_REGISTRY" heading="Technical Stack">
-      <div className="flex flex-wrap gap-2">
+      <div className="flex flex-wrap gap-3">
         {skills.map((s, i) => (
           <motion.span key={s}
             initial={{ opacity: 0, scale: 0.8 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
             transition={{ delay: i * 0.04 }}
-            className="px-3 py-1 bg-[#0d1f30] border border-[#00ff41]/40 text-sm font-mono text-[#f4fbf7] font-bold rounded-sm hover:border-[#00ff41] hover:text-[#00ff41] transition-all cursor-default"
+            className="px-4 py-2 bg-slate-900 border border-green-500/40 text-sm font-mono text-white font-bold rounded-sm hover:border-green-400 hover:text-green-400 transition-all cursor-default"
           >
             {s}
           </motion.span>
@@ -105,14 +105,14 @@ export const PCBContentSections: React.FC<PCBContentProps> = ({
 
     {/* Contact */}
     <PCBSection id="contact" eyebrow="HANDSHAKE_INIT" heading="Connect">
-      <div className="flex flex-col gap-3 font-mono">
-        <p className="text-base text-[#a9e2c1]">
-          <span className="text-[#00ff41]/60">$ ping </span>
-          <a href={`mailto:${contact.email}`} className="text-[#f4fbf7] hover:text-[#00ff41] transition-colors underline decoration-[#00ff41]/30">{contact.email}</a>
+      <div className="flex flex-col gap-4 font-mono">
+        <p className="text-lg text-emerald-100">
+          <span className="text-green-500 font-bold">$ ping </span>
+          <a href={`mailto:${contact.email}`} className="text-white hover:text-green-400 transition-colors underline decoration-green-500/40 underline-offset-4">{contact.email}</a>
         </p>
-        <p className="text-base text-[#a9e2c1]">
-          <span className="text-[#00ff41]/60">$ locate </span>
-          <span className="text-[#f4fbf7]">{contact.location}</span>
+        <p className="text-lg text-emerald-100">
+          <span className="text-green-500 font-bold">$ locate </span>
+          <span className="text-white">{contact.location}</span>
         </p>
       </div>
     </PCBSection>

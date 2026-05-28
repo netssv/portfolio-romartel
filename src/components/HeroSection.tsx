@@ -3,6 +3,7 @@
 import React from "react";
 import { ArrowUpRight } from "lucide-react";
 import { motion, useMotionValue, useTransform, useSpring, useInView } from "framer-motion";
+import Clarity from "@microsoft/clarity";
 import { MagneticButton } from "@/src/components/ui/MagneticButton";
 import { ParticleField } from "@/src/components/animations/ParticleField";
 
@@ -30,6 +31,43 @@ export const HeroSection: React.FC<HeroProps> = ({
   const heroInView = useInView(heroRef, { once: false, margin: "0px 0px -20% 0px" });
 
   const [displayText, setDisplayText] = React.useState("");
+  const [ctaVariant, setCtaVariant] = React.useState<"A" | "B">("A");
+  const [personalization, setPersonalization] = React.useState<{ source?: string; industry?: string } | null>(null);
+
+  React.useEffect(() => {
+    // UTM Personalization
+    if (typeof window !== "undefined") {
+      const params = new URLSearchParams(window.location.search);
+      const source = params.get("utm_source") || params.get("source");
+      const industry = params.get("utm_campaign") || params.get("industry");
+      if (source || industry) {
+        setPersonalization({ source: source || undefined, industry: industry || undefined });
+        // Track personalization in Clarity
+        try {
+          if (source) Clarity.setTag("personalized_source", source);
+          if (industry) Clarity.setTag("personalized_industry", industry);
+        } catch (e) {}
+      }
+    }
+
+    // A/B Test initialization
+    // Randomly select variant A (50%) or B (50%)
+    const savedVariant = localStorage.getItem("ab_test_hero_cta") as "A" | "B";
+    const variant = savedVariant || (Math.random() > 0.5 ? "A" : "B");
+    
+    if (!savedVariant) {
+      localStorage.setItem("ab_test_hero_cta", variant);
+    }
+    
+    setCtaVariant(variant);
+
+    // Tag the session in Clarity with the chosen variant
+    try {
+      Clarity.setTag("hero_cta_variant", variant);
+    } catch (e) {
+      console.log("Clarity not initialized yet for tagging");
+    }
+  }, []);
 
   React.useEffect(() => {
     if (!heroInView) {
@@ -130,16 +168,28 @@ export const HeroSection: React.FC<HeroProps> = ({
           initial="hidden"
           animate="visible"
         >
-          {/* Status pill badge — green blinking dot */}
-          <motion.div className="inline-flex items-center gap-2 mb-6" variants={itemVariants}>
-            <span className="relative flex h-2.5 w-2.5">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
-              <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500" />
-            </span>
-            <span className="text-[11px] font-body font-semibold uppercase tracking-[0.16em] text-emerald-500">
-              Available for strategic execution
-            </span>
-          </motion.div>
+          {/* Status pill badge — green blinking dot or Personalization Badge */}
+          {personalization ? (
+            <motion.div className="inline-flex items-center gap-2 mb-6 px-3 py-1.5 rounded-full bg-accent/10 border border-accent/20" variants={itemVariants}>
+              <span className="text-xl">👋</span>
+              <span className="text-xs font-body font-semibold tracking-wide text-accent">
+                {personalization.source?.toLowerCase() === 'linkedin' ? "Hello LinkedIn Connection!" : 
+                 personalization.source ? `Welcome visitor from ${personalization.source}!` : 
+                 personalization.industry ? `Tailored solutions for ${personalization.industry}` : 
+                 "Welcome to my portfolio!"}
+              </span>
+            </motion.div>
+          ) : (
+            <motion.div className="inline-flex items-center gap-2 mb-6" variants={itemVariants}>
+              <span className="relative flex h-2.5 w-2.5">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
+                <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500" />
+              </span>
+              <span className="text-[11px] font-body font-semibold uppercase tracking-[0.16em] text-emerald-500">
+                Available for strategic execution
+              </span>
+            </motion.div>
+          )}
 
           <motion.h1
             className="text-5xl sm:text-6xl lg:text-7.5xl font-heading font-extrabold text-text-primary tracking-[-0.04em] leading-[1.02] mb-6 flex flex-wrap items-center"
@@ -178,10 +228,17 @@ export const HeroSection: React.FC<HeroProps> = ({
           {/* Staggered CTAs */}
           <motion.div className="flex flex-col sm:flex-row gap-4 items-stretch sm:items-center" variants={itemVariants}>
             <MagneticButton
-              href="#projects"
+              href={ctaVariant === "A" ? "#projects" : "#experience"}
+              onClick={() => {
+                try {
+                  Clarity.event(`clicked_hero_cta_variant_${ctaVariant}`);
+                } catch (e) {
+                  // Ignore if Clarity is not ready
+                }
+              }}
               className="h-12 px-8 flex items-center justify-center rounded-xl bg-accent text-black text-xs font-body font-bold shadow-[0_4px_20px_rgba(255,149,0,0.25)] hover:shadow-[0_4px_30px_rgba(255,149,0,0.4)] transition-all duration-200"
             >
-              Explore Projects
+              {ctaVariant === "A" ? "Explore Projects" : "View My Experience"}
             </MagneticButton>
 
             <a

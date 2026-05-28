@@ -3,28 +3,31 @@
 import React from "react";
 import { PCBBoard } from "./PCBBoard";
 import { PCBInfoPanel } from "./PCBInfoPanel";
-import { PCBContentSections } from "./PCBContentSections";
 import { DesignSelector } from "@/src/components/ui/DesignSelector";
+import { FadeIn } from "@/src/components/ui/FadeIn";
+import { SectionLabel } from "@/src/components/ui/SectionLabel";
+import { ProjectCard } from "@/src/components/ProjectCard";
+import { MetricsSection } from "@/src/components/MetricsSection";
+import { ExperienceTimeline } from "@/src/components/ExperienceTimeline";
+import { SkillsGrid } from "@/src/components/SkillsGrid";
+import { ArchitectureSection } from "@/src/components/ArchitectureSection";
+import { PhilosophySection } from "@/src/components/PhilosophySection";
+import { ContactSection } from "@/src/components/ContactSection";
+import siteData from "@/src/data/siteData.json";
 
-interface PCBLayoutProps {
-  profile: { name: string; title: string; bio: string; location: string; avatar: { src: string; alt: string } };
-  sideProjects: { id: string; title: string; subtitle: string; description: string; category: string; status: string; links: { github: string; demo: string } }[];
-  experience: { company: string; role: string; period: string; location: string; description: string; impact: string[]; operations: string[]; isSecondary?: boolean }[];
-  trustedStack: string[];
-  contact: { email: string; location: string; social: { name: string; url: string }[] };
-  metadata: { socialLinks: { github: string; linkedin: string } };
-}
+export const PCBLayout: React.FC = () => {
+  const {
+    profile, sideProjects, experience, skillsMatrix, contact, metrics, philosophy
+  } = siteData;
+  const metadata = siteData.metadata;
 
-export const PCBLayout: React.FC<PCBLayoutProps> = ({
-  profile, sideProjects, experience, trustedStack, contact, metadata,
-}) => {
   return (
-    <div className="min-h-screen font-mono" style={{ background: "#0a1628" }}>
+    <div className="theme-pcb min-h-screen font-mono" style={{ background: "var(--bg-base)" }}>
       {/* Scanline overlay */}
       <div
         className="pointer-events-none fixed inset-0 z-10 opacity-[0.022]"
         style={{
-          backgroundImage: "repeating-linear-gradient(0deg, #00ff41 0px, transparent 1px, transparent 3px)",
+          backgroundImage: "repeating-linear-gradient(0deg, var(--accent) 0px, transparent 1px, transparent 3px)",
           backgroundSize: "100% 4px",
         }}
       />
@@ -34,17 +37,17 @@ export const PCBLayout: React.FC<PCBLayoutProps> = ({
         className="pointer-events-none fixed inset-0 opacity-[0.055]"
         style={{
           backgroundImage:
-            "linear-gradient(#00ff41 1px,transparent 1px),linear-gradient(90deg,#00ff41 1px,transparent 1px)",
+            "linear-gradient(var(--accent) 1px,transparent 1px),linear-gradient(90deg,var(--accent) 1px,transparent 1px)",
           backgroundSize: "40px 40px",
         }}
       />
 
       {/* Header bar */}
-      <header className="sticky top-0 z-20 border-b border-[#00ff41]/20 bg-[#0a1628]/95 backdrop-blur-sm">
+      <header className="sticky top-0 z-20 border-b border-border-subtle bg-bg-surface/95 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 h-12 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="w-2 h-2 rounded-full bg-[#00ff41] animate-pulse" />
-            <span className="text-[11px] font-mono text-[#f4fbf7] tracking-widest uppercase font-bold">
+            <div className="w-2 h-2 rounded-full bg-accent animate-pulse" />
+            <span className="text-[11px] font-mono text-text-primary tracking-widest uppercase font-bold">
               {profile.name} · System Active
             </span>
           </div>
@@ -53,7 +56,7 @@ export const PCBLayout: React.FC<PCBLayoutProps> = ({
               <a
                 key={href}
                 href={href}
-                className="text-[10px] font-mono text-[#a9e2c1] hover:text-[#00ff41] transition-colors uppercase tracking-widest font-bold"
+                className="text-[10px] font-mono text-text-muted hover:text-accent transition-colors uppercase tracking-widest font-bold"
               >
                 {href.replace("#", "")}
               </a>
@@ -65,7 +68,7 @@ export const PCBLayout: React.FC<PCBLayoutProps> = ({
               <a
                 key={href}
                 href={href}
-                className="text-[9px] font-mono text-[#a9e2c1] hover:text-[#00ff41] transition-colors uppercase tracking-widest font-bold"
+                className="text-[9px] font-mono text-text-muted hover:text-accent transition-colors uppercase tracking-widest font-bold"
               >
                 {href.replace("#", "").slice(0, 3)}
               </a>
@@ -76,13 +79,7 @@ export const PCBLayout: React.FC<PCBLayoutProps> = ({
 
       {/* Hero section */}
       <div className="relative" style={{ minHeight: "100svh" }}>
-        {/*
-          Mobile: info panel on top, board below (full-width square canvas)
-          Desktop: side-by-side, board takes ~60% width
-        */}
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8 flex flex-col lg:flex-row gap-6 lg:gap-10 items-center min-h-[calc(100svh-3rem)]">
-
-          {/* Info panel — on mobile comes FIRST so user reads name/bio before board */}
           <div className="w-full lg:w-[360px] flex-none z-10 order-1">
             <PCBInfoPanel
               name={profile.name}
@@ -94,45 +91,66 @@ export const PCBLayout: React.FC<PCBLayoutProps> = ({
               linkedin={metadata.socialLinks.linkedin}
             />
           </div>
-
-          {/* Board canvas — responsive square that fills available space */}
           <div
             className="flex-1 relative order-2 w-full"
-            style={{
-              /**
-               * On mobile: square based on viewport width minus padding.
-               * On desktop: min-height so canvas is large enough.
-               */
-              height: "min(90vw, 560px)",
-              minHeight: 320,
-            }}
+            style={{ height: "min(90vw, 560px)", minHeight: 320 }}
           >
             <PCBBoard avatarSrc={profile.avatar.src} avatarAlt={profile.avatar.alt} />
           </div>
         </div>
-
-        {/* Scroll indicator */}
         <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 animate-bounce">
-          <span className="text-[9px] font-mono text-[#a9e2c1] tracking-widest">SCROLL</span>
-          <div className="w-px h-7 bg-gradient-to-b from-[#00ff41]/40 to-transparent" />
+          <span className="text-[9px] font-mono text-text-muted tracking-widest">SCROLL</span>
+          <div className="w-px h-7 bg-gradient-to-b from-accent/40 to-transparent" />
         </div>
       </div>
 
-      {/* Scrollable content sections */}
-      <PCBContentSections
-        sideProjects={sideProjects}
-        experience={experience}
-        skills={trustedStack}
-        contact={{ email: contact.email, location: contact.location }}
-      />
+      <main className="relative z-10 w-full flex flex-col">
+        {/* ── Projects ───────────────────────────────── */}
+        <section id="projects" className="py-24 border-b border-border-subtle">
+          <div className="mx-auto max-w-6xl px-6">
+            <FadeIn>
+              <SectionLabel
+                eyebrow="Portfolio"
+                heading="Featured Projects"
+                description="Open-source tools and applications built to solve real operational and consumer problems."
+              />
+            </FadeIn>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {sideProjects.slice(0, 3).map((project, i) => (
+                <FadeIn key={project.id} delay={i * 80}>
+                  <ProjectCard {...project} />
+                </FadeIn>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* ── Metrics ────────────────────────────────── */}
+        <MetricsSection metrics={metrics} />
+
+        {/* ── Experience ─────────────────────────────── */}
+        <ExperienceTimeline items={experience} />
+
+        {/* ── Skills ─────────────────────────────────── */}
+        <SkillsGrid skillsMatrix={skillsMatrix} />
+
+        {/* ── Architecture ───────────────────────────── */}
+        <ArchitectureSection />
+
+        {/* ── Philosophy ─────────────────────────────── */}
+        <PhilosophySection quote={philosophy.quote} focus={philosophy.focus} />
+
+        {/* ── Contact ────────────────────────────────── */}
+        <ContactSection contact={contact} />
+      </main>
 
       {/* Footer */}
-      <footer className="border-t border-[#00ff41]/20 py-6">
-        <div className="max-w-5xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-2">
-          <p className="text-[10px] font-mono text-[#a9e2c1]/70">
-            <span className="text-[#00ff41]/40">©</span> {new Date().getFullYear()} {profile.name} · All Rights Reserved
+      <footer className="border-t border-border-subtle py-8 bg-bg-surface/20">
+        <div className="max-w-5xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-3">
+          <p className="text-[10px] font-mono text-text-muted">
+            <span className="text-accent/40">©</span> {new Date().getFullYear()} {profile.name} · All Rights Reserved
           </p>
-          <p className="text-[10px] font-mono text-[#a9e2c1]/40">BUILD::PCB_THEME_v2</p>
+          <p className="text-[10px] font-mono text-text-muted/60">BUILD::PCB_THEME_v2</p>
         </div>
       </footer>
 
