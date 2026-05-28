@@ -5,6 +5,7 @@ import siteData from "@/src/data/siteData.json";
 import { NoiseOverlay } from "@/src/components/animations/NoiseOverlay";
 import { SpotlightCursor } from "@/src/components/animations/SpotlightCursor";
 import { DesignProvider } from "@/src/context/DesignContext";
+import { ClarityTracker } from "@/src/components/analytics/ClarityTracker";
 
 
 
@@ -49,6 +50,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
             `,
           }}
         />
+        <ClarityTracker projectId={process.env.NEXT_PUBLIC_CLARITY_PROJECT_ID || ""} />
         <DesignProvider>
           <NoiseOverlay />
           <SpotlightCursor />
