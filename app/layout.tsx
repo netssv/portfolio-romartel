@@ -86,9 +86,20 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
             `,
           }}
         />
+        <script
+          id="microsoft-clarity"
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function(c,l,a,r,i,t,y){
+                  c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+                  t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+                  y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+              })(window, document, "clarity", "script", "wxz1d7lj48");
+            `,
+          }}
+        />
       </head>
       <body className="min-h-full flex flex-col bg-bg-base text-text-secondary overflow-x-hidden relative">
-        <ClarityTracker projectId={process.env.NEXT_PUBLIC_CLARITY_PROJECT_ID || ""} />
         <DesignProvider>
           <NoiseOverlay />
           <SpotlightCursor />
