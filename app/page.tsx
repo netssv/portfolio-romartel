@@ -28,14 +28,7 @@ export default function Home() {
 
   if (design === "pcb") {
     return (
-      <PCBLayout
-        profile={profile}
-        sideProjects={sideProjects}
-        experience={experience}
-        trustedStack={trustedStack}
-        contact={contact}
-        metadata={siteData.metadata}
-      />
+      <PCBLayout />
     );
   }
 
