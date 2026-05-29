@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useRef } from "react";
-import { motion, useScroll, useTransform, useSpring } from "framer-motion";
+import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
 import { FadeIn } from "@/src/components/ui/FadeIn";
 import { SectionLabel } from "@/src/components/ui/SectionLabel";
 
@@ -45,8 +45,73 @@ const features = [
     icon: (
       <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
     )
-  }
+  },
+  {
+    id: "06",
+    title: "Google Analytics 4",
+    desc: "GA4 measures every user interaction — page views, scroll depth, CTA clicks — feeding the Measurement Protocol with real-time behavioural data to continuously refine content strategy.",
+    isAnalytics: true,
+    analyticsType: "ga4" as const,
+    icon: null
+  },
+  {
+    id: "07",
+    title: "Microsoft Clarity",
+    desc: "Session recordings and heatmaps reveal exactly where visitors engage or drop off, enabling data-driven UX decisions without sampling or session limits.",
+    isAnalytics: true,
+    analyticsType: "clarity" as const,
+    icon: null
+  },
 ];
+
+// Animated GA4 signal bars widget
+const GA4Widget: React.FC = () => {
+  const bars = [40, 65, 30, 80, 55, 90, 45, 70, 35, 88];
+  return (
+    <div className="flex items-end gap-[3px] h-10 px-1">
+      {bars.map((h, i) => (
+        <motion.div
+          key={i}
+          className="flex-1 rounded-sm bg-[#E37400]"
+          initial={{ scaleY: 0 }}
+          animate={{ scaleY: [0.3, 1, 0.6, 0.9, 0.4, 1] }}
+          transition={{
+            duration: 2.8,
+            delay: i * 0.18,
+            repeat: Infinity,
+            repeatType: "mirror",
+            ease: "easeInOut",
+          }}
+          style={{ height: `${h}%`, transformOrigin: "bottom", opacity: 0.85 }}
+        />
+      ))}
+    </div>
+  );
+};
+
+// Animated Clarity heatmap grid widget
+const ClarityWidget: React.FC = () => {
+  const cells = Array.from({ length: 20 }, (_, i) => i);
+  const intensities = [0.9,0.4,0.7,0.2,0.8,0.5,0.3,0.95,0.6,0.1,0.75,0.4,0.85,0.3,0.6,0.2,0.9,0.5,0.7,0.3];
+  return (
+    <div className="grid grid-cols-5 gap-[3px] w-20 h-10">
+      {cells.map((i) => (
+        <motion.div
+          key={i}
+          className="rounded-[2px]"
+          animate={{ opacity: [intensities[i], intensities[(i + 7) % 20], intensities[i]] }}
+          transition={{
+            duration: 2 + (i % 3) * 0.6,
+            delay: i * 0.08,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+          style={{ background: `rgba(0, 120, 212, ${intensities[i]})` }}
+        />
+      ))}
+    </div>
+  );
+};
 
 export const ArchitectureSection = () => {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -124,7 +189,123 @@ export const ArchitectureSection = () => {
             </div>
           </motion.div>
         </FadeIn>
+
+        {/* Analytics row — GA4 + Clarity with live animations */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12 mt-8 lg:mt-12">
+          {[features[5], features[6]].map((feature, idx) => {
+            const isGA4 = feature.analyticsType === "ga4";
+            const accentColor = isGA4 ? "#E37400" : "#0078D4";
+            const accentRgb  = isGA4 ? "227,116,0"   : "0,120,212";
+            return (
+              <FadeIn key={feature.id} delay={750 + idx * 150}>
+                <motion.div
+                  whileHover={{ y: -5, scale: 1.01 }}
+                  className="group relative p-8 rounded-3xl bg-bg-surface border border-border-subtle transition-all duration-500 overflow-hidden h-full"
+                  style={{
+                    ['--card-accent' as string]: accentColor,
+                  }}
+                >
+                  {/* Hover glow */}
+                  <div
+                    className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-3xl"
+                    style={{ background: `radial-gradient(ellipse at 50% 0%, rgba(${accentRgb},0.12), transparent 70%)` }}
+                  />
+                  {/* Animated data stream lines in background */}
+                  <div className="absolute inset-0 overflow-hidden rounded-3xl pointer-events-none">
+                    {[...Array(3)].map((_, i) => (
+                      <motion.div
+                        key={i}
+                        className="absolute h-px"
+                        style={{
+                          background: `linear-gradient(90deg, transparent, rgba(${accentRgb},0.4), transparent)`,
+                          top: `${25 + i * 25}%`,
+                          left: 0,
+                          right: 0,
+                        }}
+                        animate={{ x: ["-100%", "100%"] }}
+                        transition={{
+                          duration: 3 + i * 0.8,
+                          delay: i * 0.6,
+                          repeat: Infinity,
+                          ease: "linear",
+                        }}
+                      />
+                    ))}
+                  </div>
+
+                  <div className="relative z-10">
+                    {/* Header row */}
+                    <div className="flex items-start justify-between gap-4 mb-5">
+                      <div className="flex items-start gap-4">
+                        {/* Logo chip */}
+                        <div
+                          className="flex-shrink-0 w-12 h-12 flex items-center justify-center rounded-xl border font-heading font-black text-sm"
+                          style={{
+                            background: `rgba(${accentRgb},0.1)`,
+                            borderColor: `rgba(${accentRgb},0.35)`,
+                            color: accentColor,
+                          }}
+                        >
+                          {isGA4 ? "GA4" : "CL"}
+                        </div>
+                        <div>
+                          <div className="flex items-center gap-2 mb-1">
+                            <h3 className="text-xl font-heading font-semibold text-text-primary transition-colors duration-300"
+                              style={{ ['--tw-text-opacity' as string]: 1 }}
+                            >
+                              {feature.title}
+                            </h3>
+                            {/* Live pulse badge */}
+                            <span
+                              className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[9px] font-bold uppercase tracking-widest border"
+                              style={{
+                                background: `rgba(${accentRgb},0.1)`,
+                                borderColor: `rgba(${accentRgb},0.3)`,
+                                color: accentColor,
+                              }}
+                            >
+                              <motion.span
+                                className="w-1.5 h-1.5 rounded-full"
+                                style={{ background: accentColor }}
+                                animate={{ opacity: [1, 0.2, 1] }}
+                                transition={{ duration: 1.4, repeat: Infinity }}
+                              />
+                              Live
+                            </span>
+                          </div>
+                          <p className="text-[10px] font-mono text-text-muted uppercase tracking-widest">
+                            {isGA4 ? "Behavioural Analytics" : "Session Intelligence"}
+                          </p>
+                        </div>
+                      </div>
+                      <div className="font-heading font-extrabold text-6xl text-bg-raised/40 group-hover:text-[color:var(--card-accent)]/5 transition-colors duration-500 pointer-events-none select-none">
+                        {feature.id}
+                      </div>
+                    </div>
+
+                    {/* Live widget */}
+                    <div
+                      className="mb-5 p-3 rounded-xl border"
+                      style={{
+                        background: `rgba(${accentRgb},0.05)`,
+                        borderColor: `rgba(${accentRgb},0.2)`,
+                      }}
+                    >
+                      <p className="text-[9px] font-mono uppercase tracking-widest mb-2" style={{ color: accentColor }}>
+                        {isGA4 ? "// sessions · last 7 days" : "// heatmap intensity"}
+                      </p>
+                      {isGA4 ? <GA4Widget /> : <ClarityWidget />}
+                    </div>
+
+                    <p className="text-sm font-body leading-relaxed text-text-muted">{feature.desc}</p>
+                  </div>
+                </motion.div>
+              </FadeIn>
+            );
+          })}
+        </div>
       </div>
     </section>
   );
 };
+

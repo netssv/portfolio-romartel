@@ -157,7 +157,7 @@
       "id": "webaudit",
       "title": "WebAudit",
       "subtitle": "Chrome Extension",
-      "description": "A lightweight Chrome extension designed for web developers, designers, and marketers to perform instant on-page audits, checking semantic HTML, meta tag structures, load performance indicators, and basic SEO compliance.",
+      "description": "Developed WebAudit, a Chrome Extension for instant on-page SEO diagnostics — used to audit client sites and identify conversion bottlenecks, saving 15–20 min per diagnostic session",
       "category": "Website Design & SEO Optimization",
       "status": "Production",
       "links": {

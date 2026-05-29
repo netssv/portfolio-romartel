@@ -1,13 +1,11 @@
 import type { Metadata } from "next";
 import { Inter, Space_Grotesk, Geist_Mono } from "next/font/google";
+import Script from "next/script";
 import "./globals.css";
 import siteData from "@/src/data/siteData.json";
 import { NoiseOverlay } from "@/src/components/animations/NoiseOverlay";
 import { SpotlightCursor } from "@/src/components/animations/SpotlightCursor";
 import { DesignProvider } from "@/src/context/DesignContext";
-import { ClarityTracker } from "@/src/components/analytics/ClarityTracker";
-
-
 
 const inter = Inter({ variable: "--font-inter", subsets: ["latin"], display: "swap" });
 const spaceGrotesk = Space_Grotesk({ variable: "--font-space-grotesk", subsets: ["latin"], display: "swap" });
@@ -21,36 +19,36 @@ export const metadata: Metadata = {
   openGraph: {
     title: siteData.metadata.title,
     description: siteData.metadata.description,
-    url: 'https://romartel.vercel.app',
+    url: "https://romartel.vercel.app",
     siteName: siteData.metadata.title,
-    locale: 'en_US',
-    type: 'website',
+    locale: "en_US",
+    type: "website",
   },
   twitter: {
-    card: 'summary_large_image',
+    card: "summary_large_image",
     title: siteData.metadata.title,
     description: siteData.metadata.description,
-    creator: '@netssv',
+    creator: "@netssv",
   },
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   const jsonLd = {
-    '@context': 'https://schema.org',
-    '@type': 'Person',
+    "@context": "https://schema.org",
+    "@type": "Person",
     name: siteData.profile.name,
     jobTitle: siteData.profile.title,
-    url: 'https://romartel.vercel.app',
+    url: "https://romartel.vercel.app",
     sameAs: [
       siteData.metadata.socialLinks.linkedin,
       siteData.metadata.socialLinks.github,
       siteData.metadata.socialLinks.twitter,
     ],
-    alumniOf: '',
+    alumniOf: "",
     worksFor: {
-      '@type': 'Organization',
-      name: siteData.experience[0].company
-    }
+      "@type": "Organization",
+      name: siteData.experience[0].company,
+    },
   };
 
   return (
@@ -60,12 +58,17 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
       suppressHydrationWarning
     >
       <head>
+        {/* Structured data — allowed as-is inside <head> */}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
-        <script
+      </head>
+      <body className="min-h-full flex flex-col bg-bg-base text-text-secondary overflow-x-hidden relative">
+        {/* Theme detection — runs before paint to prevent FOUC */}
+        <Script
           id="theme-override"
+          strategy="beforeInteractive"
           dangerouslySetInnerHTML={{
             __html: `
               (function() {
@@ -86,8 +89,11 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
             `,
           }}
         />
-        <script
+
+        {/* Microsoft Clarity */}
+        <Script
           id="microsoft-clarity"
+          strategy="afterInteractive"
           dangerouslySetInnerHTML={{
             __html: `
               (function(c,l,a,r,i,t,y){
@@ -98,8 +104,26 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
             `,
           }}
         />
-      </head>
-      <body className="min-h-full flex flex-col bg-bg-base text-text-secondary overflow-x-hidden relative">
+
+        {/* Google Analytics 4 */}
+        <Script
+          id="ga4-loader"
+          strategy="afterInteractive"
+          src="https://www.googletagmanager.com/gtag/js?id=G-J2MMB7MF32"
+        />
+        <Script
+          id="ga4-init"
+          strategy="afterInteractive"
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', 'G-J2MMB7MF32');
+            `,
+          }}
+        />
+
         <DesignProvider>
           <NoiseOverlay />
           <SpotlightCursor />
@@ -109,3 +133,5 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
     </html>
   );
 }
+
+
