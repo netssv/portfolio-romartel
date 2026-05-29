@@ -10,6 +10,7 @@ import { ExperienceTimeline } from "@/src/components/ExperienceTimeline";
 import { SkillsGrid } from "@/src/components/SkillsGrid";
 import { PhilosophySection } from "@/src/components/PhilosophySection";
 import { ArchitectureSection } from "@/src/components/ArchitectureSection";
+import { CaseStudiesSection } from "@/src/components/CaseStudiesSection";
 import { ContactSection } from "@/src/components/ContactSection";
 import { FadeIn } from "@/src/components/ui/FadeIn";
 import { SectionLabel } from "@/src/components/ui/SectionLabel";
@@ -43,6 +44,7 @@ export default function Home() {
           { name: "Experience", path: "#experience" },
           { name: "Insights", path: "#skills" },
           { name: "Architecture", path: "#architecture" },
+          { name: "Case Studies", path: "#case-studies" },
         ]} 
       />
       <main className="flex-1 w-full flex flex-col min-w-0">
@@ -90,6 +92,9 @@ export default function Home() {
 
         {/* ── Architecture ───────────────────────────── */}
         <ArchitectureSection />
+
+        {/* ── Case Studies ──────────────────────────── */}
+        <CaseStudiesSection />
 
         {/* ── Philosophy ─────────────────────────────── */}
         <PhilosophySection quote={philosophy.quote} focus={philosophy.focus} />

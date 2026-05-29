@@ -11,6 +11,7 @@ import { MetricsSection } from "@/src/components/MetricsSection";
 import { ExperienceTimeline } from "@/src/components/ExperienceTimeline";
 import { SkillsGrid } from "@/src/components/SkillsGrid";
 import { ArchitectureSection } from "@/src/components/ArchitectureSection";
+import { CaseStudiesSection } from "@/src/components/CaseStudiesSection";
 import { PhilosophySection } from "@/src/components/PhilosophySection";
 import { ContactSection } from "@/src/components/ContactSection";
 import siteData from "@/src/data/siteData.json";
@@ -52,7 +53,7 @@ export const PCBLayout: React.FC = () => {
             </span>
           </div>
           <nav className="hidden md:flex items-center gap-6">
-            {["#projects", "#experience", "#skills", "#contact"].map((href) => (
+            {["#projects", "#experience", "#skills", "#case-studies", "#contact"].map((href) => (
               <a
                 key={href}
                 href={href}
@@ -64,7 +65,7 @@ export const PCBLayout: React.FC = () => {
           </nav>
           {/* Mobile nav dots */}
           <nav className="flex md:hidden items-center gap-3">
-            {["#projects", "#experience", "#skills", "#contact"].map((href) => (
+            {["#projects", "#experience", "#skills", "#case-studies", "#contact"].map((href) => (
               <a
                 key={href}
                 href={href}
@@ -136,6 +137,9 @@ export const PCBLayout: React.FC = () => {
 
         {/* ── Architecture ───────────────────────────── */}
         <ArchitectureSection />
+
+        {/* ── Case Studies ──────────────────────────── */}
+        <CaseStudiesSection />
 
         {/* ── Philosophy ─────────────────────────────── */}
         <PhilosophySection quote={philosophy.quote} focus={philosophy.focus} />
