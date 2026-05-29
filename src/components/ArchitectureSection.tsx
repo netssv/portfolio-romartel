@@ -113,6 +113,77 @@ const ClarityWidget: React.FC = () => {
   );
 };
 
+const TechHeaderBackground: React.FC = () => {
+  return (
+    <div className="absolute inset-0 pointer-events-none overflow-hidden select-none -z-10">
+      {/* Circuit lines connecting dynamically */}
+      <svg className="absolute w-full h-full opacity-[0.25]" viewBox="0 0 800 400" preserveAspectRatio="none">
+        <defs>
+          <linearGradient id="circLineGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stopColor="var(--accent)" stopOpacity="0" />
+            <stop offset="30%" stopColor="var(--accent)" stopOpacity="0.6" />
+            <stop offset="70%" stopColor="var(--accent)" stopOpacity="0.6" />
+            <stop offset="100%" stopColor="var(--accent)" stopOpacity="0" />
+          </linearGradient>
+        </defs>
+        {/* Animated tracing circuit paths */}
+        <motion.path
+          d="M 50 100 L 250 100 L 300 150 L 500 150 L 550 100 L 750 100"
+          fill="none"
+          stroke="url(#circLineGrad)"
+          strokeWidth="1.25"
+          strokeDasharray="300"
+          animate={{ strokeDashoffset: [600, 0] }}
+          transition={{ repeat: Infinity, duration: 9, ease: "linear" }}
+        />
+        <motion.path
+          d="M 100 300 L 300 300 L 350 250 L 450 250 L 500 300 L 700 300"
+          fill="none"
+          stroke="url(#circLineGrad)"
+          strokeWidth="1.25"
+          strokeDasharray="300"
+          animate={{ strokeDashoffset: [-600, 0] }}
+          transition={{ repeat: Infinity, duration: 11, ease: "linear" }}
+        />
+      </svg>
+      {/* Dynamic Pulsing Target Reticles on corners */}
+      <div className="absolute top-3 left-3 w-4 h-4 border-t border-l border-accent/40" />
+      <div className="absolute top-3 right-3 w-4 h-4 border-t border-r border-accent/40" />
+      <div className="absolute bottom-3 left-3 w-4 h-4 border-b border-l border-accent/40" />
+      <div className="absolute bottom-3 right-3 w-4 h-4 border-b border-r border-accent/40" />
+
+      {/* Floating digital signal particles */}
+      {[...Array(6)].map((_, i) => {
+        const delays = [0, 0.8, 1.6, 2.4, 3.2, 4.0];
+        const lefts = [12, 85, 20, 78, 48, 52];
+        const tops = [25, 35, 75, 65, 15, 80];
+        return (
+          <motion.div
+            key={i}
+            className="absolute w-1.5 h-1.5 rounded-full"
+            style={{
+              left: `${lefts[i]}%`,
+              top: `${tops[i]}%`,
+              background: "var(--accent)",
+              boxShadow: "0 0 10px var(--accent)",
+            }}
+            animate={{
+              opacity: [0.1, 0.7, 0.1],
+              scale: [0.7, 1.2, 0.7],
+            }}
+            transition={{
+              duration: 3.5,
+              repeat: Infinity,
+              ease: "easeInOut",
+              delay: delays[i],
+            }}
+          />
+        );
+      })}
+    </div>
+  );
+};
+
 export const ArchitectureSection = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   
@@ -133,7 +204,8 @@ export const ArchitectureSection = () => {
       />
 
       <div className="mx-auto max-w-6xl px-6 relative z-10">
-        <div className="flex flex-col items-center text-center mb-20">
+        <div className="relative flex flex-col items-center text-center mb-20 px-8 py-10 sm:py-12 rounded-3xl border border-border-subtle bg-bg-surface/40 backdrop-blur-xs max-w-3xl mx-auto overflow-hidden shadow-xs">
+          <TechHeaderBackground />
           <FadeIn>
             <SectionLabel
               eyebrow="Under The Hood"
