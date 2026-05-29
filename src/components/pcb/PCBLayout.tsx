@@ -3,7 +3,6 @@
 import React from "react";
 import { PCBBoard } from "./PCBBoard";
 import { PCBInfoPanel } from "./PCBInfoPanel";
-import { DesignSelector } from "@/src/components/ui/DesignSelector";
 import { FadeIn } from "@/src/components/ui/FadeIn";
 import { SectionLabel } from "@/src/components/ui/SectionLabel";
 import { ProjectCard } from "@/src/components/ProjectCard";
@@ -14,6 +13,7 @@ import { ArchitectureSection } from "@/src/components/ArchitectureSection";
 import { CaseStudiesSection } from "@/src/components/CaseStudiesSection";
 import { PhilosophySection } from "@/src/components/PhilosophySection";
 import { ContactSection } from "@/src/components/ContactSection";
+import { ScrollIndicator } from "@/src/components/layout/ScrollIndicator";
 import siteData from "@/src/data/siteData.json";
 
 export const PCBLayout: React.FC = () => {
@@ -24,6 +24,7 @@ export const PCBLayout: React.FC = () => {
 
   return (
     <div className="theme-pcb min-h-screen font-mono" style={{ background: "var(--bg-base)" }}>
+      <ScrollIndicator />
       {/* Scanline overlay */}
       <div
         className="pointer-events-none fixed inset-0 z-10 opacity-[0.022]"
@@ -158,7 +159,6 @@ export const PCBLayout: React.FC = () => {
         </div>
       </footer>
 
-      <DesignSelector />
     </div>
   );
 };

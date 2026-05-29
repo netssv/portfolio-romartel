@@ -16,7 +16,6 @@ import { FadeIn } from "@/src/components/ui/FadeIn";
 import { SectionLabel } from "@/src/components/ui/SectionLabel";
 import { useDesign } from "@/src/context/DesignContext";
 import { PCBLayout } from "@/src/components/pcb/PCBLayout";
-import { DesignSelector } from "@/src/components/ui/DesignSelector";
 import { ScrollIndicator } from "@/src/components/layout/ScrollIndicator";
 
 const {
@@ -117,8 +116,6 @@ export default function Home() {
         </div>
       </footer>
 
-      {/* Floating Design Selector */}
-      <DesignSelector />
     </>
   );
 }
