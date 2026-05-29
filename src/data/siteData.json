@@ -36,7 +36,7 @@
     "title": "Technical Solutions, Automation & Data Analytics",
     "location": "San Salvador, El Salvador",
     "tagline": "Bridging engineering, automated systems, and data analytics to solve practical business problems.",
-    "bio": "Technology and operations professional with experience supporting digital solutions, business reporting, and process improvement initiatives. Skilled in technical support, data analysis, dashboard creation, and workflow automation using tools such as Power BI, Excel, SQL, and Python. Focused on helping businesses improve operational visibility, streamline repetitive tasks, and enhance customer and user experiences.",
+    "bio": "Marketing professional bridging digital strategy and technical execution. Background in SEO, CRO, and content — grounded by real experience inside web hosting infrastructure. I don't just optimize for search; I understand what happens at the server level when a site underperforms",
     "avatar": {
       "src": "/avatar.webp",
       "alt": "Rodrigo Martel Profile Portrait"
@@ -52,7 +52,7 @@
       "role": "CX Specialist – Infrastructure & Web Hosting",
       "period": "2025 - Present",
       "location": "Remote",
-      "description": "Front-line technical support for web hosting clients — bridging complex infrastructure issues and customer needs through clear communication and automation-assisted diagnostics.",
+      "description": "Technical context that most web strategists don't have. Working inside HostPapa's infrastructure — across WordPress, DNS, SSL, and server environments — gives me a ground-level understanding of why sites underperform and how to fix it at the root, not just the symptom.",
       "impact": [
         "Deployed Python and Bash scripts to automate website audit tasks and repetitive validation workflows.",
         "Contributed to internal knowledge base improvements, reducing customer self-service friction.",
@@ -226,7 +226,7 @@
     }
   },
   "trustedStack": [
-    "Python", "SQL", "Power BI", "Bash", "Android · Kotlin", "Next.js", "Data Engineering", "AI Tools"
+    "SEO", "CRO", "Content Strategy", "Google Analytics 4", "Microsoft Clarity", "Google Search Console", "Microsoft Power BI", "A/B Testing", "Claude CLI", "Antigravity Bash", "Next.js", "AI Tools"
   ],
 
   "metrics": [

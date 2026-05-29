@@ -52,7 +52,7 @@ export const PCBInfoPanel: React.FC<PCBInfoPanelProps> = ({
 
       {/* Bio */}
       <p className="text-sm font-mono text-[#a9e2c1] leading-relaxed border-l-2 border-[#00ff41]/40 pl-3">
-        {bio.slice(0, 160)}…
+        {bio}
       </p>
 
       {/* Data rows */}

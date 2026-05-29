@@ -11,32 +11,19 @@ interface TrustedStackProps {
 
 const getTechIcon = (tech: string) => {
   const name = tech.toLowerCase();
-  if (name.includes("python")) {
-    return (
-      <svg viewBox="0 0 24 24" className="w-3.5 h-3.5 text-[#3776AB] fill-current" aria-hidden="true">
-        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14h2v2h-2v-2zm0-10h2v8h-2V6z" />
-      </svg>
-    );
+  if (name.includes("seo") || name.includes("cro") || name.includes("content") || name.includes("search console")) {
+    return <Network size={14} className="text-[#00A4EF]" />;
   }
-  if (name.includes("sql")) {
-    return <Database size={14} className="text-[#00758F]" />;
-  }
-  if (name.includes("power bi")) {
+  if (name.includes("analytics") || name.includes("clarity") || name.includes("ga4") || name.includes("power bi") || name.includes("testing")) {
     return <BarChart3 size={14} className="text-[#F2C811]" />;
   }
-  if (name.includes("bash")) {
+  if (name.includes("bash") || name.includes("cli") || name.includes("terminal")) {
     return <Terminal size={14} className="text-[#4EAA25]" />;
-  }
-  if (name.includes("android") || name.includes("kotlin")) {
-    return <Binary size={14} className="text-[#7F52FF]" />;
   }
   if (name.includes("next.js") || name.includes("next")) {
     return <Cpu size={14} className="text-text-primary" />;
   }
-  if (name.includes("data engineering")) {
-    return <Network size={14} className="text-[#00A4EF]" />;
-  }
-  if (name.includes("ai tools") || name.includes("ai")) {
+  if (name.includes("ai") || name.includes("claude") || name.includes("antigravity")) {
     return <Sparkles size={14} className="text-[#A259FF]" />;
   }
   return <Cpu size={14} className="text-text-muted" />;
