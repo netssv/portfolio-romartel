@@ -48,7 +48,7 @@ const CASE_STUDIES = [
       { target: 18, prefix: "+", suffix: "%", label: "CVR lift from A/B test" },
       { target: 41, prefix: "−", suffix: "%", label: "Cost per lead (CPA)" },
     ],
-    tools: ["WordPress + Elementor", "GA4 + GTM", "Google Ads", "Hotjar (heatmaps)"],
+    tools: ["WordPress + Elementor", "GA4 + GTM", "Google Ads", "Clarity (heatmaps)"],
   },
   {
     id: "03",

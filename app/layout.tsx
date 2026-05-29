@@ -57,38 +57,32 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
       className={`${inter.variable} ${spaceGrotesk.variable} ${geistMono.variable} h-full antialiased`}
       suppressHydrationWarning
     >
-      <head>
-        {/* Structured data — allowed as-is inside <head> */}
+      <body className="min-h-full flex flex-col bg-bg-base text-text-secondary overflow-x-hidden relative">
+        {/* Structured data */}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
-      </head>
-      <body className="min-h-full flex flex-col bg-bg-base text-text-secondary overflow-x-hidden relative">
         {/* Theme detection — runs before paint to prevent FOUC */}
-        <Script
-          id="theme-override"
-          strategy="beforeInteractive"
-          dangerouslySetInnerHTML={{
-            __html: `
-              (function() {
-                var override = localStorage.getItem('theme-override');
-                if (override === 'night' || override === 'dark') {
-                  document.documentElement.classList.add('theme-dark');
-                } else if (override === 'day' || override === 'light') {
+        <Script id="theme-override" strategy="beforeInteractive">
+          {`
+            (function() {
+              var override = localStorage.getItem('theme-override');
+              if (override === 'night' || override === 'dark') {
+                document.documentElement.classList.add('theme-dark');
+              } else if (override === 'day' || override === 'light') {
+                document.documentElement.classList.remove('theme-dark');
+              } else {
+                var hour = new Date().getHours();
+                if (hour >= 6 && hour < 18) {
                   document.documentElement.classList.remove('theme-dark');
                 } else {
-                  var hour = new Date().getHours();
-                  if (hour >= 6 && hour < 18) {
-                    document.documentElement.classList.remove('theme-dark');
-                  } else {
-                    document.documentElement.classList.add('theme-dark');
-                  }
+                  document.documentElement.classList.add('theme-dark');
                 }
-              })();
-            `,
-          }}
-        />
+              }
+            })();
+          `}
+        </Script>
 
         {/* Microsoft Clarity */}
         <Script
