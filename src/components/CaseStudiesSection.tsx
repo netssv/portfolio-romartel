@@ -21,10 +21,10 @@ const CASE_STUDIES = [
     ],
     timeframe: "90 days post-implementation",
     metrics: [
-      { target: 64, prefix: "+", suffix: "%", label: "Organic impressions" },
-      { target: 38, prefix: "+", suffix: "%", label: "Organic sessions" },
-      { target: 11, prefix: "", suffix: "", label: "New top-10 keywords" },
-      { target: 22, prefix: "−", suffix: "%", label: "Paid traffic dependency" },
+      { target: 15, prefix: "", suffix: "+", label: "Pages audited & restructured" },
+      { target: 4, prefix: "", suffix: "", label: "Issue types resolved (duplicate content, broken links, missing canonicals, crawl errors)" },
+      { target: 3, prefix: "", suffix: "", label: "Keyword clusters mapped to search intent" },
+      { target: 1, prefix: "", suffix: "", label: "Content brief template delivered for ongoing editorial use" },
     ],
     tools: ["Google Search Console", "Ahrefs (free tier)", "Screaming Frog", "Google Analytics 4"],
   },
@@ -43,10 +43,10 @@ const CASE_STUDIES = [
     ],
     timeframe: "60 days post-launch",
     metrics: [
-      { target: 3.1, prefix: "", suffix: "%", label: "Conversion rate (from 0.7%)", decimals: 1 },
-      { target: 55, prefix: "−", suffix: "%", label: "Bounce rate vs homepage" },
-      { target: 18, prefix: "+", suffix: "%", label: "CVR lift from A/B test" },
-      { target: 41, prefix: "−", suffix: "%", label: "Cost per lead (CPA)" },
+      { target: 1, prefix: "", suffix: "", label: "Dedicated landing page built end-to-end" },
+      { target: 2, prefix: "", suffix: "", label: "A/B variants tested (feature-led vs. outcome-led headline)" },
+      { target: 5, prefix: "", suffix: "", label: "GA4 custom events configured (scroll depth, CTA clicks, form completions)" },
+      { target: 3, prefix: "", suffix: "", label: "Performance optimizations applied (asset compression, script deferral, load sequencing)" },
     ],
     tools: ["WordPress + Elementor", "GA4 + GTM", "Google Ads", "Clarity (heatmaps)"],
   },
@@ -65,10 +65,10 @@ const CASE_STUDIES = [
     ],
     timeframe: "90 days",
     metrics: [
-      { target: 112, prefix: "+", suffix: "%", label: "LinkedIn impressions" },
-      { target: 47, prefix: "+", suffix: "%", label: "Engagement rate" },
-      { target: 290, prefix: "+", suffix: "", label: "New LinkedIn followers" },
-      { target: 3, prefix: "", suffix: "x", label: "Content output multiplier" },
+      { target: 3, prefix: "", suffix: "+", label: "Months of sustained execution" },
+      { target: 90, prefix: "", suffix: "+", label: "Pieces of content produced across LinkedIn & Instagram" },
+      { target: 3, prefix: "", suffix: "", label: "Content pillars defined and maintained" },
+      { target: 1, prefix: "", suffix: "", label: "Monthly performance report template built for internal use" },
     ],
     tools: ["Meta Business Suite", "LinkedIn Analytics", "Notion", "Claude / ChatGPT", "Canva"],
   },
@@ -220,7 +220,7 @@ export const CaseStudiesSection: React.FC = () => {
                     {cs.timeframe}
                   </span>
                 </div>
-                <div className="grid grid-cols-2 gap-4">
+                <div className="flex flex-col gap-3.5">
                   {cs.metrics.map((m, i) => (
                     <MetricCounter key={i} {...m} />
                   ))}
