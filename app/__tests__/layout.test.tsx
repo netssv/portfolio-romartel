@@ -33,9 +33,9 @@ describe("RootLayout Component", () => {
     );
 
     // Assert head script is present containing initial theme loader
-    const headScript = document.querySelector("script");
-    expect(headScript).not.toBeNull();
-    expect(headScript?.innerHTML).toContain("theme-override");
-    expect(headScript?.innerHTML).toContain("Date().getHours()");
+    const scripts = Array.from(document.querySelectorAll("script"));
+    const themeScript = scripts.find(s => s.innerHTML.includes("theme-override"));
+    expect(themeScript).toBeDefined();
+    expect(themeScript?.innerHTML).toContain("Date().getHours()");
   });
 });

@@ -253,7 +253,7 @@ export const ArchitectureSection = () => {
               <div className="flex-1">
                 <div className="flex flex-col md:flex-row md:items-center gap-2 mb-3">
                   <h3 className="text-xl font-heading font-semibold text-text-primary group-hover:text-accent transition-colors duration-300">{features[4].title}</h3>
-                  <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-semibold uppercase tracking-widest bg-accent/10 text-accent border border-accent/20 md:ml-3 w-fit">Live in production</span>
+                  <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold uppercase tracking-widest bg-accent/10 text-accent border border-accent/20 md:ml-3 w-fit">Live in production</span>
                 </div>
                 <p className="text-sm font-body leading-relaxed text-text-muted">{features[4].desc}</p>
               </div>
@@ -329,7 +329,7 @@ export const ArchitectureSection = () => {
                             </h3>
                             {/* Live pulse badge */}
                             <span
-                              className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[9px] font-bold uppercase tracking-widest border"
+                              className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-xs font-bold uppercase tracking-widest border"
                               style={{
                                 background: `rgba(${accentRgb},0.1)`,
                                 borderColor: `rgba(${accentRgb},0.3)`,
@@ -345,7 +345,7 @@ export const ArchitectureSection = () => {
                               Live
                             </span>
                           </div>
-                          <p className="text-[10px] font-mono text-text-muted uppercase tracking-widest">
+                          <p className="text-xs font-mono text-text-muted uppercase tracking-widest">
                             {isGA4 ? "Behavioural Analytics" : "Session Intelligence"}
                           </p>
                         </div>
@@ -363,7 +363,7 @@ export const ArchitectureSection = () => {
                         borderColor: `rgba(${accentRgb},0.2)`,
                       }}
                     >
-                      <p className="text-[9px] font-mono uppercase tracking-widest mb-2" style={{ color: accentColor }}>
+                      <p className="text-xs font-mono uppercase tracking-widest mb-2" style={{ color: accentColor }}>
                         {isGA4 ? "// sessions · last 7 days" : "// heatmap intensity"}
                       </p>
                       {isGA4 ? <GA4Widget /> : <ClarityWidget />}

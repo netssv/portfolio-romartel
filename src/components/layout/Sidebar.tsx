@@ -83,7 +83,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ authorName }) => {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.8, delay: 0.5 }}
-              className="text-[10px] font-body tracking-[0.2em] uppercase text-text-accent font-semibold block mt-1"
+              className="text-xs font-body tracking-[0.2em] uppercase text-text-accent font-semibold block mt-1"
             >
               Technology Architecture
             </motion.span>
@@ -158,7 +158,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ authorName }) => {
             )}
           </button>
 
-          <div className="text-[11px] font-body text-text-muted">
+          <div className="text-xs font-body text-text-muted">
             &copy; {new Date().getFullYear()} · Core Strategy
           </div>
         </div>

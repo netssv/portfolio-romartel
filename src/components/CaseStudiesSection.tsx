@@ -106,14 +106,13 @@ const MetricCounter: React.FC<{
   }, [target]);
 
   return (
-    <div className="p-4 rounded-xl border border-border-subtle bg-bg-surface/50 backdrop-blur-xs flex flex-col justify-center min-h-[96px] relative overflow-hidden transition-all duration-300 hover:border-accent/40 group">
-      <div className="absolute inset-0 bg-accent/2 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+    <div className="p-4 rounded-xl border border-border-base bg-bg-surface flex flex-col justify-center min-h-[96px] relative overflow-hidden transition-all duration-300 hover:border-accent group">
       <span className="text-2xl sm:text-3xl font-mono font-bold text-accent tracking-tight">
         {prefix}
         {value.toFixed(decimals)}
         {suffix}
       </span>
-      <span className="text-[10px] font-mono uppercase tracking-wider text-text-muted mt-1 leading-snug">
+      <span className="text-xs font-mono uppercase tracking-wider text-text-secondary mt-1.5 leading-snug">
         {label}
       </span>
     </div>
@@ -136,20 +135,25 @@ export const CaseStudiesSection: React.FC = () => {
         </FadeIn>
 
         {/* Tab Selector */}
-        <div className="flex justify-start md:justify-center mb-10 overflow-x-auto pb-2 scrollbar-none gap-2">
-          {CASE_STUDIES.map((study, idx) => (
-            <button
-              key={study.id}
-              onClick={() => setActiveTab(idx)}
-              className={`relative px-5 py-2.5 rounded-full text-xs font-mono font-bold uppercase tracking-wider transition-all duration-300 border focus:outline-hidden ${
-                activeTab === idx
-                  ? "border-accent text-bg-base bg-accent z-10"
-                  : "border-border-subtle text-text-muted hover:text-text-primary hover:border-border-base bg-bg-surface/30"
-              }`}
-            >
-              {study.id} · {study.tag}
-            </button>
-          ))}
+        <div className="flex justify-start md:justify-center mb-10 overflow-x-auto pb-2 scrollbar-none gap-2" role="tablist" aria-label="Case Studies">
+          {CASE_STUDIES.map((study, idx) => {
+            const isActive = activeTab === idx;
+            return (
+              <button
+                key={study.id}
+                role="tab"
+                aria-selected={isActive}
+                onClick={() => setActiveTab(idx)}
+                className={`relative px-5 py-2.5 rounded-full text-xs font-mono font-bold uppercase tracking-wider transition-all duration-300 border focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus:outline-none cursor-pointer ${
+                  isActive
+                    ? "border-accent text-bg-base bg-accent z-10 shadow-md shadow-accent/20"
+                    : "border-border-base text-text-muted hover:text-text-primary hover:border-border-subtle bg-bg-surface"
+                }`}
+              >
+                {study.id} · {study.tag}
+              </button>
+            );
+          })}
         </div>
 
         {/* Case Study Content */}
@@ -165,7 +169,7 @@ export const CaseStudiesSection: React.FC = () => {
             {/* Left Column: Context & What I Did */}
             <div className="lg:col-span-7 flex flex-col gap-6">
               <div>
-                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-accent/20 bg-accent/4 text-[10px] font-mono font-bold tracking-wider text-accent uppercase mb-3">
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-accent/30 bg-accent/10 text-xs font-mono font-bold tracking-wider text-accent uppercase mb-3">
                   Case Study {cs.id}
                 </div>
                 <h3 className="text-2xl sm:text-3xl font-heading font-bold text-text-primary leading-tight tracking-tight">
@@ -176,7 +180,7 @@ export const CaseStudiesSection: React.FC = () => {
                 </p>
               </div>
 
-              <div className="p-5 sm:p-6 rounded-2xl border border-border-subtle bg-bg-surface/30 backdrop-blur-xs">
+              <div className="p-5 sm:p-6 rounded-2xl border border-border-base bg-bg-surface">
                 <h4 className="text-xs font-mono font-bold uppercase tracking-wider text-text-primary mb-3">
                   Context &amp; Challenge
                 </h4>
@@ -185,7 +189,7 @@ export const CaseStudiesSection: React.FC = () => {
                 </p>
               </div>
 
-              <div className="p-5 sm:p-6 rounded-2xl border border-border-subtle bg-bg-surface/30 backdrop-blur-xs">
+              <div className="p-5 sm:p-6 rounded-2xl border border-border-base bg-bg-surface">
                 <h4 className="text-xs font-mono font-bold uppercase tracking-wider text-text-primary mb-4">
                   What I Did
                 </h4>
@@ -196,10 +200,10 @@ export const CaseStudiesSection: React.FC = () => {
                       initial={{ opacity: 0, x: -8 }}
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ delay: i * 0.08 + 0.1, duration: 0.3 }}
-                      className="flex items-start gap-3 text-xs sm:text-sm font-body text-text-secondary leading-relaxed"
+                      className="flex items-start gap-3 text-sm font-body text-text-secondary leading-relaxed"
                     >
-                      <div className="mt-0.5 w-4 h-4 sm:w-5 sm:h-5 rounded-md border border-accent/20 bg-accent/5 flex items-center justify-center flex-shrink-0 text-accent">
-                        <Check size={11} className="stroke-[3]" />
+                      <div className="mt-0.5 w-5 h-5 rounded-md border border-accent/30 bg-accent/10 flex items-center justify-center flex-shrink-0 text-accent" aria-hidden="true">
+                        <Check size={12} className="stroke-[3]" />
                       </div>
                       <span>{action}</span>
                     </motion.li>
@@ -211,12 +215,12 @@ export const CaseStudiesSection: React.FC = () => {
             {/* Right Column: Metrics & Stack */}
             <div className="lg:col-span-5 flex flex-col gap-6">
               {/* Metrics Card */}
-              <div className="p-5 sm:p-6 rounded-2xl border border-border-subtle bg-bg-surface/30 backdrop-blur-xs relative overflow-hidden">
+              <div className="p-5 sm:p-6 rounded-2xl border border-border-base bg-bg-surface relative overflow-hidden">
                 <div className="flex justify-between items-center mb-4">
                   <h4 className="text-xs font-mono font-bold uppercase tracking-wider text-text-primary">
                     Performance Metrics
                   </h4>
-                  <span className="text-[10px] font-mono text-text-muted px-2 py-0.5 rounded-sm bg-bg-raised">
+                  <span className="text-xs font-mono text-text-muted px-2.5 py-0.5 rounded-md bg-bg-raised border border-border-subtle">
                     {cs.timeframe}
                   </span>
                 </div>
@@ -228,7 +232,7 @@ export const CaseStudiesSection: React.FC = () => {
               </div>
 
               {/* Tools Card */}
-              <div className="p-5 sm:p-6 rounded-2xl border border-border-subtle bg-bg-surface/30 backdrop-blur-xs">
+              <div className="p-5 sm:p-6 rounded-2xl border border-border-base bg-bg-surface">
                 <h4 className="text-xs font-mono font-bold uppercase tracking-wider text-text-primary mb-3.5">
                   Tools &amp; Infrastructure
                 </h4>
@@ -236,7 +240,7 @@ export const CaseStudiesSection: React.FC = () => {
                   {cs.tools.map((tool) => (
                     <span
                       key={tool}
-                      className="px-3 py-1.5 rounded-lg border border-border-subtle bg-bg-surface text-xs font-mono font-bold text-text-secondary transition-colors duration-200 hover:border-accent hover:text-accent"
+                      className="px-3 py-1.5 rounded-lg border border-border-subtle bg-bg-raised text-xs font-mono font-bold text-text-secondary transition-colors duration-200 hover:border-accent hover:text-accent"
                     >
                       {tool}
                     </span>

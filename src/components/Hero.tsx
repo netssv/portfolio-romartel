@@ -27,7 +27,7 @@ export const Hero: React.FC<HeroProps> = ({
         {/* Text Content */}
         <div className="lg:col-span-7 flex flex-col items-start text-left">
           {/* Status badge */}
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-amber-500/25 bg-amber-500/5 text-amber-500 text-[11px] font-mono tracking-widest mb-8">
+          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-amber-500/25 bg-amber-500/5 text-amber-500 text-xs font-mono tracking-widest mb-8">
             <span className="flex h-2 w-2 rounded-full bg-amber-500 animate-pulse" />
             AVAILABLE · Technical Solutions &amp; Automation
           </div>
@@ -90,7 +90,7 @@ export const Hero: React.FC<HeroProps> = ({
                   <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" />
                 </svg>
                 <div>
-                  <p className="text-[10px] font-mono text-amber-500/80 uppercase tracking-widest leading-none mb-0.5">
+                  <p className="text-xs font-mono text-amber-500/80 uppercase tracking-widest leading-none mb-0.5">
                     Location
                   </p>
                   <p className="text-xs font-semibold text-zinc-100 leading-none">{location}</p>

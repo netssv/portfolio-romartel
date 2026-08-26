@@ -58,11 +58,11 @@ const SkillCard: React.FC<{ catKey: string; cat: SkillCategory; index: number }>
         <div>
           <span className="text-2xl leading-none">{cat.icon}</span>
           <h3 className="text-sm font-heading font-bold text-text-primary mt-2 leading-tight">{cat.title}</h3>
-          <p className="text-[10px] font-body text-text-muted mt-0.5">{cat.skills.length} capabilities</p>
+          <p className="text-xs font-body text-text-muted mt-0.5">{cat.skills.length} capabilities</p>
         </div>
         {/* Level badge */}
         <span
-          className="shrink-0 px-2.5 py-1 rounded-full text-[10px] font-body font-bold tracking-wide border"
+          className="shrink-0 px-2.5 py-1 rounded-full text-xs font-body font-bold tracking-wide border"
           style={{ color: meta.color, borderColor: `${meta.color}30`, background: `${meta.color}0D` }}
         >
           {meta.label}
@@ -72,8 +72,8 @@ const SkillCard: React.FC<{ catKey: string; cat: SkillCategory; index: number }>
       {/* Proficiency bar */}
       <div className="relative z-10 flex flex-col gap-1.5">
         <div className="flex justify-between items-center">
-          <span className="text-[10px] font-body text-text-muted uppercase tracking-widest">Proficiency</span>
-          <span className="text-[11px] font-body font-bold" style={{ color: meta.color }}>{meta.level}%</span>
+          <span className="text-xs font-body text-text-muted uppercase tracking-widest">Proficiency</span>
+          <span className="text-xs font-body font-bold" style={{ color: meta.color }}>{meta.level}%</span>
         </div>
         <div className="h-1.5 w-full rounded-full bg-bg-raised overflow-hidden">
           <motion.div
@@ -100,7 +100,7 @@ const SkillCard: React.FC<{ catKey: string; cat: SkillCategory; index: number }>
                   initial="hidden"
                   animate="show"
                   exit="exit"
-                  className="px-2.5 py-1 rounded-lg text-[10px] font-body text-text-secondary border border-border-subtle bg-bg-raised"
+                  className="px-2.5 py-1 rounded-lg text-xs font-body text-text-secondary border border-border-subtle bg-bg-raised"
                 >
                   {skill}
                 </motion.span>
@@ -115,11 +115,11 @@ const SkillCard: React.FC<{ catKey: string; cat: SkillCategory; index: number }>
               className="flex flex-wrap gap-1.5"
             >
               {cat.skills.slice(0, 2).map((skill) => (
-                <span key={skill} className="px-2.5 py-1 rounded-lg text-[10px] font-body text-text-muted border border-border-subtle bg-bg-raised">
+                <span key={skill} className="px-2.5 py-1 rounded-lg text-xs font-body text-text-muted border border-border-subtle bg-bg-raised">
                   {skill}
                 </span>
               ))}
-              <span className="px-2.5 py-1 rounded-lg text-[10px] font-body text-text-muted/60 border border-dashed border-border-subtle">
+              <span className="px-2.5 py-1 rounded-lg text-xs font-body text-text-muted/60 border border-dashed border-border-subtle">
                 +{cat.skills.length - 2} more — hover to expand
               </span>
             </motion.div>

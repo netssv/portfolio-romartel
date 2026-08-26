@@ -34,7 +34,7 @@ describe("Sidebar Component", () => {
   it("renders the author name and navigation list items", () => {
     render(<Sidebar authorName="Rodrigo Martel" />);
     
-    expect(screen.getByText("Rodrigo Martel")).toBeInTheDocument();
+    expect(screen.getByText((content, element) => element?.textContent === "Rodrigo Martel")).toBeInTheDocument();
     expect(screen.getByText("Projects")).toBeInTheDocument();
     expect(screen.getByText("Experience")).toBeInTheDocument();
   });

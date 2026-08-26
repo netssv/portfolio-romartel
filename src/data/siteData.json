@@ -24,12 +24,30 @@
     }
   },
   "navigation": [
-    { "name": "Resume", "path": "/" },
-    { "name": "Projects", "path": "#projects" },
-    { "name": "Experience", "path": "#experience" },
-    { "name": "Skills", "path": "#skills" },
-    { "name": "Architecture", "path": "#architecture" },
-    { "name": "Contact", "path": "/contact" }
+    {
+      "name": "Resume",
+      "path": "/"
+    },
+    {
+      "name": "Projects",
+      "path": "#projects"
+    },
+    {
+      "name": "Experience",
+      "path": "#experience"
+    },
+    {
+      "name": "Skills",
+      "path": "#skills"
+    },
+    {
+      "name": "Architecture",
+      "path": "#architecture"
+    },
+    {
+      "name": "Contact",
+      "path": "/contact"
+    }
   ],
   "profile": {
     "name": "Rodrigo Martel",
@@ -150,40 +168,109 @@
   ],
   "sideProjects": [
     {
-      "id": "webaudit",
-      "title": "WebAudit",
-      "subtitle": "Chrome Extension",
-      "description": "Developed WebAudit, a Chrome Extension for instant on-page SEO diagnostics — used to audit client sites and identify conversion bottlenecks, saving 15–20 min per diagnostic session",
-      "category": "Website Design & SEO Optimization",
+      "id": "fifa-predictor",
+      "title": "FIFA World Cup 2026 AI Lab",
+      "subtitle": "Monte Carlo ML Simulator & Interactive Tournament Bracket",
+      "description": "Machine learning tournament simulation blending Random Forest and Poisson distribution over 10 feature pipelines (xG, squad valuations, altitude wear, player fatigue). Runs 5,000+ Monte Carlo cycles to identify the most statistically representative tournament path with high-fidelity vector bracket exports.",
+      "valueProp": "Statistical predictive modeling with 10 feature pipelines and 5,000+ Monte Carlo runs.",
+      "outcome": "Deterministic single runs and probabilistic multi-run distribution generator.",
+      "category": "Machine Learning & Data",
       "status": "Production",
+      "tags": [
+        "Python ML",
+        "Random Forest",
+        "Poisson Distribution",
+        "Next.js",
+        "TypeScript",
+        "Tailwind CSS"
+      ],
       "links": {
-        "github": "https://github.com/netssv/webaudit",
-        "demo": "https://chromewebstore.google.com/detail/web-audit-tool/jnjaijaodpngdckabfkmjokllnohmcii?hl=en&authuser=3"
+        "github": "https://github.com/netssv/Fifa-WorldCup-Data-Analysis-1930-2026",
+        "demo": "https://github.com/netssv/Fifa-WorldCup-Data-Analysis-1930-2026"
+      }
+    },
+    {
+      "id": "hodl-watcher",
+      "title": "HODL Watcher",
+      "subtitle": "Quantitative BTC/USDT Copilot & Honest ML Dashboard",
+      "description": "Quantitative market intelligence copilot built on honest metrics principles—transparently exposing confidence levels and data gaps. Delivers structured market state payloads (funding rates, order flow, sentiment) for autonomous trading agents and quantitative analysts.",
+      "valueProp": "High-frequency market data ingestion and honest metrics confidence intervals.",
+      "outcome": "Structured real-time payload generation for LLM agents and trading models.",
+      "category": "Machine Learning & Data",
+      "status": "Production",
+      "tags": [
+        "Python",
+        "Machine Learning",
+        "Quantitative Finance",
+        "ETL Pipelines",
+        "Crypto Derivatives API"
+      ],
+      "links": {
+        "github": "https://github.com/netssv/HODL_watcher",
+        "demo": "https://github.com/netssv/HODL_watcher"
       }
     },
     {
       "id": "whathappened",
       "title": "WhatHappened",
-      "subtitle": "Chrome Extension",
-      "description": "An advanced web diagnostic tool that emulates a virtual Linux terminal interface within the browser. Designed to help technical support engineers perform deep frontend diagnostics, check server response simulated feeds, and inspect DOM structures through CLI commands.",
-      "category": "Systems & Dev Tools",
+      "subtitle": "Chrome MV3 Web Infrastructure Triage Terminal",
+      "description": "Published Chrome Web Store extension providing a POSIX-style terminal emulator in the browser side-panel. Enables edge-level DNS (DoH), SSL certificate triage, and network OSINT without external cloud tracking or latency.",
+      "valueProp": "POSIX-style CLI inside Chrome for edge DNS, SSL, and network triage.",
+      "outcome": "Consolidates 10+ fragmented web tools into a zero-cloud browser terminal.",
+      "category": "Web Infrastructure & Security",
       "status": "Production",
+      "tags": [
+        "Chrome Extension (MV3)",
+        "TypeScript",
+        "DNS / SSL Triage",
+        "POSIX CLI",
+        "Zero-Cloud Edge"
+      ],
       "links": {
-        "github": "https://github.com/netssv/whathappened",
+        "github": "https://github.com/netssv/whathappend",
         "demo": "https://chromewebstore.google.com/detail/whathappened/jkohefabbnobompohkedfaodcnfdplom?authuser=3&hl=en"
       }
     },
     {
-      "id": "rebusca",
-      "title": "Rebusca",
-      "subtitle": "Modular Android Application",
-      "description": "A modular, clean-architecture Android application leveraging web scraping algorithms and semantic searching to compare consumer goods prices across major supermarkets. Focused on providing real-time price comparisons to optimize family savings in El Salvador.",
-      "category": "Mobile & Scraping Algorithms",
-      "status": "In Development",
+      "id": "caniarun",
+      "title": "caniarun",
+      "subtitle": "PyPI Hardware Profiler for Open-Source AI Models",
+      "description": "Open-source CLI tool distributed via PyPI that profiles local GPU/VRAM/CPU resources and computes real-world compatibility against 80+ AI models across GGUF and integer quantization tiers.",
+      "valueProp": "Instant hardware profiling and quantization compatibility classification.",
+      "outcome": "Published on PyPI with global install via pip install caniarun.",
+      "category": "Developer Tooling & CLI",
+      "status": "Production",
+      "tags": [
+        "Python CLI",
+        "PyPI Package",
+        "Hardware Detection",
+        "LLM Quantization",
+        "CUDA / GPU"
+      ],
       "links": {
-        "github": "https://github.com/netssv/rebusca-app",
-        "demo": "/rebusca.mp4",
-        "preview": "/rebusca-preview.gif"
+        "github": "https://github.com/netssv/can_ia_run",
+        "demo": "https://github.com/netssv/can_ia_run"
+      }
+    },
+    {
+      "id": "btkey-sync",
+      "title": "btkey_sync",
+      "subtitle": "Cross-OS Bluetooth LE Pairing Key Synchronizer",
+      "description": "Low-level systems automation tool solving Bluetooth re-pairing in dual-boot systems. Automatically extracts Windows SYSTEM-level LTK keys and converts them into Linux BlueZ daemon format.",
+      "valueProp": "Eliminates BLE re-pairing friction across dual-boot OS partitions.",
+      "outcome": "Automated SYSTEM registry token extraction and BlueZ daemon conversion.",
+      "category": "Systems & Automation",
+      "status": "Production",
+      "tags": [
+        "Python",
+        "Windows Registry",
+        "Linux BlueZ",
+        "Bluetooth LE",
+        "Security & Cryptography"
+      ],
+      "links": {
+        "github": "https://github.com/netssv/btkey_sync",
+        "demo": "https://github.com/netssv/btkey_sync"
       }
     }
   ],
@@ -226,30 +313,107 @@
     }
   },
   "trustedStack": [
-    "SEO", "CRO", "Content Strategy", "Google Analytics 4", "Microsoft Clarity", "Google Search Console", "Microsoft Power BI", "A/B Testing", "Claude CLI", "Antigravity Bash", "Next.js", "AI Tools"
+    "SEO",
+    "CRO",
+    "Content Strategy",
+    "Google Analytics 4",
+    "Microsoft Clarity",
+    "Google Search Console",
+    "Microsoft Power BI",
+    "A/B Testing",
+    "Claude CLI",
+    "Antigravity Bash",
+    "Next.js",
+    "AI Tools"
   ],
-
   "metrics": [
-    { "value": "70%", "label": "Reduction in reporting time" },
-    { "value": "40+",  "label": "Documented incident patterns" },
-    { "value": "3",    "label": "2 Chrome extensions + 1 Android App" },
-    { "value": "12%", "label": "SLA improvement at HP" }
+    {
+      "value": "70%",
+      "label": "Reduction in reporting time"
+    },
+    {
+      "value": "40+",
+      "label": "Documented incident patterns"
+    },
+    {
+      "value": "3",
+      "label": "2 Chrome extensions + 1 Android App"
+    },
+    {
+      "value": "12%",
+      "label": "SLA improvement at HP"
+    }
   ],
-
   "philosophy": {
     "quote": "Technology without strategy is just overhead. I build systems that reduce friction, expose data, and let organizations move faster — not louder.",
-    "focus": ["Automation", "Data Architecture", "Digital Transformation", "Operational Efficiency"]
+    "focus": [
+      "Automation",
+      "Data Architecture",
+      "Digital Transformation",
+      "Operational Efficiency"
+    ]
   },
-
   "contact": {
     "title": "Let's Connect",
     "description": "Interested in automating workflows, scaling data pipelines, or optimizing your digital transformation strategies? Get in touch to discuss technical solutions.",
     "email": "rop.martel@gmail.com",
     "location": "San Salvador, El Salvador",
     "social": [
-      { "name": "LinkedIn", "url": "https://linkedin.com/in/ropmartel", "display": "linkedin.com/in/ropmartel" },
-      { "name": "GitHub", "url": "https://github.com/netssv/", "display": "github.com/netssv/" },
-      { "name": "Twitter / X", "url": "https://x.com/netssv", "display": "x.com/netssv" }
+      {
+        "name": "LinkedIn",
+        "url": "https://linkedin.com/in/ropmartel",
+        "display": "linkedin.com/in/ropmartel"
+      },
+      {
+        "name": "GitHub",
+        "url": "https://github.com/netssv/",
+        "display": "github.com/netssv/"
+      },
+      {
+        "name": "Twitter / X",
+        "url": "https://x.com/netssv",
+        "display": "x.com/netssv"
+      }
     ]
+  },
+  "flagshipProject": {
+    "id": "metropolyca",
+    "title": "Metropolyca",
+    "subtitle": "A living 3D city-builder and tycoon game in your browser",
+    "eyebrow": "Flagship Project · Early Access Live · Roadmap to Steam",
+    "description": "Metropolyca is a web-first city simulation game where you build and manage living metropolitan cities. Balance citizen needs, public transport, city budgets, and utilities while watching a vibrant world unfold—from day-to-night lighting and dynamic rainstorms where citizens open umbrellas, to smooth traffic networks and emergency response.",
+    "orchestrationStory": "Built using AI as an engineering multiplier, guided by meticulous human craftsmanship: custom game architecture, 150+ automated tests, and continuous QA to ensure smooth 60 FPS performance and reliable simulation logic.",
+    "status": "Early Access Live",
+    "category": "3D Simulation & Gaming",
+    "metrics": [
+      {
+        "label": "Performance",
+        "value": "Instant 60 FPS"
+      },
+      {
+        "label": "Test Coverage",
+        "value": "150+ Tests Passed"
+      },
+      {
+        "label": "World Engine",
+        "value": "Living 3D City"
+      },
+      {
+        "label": "Release Status",
+        "value": "Steam Roadmap"
+      }
+    ],
+    "tags": [
+      "City-Builder Game",
+      "3D Web Simulation",
+      "TypeScript",
+      "Living Economy",
+      "Urban Logistics",
+      "Steam Roadmap"
+    ],
+    "links": {
+      "demo": "https://metropolyca.vercel.app/",
+      "github": "https://github.com/netssv/metropolyca"
+    }
   }
 }

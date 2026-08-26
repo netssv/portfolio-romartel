@@ -133,7 +133,7 @@ export const PCBBoard: React.FC<PCBBoardProps> = ({ avatarSrc, avatarAlt }) => {
 
           {/* Chip label */}
           <div className="absolute -bottom-8 left-0 right-0 text-center">
-            <span className="text-[10px] font-mono text-[#00ff41]/75 tracking-widest font-bold">
+            <span className="text-xs font-mono text-[#00ff41]/75 tracking-widest font-bold">
               IC-RM-01 · 5Y
             </span>
           </div>

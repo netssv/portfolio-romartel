@@ -93,7 +93,7 @@ export const PhilosophySection: React.FC<PhilosophyProps> = ({ quote, focus }) =
       <div className="mx-auto max-w-6xl px-6 relative z-10">
         <FadeIn>
           <div className="max-w-3xl">
-            <p className="text-[10px] font-body font-bold uppercase tracking-wider text-text-muted mb-8">
+            <p className="text-xs font-body font-bold uppercase tracking-wider text-text-muted mb-8">
               Philosophy &amp; Strategic Vision
             </p>
 

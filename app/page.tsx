@@ -4,7 +4,7 @@ import siteData from "@/src/data/siteData.json";
 import { Navbar } from "@/src/components/Navbar";
 import { HeroSection } from "@/src/components/HeroSection";
 import { TrustedStack } from "@/src/components/TrustedStack";
-import { ProjectCard } from "@/src/components/ProjectCard";
+import { ProjectsSection } from "@/src/components/ProjectsSection";
 import { MetricsSection } from "@/src/components/MetricsSection";
 import { ExperienceTimeline } from "@/src/components/ExperienceTimeline";
 import { SkillsGrid } from "@/src/components/SkillsGrid";
@@ -12,26 +12,14 @@ import { PhilosophySection } from "@/src/components/PhilosophySection";
 import { ArchitectureSection } from "@/src/components/ArchitectureSection";
 import { CaseStudiesSection } from "@/src/components/CaseStudiesSection";
 import { ContactSection } from "@/src/components/ContactSection";
-import { FadeIn } from "@/src/components/ui/FadeIn";
-import { SectionLabel } from "@/src/components/ui/SectionLabel";
-import { useDesign } from "@/src/context/DesignContext";
-import { PCBLayout } from "@/src/components/pcb/PCBLayout";
 import { ScrollIndicator } from "@/src/components/layout/ScrollIndicator";
 
 const {
-  profile, experience, sideProjects,
+  profile, experience, flagshipProject, sideProjects,
   skillsMatrix, contact, trustedStack, metrics, philosophy,
 } = siteData;
 
 export default function Home() {
-  const { design } = useDesign();
-
-  if (design === "pcb") {
-    return (
-      <PCBLayout />
-    );
-  }
-
   return (
     <>
       <ScrollIndicator />
@@ -60,25 +48,11 @@ export default function Home() {
         {/* ── Tech Stack ─────────────────────────────── */}
         <TrustedStack stack={trustedStack} />
 
-        {/* ── Projects ───────────────────────────────── */}
-        <section id="projects" className="py-24 border-b border-border-subtle">
-          <div className="mx-auto max-w-6xl px-6">
-            <FadeIn>
-              <SectionLabel
-                eyebrow="Portfolio"
-                heading="Featured Projects"
-                description="Open-source tools and applications built to solve real operational and consumer problems."
-              />
-            </FadeIn>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              {sideProjects.slice(0, 3).map((project, i) => (
-                <FadeIn key={project.id} delay={i * 80}>
-                  <ProjectCard {...project} />
-                </FadeIn>
-              ))}
-            </div>
-          </div>
-        </section>
+        {/* ── Projects (Flagship + 5 Specialized Projects) ──── */}
+        <ProjectsSection
+          flagship={flagshipProject}
+          projects={sideProjects}
+        />
 
         {/* ── Metrics ────────────────────────────────── */}
         <MetricsSection metrics={metrics} />
@@ -115,8 +89,6 @@ export default function Home() {
           </div>
         </div>
       </footer>
-
     </>
   );
 }
-

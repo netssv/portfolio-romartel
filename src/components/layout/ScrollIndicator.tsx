@@ -117,7 +117,7 @@ export const ScrollIndicator: React.FC = () => {
         onDragStart={() => setIsDragging(true)}
         onDragEnd={() => setIsDragging(false)}
         className={`fixed left-5 top-1/2 -translate-y-1/2 z-50 hidden lg:flex flex-col gap-2.5
-          font-mono text-[10px] select-none
+          font-mono text-xs select-none
           bg-bg-surface/90 border border-border-subtle p-4 rounded-2xl
           shadow-xl backdrop-blur-md w-[220px]
           transition-shadow duration-200
@@ -134,7 +134,7 @@ export const ScrollIndicator: React.FC = () => {
             <span className="w-1.5 h-1.5 rounded-full bg-yellow-500/70" />
             <span className="w-1.5 h-1.5 rounded-full bg-green-500/70" />
           </div>
-          <span className="text-[8px] text-text-muted uppercase tracking-widest font-bold">
+          <span className="text-xs text-text-muted uppercase tracking-widest font-bold">
             bash · drag me
           </span>
         </div>

@@ -2,38 +2,43 @@
 
 import React, { createContext, useContext, useState, ReactNode } from "react";
 
-export type DesignTheme = "editorial" | "pcb";
+export type ThemeMode = "day" | "night";
 
 interface DesignContextValue {
-  design: DesignTheme;
-  setDesign: (d: DesignTheme) => void;
+  theme: ThemeMode;
+  setTheme: (t: ThemeMode) => void;
 }
 
 const DesignContext = createContext<DesignContextValue>({
-  design: "editorial",
-  setDesign: () => {},
+  theme: "night",
+  setTheme: () => {},
 });
 
 export const DesignProvider = ({ children }: { children: ReactNode }) => {
-  const [design, setDesignState] = useState<DesignTheme>(() => {
+  const [theme, setThemeState] = useState<ThemeMode>(() => {
     if (typeof window !== "undefined" && typeof localStorage !== "undefined") {
-      const saved = localStorage.getItem("design-theme");
-      if (saved === "editorial" || saved === "pcb") {
-        return saved as DesignTheme;
+      const saved = localStorage.getItem("theme-override");
+      if (saved === "day" || saved === "night") {
+        return saved as ThemeMode;
       }
     }
-    return "editorial";
+    return "night";
   });
 
-  const setDesign = (d: DesignTheme) => {
-    setDesignState(d);
+  const setTheme = (t: ThemeMode) => {
+    setThemeState(t);
     if (typeof localStorage !== "undefined") {
-      localStorage.setItem("design-theme", d);
+      localStorage.setItem("theme-override", t);
+      if (t === "night") {
+        document.documentElement.classList.add("theme-dark");
+      } else {
+        document.documentElement.classList.remove("theme-dark");
+      }
     }
   };
 
   return (
-    <DesignContext.Provider value={{ design, setDesign }}>
+    <DesignContext.Provider value={{ theme, setTheme }}>
       {children}
     </DesignContext.Provider>
   );

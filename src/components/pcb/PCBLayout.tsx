@@ -49,7 +49,7 @@ export const PCBLayout: React.FC = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 h-12 flex items-center justify-between">
           <div className="flex items-center gap-3">
             <div className="w-2 h-2 rounded-full bg-accent animate-pulse" />
-            <span className="text-[11px] font-mono text-text-primary tracking-widest uppercase font-bold">
+            <span className="text-xs font-mono text-text-primary tracking-widest uppercase font-bold">
               {profile.name} · System Active
             </span>
           </div>
@@ -58,7 +58,7 @@ export const PCBLayout: React.FC = () => {
               <a
                 key={href}
                 href={href}
-                className="text-[10px] font-mono text-text-muted hover:text-accent transition-colors uppercase tracking-widest font-bold"
+                className="text-xs font-mono text-text-muted hover:text-accent transition-colors uppercase tracking-widest font-bold"
               >
                 {href.replace("#", "")}
               </a>
@@ -70,7 +70,7 @@ export const PCBLayout: React.FC = () => {
               <a
                 key={href}
                 href={href}
-                className="text-[9px] font-mono text-text-muted hover:text-accent transition-colors uppercase tracking-widest font-bold"
+                className="text-xs font-mono text-text-muted hover:text-accent transition-colors uppercase tracking-widest font-bold"
               >
                 {href.replace("#", "").slice(0, 3)}
               </a>
@@ -101,7 +101,7 @@ export const PCBLayout: React.FC = () => {
           </div>
         </div>
         <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 animate-bounce">
-          <span className="text-[9px] font-mono text-text-muted tracking-widest">SCROLL</span>
+          <span className="text-xs font-mono text-text-muted tracking-widest">SCROLL</span>
           <div className="w-px h-7 bg-gradient-to-b from-accent/40 to-transparent" />
         </div>
       </div>
@@ -152,10 +152,10 @@ export const PCBLayout: React.FC = () => {
       {/* Footer */}
       <footer className="border-t border-border-subtle py-8 bg-bg-surface/20">
         <div className="max-w-5xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-3">
-          <p className="text-[10px] font-mono text-text-muted">
+          <p className="text-xs font-mono text-text-muted">
             <span className="text-accent/40">©</span> {new Date().getFullYear()} {profile.name} · All Rights Reserved
           </p>
-          <p className="text-[10px] font-mono text-text-muted/60">BUILD::PCB_THEME_v2</p>
+          <p className="text-xs font-mono text-text-muted/60">BUILD::PCB_THEME_v2</p>
         </div>
       </footer>
 

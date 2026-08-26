@@ -74,17 +74,17 @@ export const PCBNodes: React.FC<PCBNodesProps> = ({ width, height, radius }) => 
                   <p className="text-base font-heading font-extrabold text-[#00ff41] leading-none">
                     {node.label}
                   </p>
-                  <p className="text-[9px] font-body text-[#00ff41]/75 mt-0.5 leading-tight px-1">
+                  <p className="text-xs font-body text-[#00ff41]/75 mt-0.5 leading-tight px-1">
                     {node.sublabel}
                   </p>
                 </>
               ) : (
                 <>
-                  <p className="text-[10px] font-body font-bold text-[#00ff41] leading-tight px-1">
+                  <p className="text-xs font-body font-bold text-[#00ff41] leading-tight px-1">
                     {node.label}
                   </p>
                   {node.sublabel && (
-                    <p className="text-[9px] font-body text-[#00ff41]/65 leading-tight px-1">
+                    <p className="text-xs font-body text-[#00ff41]/65 leading-tight px-1">
                       {node.sublabel}
                     </p>
                   )}

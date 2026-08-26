@@ -185,7 +185,7 @@ export const HeroSection: React.FC<HeroProps> = ({
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
                 <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500" />
               </span>
-              <span className="text-[11px] font-body font-semibold uppercase tracking-[0.16em] text-emerald-500">
+              <span className="text-xs font-body font-semibold uppercase tracking-[0.16em] text-emerald-500">
                 Available for strategic execution
               </span>
             </motion.div>
@@ -279,7 +279,7 @@ export const HeroSection: React.FC<HeroProps> = ({
 
             {/* Minimal Location tag */}
             <motion.div 
-              className="mt-6 flex items-center gap-1.5 text-[10px] font-body font-semibold tracking-wider text-text-muted uppercase"
+              className="mt-6 flex items-center gap-1.5 text-xs font-body font-semibold tracking-wider text-text-muted uppercase"
               style={{ transform: "translateZ(40px)" }}
             >
               <span className="h-1 w-1 rounded-full bg-accent" />

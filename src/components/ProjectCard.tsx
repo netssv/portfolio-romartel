@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import { ArrowUpRight } from "lucide-react";
 import { motion } from "framer-motion";
 
-const Github = ({ size = 13, className = "" }: { size?: number; className?: string }) => (
+const GithubIcon = ({ size = 13, className = "" }: { size?: number; className?: string }) => (
   <svg
     viewBox="0 0 24 24"
     width={size}
@@ -26,52 +26,27 @@ export interface ProjectCardProps {
   title: string;
   subtitle: string;
   description: string;
+  valueProp?: string;
+  outcome?: string;
   category: string;
   status: string;
-  links: { github: string; demo: string; preview?: string };
+  tags?: string[];
+  links: { github: string; demo: string };
 }
 
-const PROJECT_META: Record<
-  string,
-  { valueProp: string; outcome: string; stack: string[] }
-> = {
-  webaudit: {
-    valueProp: "Instant on-page SEO and HTML audits without leaving the browser.",
-    outcome: "Saves developers 15–20 min per diagnostic session.",
-    stack: ["JavaScript", "Chrome Extension API", "DOM Parser"],
-  },
-  whathappened: {
-    valueProp: "Linux-style terminal for deep frontend diagnostics inside Chrome.",
-    outcome: "Enables T2/T3 engineers to audit web apps via CLI commands.",
-    stack: ["TypeScript", "Xterm.js", "Chrome Extension API"],
-  },
-  rebusca: {
-    valueProp: "Semantic price comparison across Salvadoran supermarkets.",
-    outcome: "Helps families identify the cheapest basket in real time.",
-    stack: ["Kotlin", "Jetpack Compose", "Hilt DI", "Web Scraping"],
-  },
-};
-
-const isReleased = (status: string) => status === "Production";
-
 export const ProjectCard: React.FC<ProjectCardProps> = ({
-  id,
   title,
   subtitle,
+  description,
+  valueProp,
+  outcome,
   category,
   status,
+  tags = [],
   links,
 }) => {
   const [coords, setCoords] = useState({ x: 0, y: 0 });
   const [isHovered, setIsHovered] = useState(false);
-
-  const meta = PROJECT_META[id] ?? {
-    valueProp: "Custom tool built to solve operational problems.",
-    outcome: "Delivered measurable efficiency improvements.",
-    stack: ["Next.js", "TypeScript"],
-  };
-
-  const released = isReleased(status);
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     const { left, top } = e.currentTarget.getBoundingClientRect();
@@ -80,125 +55,87 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
 
   return (
     <motion.article
-      className="group relative flex flex-col p-6 rounded-2xl border border-border-base overflow-hidden transition-colors duration-300 hover:border-accent"
-      whileHover={{ y: -5 }}
-      transition={{ type: "spring", stiffness: 200, damping: 18 }}
+      className="group relative flex flex-col justify-between p-6 sm:p-7 rounded-2xl border border-border-base bg-bg-surface overflow-hidden transition-all duration-300 hover:border-accent hover:shadow-xl"
+      whileHover={{ y: -4 }}
+      transition={{ type: "spring", stiffness: 220, damping: 18 }}
       onMouseMove={handleMouseMove}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       style={{
-        background: `radial-gradient(300px circle at ${coords.x}px ${coords.y}px, rgba(255, 149, 0, 0.04), transparent 80%), var(--bg-surface)`,
+        background: `radial-gradient(400px circle at ${coords.x}px ${coords.y}px, rgba(255, 149, 0, 0.04), transparent 80%), var(--bg-surface)`,
       }}
     >
-      {/* Spotlight Border illumination overlay (highly subtle) */}
-      {isHovered && (
-        <div
-          className="absolute inset-0 pointer-events-none rounded-2xl opacity-100 transition-opacity duration-300"
-          style={{
-            border: "1.5px solid transparent",
-            background: `radial-gradient(150px circle at ${coords.x}px ${coords.y}px, rgba(255, 149, 0, 0.3), transparent 70%)`,
-            WebkitMask:
-              "linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)",
-            WebkitMaskComposite: "xor",
-            maskComposite: "exclude",
-          }}
-        />
-      )}
-
-      {/* Background Media Preview (if available) */}
-      {links.preview && (
-        <img
-          src={links.preview}
-          alt={`Preview of ${title}`}
-          className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-700 pointer-events-none z-0 ${
-            isHovered ? "opacity-[0.12]" : "opacity-0"
-          }`}
-        />
-      )}
-
-      {/* Content wrapper to stay above the background video */}
-      <div className="relative z-10 flex flex-col h-full">
-        {/* Eyebrow details */}
-        <div className="flex items-start justify-between gap-4 mb-5">
-          <div>
-            <span className="text-[9px] font-body font-bold uppercase tracking-wider text-text-muted">
-              {category}
-            </span>
-            <h3 className="text-lg font-heading font-bold text-text-primary group-hover:text-accent transition-colors duration-200 mt-1">
-              {title}
-            </h3>
-            <p className="text-xs font-body text-text-muted mt-0.5">{subtitle}</p>
-          </div>
-          <span
-            className={`shrink-0 mt-0.5 px-2.5 py-0.5 rounded-full text-[10px] font-body font-semibold tracking-wide border ${
-              released
-                ? "bg-emerald-500/5 text-emerald-400 border-emerald-500/10"
-                : "bg-accent/5 text-accent border-accent/10"
-            }`}
-          >
-            {released ? "Live" : "Beta"}
+      {/* Top Header */}
+      <div>
+        <div className="flex items-start justify-between gap-3 mb-4">
+          <span className="text-xs font-mono font-bold uppercase tracking-wider text-accent/80">
+            {category}
+          </span>
+          <span className="shrink-0 px-2.5 py-0.5 rounded-full text-xs font-mono font-semibold tracking-wide border bg-emerald-500/5 text-emerald-400 border-emerald-500/20">
+            {status}
           </span>
         </div>
 
-        {/* Value proposition */}
-        <p className="text-sm font-body text-text-secondary leading-relaxed mb-3">
-          {meta.valueProp}
+        <h3 className="text-xl font-heading font-bold text-text-primary group-hover:text-accent transition-colors duration-200">
+          {title}
+        </h3>
+        <p className="text-xs font-body font-medium text-text-muted mt-1 mb-3">
+          {subtitle}
         </p>
 
-        {/* Animated Analytics & Tech Stack (Reveals on Hover) */}
-        <motion.div
-          initial={{ height: 0, opacity: 0, x: 20 }}
-          animate={{
-            height: isHovered ? "auto" : 0,
-            opacity: isHovered ? 1 : 0,
-            x: isHovered ? 0 : 20,
-          }}
-          transition={{ type: "spring", stiffness: 260, damping: 20 }}
-          className="overflow-hidden flex flex-col"
-        >
-          {/* Highlighted Outcome */}
-          <p className="text-xs font-body font-semibold text-text-primary mb-6 mt-4 flex items-center gap-1.5">
-            <span className="text-accent">→</span>
-            <span>{meta.outcome}</span>
-          </p>
+        <p className="text-xs sm:text-sm font-body text-text-secondary leading-relaxed mb-4">
+          {description}
+        </p>
 
-          {/* Technology chips */}
+        {/* Highlighted Value Prop */}
+        {valueProp && (
+          <div className="mb-4 text-xs font-body text-text-primary/90 bg-bg-base/60 rounded-xl p-3 border border-border-subtle/50">
+            <span className="text-accent font-semibold">Key Highlight: </span>
+            {valueProp}
+          </div>
+        )}
+
+        {/* Technology Pills */}
+        {tags.length > 0 && (
           <div className="flex flex-wrap gap-1.5 mb-6">
-            {meta.stack.map((tech) => (
+            {tags.map((tech) => (
               <span
                 key={tech}
-                className="px-2 py-0.5 rounded-md text-[10px] font-body text-text-muted bg-bg-raised border border-border-subtle"
+                className="px-2 py-0.5 rounded-md text-xs font-mono text-text-muted bg-bg-raised border border-border-subtle"
               >
                 {tech}
               </span>
             ))}
           </div>
-        </motion.div>
+        )}
+      </div>
 
-        {/* Footer dynamic links */}
-        <div className="mt-auto flex items-center gap-4 pt-4 border-t border-border-subtle">
-          <a
-            href={links.github}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-1.5 text-xs font-body font-semibold text-text-secondary hover:text-text-primary transition-colors duration-200"
-          >
-            <Github size={13} className="text-text-muted" />
-            <span>GitHub</span>
-          </a>
+      {/* Footer CTA Links */}
+      <div className="flex items-center justify-between pt-4 border-t border-border-subtle mt-auto">
+        <a
+          href={links.github}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center gap-1.5 text-xs font-body font-semibold text-text-secondary hover:text-text-primary transition-colors duration-200"
+        >
+          <GithubIcon size={13} className="text-text-muted" />
+          <span>Source Code</span>
+        </a>
+
+        {links.demo && (
           <a
             href={links.demo}
             target="_blank"
             rel="noopener noreferrer"
-            className="group/btn inline-flex items-center gap-1 text-xs font-body font-semibold text-accent hover:text-amber-400 transition-colors duration-200 ml-auto"
+            className="group/btn inline-flex items-center gap-1 text-xs font-body font-semibold text-accent hover:text-amber-300 transition-colors duration-200"
           >
-            <span>Explore info</span>
+            <span>Live Project</span>
             <ArrowUpRight
               size={13}
               className="text-accent group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5 transition-transform duration-200"
             />
           </a>
-        </div>
+        )}
       </div>
     </motion.article>
   );

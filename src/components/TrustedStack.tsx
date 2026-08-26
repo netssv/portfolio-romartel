@@ -61,7 +61,7 @@ export const TrustedStack: React.FC<TrustedStackProps> = ({ stack }) => (
     <div className="mx-auto max-w-6xl px-6">
       <FadeIn>
         <div className="flex flex-wrap items-center gap-x-8 gap-y-3">
-          <span className="text-[11px] font-body font-semibold uppercase tracking-[0.12em] text-text-muted shrink-0">
+          <span className="text-xs font-body font-semibold uppercase tracking-[0.12em] text-text-muted shrink-0">
             Tech stack
           </span>
           <div className="h-px flex-1 bg-border-subtle hidden sm:block" />
