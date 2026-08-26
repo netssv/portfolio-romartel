@@ -266,7 +266,7 @@ export const HeroSection: React.FC<HeroProps> = ({
             onMouseMove={handleMouseMove}
             onMouseLeave={handleMouseLeave}
             style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}
-            whileHover={{ scale: 1.15, transition: { type: "spring", stiffness: 400, damping: 25 } }}
+            whileHover={{ scale: 1.04, transition: { type: "spring", stiffness: 300, damping: 22 } }}
           >
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <motion.img

@@ -1,7 +1,7 @@
 "use client";
 
-import React, { useState } from "react";
-import { ArrowUpRight, Play, Sparkles, ShieldCheck, Flame, HeartHandshake } from "lucide-react";
+import React, { useState, useRef } from "react";
+import { ArrowUpRight, Play, Pause, Volume2, VolumeX, Maximize2, Sparkles, ShieldCheck, Flame, Film } from "lucide-react";
 import { motion } from "framer-motion";
 
 const GithubIcon = ({ size = 14, className = "" }: { size?: number; className?: string }) => (
@@ -33,6 +33,7 @@ export interface FlagshipProjectProps {
   metrics: { label: string; value: string }[];
   tags: string[];
   links: { demo: string; github: string };
+  videoSrc?: string;
 }
 
 export const FlagshipProjectCard: React.FC<FlagshipProjectProps> = ({
@@ -43,9 +44,39 @@ export const FlagshipProjectCard: React.FC<FlagshipProjectProps> = ({
   metrics,
   tags,
   links,
+  videoSrc = "/metro.mp4",
 }) => {
   const [coords, setCoords] = useState({ x: 0, y: 0 });
   const [isHovered, setIsHovered] = useState(false);
+
+  // Video state
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const [isPlaying, setIsPlaying] = useState(true);
+  const [isMuted, setIsMuted] = useState(true);
+
+  const togglePlay = () => {
+    if (!videoRef.current) return;
+    if (isPlaying) {
+      videoRef.current.pause();
+      setIsPlaying(false);
+    } else {
+      videoRef.current.play();
+      setIsPlaying(true);
+    }
+  };
+
+  const toggleMute = () => {
+    if (!videoRef.current) return;
+    videoRef.current.muted = !isMuted;
+    setIsMuted(!isMuted);
+  };
+
+  const handleFullscreen = () => {
+    if (!videoRef.current) return;
+    if (videoRef.current.requestFullscreen) {
+      videoRef.current.requestFullscreen();
+    }
+  };
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     const { left, top } = e.currentTarget.getBoundingClientRect();
@@ -97,6 +128,54 @@ export const FlagshipProjectCard: React.FC<FlagshipProjectProps> = ({
           <span className="text-xs font-mono uppercase tracking-widest text-text-muted">
             3D Web Simulation & Game
           </span>
+        </div>
+
+        {/* ── Cinematic Trailer 1 Video Player ── */}
+        <div className="relative rounded-2xl overflow-hidden border border-border-base bg-black/90 aspect-video shadow-2xl group/video">
+          <video
+            ref={videoRef}
+            src={videoSrc}
+            autoPlay
+            loop
+            muted={isMuted}
+            playsInline
+            className="w-full h-full object-cover cursor-pointer"
+            onClick={togglePlay}
+          />
+
+          {/* Top video label */}
+          <div className="absolute top-3.5 left-3.5 z-20 flex items-center gap-2 px-3 py-1.5 rounded-xl bg-black/75 backdrop-blur-md border border-white/10 text-xs font-mono text-white/90">
+            <Film size={13} className="text-accent" />
+            <span className="font-semibold">Official Trailer 1 · Metropolyca Engine</span>
+          </div>
+
+          {/* Floating Video Controls */}
+          <div className="absolute bottom-3.5 right-3.5 z-20 flex items-center gap-2">
+            <button
+              onClick={togglePlay}
+              className="p-2 rounded-xl bg-black/75 backdrop-blur-md border border-white/15 text-white hover:border-accent hover:text-accent transition-all cursor-pointer"
+              aria-label={isPlaying ? "Pause video" : "Play video"}
+            >
+              {isPlaying ? <Pause size={14} /> : <Play size={14} className="fill-current" />}
+            </button>
+
+            <button
+              onClick={toggleMute}
+              className="px-3 py-1.5 rounded-xl bg-black/75 backdrop-blur-md border border-white/15 text-xs font-mono text-white hover:border-accent hover:text-accent transition-all flex items-center gap-1.5 cursor-pointer"
+              aria-label={isMuted ? "Unmute audio" : "Mute audio"}
+            >
+              {isMuted ? <VolumeX size={14} /> : <Volume2 size={14} className="text-accent" />}
+              <span>{isMuted ? "Unmute" : "Mute"}</span>
+            </button>
+
+            <button
+              onClick={handleFullscreen}
+              className="p-2 rounded-xl bg-black/75 backdrop-blur-md border border-white/15 text-white hover:border-accent hover:text-accent transition-all cursor-pointer"
+              aria-label="Fullscreen video"
+            >
+              <Maximize2 size={14} />
+            </button>
+          </div>
         </div>
 
         {/* Main Content Info */}
