@@ -19,7 +19,7 @@ import { ScrollIndicator } from "@/src/components/layout/ScrollIndicator";
 
 const {
   profile, experience, sideProjects,
-  skillsMatrix, contact, trustedStack, metrics, philosophy,
+  skillsMatrix, contact, trustedStack, metrics, philosophy, navigation,
 } = siteData;
 
 export default function Home() {
@@ -42,14 +42,8 @@ export default function Home() {
     <>
       <ScrollIndicator />
       <Navbar 
-
         authorName={profile.name} 
-        navItems={[
-          { name: "Home", path: "#top" },
-          { name: "Projects", path: "#projects" },
-          { name: "Experience", path: "#experience" },
-          { name: "Insights", path: "#skills" }
-        ]} 
+        navItems={navigation} 
       />
       <main className="flex-1 w-full flex flex-col min-w-0">
         {/* ── Hero ───────────────────────────────────── */}

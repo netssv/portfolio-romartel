@@ -24,11 +24,10 @@
     }
   },
   "navigation": [
-    { "name": "Resume", "path": "/" },
+    { "name": "Home", "path": "#top" },
     { "name": "Projects", "path": "#projects" },
     { "name": "Experience", "path": "#experience" },
-    { "name": "Skills", "path": "#skills" },
-    { "name": "Contact", "path": "/contact" }
+    { "name": "Insights", "path": "#skills" }
   ],
   "profile": {
     "name": "Rodrigo Martel",
