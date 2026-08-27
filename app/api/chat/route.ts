@@ -16,14 +16,41 @@ interface IncomingMessage {
   text: string;
 }
 
+function normalizeContents(messages: IncomingMessage[]) {
+  // Gemini API requires conversation to start with a user turn
+  const firstUserIndex = messages.findIndex((m) => m.role === "user");
+  if (firstUserIndex === -1) return [];
+
+  // Limit context to last 10 messages
+  const recentMessages = messages.slice(firstUserIndex).slice(-10);
+  const contents: Array<{ role: "user" | "model"; parts: Array<{ text: string }> }> = [];
+
+  for (const m of recentMessages) {
+    const text = (m.text || "").trim();
+    if (!text) continue;
+
+    const role = m.role === "user" ? "user" : "model";
+    const lastEntry = contents[contents.length - 1];
+
+    if (lastEntry && lastEntry.role === role) {
+      lastEntry.parts[0].text += `\n${text}`;
+    } else {
+      contents.push({ role, parts: [{ text }] });
+    }
+  }
+
+  return contents;
+}
+
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
-    const messages: IncomingMessage[] = body.messages || [];
+    const rawMessages: IncomingMessage[] = body.messages || [];
 
-    if (!Array.isArray(messages) || messages.length === 0) {
+    const contents = normalizeContents(rawMessages);
+    if (contents.length === 0) {
       return NextResponse.json(
-        { error: "A non-empty list of messages is required." },
+        { error: "A valid user message is required to start the conversation." },
         { status: 400 }
       );
     }
@@ -31,18 +58,13 @@ export async function POST(req: NextRequest) {
     const ai = getGeminiClient();
     const systemInstruction = buildSystemInstruction();
 
-    const contents: any[] = messages.map((m) => ({
-      role: m.role === "user" ? "user" : "model",
-      parts: [{ text: m.text }],
-    }));
-
-    // Initial model invocation with zero thinking budget
+    // Initial model invocation with low temperature for precision
     const initialResponse = await ai.models.generateContent({
       model: "gemini-2.5-flash",
       contents,
       config: {
         systemInstruction,
-        temperature: 0.7,
+        temperature: 0.3,
         maxOutputTokens: 800,
         thinkingConfig: { thinkingBudget: 0 },
         tools: [{ functionDeclarations: CHATBOT_TOOL_DECLARATIONS }],
@@ -66,7 +88,6 @@ export async function POST(req: NextRequest) {
         toolResult = { error: `Unknown function ${call.name}` };
       }
 
-      // Append model call and tool execution result to contents
       const toolContents = [
         ...contents,
         {
@@ -91,7 +112,7 @@ export async function POST(req: NextRequest) {
         contents: toolContents,
         config: {
           systemInstruction,
-          temperature: 0.7,
+          temperature: 0.3,
           maxOutputTokens: 800,
           thinkingConfig: { thinkingBudget: 0 },
         },
@@ -103,19 +124,17 @@ export async function POST(req: NextRequest) {
       });
     }
 
-    const replyText = initialResponse.text || "No response generated.";
+    const replyText = initialResponse.text || "I am here to assist with Rodrigo's portfolio. How can I help?";
     return NextResponse.json({ reply: replyText });
   } catch (error: unknown) {
-    const err = error as { message?: string };
-    const errorMessage = err?.message || "Internal server error";
+    const err = error as { message?: string; status?: number };
+    console.error("[Clippo Chat API Error]:", error);
+
+    const errorMessage =
+      err?.message || "Failed to process request with AI assistant.";
 
     return NextResponse.json(
-      {
-        error:
-          process.env.NODE_ENV === "development"
-            ? errorMessage
-            : "Failed to process request. Please check GEMINI_API_KEY.",
-      },
+      { error: errorMessage },
       { status: 500 }
     );
   }
