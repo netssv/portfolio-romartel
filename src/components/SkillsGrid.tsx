@@ -136,6 +136,7 @@ export const SkillsGrid: React.FC<{ skillsMatrix: SkillsMatrixData }> = ({ skill
       <div className="mx-auto max-w-5xl px-6">
         <FadeIn>
           <SectionLabel
+            index="02"
             eyebrow="Expertise"
             heading="Technical Skills"
             description="A curated toolkit across technical support, data intelligence, and digital operations — refined through years of cross-functional collaboration."

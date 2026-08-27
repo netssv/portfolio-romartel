@@ -1,21 +1,21 @@
 "use client";
 
 import React, { useState } from "react";
-import { ArrowUpRight } from "lucide-react";
+import { ArrowUpRight, Trophy, LineChart, Terminal, Cpu, Bluetooth, Gamepad2, Layers, LucideIcon } from "lucide-react";
 import { motion } from "framer-motion";
 
-const GithubIcon = ({ size = 13, className = "" }: { size?: number; className?: string }) => (
-  <svg
-    viewBox="0 0 24 24"
-    width={size}
-    height={size}
-    stroke="currentColor"
-    strokeWidth="2.25"
-    fill="none"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-    className={className}
-  >
+const ICON_MAP: Record<string, LucideIcon> = {
+  Trophy,
+  LineChart,
+  Terminal,
+  Cpu,
+  Bluetooth,
+  Gamepad2,
+  Layers,
+};
+
+const GithubIcon = ({ size = 13 }: { size?: number }) => (
+  <svg viewBox="0 0 24 24" width={size} height={size} stroke="currentColor" strokeWidth="2.25" fill="none" strokeLinecap="round" strokeLinejoin="round">
     <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4" />
     <path d="M9 18c-4.51 2-5-2-7-2" />
   </svg>
@@ -29,6 +29,8 @@ export interface ProjectCardProps {
   valueProp?: string;
   category: string;
   status: string;
+  icon?: string;
+  image?: string;
   tags?: string[];
   links: { github: string; demo: string };
 }
@@ -40,111 +42,111 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
   valueProp,
   category,
   status,
+  icon,
+  image,
   tags = [],
   links,
 }) => {
   const [coords, setCoords] = useState({ x: 0, y: 0 });
-  const [showAllTags, setShowAllTags] = useState(false);
+  const IconComponent = icon && ICON_MAP[icon] ? ICON_MAP[icon] : Layers;
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     const { left, top } = e.currentTarget.getBoundingClientRect();
     setCoords({ x: e.clientX - left, y: e.clientY - top });
   };
 
-  const visibleTags = showAllTags ? tags : tags.slice(0, 4);
-  const remainingCount = tags.length - 4;
-
   return (
     <motion.article
-      className="group relative flex flex-col justify-between p-6 sm:p-6 rounded-2xl border border-border-base bg-bg-surface overflow-hidden transition-all duration-300 hover:border-accent hover:shadow-xl"
-      whileHover={{ y: -3 }}
+      className="group relative flex flex-col justify-between rounded-2xl border border-border-base bg-bg-surface overflow-hidden transition-all duration-300 hover:border-accent hover:shadow-xl"
+      whileHover={{ y: -4 }}
       transition={{ type: "spring", stiffness: 240, damping: 20 }}
       onMouseMove={handleMouseMove}
       style={{
-        background: `radial-gradient(400px circle at ${coords.x}px ${coords.y}px, rgba(255, 149, 0, 0.05), transparent 80%), var(--bg-surface)`,
+        background: `radial-gradient(400px circle at ${coords.x}px ${coords.y}px, rgba(255, 149, 0, 0.06), transparent 80%), var(--bg-surface)`,
       }}
     >
-      {/* Top Header */}
-      <div>
-        <div className="flex items-center justify-between gap-3 mb-3">
-          <span className="text-[11px] font-mono font-bold uppercase tracking-wider text-text-accent">
-            {category}
-          </span>
-          <span className="shrink-0 px-2 py-0.5 rounded-full text-[10px] font-mono font-semibold tracking-wide border bg-emerald-500/10 text-emerald-700 dark:text-emerald-300 border-emerald-500/30">
-            {status}
-          </span>
+      {/* Visual Screenshot Preview Banner */}
+      {image && (
+        <div className="relative w-full aspect-[16/9] overflow-hidden bg-bg-raised border-b border-border-subtle">
+          <motion.img
+            src={image}
+            alt={`${title} Preview`}
+            className="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
+            loading="lazy"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-bg-surface/90 via-transparent to-transparent opacity-60" />
+          
+          {/* Floating Status & Category on image */}
+          <div className="absolute top-3 left-3 right-3 flex items-center justify-between pointer-events-none">
+            <span className="flex items-center gap-1.5 px-2.5 py-1 rounded-md text-[10px] font-mono font-semibold bg-bg-surface/90 backdrop-blur-md border border-border-subtle text-text-primary shadow-xs">
+              <IconComponent className="w-3.5 h-3.5 text-accent" />
+              <span>{category}</span>
+            </span>
+            <span className="px-2 py-0.5 rounded-full text-[10px] font-mono font-semibold tracking-wide border bg-emerald-500/20 text-emerald-700 dark:text-emerald-300 border-emerald-500/40 backdrop-blur-sm">
+              {status}
+            </span>
+          </div>
         </div>
+      )}
 
-        <h3 className="text-lg font-heading font-bold text-text-primary group-hover:text-accent transition-colors duration-200">
+      {/* Content Body */}
+      <div className="p-5 flex-1 flex flex-col">
+        {!image && (
+          <div className="flex items-center justify-between gap-3 mb-3">
+            <span className="flex items-center gap-1.5 text-[11px] font-mono font-bold uppercase tracking-wider text-text-accent">
+              <IconComponent className="w-3.5 h-3.5 text-accent" />
+              <span>{category}</span>
+            </span>
+            <span className="px-2 py-0.5 rounded-full text-[10px] font-mono font-semibold border bg-emerald-500/10 text-emerald-700 dark:text-emerald-300 border-emerald-500/30">
+              {status}
+            </span>
+          </div>
+        )}
+
+        <h3 className="text-base sm:text-lg font-heading font-bold text-text-primary group-hover:text-accent transition-colors duration-200">
           {title}
         </h3>
-        <p className="text-xs font-body font-medium text-text-muted mt-0.5 mb-2.5">
+        <p className="text-xs font-mono text-text-muted mt-0.5 mb-2">
           {subtitle}
         </p>
-
-        <p className="text-xs font-body text-text-secondary leading-relaxed mb-3.5 line-clamp-3">
+        <p className="text-xs font-body text-text-secondary leading-relaxed mb-3 line-clamp-2">
           {description}
         </p>
 
-        {/* Highlighted Value Prop (Accent Bordered) */}
         {valueProp && (
-          <div className="mb-3.5 text-[11px] font-body text-text-secondary border-l-2 border-accent pl-2.5 py-0.5 bg-bg-base/40 rounded-r-lg">
-            <span className="font-semibold text-text-primary">Highlight: </span>
+          <div className="mb-3 text-[11px] font-mono text-text-secondary border-l-2 border-accent pl-2 py-0.5 bg-bg-base/50 rounded-r">
+            <span className="font-semibold text-text-primary">Impact: </span>
             {valueProp}
           </div>
         )}
 
-        {/* Technology Pills (Capped with toggle) */}
+        {/* Technology Pills */}
         {tags.length > 0 && (
-          <div className="flex flex-wrap items-center gap-1.5 mb-5">
-            {visibleTags.map((tech) => (
-              <span
-                key={tech}
-                className="px-2 py-0.5 rounded-md text-[11px] font-mono text-text-secondary bg-bg-raised border border-border-subtle"
-              >
+          <div className="flex flex-wrap items-center gap-1.5 mt-auto pt-2">
+            {tags.slice(0, 4).map((tech) => (
+              <span key={tech} className="px-2 py-0.5 rounded text-[10px] font-mono text-text-secondary bg-bg-raised border border-border-subtle">
                 {tech}
               </span>
             ))}
-            {remainingCount > 0 && !showAllTags && (
-              <button
-                type="button"
-                onClick={() => setShowAllTags(true)}
-                className="px-1.5 py-0.5 rounded-md text-[10px] font-mono text-text-muted hover:text-text-primary bg-bg-base/60 border border-border-subtle cursor-pointer transition-colors"
-              >
-                +{remainingCount} more
-              </button>
-            )}
           </div>
         )}
       </div>
 
       {/* Footer CTA Links */}
-      <div className="flex items-center justify-between pt-3 border-t border-border-subtle mt-auto font-body text-xs font-semibold">
-        <a
-          href={links.github}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-flex items-center gap-1.5 text-text-secondary hover:text-text-primary transition-colors duration-200"
-        >
-          <GithubIcon size={13} className="text-text-muted" />
+      <div className="flex items-center justify-between px-5 py-3 border-t border-border-subtle bg-bg-base/30 font-body text-xs font-semibold">
+        <a href={links.github} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 text-text-secondary hover:text-text-primary transition-colors duration-200">
+          <GithubIcon size={13} />
           <span>Source</span>
         </a>
 
         {links.demo && (
-          <a
-            href={links.demo}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="group/btn inline-flex items-center gap-1 text-accent hover:text-amber-500 transition-colors duration-200"
-          >
+          <a href={links.demo} target="_blank" rel="noopener noreferrer" className="group/btn inline-flex items-center gap-1 text-accent hover:text-amber-500 transition-colors duration-200">
             <span>Live Project</span>
-            <ArrowUpRight
-              size={13}
-              className="text-accent group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5 transition-transform duration-200"
-            />
+            <ArrowUpRight size={13} className="group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5 transition-transform duration-200" />
           </a>
         )}
       </div>
     </motion.article>
   );
 };
+

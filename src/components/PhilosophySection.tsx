@@ -1,153 +1,87 @@
 "use client";
 
 import React from "react";
-import { motion, Variants } from "framer-motion";
+import { motion } from "framer-motion";
 import { FadeIn } from "@/src/components/ui/FadeIn";
+import { Cpu, LineChart, Workflow, LucideIcon } from "lucide-react";
 
 interface PhilosophyProps {
   quote: string;
   focus: string[];
 }
 
-const containerVariants: Variants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.04,
-      delayChildren: 0.15,
-    },
+interface Pillar {
+  title: string;
+  description: string;
+  icon: LucideIcon;
+}
+
+const PILLARS: Pillar[] = [
+  {
+    title: "Engineering Rigor",
+    description: "Deep server and web infrastructure understanding behind every marketing decision.",
+    icon: Cpu,
   },
-};
-
-const wordVariants: Variants = {
-  hidden: { opacity: 0, y: 10, filter: "blur(2px)" },
-  visible: {
-    opacity: 1,
-    y: 0,
-    filter: "blur(0px)",
-    transition: {
-      duration: 0.5,
-      ease: "easeOut",
-    },
+  {
+    title: "Growth Telemetry",
+    description: "Data-driven CRO, GA4 custom event tracking, and quantitative modeling.",
+    icon: LineChart,
   },
-};
+  {
+    title: "Practical Automation",
+    description: "Building Python and POSIX tools that eliminate friction and speed up execution.",
+    icon: Workflow,
+  },
+];
 
-export const PhilosophySection: React.FC<PhilosophyProps> = ({ quote, focus }) => {
-  const words = quote.split(" ");
-
+export const PhilosophySection: React.FC<PhilosophyProps> = ({ quote }) => {
   return (
     <section className="py-24 border-b border-border-subtle relative overflow-hidden">
-      {/* ── Background Abstract Animated Geometry ──────────────────────── */}
-      <div 
-        className="absolute right-12 top-1/2 -translate-y-1/2 w-80 h-80 opacity-[0.05] pointer-events-none hidden md:block"
-        aria-hidden="true"
-      >
-        {/* Outer slow-spinning dashed ring */}
-        <motion.svg
-          viewBox="0 0 100 100"
-          className="w-full h-full text-accent"
-          animate={{ rotate: 360 }}
-          transition={{ repeat: Infinity, duration: 50, ease: "linear" }}
-        >
-          <circle
-            cx="50"
-            cy="50"
-            r="46"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="0.75"
-            strokeDasharray="6 6"
-          />
-        </motion.svg>
-
-        {/* Inner fast-spinning counter ring */}
-        <motion.svg
-          viewBox="0 0 100 100"
-          className="absolute inset-0 w-full h-full text-accent"
-          animate={{ rotate: -360 }}
-          transition={{ repeat: Infinity, duration: 30, ease: "linear" }}
-        >
-          <circle
-            cx="50"
-            cy="50"
-            r="32"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="0.75"
-            strokeDasharray="2 12"
-          />
-          <circle
-            cx="50"
-            cy="50"
-            r="20"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="0.5"
-            strokeDasharray="4 4"
-          />
-        </motion.svg>
-      </div>
-
-      {/* ── Section Content ────────────────────────────────────────────── */}
       <div className="mx-auto max-w-6xl px-6 relative z-10">
         <FadeIn>
-          <div className="max-w-3xl">
-            <p className="text-xs font-body font-bold uppercase tracking-wider text-text-muted mb-8">
-              Philosophy &amp; Strategic Vision
-            </p>
+          <div className="mb-14 max-w-3xl">
+            <span className="text-xs font-mono font-bold uppercase tracking-[0.14em] text-text-accent block mb-3">
+              Strategic Vision
+            </span>
+            <h2 className="text-2xl sm:text-3xl font-heading font-bold text-text-primary leading-snug">
+              &ldquo;{quote}&rdquo;
+            </h2>
+          </div>
 
-            {/* Blockquote with refined animated left border */}
-            <blockquote className="relative pl-6 sm:pl-8 mb-10 min-h-[90px]">
-              {/* Dynamic growing border indicator */}
-              <motion.div
-                className="absolute left-0 top-0 bottom-0 w-[2px] bg-accent origin-top"
-                initial={{ scaleY: 0 }}
-                whileInView={{ scaleY: 1 }}
-                viewport={{ once: true, margin: "-15%" }}
-                transition={{ duration: 0.75, ease: [0.16, 1, 0.3, 1] }}
-              />
-
-              {/* Dynamic Staggered Words Reveal */}
-              <motion.p
-                variants={containerVariants}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true, margin: "-15%" }}
-                className="text-xl sm:text-2xl font-heading font-medium text-text-primary leading-[1.6] tracking-tight flex flex-wrap gap-x-[7px] gap-y-1"
-              >
-                <motion.span variants={wordVariants} className="inline-block text-accent/80 font-serif">&ldquo;</motion.span>
-                {words.map((word, idx) => (
-                  <motion.span
-                    key={idx}
-                    variants={wordVariants}
-                    className="inline-block"
-                  >
-                    {word}
-                  </motion.span>
-                ))}
-                <motion.span variants={wordVariants} className="inline-block text-accent/80 font-serif">&rdquo;</motion.span>
-              </motion.p>
-            </blockquote>
-
-            {/* Premium capsule Focus tags */}
-            <div className="flex flex-wrap gap-2.5">
-              {focus.map((item, idx) => (
-                <motion.span
-                  key={item}
-                  initial={{ opacity: 0, scale: 0.95, y: 10 }}
-                  whileInView={{ opacity: 1, scale: 1, y: 0 }}
+          {/* 3 Visual Pillar Cards */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {PILLARS.map((p, idx) => {
+              const Icon = p.icon;
+              return (
+                <motion.div
+                  key={p.title}
+                  initial={{ opacity: 0, y: 15 }}
+                  whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, margin: "-10%" }}
-                  transition={{ duration: 0.4, delay: idx * 0.1 + 0.5, ease: "easeOut" }}
-                  className="px-3.5 py-1 rounded-xl text-xs font-body font-semibold text-text-secondary border border-border-base bg-bg-raised backdrop-blur-sm hover:border-accent hover:text-accent transition-colors duration-300 cursor-default"
+                  transition={{ duration: 0.35, delay: idx * 0.1 }}
+                  className="p-6 rounded-2xl border border-border-base bg-bg-surface flex flex-col justify-between hover:border-accent shadow-sm transition-all group"
                 >
-                  {item}
-                </motion.span>
-              ))}
-            </div>
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="w-10 h-10 rounded-xl bg-accent/10 border border-accent/20 flex items-center justify-center text-accent group-hover:bg-accent group-hover:text-black transition-colors">
+                      <Icon size={18} />
+                    </div>
+                    <span className="text-xs font-mono text-text-muted">0{idx + 1}</span>
+                  </div>
+                  <div>
+                    <h3 className="text-base font-heading font-bold text-text-primary mb-1.5 group-hover:text-accent transition-colors">
+                      {p.title}
+                    </h3>
+                    <p className="text-xs font-body text-text-secondary leading-relaxed">
+                      {p.description}
+                    </p>
+                  </div>
+                </motion.div>
+              );
+            })}
           </div>
         </FadeIn>
       </div>
     </section>
   );
 };
+

@@ -73,6 +73,7 @@ export const ContactSection: React.FC<{ contact: ContactData }> = ({ contact }) 
         <div className="lg:col-span-5">
           <FadeIn>
             <SectionLabel
+              index="06"
               eyebrow={contact.title}
               heading="Let's Connect"
               description={contact.description}

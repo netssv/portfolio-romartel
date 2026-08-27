@@ -35,6 +35,7 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
       <div className="mx-auto max-w-6xl px-6">
         <FadeIn>
           <SectionLabel
+            index="01"
             eyebrow="Explore Projects"
             heading="Featured Projects & Open-Source Work"
             description="From interactive 3D games and machine learning tools to practical developer utilities. Built with careful craftsmanship, clean architecture, and reliable performance."

@@ -208,6 +208,7 @@ export const ArchitectureSection = () => {
           <TechHeaderBackground />
           <FadeIn>
             <SectionLabel
+              index="05"
               eyebrow="Under The Hood"
               heading="Architecture & Strategy"
               description="This portfolio isn't just a static resume—it's a live demonstration of modern web strategy, performance optimization, and interactive UX design."

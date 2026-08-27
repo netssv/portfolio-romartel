@@ -54,7 +54,7 @@
     "title": "Technical Solutions, Automation & Data Analytics",
     "location": "San Salvador, El Salvador",
     "tagline": "Bridging engineering, automated systems, and data analytics to solve practical business problems.",
-    "bio": "Marketing professional bridging digital strategy and technical execution. Background in SEO, CRO, and content — grounded by real experience inside web hosting infrastructure. I don't just optimize for search; I understand what happens at the server level when a site underperforms",
+    "bio": "Marketing professional bridging digital strategy, server infrastructure, and quantitative data analytics. Specializing in SEO architecture, CRO telemetry, and Python automation workflows.",
     "avatar": {
       "src": "/avatar.webp",
       "alt": "Rodrigo Martel Profile Portrait"
@@ -171,10 +171,12 @@
       "id": "fifa-predictor",
       "title": "FIFA World Cup 2026 AI Lab",
       "subtitle": "Monte Carlo ML Simulator & Bracket Engine",
-      "description": "Predictive tournament simulation blending Random Forest and Poisson models across 10 feature pipelines. Runs 5,000+ Monte Carlo cycles to identify statistically optimal tournament paths.",
+      "description": "Predictive tournament simulation blending Random Forest and Poisson models across 10 feature pipelines with 5,000+ Monte Carlo cycles.",
       "valueProp": "Statistical predictive modeling with 10 feature pipelines and 5,000+ Monte Carlo cycles.",
       "category": "Machine Learning & Data",
       "status": "Production",
+      "icon": "Trophy",
+      "image": "/projects/fifa-predictor.png",
       "tags": [
         "Python ML",
         "Random Forest",
@@ -183,17 +185,19 @@
       ],
       "links": {
         "github": "https://github.com/netssv/fifa-world-cup-2026-predictor",
-        "demo": "https://fifa-world-cup-2026-predictor.vercel.app/"
+        "demo": "https://fifa2026worldcup.vercel.app/"
       }
     },
     {
       "id": "hodl-watcher",
       "title": "HODL Watcher",
       "subtitle": "Quantitative BTC Copilot & Serverless Pipeline",
-      "description": "Quantitative market intelligence copilot delivering structured Bitcoin market payloads (order flow, mempool fees, sentiment) backed by a $0/mo autonomous keep-alive watchdog.",
+      "description": "Quantitative market intelligence copilot delivering structured Bitcoin market payloads backed by an autonomous $0/mo serverless cron watchdog.",
       "valueProp": "Autonomous $0/mo cloud pipeline with Make.com cron watchdog and in-memory telemetry.",
       "category": "Machine Learning & Data",
       "status": "Production",
+      "icon": "LineChart",
+      "image": "/projects/hodl-watcher.png",
       "tags": [
         "Python FastAPI",
         "Make.com Cron",
@@ -209,10 +213,12 @@
       "id": "whathappened",
       "title": "WhatHappened",
       "subtitle": "Chrome MV3 Web Infrastructure Triage Terminal",
-      "description": "Published Chrome Web Store extension providing a POSIX-style terminal emulator in the browser side-panel for edge DNS (DoH), SSL certificate inspection, and network OSINT.",
+      "description": "Published Chrome Web Store extension providing a POSIX-style terminal emulator for edge DNS (DoH), SSL certificate inspection, and network triage.",
       "valueProp": "POSIX-style CLI inside Chrome for edge DNS, SSL inspection, and network triage.",
       "category": "Web Infrastructure & Security",
       "status": "Production",
+      "icon": "Terminal",
+      "image": "/projects/whathappened.png",
       "tags": [
         "Chrome MV3",
         "TypeScript",
@@ -220,18 +226,20 @@
         "POSIX CLI"
       ],
       "links": {
-        "github": "https://github.com/netssv/WhatHappened",
-        "demo": "https://chromewebstore.google.com/detail/whathappened/jbbjafkjcgfegbknpggodjodgfklchfc"
+        "github": "https://github.com/netssv/whathappend",
+        "demo": "https://chromewebstore.google.com/detail/whathappened/jkohefabbnobompohkedfaodcnfdplom"
       }
     },
     {
       "id": "caniarun",
       "title": "caniarun",
       "subtitle": "PyPI Hardware Profiler for Open-Source AI",
-      "description": "Open-source CLI tool distributed via PyPI profiling local GPU/VRAM hardware to benchmark real-world compatibility against 80+ AI models across GGUF quantization tiers.",
+      "description": "CLI tool distributed via PyPI profiling local GPU/VRAM hardware to benchmark real-world compatibility against 80+ AI models across GGUF quantization tiers.",
       "valueProp": "Instant hardware profiling and quantization compatibility classification.",
       "category": "Developer Tooling & CLI",
       "status": "Production",
+      "icon": "Cpu",
+      "image": "/projects/caniarun.png",
       "tags": [
         "Python CLI",
         "PyPI Package",
@@ -239,7 +247,7 @@
         "CUDA / GPU"
       ],
       "links": {
-        "github": "https://github.com/netssv/caniarun",
+        "github": "https://github.com/netssv/can_ia_run",
         "demo": "https://pypi.org/project/caniarun/"
       }
     },
@@ -247,10 +255,12 @@
       "id": "btkey-sync",
       "title": "btkey_sync",
       "subtitle": "Cross-OS Bluetooth LE Key Synchronizer",
-      "description": "Systems automation utility that extracts Windows SYSTEM-level Bluetooth LTK keys and converts them into Linux BlueZ format, eliminating dual-boot re-pairing friction.",
+      "description": "Systems automation utility that extracts Windows SYSTEM-level Bluetooth LTK keys and converts them into Linux BlueZ format, eliminating dual-boot re-pairing.",
       "valueProp": "Eliminates BLE re-pairing friction across dual-boot OS partitions.",
       "category": "Systems & Automation",
       "status": "Production",
+      "icon": "Bluetooth",
+      "image": "/projects/btkey-sync.png",
       "tags": [
         "Python",
         "Windows Registry",
@@ -259,7 +269,7 @@
       ],
       "links": {
         "github": "https://github.com/netssv/btkey_sync",
-        "demo": "https://github.com/netssv/btkey_sync"
+        "demo": "https://pypi.org/project/Btkey-Sync/"
       }
     }
   ],
@@ -368,12 +378,14 @@
   "flagshipProject": {
     "id": "metropolyca",
     "title": "Metropolyca",
-    "subtitle": "A living 3D city-builder and tycoon game in your browser",
+    "subtitle": "Living 3D city-builder and economic simulation in your browser",
     "eyebrow": "Flagship Project · Early Access Live · Roadmap to Steam",
-    "description": "Metropolyca is a web-first city simulation game where you build and manage living metropolitan cities. Balance citizen needs, public transport, city budgets, and utilities while watching a vibrant world unfold—from day-to-night lighting and dynamic rainstorms where citizens open umbrellas, to smooth traffic networks and emergency response.",
-    "orchestrationStory": "Built using AI as an engineering multiplier, guided by meticulous human craftsmanship: custom game architecture, 150+ automated tests, and continuous QA to ensure smooth 60 FPS performance and reliable simulation logic.",
+    "description": "Web-first city simulation game managing living metropolitan zones, dynamic traffic networks, citizen needs, and simulated economies at instant 60 FPS.",
+    "orchestrationStory": "Custom game architecture with 150+ automated unit/integration tests and continuous QA.",
     "status": "Early Access Live",
     "category": "3D Simulation & Gaming",
+    "icon": "Gamepad2",
+    "image": "/projects/metropolyca.png",
     "metrics": [
       {
         "label": "Performance",
