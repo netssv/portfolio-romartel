@@ -14,7 +14,7 @@ export interface PinnedProjectItem {
   description: string;
   story: string;
   metrics: { label: string; value: string }[];
-  tags: string[];
+  tags?: string[];
   links: { demo: string; github: string };
   videoSrc?: string;
   imageSrc?: string;

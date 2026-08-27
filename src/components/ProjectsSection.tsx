@@ -58,10 +58,10 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
       description: p.description,
       story: p.valueProp || "Engineered scalable automation pipelines with high test coverage and real-time telemetry.",
       metrics: [
-        { label: "Architecture", value: p.tags[0] || "TypeScript" },
+        { label: "Architecture", value: (p.tags && p.tags[0]) || "TypeScript" },
         { label: "Deployment", value: "Production Active" },
       ],
-      tags: p.tags,
+      tags: p.tags || [],
       links: p.links,
       imageSrc: p.image,
       icon: p.icon || "Terminal",
