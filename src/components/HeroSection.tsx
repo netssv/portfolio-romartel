@@ -1,13 +1,12 @@
 "use client";
 
-import React from "react";
-import { ArrowUpRight } from "lucide-react";
-import { motion, useMotionValue, useTransform, useSpring, useInView } from "framer-motion";
+import React, { useRef, useState, useEffect } from "react";
+import { ArrowUpRight, MapPin } from "lucide-react";
+import { motion, useInView, useMotionValue, useSpring, useTransform } from "framer-motion";
 import Clarity from "@microsoft/clarity";
 import { MagneticButton } from "@/src/components/ui/MagneticButton";
-import { ParticleField } from "@/src/components/animations/ParticleField";
 
-interface HeroProps {
+interface HeroSectionProps {
   name: string;
   title: string;
   bio: string;
@@ -16,7 +15,7 @@ interface HeroProps {
   email: string;
 }
 
-export const HeroSection: React.FC<HeroProps> = ({
+export const HeroSection: React.FC<HeroSectionProps> = ({
   name,
   title,
   bio,
@@ -24,98 +23,56 @@ export const HeroSection: React.FC<HeroProps> = ({
   avatar,
   email,
 }) => {
-  const imgRef = React.useRef<HTMLDivElement>(null);
-  const imgInView = useInView(imgRef, { once: false, margin: "-10% 0px -10% 0px" });
+  const heroRef = useRef<HTMLDivElement>(null);
+  const imgRef = useRef<HTMLDivElement>(null);
+  const imgInView = useInView(imgRef, { once: true, margin: "-50px" });
 
-  const heroRef = React.useRef<HTMLDivElement>(null);
-  const heroInView = useInView(heroRef, { once: false, margin: "0px 0px -20% 0px" });
+  const [displayText, setDisplayText] = useState("");
+  const [personalization, setPersonalization] = useState<{ source?: string; industry?: string } | null>(null);
+  const [ctaVariant, setCtaVariant] = useState<"A" | "B">("A");
 
-  const [displayText, setDisplayText] = React.useState("");
-  const [ctaVariant, setCtaVariant] = React.useState<"A" | "B">("A");
-  const [personalization, setPersonalization] = React.useState<{ source?: string; industry?: string } | null>(null);
-
-  React.useEffect(() => {
-    // UTM Personalization
+  useEffect(() => {
+    // 1. UTM Personalization
     if (typeof window !== "undefined") {
       const params = new URLSearchParams(window.location.search);
-      const source = params.get("utm_source") || params.get("source");
-      const industry = params.get("utm_campaign") || params.get("industry");
-      if (source || industry) {
-        setPersonalization({ source: source || undefined, industry: industry || undefined });
-        // Track personalization in Clarity
-        try {
-          if (source) Clarity.setTag("personalized_source", source);
-          if (industry) Clarity.setTag("personalized_industry", industry);
-        } catch (e) {}
+      const utmSource = params.get("utm_source") || params.get("source");
+      const utmIndustry = params.get("utm_industry") || params.get("industry");
+
+      if (utmSource || utmIndustry) {
+        setPersonalization({ source: utmSource || undefined, industry: utmIndustry || undefined });
       }
-    }
 
-    // A/B Test initialization
-    // Randomly select variant A (50%) or B (50%)
-    const savedVariant = localStorage.getItem("ab_test_hero_cta") as "A" | "B";
-    const variant = savedVariant || (Math.random() > 0.5 ? "A" : "B");
-    
-    if (!savedVariant) {
-      localStorage.setItem("ab_test_hero_cta", variant);
-    }
-    
-    setCtaVariant(variant);
-
-    // Tag the session in Clarity with the chosen variant
-    try {
-      Clarity.setTag("hero_cta_variant", variant);
-    } catch (e) {
-      console.log("Clarity not initialized yet for tagging");
+      // 2. Native A/B Testing Engine
+      const storedVariant = localStorage.getItem("ab_hero_cta_variant") as "A" | "B" | null;
+      if (storedVariant) {
+        setCtaVariant(storedVariant);
+      } else {
+        const assignedVariant = Math.random() < 0.5 ? "A" : "B";
+        localStorage.setItem("ab_hero_cta_variant", assignedVariant);
+        setCtaVariant(assignedVariant);
+      }
     }
   }, []);
 
-  React.useEffect(() => {
-    if (!heroInView) {
-      setDisplayText(""); // Reset when out of view
-      return;
-    }
+  // Typewriter effect for name
+  useEffect(() => {
+    let index = 0;
+    const interval = setInterval(() => {
+      if (index <= name.length) {
+        setDisplayText(name.slice(0, index));
+        index++;
+      } else {
+        clearInterval(interval);
+      }
+    }, 45);
+    return () => clearInterval(interval);
+  }, [name]);
 
-    let timeout: NodeJS.Timeout;
-
-    if (name === "Rodrigo Martel") {
-      const sequence = [
-        "R", "Ro", "Rod", "Rodr", "Rodri", "Rodrig", "Rodrigp", "Rodrigp ", "Rodrigp", "Rodrig",
-        "Rodrigo", "Rodrigo ", "Rodrigo M", "Rodrigo Ma", "Rodrigo Mar", "Rodrigo Mart", "Rodrigo Marte", "Rodrigo Martel"
-      ];
-      let i = 0;
-      const nextTick = () => {
-        if (i < sequence.length) {
-          setDisplayText(sequence[i]);
-          let delay = Math.random() * 60 + 40;
-          if (i === 6) delay = 300;
-          if (i === 7) delay = 500;
-          if (i === 8 || i === 9) delay = 100;
-          if (i === 10) delay = 300;
-          i++;
-          timeout = setTimeout(nextTick, delay);
-        }
-      };
-      timeout = setTimeout(nextTick, 300);
-    } else {
-      let i = 0;
-      const nextTick = () => {
-        if (i <= name.length) {
-          setDisplayText(name.substring(0, i));
-          i++;
-          timeout = setTimeout(nextTick, Math.random() * 60 + 40);
-        }
-      };
-      timeout = setTimeout(nextTick, 300);
-    }
-
-    return () => clearTimeout(timeout);
-  }, [heroInView, name]);
-  // Stagger entry configurations
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
-      transition: { staggerChildren: 0.1, delayChildren: 0.15 },
+      transition: { staggerChildren: 0.1, delayChildren: 0.1 },
     },
   };
 
@@ -133,9 +90,8 @@ export const HeroSection: React.FC<HeroProps> = ({
     const mouseX = e.clientX - rect.left;
     const mouseY = e.clientY - rect.top;
     const xPct = mouseX / width - 0.5;
-    const yPct = mouseY / height - 0.5;
+    y.set(mouseY / height - 0.5);
     x.set(xPct);
-    y.set(yPct);
   };
 
   const handleMouseLeave = () => {
@@ -153,14 +109,14 @@ export const HeroSection: React.FC<HeroProps> = ({
   };
 
   return (
-    <section id="top" className="relative py-20 lg:py-32 border-b border-border-subtle overflow-hidden">
+    <section id="top" className="relative pt-20 pb-12 lg:pt-28 lg:pb-16 overflow-hidden">
       {/* Background ambient glow pulse */}
       <div
         className="pointer-events-none absolute -right-24 -top-24 w-96 h-96 rounded-full blur-[140px] opacity-[0.08]"
         style={{ background: "radial-gradient(circle, var(--accent) 0%, transparent 80%)" }}
       />
 
-      <div ref={heroRef} className="relative mx-auto max-w-6xl px-6 grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
+      <div ref={heroRef} className="relative mx-auto max-w-6xl px-6 grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
         {/* ── Left: Text details with stagger animations ────────────────────── */}
         <motion.div
           className="lg:col-span-7 flex flex-col z-10"
@@ -168,7 +124,7 @@ export const HeroSection: React.FC<HeroProps> = ({
           initial="hidden"
           animate="visible"
         >
-          {/* Status pill badge — green blinking dot or Personalization Badge */}
+          {/* Status pill badge with location tag */}
           {personalization ? (
             <motion.div className="inline-flex items-center gap-2 mb-6 px-3 py-1.5 rounded-full bg-accent/10 border border-accent/20" variants={itemVariants}>
               <span className="text-xl">👋</span>
@@ -180,13 +136,20 @@ export const HeroSection: React.FC<HeroProps> = ({
               </span>
             </motion.div>
           ) : (
-            <motion.div className="inline-flex items-center gap-2 mb-6" variants={itemVariants}>
-              <span className="relative flex h-2.5 w-2.5">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
-                <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500" />
+            <motion.div className="inline-flex flex-wrap items-center gap-2.5 mb-6" variants={itemVariants}>
+              <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20">
+                <span className="relative flex h-2 w-2">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
+                </span>
+                <span className="text-[11px] font-mono font-semibold uppercase tracking-[0.14em] text-emerald-400">
+                  Available for strategic execution
+                </span>
               </span>
-              <span className="text-xs font-body font-semibold uppercase tracking-[0.16em] text-emerald-500">
-                Available for strategic execution
+
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-zinc-900/80 border border-zinc-800 text-[11px] font-mono font-medium text-zinc-400">
+                <MapPin size={11} className="text-accent" />
+                <span>{location}</span>
               </span>
             </motion.div>
           )}
@@ -232,8 +195,8 @@ export const HeroSection: React.FC<HeroProps> = ({
               onClick={() => {
                 try {
                   Clarity.event(`clicked_hero_cta_variant_${ctaVariant}`);
-                } catch (e) {
-                  // Ignore if Clarity is not ready
+                } catch {
+                  // Ignore
                 }
               }}
               className="h-12 px-8 flex items-center justify-center rounded-xl bg-accent text-black text-xs font-body font-bold shadow-[0_4px_20px_rgba(255,149,0,0.25)] hover:shadow-[0_4px_30px_rgba(255,149,0,0.4)] transition-all duration-200"
@@ -266,25 +229,34 @@ export const HeroSection: React.FC<HeroProps> = ({
             onMouseMove={handleMouseMove}
             onMouseLeave={handleMouseLeave}
             style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}
-            whileHover={{ scale: 1.04, transition: { type: "spring", stiffness: 300, damping: 22 } }}
+            whileHover={{ scale: 1.03, transition: { type: "spring", stiffness: 300, damping: 22 } }}
           >
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <motion.img
-              src={avatar.src}
-              alt={avatar.alt}
-              className="w-72 h-72 sm:w-80 sm:h-80 lg:w-96 lg:h-96 object-cover rounded-3xl filter contrast-[1.05] shadow-[0_20px_50px_rgba(0,0,0,0.3)] transition-shadow duration-300 group-hover:shadow-[0_30px_60px_rgba(255,149,0,0.25)]"
-              loading="lazy"
-              style={{ transform: "translateZ(30px)" }}
-            />
+            {/* Image Frame with subtle glow */}
+            <div className="relative rounded-3xl overflow-hidden p-1 bg-gradient-to-b from-zinc-700/50 via-zinc-800/30 to-zinc-900/60 shadow-[0_20px_50px_rgba(0,0,0,0.4)]">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <motion.img
+                src={avatar.src}
+                alt={avatar.alt}
+                className="w-72 h-72 sm:w-80 sm:h-80 lg:w-96 lg:h-96 object-cover rounded-[22px] filter contrast-[1.05]"
+                loading="lazy"
+                style={{ transform: "translateZ(30px)" }}
+              />
 
-            {/* Minimal Location tag */}
-            <motion.div 
-              className="mt-6 flex items-center gap-1.5 text-xs font-body font-semibold tracking-wider text-text-muted uppercase"
-              style={{ transform: "translateZ(40px)" }}
-            >
-              <span className="h-1 w-1 rounded-full bg-accent" />
-              <span>{location}</span>
-            </motion.div>
+              {/* Floating glass location pill over image */}
+              <div 
+                className="absolute bottom-4 left-4 right-4 flex items-center justify-between px-3.5 py-2 rounded-xl bg-zinc-950/75 backdrop-blur-md border border-zinc-700/50 shadow-lg text-[11px] font-mono text-zinc-300"
+                style={{ transform: "translateZ(50px)" }}
+              >
+                <div className="flex items-center gap-1.5">
+                  <span className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
+                  <span className="font-semibold text-zinc-200">Remote / Global</span>
+                </div>
+                <div className="flex items-center gap-1 text-zinc-400">
+                  <MapPin size={11} className="text-accent" />
+                  <span>San Salvador</span>
+                </div>
+              </div>
+            </div>
           </motion.div>
         </div>
       </div>

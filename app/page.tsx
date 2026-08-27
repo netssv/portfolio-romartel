@@ -3,6 +3,7 @@
 import siteData from "@/src/data/siteData.json";
 import { Navbar } from "@/src/components/Navbar";
 import { HeroSection } from "@/src/components/HeroSection";
+import { BtcTrendTelemetryBar } from "@/src/components/BtcTrendTelemetryBar";
 import { TrustedStack } from "@/src/components/TrustedStack";
 import { ProjectsSection } from "@/src/components/ProjectsSection";
 import { MetricsSection } from "@/src/components/MetricsSection";
@@ -44,6 +45,9 @@ export default function Home() {
           avatar={profile.avatar}
           email={contact.email}
         />
+
+        {/* ── Real-Time BTC Macro Trend & Automation Watchdog Bar ── */}
+        <BtcTrendTelemetryBar />
 
         {/* ── Tech Stack ─────────────────────────────── */}
         <TrustedStack stack={trustedStack} />

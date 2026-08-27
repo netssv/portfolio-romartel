@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import { ArrowUpRight } from "lucide-react";
 import { motion } from "framer-motion";
+import { HodlLiveTelemetry } from "@/src/components/HodlLiveTelemetry";
 
 const GithubIcon = ({ size = 13, className = "" }: { size?: number; className?: string }) => (
   <svg
@@ -35,6 +36,7 @@ export interface ProjectCardProps {
 }
 
 export const ProjectCard: React.FC<ProjectCardProps> = ({
+  id,
   title,
   subtitle,
   description,
@@ -46,7 +48,7 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
   links,
 }) => {
   const [coords, setCoords] = useState({ x: 0, y: 0 });
-  const [isHovered, setIsHovered] = useState(false);
+  const [, setIsHovered] = useState(false);
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     const { left, top } = e.currentTarget.getBoundingClientRect();
@@ -86,6 +88,9 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
         <p className="text-xs sm:text-sm font-body text-text-secondary leading-relaxed mb-4">
           {description}
         </p>
+
+        {/* Live Telemetry Widget for HODL Watcher */}
+        {id === "hodl-watcher" && <HodlLiveTelemetry />}
 
         {/* Highlighted Value Prop */}
         {valueProp && (

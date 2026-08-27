@@ -194,20 +194,21 @@
       "title": "HODL Watcher",
       "subtitle": "Quantitative BTC/USDT Copilot & Honest ML Dashboard",
       "description": "Quantitative market intelligence copilot built on honest metrics principles—transparently exposing confidence levels and data gaps. Delivers structured market state payloads (funding rates, order flow, sentiment) for autonomous trading agents and quantitative analysts.",
-      "valueProp": "High-frequency market data ingestion and honest metrics confidence intervals.",
+      "valueProp": "High-availability cloud pipeline ($0/mo) with automated cron keep-alive, in-memory telemetry, and live status reporting.",
       "outcome": "Structured real-time payload generation for LLM agents and trading models.",
       "category": "Machine Learning & Data",
       "status": "Production",
       "tags": [
-        "Python",
-        "Machine Learning",
+        "Python FastAPI",
+        "n8n / Cron Pipelines",
+        "Render Cloud",
+        "React 19 SPA",
         "Quantitative Finance",
-        "ETL Pipelines",
-        "Crypto Derivatives API"
+        "Live Telemetry"
       ],
       "links": {
         "github": "https://github.com/netssv/HODL_watcher",
-        "demo": "https://github.com/netssv/HODL_watcher"
+        "demo": "https://hodl-watcher.vercel.app/"
       }
     },
     {
