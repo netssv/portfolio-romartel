@@ -1,8 +1,9 @@
 "use client";
 
-import React, { useState, useEffect, useRef } from "react";
-import { motion, useDragControls, AnimatePresence } from "framer-motion";
+import React, { useEffect, useRef, useState, useCallback } from "react";
+import { useDragControls, motion, AnimatePresence } from "framer-motion";
 import { TerminalThemeSwitcher } from "./TerminalThemeSwitcher";
+import { ChevronDown, ChevronUp, Terminal } from "lucide-react";
 
 interface Section {
   id: string;
@@ -19,7 +20,6 @@ const sections: Section[] = [
   { id: "contact",      label: "Contact",      cmd: "ping -c 1 contact" },
 ];
 
-// ── Blinking cursor ────────────────────────────────────────────────────────────
 const Cursor: React.FC = () => (
   <motion.span
     animate={{ opacity: [1, 0, 1] }}
@@ -28,33 +28,20 @@ const Cursor: React.FC = () => (
   />
 );
 
-// ── Shared terminal body content ───────────────────────────────────────────────
-const TerminalBody: React.FC<{
-  activeSection: string;
-  onNavigate: () => void;
-}> = ({ activeSection, onNavigate }) => (
+const TerminalBody: React.FC<{ activeSection: string; onNavigate: () => void }> = ({ activeSection, onNavigate }) => (
   <div className="flex flex-col gap-2">
-    {sections.map((section) => {
-      const isActive = activeSection === section.id;
+    {sections.map((sec) => {
+      const isActive = activeSection === sec.id;
       return (
-        <a
-          key={section.id}
-          href={`#${section.id}`}
-          onClick={onNavigate}
-          className="group flex flex-col transition-all duration-200"
-        >
+        <a key={sec.id} href={`#${sec.id}`} onClick={onNavigate} className="group flex flex-col transition-all duration-200">
           {isActive ? (
             <span className="text-accent font-bold leading-relaxed">
               <span className="opacity-50">romartel@portfolio:~$</span>{" "}
-              <span className="text-text-primary underline decoration-accent/35 decoration-2">
-                {section.cmd}
-              </span>
+              <span className="text-text-primary underline decoration-accent/35 decoration-2">{sec.cmd}</span>
               <Cursor />
             </span>
           ) : (
-            <span className="text-text-muted group-hover:text-text-primary transition-colors duration-150">
-              $ {section.cmd}
-            </span>
+            <span className="text-text-muted group-hover:text-text-primary transition-colors duration-150">$ {sec.cmd}</span>
           )}
         </a>
       );
@@ -64,12 +51,38 @@ const TerminalBody: React.FC<{
 
 export const ScrollIndicator: React.FC = () => {
   const [activeSection, setActiveSection] = useState<string>("top");
-  const [isDragging, setIsDragging]       = useState(false);
-  const [mobileOpen, setMobileOpen]       = useState(false);
+  const [isDragging, setIsDragging] = useState(false);
+  const [isCollapsed, setIsCollapsed] = useState(true);
+  const hideTimerRef = useRef<NodeJS.Timeout | null>(null);
   const dragControls = useDragControls();
   const desktopConstraintsRef = useRef<HTMLDivElement>(null);
 
-  // ── Inject viewport constraint div for desktop drag ──────────────────────────
+  const startAutoHideTimer = useCallback(() => {
+    if (hideTimerRef.current) clearTimeout(hideTimerRef.current);
+    hideTimerRef.current = setTimeout(() => {
+      setIsCollapsed(true);
+    }, 10000);
+  }, []);
+
+  const handleMouseEnter = () => {
+    setIsCollapsed(false);
+    startAutoHideTimer();
+  };
+
+  const handleMouseMove = () => {
+    startAutoHideTimer();
+  };
+
+  const handleMouseLeave = () => {
+    startAutoHideTimer();
+  };
+
+  useEffect(() => {
+    return () => {
+      if (hideTimerRef.current) clearTimeout(hideTimerRef.current);
+    };
+  }, []);
+
   useEffect(() => {
     const el = desktopConstraintsRef.current;
     if (!el) return;
@@ -78,13 +91,12 @@ export const ScrollIndicator: React.FC = () => {
     return () => { if (el.parentNode) el.parentNode.removeChild(el); };
   }, []);
 
-  // ── IntersectionObserver ─────────────────────────────────────────────────────
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            const id = (entry.target as HTMLElement).dataset.scrollSection ?? "top";
+        entries.forEach((e) => {
+          if (e.isIntersecting) {
+            const id = (e.target as HTMLElement).dataset.scrollSection ?? "top";
             setActiveSection(id);
           }
         });
@@ -106,7 +118,6 @@ export const ScrollIndicator: React.FC = () => {
 
   return (
     <>
-      {/* ── Desktop: draggable terminal ──────────────────────────────────────── */}
       <div ref={desktopConstraintsRef} className="hidden lg:block" />
       <motion.div
         drag
@@ -116,88 +127,51 @@ export const ScrollIndicator: React.FC = () => {
         dragConstraints={desktopConstraintsRef}
         onDragStart={() => setIsDragging(true)}
         onDragEnd={() => setIsDragging(false)}
-        className={`fixed left-5 top-1/2 -translate-y-1/2 z-50 hidden lg:flex flex-col gap-2.5
-          font-mono text-xs select-none
-          bg-bg-surface/90 border border-border-subtle p-4 rounded-2xl
-          shadow-xl backdrop-blur-md w-[220px]
-          transition-shadow duration-200
-          ${isDragging ? "shadow-2xl border-accent/30" : ""}`}
+        onMouseEnter={handleMouseEnter}
+        onMouseMove={handleMouseMove}
+        onMouseLeave={handleMouseLeave}
+        className={`fixed left-5 bottom-8 z-50 flex flex-col font-mono text-xs select-none
+          bg-bg-surface/95 border border-border-subtle rounded-2xl shadow-2xl backdrop-blur-md
+          transition-all duration-300 ${isCollapsed ? "w-auto" : "w-[230px] p-4"}
+          ${isDragging ? "shadow-accent/20 border-accent/40" : ""}`}
         style={{ cursor: isDragging ? "grabbing" : "default" }}
       >
-        {/* Header / drag handle */}
         <div
           onPointerDown={(e) => dragControls.start(e)}
-          className="flex items-center justify-between border-b border-border-subtle pb-2 mb-1.5 cursor-grab active:cursor-grabbing"
+          className={`flex items-center justify-between cursor-grab active:cursor-grabbing ${
+            isCollapsed ? "px-3.5 py-2.5 gap-3" : "border-b border-border-subtle pb-2 mb-2"
+          }`}
         >
-          <div className="flex gap-1.5">
-            <span className="w-1.5 h-1.5 rounded-full bg-red-500/70" />
-            <span className="w-1.5 h-1.5 rounded-full bg-yellow-500/70" />
-            <span className="w-1.5 h-1.5 rounded-full bg-green-500/70" />
+          <div className="flex items-center gap-1.5" onClick={(e) => e.stopPropagation()}>
+            <button type="button" onClick={() => setIsCollapsed(true)} title="Collapse" className="w-2.5 h-2.5 rounded-full bg-red-500/80 hover:bg-red-500 transition-colors cursor-pointer" />
+            <button type="button" onClick={() => setIsCollapsed((p) => !p)} title="Toggle" className="w-2.5 h-2.5 rounded-full bg-yellow-500/80 hover:bg-yellow-500 transition-colors cursor-pointer" />
+            <button type="button" onClick={() => setIsCollapsed(false)} title="Expand" className="w-2.5 h-2.5 rounded-full bg-green-500/80 hover:bg-green-500 transition-colors cursor-pointer" />
           </div>
-          <span className="text-xs text-text-muted uppercase tracking-widest font-bold">
-            bash · drag me
-          </span>
+
+          {isCollapsed ? (
+            <div className="flex items-center gap-2 text-text-primary font-semibold">
+              <Terminal size={12} className="text-accent" />
+              <span className="truncate max-w-[130px] text-[11px]">$ {activeCmd}</span>
+              <ChevronUp size={12} className="text-text-muted" />
+            </div>
+          ) : (
+            <div className="flex items-center gap-1.5">
+              <span className="text-[10px] text-text-muted uppercase tracking-widest font-bold">bash · drag</span>
+              <button type="button" onClick={() => setIsCollapsed(true)} className="text-text-muted hover:text-text-primary p-0.5 rounded cursor-pointer" title="Collapse">
+                <ChevronDown size={12} />
+              </button>
+            </div>
+          )}
         </div>
 
-        <TerminalBody
-          activeSection={activeSection}
-          onNavigate={() => { /* no-op on desktop */ }}
-        />
-
-        <TerminalThemeSwitcher />
-      </motion.div>
-
-      {/* ── Mobile: collapsible draggable terminal pill ──────────────────────── */}
-      <motion.div
-        drag
-        dragMomentum={false}
-        dragElastic={0.05}
-        onDragStart={() => setIsDragging(true)}
-        onDragEnd={() => setIsDragging(false)}
-        className="fixed bottom-6 left-4 z-50 flex lg:hidden flex-col font-mono select-none"
-        style={{ touchAction: "none" }}
-      >
-        {/* Expanded panel — slides up */}
         <AnimatePresence>
-          {mobileOpen && (
-            <motion.div
-              key="mobile-panel"
-              initial={{ opacity: 0, y: 12, scale: 0.95 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              exit={{ opacity: 0, y: 12, scale: 0.95 }}
-              transition={{ duration: 0.22, ease: "easeOut" }}
-              className="mb-2 bg-bg-surface/95 border border-border-subtle rounded-2xl p-4 shadow-2xl backdrop-blur-md text-[10.5px] w-[230px]"
-            >
-              <TerminalBody
-                activeSection={activeSection}
-                onNavigate={() => setMobileOpen(false)}
-              />
+          {!isCollapsed && (
+            <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: "auto" }} exit={{ opacity: 0, height: 0 }} transition={{ duration: 0.2 }}>
+              <TerminalBody activeSection={activeSection} onNavigate={() => {}} />
               <TerminalThemeSwitcher />
             </motion.div>
           )}
         </AnimatePresence>
-
-        {/* Collapsed pill — always visible */}
-        <motion.button
-          onClick={() => { if (!isDragging) setMobileOpen((o) => !o); }}
-          whileTap={{ scale: 0.95 }}
-          className={`flex items-center gap-2.5 px-4.5 py-2.5 rounded-xl border shadow-lg backdrop-blur-md text-[11.5px] font-mono transition-all duration-200
-            ${mobileOpen
-              ? "bg-accent text-bg-base border-accent"
-              : "bg-bg-surface/90 border-border-subtle text-text-primary"
-            }`}
-        >
-          {/* Dots */}
-          <div className="flex gap-1.5">
-            <span className={`w-1.5 h-1.5 rounded-full ${mobileOpen ? "bg-bg-base/60" : "bg-red-500/70"}`} />
-            <span className={`w-1.5 h-1.5 rounded-full ${mobileOpen ? "bg-bg-base/60" : "bg-yellow-500/70"}`} />
-            <span className={`w-1.5 h-1.5 rounded-full ${mobileOpen ? "bg-bg-base/60" : "bg-green-500/70"}`} />
-          </div>
-          <span className="truncate max-w-[135px]">
-            $ {activeCmd}
-          </span>
-          {!mobileOpen && <Cursor />}
-        </motion.button>
       </motion.div>
     </>
   );

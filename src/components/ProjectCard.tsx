@@ -3,7 +3,6 @@
 import React, { useState } from "react";
 import { ArrowUpRight } from "lucide-react";
 import { motion } from "framer-motion";
-import { HodlLiveTelemetry } from "@/src/components/HodlLiveTelemetry";
 
 const GithubIcon = ({ size = 13, className = "" }: { size?: number; className?: string }) => (
   <svg
@@ -28,7 +27,6 @@ export interface ProjectCardProps {
   subtitle: string;
   description: string;
   valueProp?: string;
-  outcome?: string;
   category: string;
   status: string;
   tags?: string[];
@@ -36,95 +34,100 @@ export interface ProjectCardProps {
 }
 
 export const ProjectCard: React.FC<ProjectCardProps> = ({
-  id,
   title,
   subtitle,
   description,
   valueProp,
-  outcome,
   category,
   status,
   tags = [],
   links,
 }) => {
   const [coords, setCoords] = useState({ x: 0, y: 0 });
-  const [, setIsHovered] = useState(false);
+  const [showAllTags, setShowAllTags] = useState(false);
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     const { left, top } = e.currentTarget.getBoundingClientRect();
     setCoords({ x: e.clientX - left, y: e.clientY - top });
   };
 
+  const visibleTags = showAllTags ? tags : tags.slice(0, 4);
+  const remainingCount = tags.length - 4;
+
   return (
     <motion.article
-      className="group relative flex flex-col justify-between p-6 sm:p-7 rounded-2xl border border-border-base bg-bg-surface overflow-hidden transition-all duration-300 hover:border-accent hover:shadow-xl"
-      whileHover={{ y: -4 }}
-      transition={{ type: "spring", stiffness: 220, damping: 18 }}
+      className="group relative flex flex-col justify-between p-6 sm:p-6 rounded-2xl border border-border-base bg-bg-surface overflow-hidden transition-all duration-300 hover:border-accent hover:shadow-xl"
+      whileHover={{ y: -3 }}
+      transition={{ type: "spring", stiffness: 240, damping: 20 }}
       onMouseMove={handleMouseMove}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
       style={{
-        background: `radial-gradient(400px circle at ${coords.x}px ${coords.y}px, rgba(255, 149, 0, 0.04), transparent 80%), var(--bg-surface)`,
+        background: `radial-gradient(400px circle at ${coords.x}px ${coords.y}px, rgba(255, 149, 0, 0.05), transparent 80%), var(--bg-surface)`,
       }}
     >
       {/* Top Header */}
       <div>
-        <div className="flex items-start justify-between gap-3 mb-4">
-          <span className="text-xs font-mono font-bold uppercase tracking-wider text-accent/80">
+        <div className="flex items-center justify-between gap-3 mb-3">
+          <span className="text-[11px] font-mono font-bold uppercase tracking-wider text-text-accent">
             {category}
           </span>
-          <span className="shrink-0 px-2.5 py-0.5 rounded-full text-xs font-mono font-semibold tracking-wide border bg-emerald-500/5 text-emerald-400 border-emerald-500/20">
+          <span className="shrink-0 px-2 py-0.5 rounded-full text-[10px] font-mono font-semibold tracking-wide border bg-emerald-500/10 text-emerald-700 dark:text-emerald-300 border-emerald-500/30">
             {status}
           </span>
         </div>
 
-        <h3 className="text-xl font-heading font-bold text-text-primary group-hover:text-accent transition-colors duration-200">
+        <h3 className="text-lg font-heading font-bold text-text-primary group-hover:text-accent transition-colors duration-200">
           {title}
         </h3>
-        <p className="text-xs font-body font-medium text-text-muted mt-1 mb-3">
+        <p className="text-xs font-body font-medium text-text-muted mt-0.5 mb-2.5">
           {subtitle}
         </p>
 
-        <p className="text-xs sm:text-sm font-body text-text-secondary leading-relaxed mb-4">
+        <p className="text-xs font-body text-text-secondary leading-relaxed mb-3.5 line-clamp-3">
           {description}
         </p>
 
-        {/* Live Telemetry Widget for HODL Watcher */}
-        {id === "hodl-watcher" && <HodlLiveTelemetry />}
-
-        {/* Highlighted Value Prop */}
+        {/* Highlighted Value Prop (Accent Bordered) */}
         {valueProp && (
-          <div className="mb-4 text-xs font-body text-text-primary/90 bg-bg-base/60 rounded-xl p-3 border border-border-subtle/50">
-            <span className="text-accent font-semibold">Key Highlight: </span>
+          <div className="mb-3.5 text-[11px] font-body text-text-secondary border-l-2 border-accent pl-2.5 py-0.5 bg-bg-base/40 rounded-r-lg">
+            <span className="font-semibold text-text-primary">Highlight: </span>
             {valueProp}
           </div>
         )}
 
-        {/* Technology Pills */}
+        {/* Technology Pills (Capped with toggle) */}
         {tags.length > 0 && (
-          <div className="flex flex-wrap gap-1.5 mb-6">
-            {tags.map((tech) => (
+          <div className="flex flex-wrap items-center gap-1.5 mb-5">
+            {visibleTags.map((tech) => (
               <span
                 key={tech}
-                className="px-2 py-0.5 rounded-md text-xs font-mono text-text-muted bg-bg-raised border border-border-subtle"
+                className="px-2 py-0.5 rounded-md text-[11px] font-mono text-text-secondary bg-bg-raised border border-border-subtle"
               >
                 {tech}
               </span>
             ))}
+            {remainingCount > 0 && !showAllTags && (
+              <button
+                type="button"
+                onClick={() => setShowAllTags(true)}
+                className="px-1.5 py-0.5 rounded-md text-[10px] font-mono text-text-muted hover:text-text-primary bg-bg-base/60 border border-border-subtle cursor-pointer transition-colors"
+              >
+                +{remainingCount} more
+              </button>
+            )}
           </div>
         )}
       </div>
 
       {/* Footer CTA Links */}
-      <div className="flex items-center justify-between pt-4 border-t border-border-subtle mt-auto">
+      <div className="flex items-center justify-between pt-3 border-t border-border-subtle mt-auto font-body text-xs font-semibold">
         <a
           href={links.github}
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center gap-1.5 text-xs font-body font-semibold text-text-secondary hover:text-text-primary transition-colors duration-200"
+          className="inline-flex items-center gap-1.5 text-text-secondary hover:text-text-primary transition-colors duration-200"
         >
           <GithubIcon size={13} className="text-text-muted" />
-          <span>Source Code</span>
+          <span>Source</span>
         </a>
 
         {links.demo && (
@@ -132,7 +135,7 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
             href={links.demo}
             target="_blank"
             rel="noopener noreferrer"
-            className="group/btn inline-flex items-center gap-1 text-xs font-body font-semibold text-accent hover:text-amber-300 transition-colors duration-200"
+            className="group/btn inline-flex items-center gap-1 text-accent hover:text-amber-500 transition-colors duration-200"
           >
             <span>Live Project</span>
             <ArrowUpRight

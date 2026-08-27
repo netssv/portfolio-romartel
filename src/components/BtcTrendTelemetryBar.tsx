@@ -61,10 +61,10 @@ export const BtcTrendTelemetryBar: React.FC = () => {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          source: "recruiter-interactive",
-          task: "Manual Pipeline Verification",
+          source: "visitor-test",
+          task: "Interactive Health Check",
           status: "ok",
-          details: "Interactive test ping from portfolio",
+          details: "Manual ping from portfolio visitor",
         }),
       });
       await fetchTelemetry();
@@ -97,49 +97,56 @@ export const BtcTrendTelemetryBar: React.FC = () => {
     <section className="relative -mt-4 sm:-mt-6 mb-12 z-20">
       <div className="mx-auto max-w-6xl px-6">
         <FadeIn>
-          <div className="relative overflow-hidden rounded-2xl border border-zinc-800/90 bg-zinc-950/85 p-4 sm:p-5 backdrop-blur-xl shadow-2xl transition-all duration-300 hover:border-zinc-700/80">
-            <div className="pointer-events-none absolute inset-x-0 top-0 h-[1px] bg-gradient-to-r from-transparent via-emerald-500/50 to-transparent" />
-            <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
-              <div className="flex items-center gap-3.5">
+          <div className="relative overflow-hidden rounded-2xl border border-zinc-800/90 bg-zinc-950/90 p-4 sm:px-6 sm:py-4 backdrop-blur-xl shadow-2xl transition-all duration-300 hover:border-zinc-700/80">
+            <div className="pointer-events-none absolute inset-x-0 top-0 h-[1px] bg-gradient-to-r from-transparent via-emerald-500/40 to-transparent" />
+
+            {/* Main Aligned 1-Row Grid */}
+            <div className="flex flex-col xl:flex-row xl:items-center xl:justify-between gap-4">
+              {/* Left Column: Live Status */}
+              <div className="flex items-center gap-3 min-w-0">
                 <div className="relative flex h-3.5 w-3.5 shrink-0 items-center justify-center">
-                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-70" />
+                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-60" />
                   <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-emerald-500" />
                 </div>
-                <div>
+                <div className="min-w-0">
                   <div className="flex items-center gap-2">
                     <span className="font-mono text-xs font-bold uppercase tracking-wider text-emerald-400">
-                      LIVE CLOUD PIPELINE ACTIVE
+                      LIVE CLOUD PIPELINE
                     </span>
-                    <span className="rounded-md bg-emerald-500/10 border border-emerald-500/20 px-1.5 py-0.5 text-[10px] font-mono font-medium text-emerald-300">
+                    <span className="rounded-md bg-emerald-500/10 border border-emerald-500/20 px-1.5 py-0.2 text-[10px] font-mono font-medium text-emerald-300">
                       Render + Make.com
                     </span>
                   </div>
-                  <p className="font-mono text-[11px] text-zinc-400 mt-0.5">
+                  <p className="font-mono text-[11px] text-zinc-400 mt-0.5 truncate">
                     {latest ? (
-                      <>Heartbeat: <span className="text-zinc-200 font-semibold">{latest.task}</span> · <span className="text-purple-400">[{latest.source}]</span> ({formatTime(latest.timestamp)})</>
-                    ) : "Automated keep-alive engine maintaining zero-cold-start 24/7 API uptime"}
+                      <>Last: <span className="text-zinc-200 font-semibold">{latest.task}</span> · <span className="text-purple-400">[{latest.source}]</span> ({formatTime(latest.timestamp)})</>
+                    ) : "Autonomous keep-alive maintaining 24/7 API uptime"}
                   </p>
                 </div>
               </div>
 
-              <div className="flex flex-wrap items-center gap-2.5 sm:gap-3 pt-3 lg:pt-0 border-t lg:border-t-0 border-zinc-800/80">
+              {/* Center + Right Group */}
+              <div className="flex flex-wrap items-center justify-between xl:justify-end gap-3 pt-3 xl:pt-0 border-t xl:border-t-0 border-zinc-800/80">
+                {/* Center Ticker */}
                 <BtcPriceCard price={btcTicker.price} changePct={btcTicker.priceChangePercent} highPrice={btcTicker.highPrice} lowPrice={btcTicker.lowPrice} flash={priceFlash} />
-                <div className="flex items-center gap-2 ml-auto lg:ml-0">
-                  <button type="button" onClick={handleTriggerPing} disabled={triggering} title="Send a test ping to the backend" className="flex items-center gap-1 rounded-xl border border-emerald-500/40 bg-emerald-500/10 px-2.5 py-2 text-xs font-mono font-semibold text-emerald-300 hover:bg-emerald-500/20 transition-all">
+
+                {/* Right Action Buttons */}
+                <div className="flex items-center gap-2">
+                  <button type="button" onClick={handleTriggerPing} disabled={triggering} title="Send a test ping to the backend" className="flex items-center gap-1 rounded-xl border border-emerald-500/40 bg-emerald-500/10 px-3 py-2 text-xs font-mono font-semibold text-emerald-300 hover:bg-emerald-500/20 transition-all cursor-pointer">
                     <Send size={11} className={triggering ? "animate-bounce" : ""} />
-                    <span>{triggering ? "Testing..." : "Test Ping"}</span>
+                    <span>{triggering ? "Testing..." : "Test API"}</span>
                   </button>
-                  <a href="https://hodl-watcher-api.onrender.com/docs" target="_blank" rel="noopener noreferrer" className="flex items-center gap-1 rounded-xl border border-zinc-700/80 bg-zinc-800/90 px-2.5 py-2 text-xs font-mono font-medium text-zinc-300 hover:bg-zinc-700 transition-all">
+                  <a href="https://hodl-watcher-api.onrender.com/docs" target="_blank" rel="noopener noreferrer" className="flex items-center gap-1 rounded-xl border border-zinc-700/80 bg-zinc-900 px-3 py-2 text-xs font-mono font-medium text-zinc-300 hover:bg-zinc-800 transition-all">
                     <BookOpen size={12} />
-                    <span className="hidden sm:inline">Docs</span>
+                    <span>Docs</span>
                   </a>
-                  <button type="button" onClick={() => setShowLogs(!showLogs)} className="flex items-center gap-1.5 rounded-xl border border-zinc-700/80 bg-zinc-800/90 px-3 py-2 text-xs font-mono font-semibold text-zinc-200 hover:bg-zinc-700 transition-all">
+                  <button type="button" onClick={() => setShowLogs(!showLogs)} className="flex items-center gap-1.5 rounded-xl border border-zinc-700/80 bg-zinc-900 px-3 py-2 text-xs font-mono font-semibold text-zinc-200 hover:bg-zinc-800 transition-all cursor-pointer">
                     <Terminal size={13} className="text-emerald-400" />
                     <span>{showLogs ? "Hide" : "Logs"}</span>
                     {showLogs ? <ChevronUp size={13} /> : <ChevronDown size={13} />}
                   </button>
                   <a href="https://hodl-watcher.vercel.app/" target="_blank" rel="noopener noreferrer" className="flex items-center gap-1.5 rounded-xl bg-accent px-3.5 py-2 text-xs font-body font-bold text-black shadow-md hover:bg-amber-400 transition-all">
-                    <span>Desk</span>
+                    <span>Signal Desk</span>
                     <ArrowUpRight size={13} />
                   </a>
                 </div>

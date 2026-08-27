@@ -170,41 +170,35 @@
     {
       "id": "fifa-predictor",
       "title": "FIFA World Cup 2026 AI Lab",
-      "subtitle": "Monte Carlo ML Simulator & Interactive Tournament Bracket",
-      "description": "Machine learning tournament simulation blending Random Forest and Poisson distribution over 10 feature pipelines (xG, squad valuations, altitude wear, player fatigue). Runs 5,000+ Monte Carlo cycles to identify the most statistically representative tournament path with high-fidelity vector bracket exports.",
-      "valueProp": "Statistical predictive modeling with 10 feature pipelines and 5,000+ Monte Carlo runs.",
-      "outcome": "Deterministic single runs and probabilistic multi-run distribution generator.",
+      "subtitle": "Monte Carlo ML Simulator & Bracket Engine",
+      "description": "Predictive tournament simulation blending Random Forest and Poisson models across 10 feature pipelines. Runs 5,000+ Monte Carlo cycles to identify statistically optimal tournament paths.",
+      "valueProp": "Statistical predictive modeling with 10 feature pipelines and 5,000+ Monte Carlo cycles.",
       "category": "Machine Learning & Data",
       "status": "Production",
       "tags": [
         "Python ML",
         "Random Forest",
-        "Poisson Distribution",
         "Next.js",
-        "TypeScript",
-        "Tailwind CSS"
+        "TypeScript"
       ],
       "links": {
-        "github": "https://github.com/netssv/Fifa-WorldCup-Data-Analysis-1930-2026",
-        "demo": "https://github.com/netssv/Fifa-WorldCup-Data-Analysis-1930-2026"
+        "github": "https://github.com/netssv/fifa-world-cup-2026-predictor",
+        "demo": "https://fifa-world-cup-2026-predictor.vercel.app/"
       }
     },
     {
       "id": "hodl-watcher",
       "title": "HODL Watcher",
-      "subtitle": "Quantitative BTC/USDT Copilot & Honest ML Dashboard",
-      "description": "Quantitative market intelligence copilot built on honest metrics principles—transparently exposing confidence levels and data gaps. Delivers structured market state payloads (funding rates, order flow, sentiment) for autonomous trading agents and quantitative analysts.",
-      "valueProp": "High-availability cloud pipeline ($0/mo) with automated cron keep-alive, in-memory telemetry, and live status reporting.",
-      "outcome": "Structured real-time payload generation for LLM agents and trading models.",
+      "subtitle": "Quantitative BTC Copilot & Serverless Pipeline",
+      "description": "Quantitative market intelligence copilot delivering structured Bitcoin market payloads (order flow, mempool fees, sentiment) backed by a $0/mo autonomous keep-alive watchdog.",
+      "valueProp": "Autonomous $0/mo cloud pipeline with Make.com cron watchdog and in-memory telemetry.",
       "category": "Machine Learning & Data",
       "status": "Production",
       "tags": [
         "Python FastAPI",
-        "n8n / Cron Pipelines",
+        "Make.com Cron",
         "Render Cloud",
-        "React 19 SPA",
-        "Quantitative Finance",
-        "Live Telemetry"
+        "React 19"
       ],
       "links": {
         "github": "https://github.com/netssv/HODL_watcher",
@@ -215,59 +209,53 @@
       "id": "whathappened",
       "title": "WhatHappened",
       "subtitle": "Chrome MV3 Web Infrastructure Triage Terminal",
-      "description": "Published Chrome Web Store extension providing a POSIX-style terminal emulator in the browser side-panel. Enables edge-level DNS (DoH), SSL certificate triage, and network OSINT without external cloud tracking or latency.",
-      "valueProp": "POSIX-style CLI inside Chrome for edge DNS, SSL, and network triage.",
-      "outcome": "Consolidates 10+ fragmented web tools into a zero-cloud browser terminal.",
+      "description": "Published Chrome Web Store extension providing a POSIX-style terminal emulator in the browser side-panel for edge DNS (DoH), SSL certificate inspection, and network OSINT.",
+      "valueProp": "POSIX-style CLI inside Chrome for edge DNS, SSL inspection, and network triage.",
       "category": "Web Infrastructure & Security",
       "status": "Production",
       "tags": [
-        "Chrome Extension (MV3)",
+        "Chrome MV3",
         "TypeScript",
         "DNS / SSL Triage",
-        "POSIX CLI",
-        "Zero-Cloud Edge"
+        "POSIX CLI"
       ],
       "links": {
-        "github": "https://github.com/netssv/whathappend",
-        "demo": "https://chromewebstore.google.com/detail/whathappened/jkohefabbnobompohkedfaodcnfdplom?authuser=3&hl=en"
+        "github": "https://github.com/netssv/WhatHappened",
+        "demo": "https://chromewebstore.google.com/detail/whathappened/jbbjafkjcgfegbknpggodjodgfklchfc"
       }
     },
     {
       "id": "caniarun",
       "title": "caniarun",
-      "subtitle": "PyPI Hardware Profiler for Open-Source AI Models",
-      "description": "Open-source CLI tool distributed via PyPI that profiles local GPU/VRAM/CPU resources and computes real-world compatibility against 80+ AI models across GGUF and integer quantization tiers.",
+      "subtitle": "PyPI Hardware Profiler for Open-Source AI",
+      "description": "Open-source CLI tool distributed via PyPI profiling local GPU/VRAM hardware to benchmark real-world compatibility against 80+ AI models across GGUF quantization tiers.",
       "valueProp": "Instant hardware profiling and quantization compatibility classification.",
-      "outcome": "Published on PyPI with global install via pip install caniarun.",
       "category": "Developer Tooling & CLI",
       "status": "Production",
       "tags": [
         "Python CLI",
         "PyPI Package",
-        "Hardware Detection",
         "LLM Quantization",
         "CUDA / GPU"
       ],
       "links": {
-        "github": "https://github.com/netssv/can_ia_run",
-        "demo": "https://github.com/netssv/can_ia_run"
+        "github": "https://github.com/netssv/caniarun",
+        "demo": "https://pypi.org/project/caniarun/"
       }
     },
     {
       "id": "btkey-sync",
       "title": "btkey_sync",
-      "subtitle": "Cross-OS Bluetooth LE Pairing Key Synchronizer",
-      "description": "Low-level systems automation tool solving Bluetooth re-pairing in dual-boot systems. Automatically extracts Windows SYSTEM-level LTK keys and converts them into Linux BlueZ daemon format.",
+      "subtitle": "Cross-OS Bluetooth LE Key Synchronizer",
+      "description": "Systems automation utility that extracts Windows SYSTEM-level Bluetooth LTK keys and converts them into Linux BlueZ format, eliminating dual-boot re-pairing friction.",
       "valueProp": "Eliminates BLE re-pairing friction across dual-boot OS partitions.",
-      "outcome": "Automated SYSTEM registry token extraction and BlueZ daemon conversion.",
       "category": "Systems & Automation",
       "status": "Production",
       "tags": [
         "Python",
         "Windows Registry",
         "Linux BlueZ",
-        "Bluetooth LE",
-        "Security & Cryptography"
+        "Bluetooth LE"
       ],
       "links": {
         "github": "https://github.com/netssv/btkey_sync",
