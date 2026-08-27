@@ -33,6 +33,7 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
       ? projects
       : projects.filter((p) => p.category === selectedCategory);
 
+  // Include ALL 6 projects (Flagship + All Production Side Projects)
   const pinnedItems: PinnedProjectItem[] = [
     {
       id: "metropolyca",
@@ -48,14 +49,14 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
       videoSrc: flagship.videoSrc || "/metro.mp4",
       icon: "Film",
     },
-    ...projects.slice(0, 3).map((p) => ({
+    ...projects.map((p) => ({
       id: p.id,
       title: p.title,
       subtitle: p.subtitle,
       eyebrow: p.category.split("&")[0].trim(),
       category: p.category,
       description: p.description,
-      story: p.valueProp || "Engineered scalable cloud automation with zero server cost and real-time validation.",
+      story: p.valueProp || "Engineered scalable automation pipelines with high test coverage and real-time telemetry.",
       metrics: [
         { label: "Architecture", value: p.tags[0] || "TypeScript" },
         { label: "Deployment", value: "Production Active" },
@@ -63,7 +64,7 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
       tags: p.tags,
       links: p.links,
       imageSrc: p.image,
-      icon: (p.icon as "Film" | "Trophy" | "LineChart" | "Terminal" | "Cpu") || "Terminal",
+      icon: p.icon || "Terminal",
     })),
   ];
 
