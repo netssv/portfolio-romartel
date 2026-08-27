@@ -11,6 +11,10 @@ vi.mock("@/src/components/animations/SpotlightCursor", () => ({
   SpotlightCursor: () => <div data-testid="spotlight-cursor" />,
 }));
 
+vi.mock("@/src/components/ui/chatbot/ChatBot", () => ({
+  ChatBot: () => <div data-testid="chatbot" />,
+}));
+
 describe("RootLayout Component", () => {
   it("renders children, NoiseOverlay, and SpotlightCursor layers", () => {
     render(

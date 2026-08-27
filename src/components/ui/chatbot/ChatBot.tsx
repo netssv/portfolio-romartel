@@ -24,9 +24,7 @@ export function ChatBot() {
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
-  const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  };
+  const scrollToBottom = () => messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
 
   useEffect(() => {
     if (isOpen) {
@@ -66,8 +64,7 @@ export function ChatBot() {
         };
         setMessages((prev) => [...prev, botMsg]);
       } catch (err: unknown) {
-        const msg = err instanceof Error ? err.message : "Something went wrong.";
-        setError(msg);
+        setError(err instanceof Error ? err.message : "Something went wrong.");
       }
     });
   };
@@ -96,26 +93,18 @@ export function ChatBot() {
                 <div>
                   <h3 className="text-xs font-semibold text-text-primary tracking-wide">Clippo</h3>
                   <div className="flex items-center gap-1.5">
-                    <span className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" />
-                    <span className="text-[10px] text-text-muted">Online</span>
+                    <span className={`w-1.5 h-1.5 rounded-full ${isPending ? "bg-accent animate-ping" : "bg-green-500 animate-pulse"}`} />
+                    <span className={`text-[10px] ${isPending ? "text-accent font-medium" : "text-text-muted"}`}>
+                      {isPending ? "Thinking..." : "Online"}
+                    </span>
                   </div>
                 </div>
               </div>
               <div className="flex items-center gap-1">
-                <button
-                  type="button"
-                  onClick={handleReset}
-                  title="Reset conversation"
-                  className="p-1.5 rounded-lg text-text-muted hover:text-text-primary hover:bg-bg-raised transition-colors"
-                >
+                <button type="button" onClick={handleReset} title="Reset conversation" className="p-1.5 rounded-lg text-text-muted hover:text-text-primary hover:bg-bg-raised transition-colors">
                   <RotateCcw className="w-3.5 h-3.5" />
                 </button>
-                <button
-                  type="button"
-                  onClick={() => setIsOpen(false)}
-                  title="Close chat"
-                  className="p-1.5 rounded-lg text-text-muted hover:text-text-primary hover:bg-bg-raised transition-colors"
-                >
+                <button type="button" onClick={() => setIsOpen(false)} title="Close chat" className="p-1.5 rounded-lg text-text-muted hover:text-text-primary hover:bg-bg-raised transition-colors">
                   <X className="w-4 h-4" />
                 </button>
               </div>
@@ -128,33 +117,29 @@ export function ChatBot() {
               ))}
 
               {isPending && (
-                <div className="flex items-center gap-2 text-xs text-text-muted">
-                  <ClippoAvatar size={20} isThinking />
-                  <Loader2 className="w-3.5 h-3.5 animate-spin text-accent" />
-                  <span>Clippo is thinking...</span>
+                <div className="flex gap-2.5 items-start">
+                  <div className="w-8 h-8 rounded-full flex items-center justify-center shrink-0 text-xs border bg-bg-raised border-border-subtle overflow-visible">
+                    <ClippoAvatar size={26} isThinking />
+                  </div>
+                  <div className="relative max-w-[85%] rounded-2xl rounded-tl-sm px-3.5 py-2.5 bg-bg-raised/80 border border-border-subtle shadow-sm flex items-center gap-2 text-xs">
+                    <span className="text-text-muted font-medium">Thinking</span>
+                    <span className="flex gap-1 items-center">
+                      <span className="w-1.5 h-1.5 rounded-full bg-accent animate-bounce" style={{ animationDelay: "0ms" }} />
+                      <span className="w-1.5 h-1.5 rounded-full bg-accent animate-bounce" style={{ animationDelay: "150ms" }} />
+                      <span className="w-1.5 h-1.5 rounded-full bg-accent animate-bounce" style={{ animationDelay: "300ms" }} />
+                    </span>
+                  </div>
                 </div>
               )}
 
-              {error && (
-                <div className="text-xs text-red-500 bg-red-500/10 p-2.5 rounded-lg border border-red-500/20">
-                  {error}
-                </div>
-              )}
+              {error && <div className="text-xs text-red-500 bg-red-500/10 p-2.5 rounded-lg border border-red-500/20">{error}</div>}
 
-              {messages.length === 1 && (
-                <ChatSuggestions onSelect={(prompt) => handleSend(prompt)} disabled={isPending} />
-              )}
+              {messages.length === 1 && <ChatSuggestions onSelect={(prompt) => handleSend(prompt)} disabled={isPending} />}
               <div ref={messagesEndRef} />
             </div>
 
             {/* Input Form */}
-            <form
-              onSubmit={(e) => {
-                e.preventDefault();
-                handleSend();
-              }}
-              className="p-3 border-t border-border-subtle bg-bg-raised/30 flex gap-2 items-center"
-            >
+            <form onSubmit={(e) => { e.preventDefault(); handleSend(); }} className="p-3 border-t border-border-subtle bg-bg-raised/30 flex gap-2 items-center">
               <input
                 ref={inputRef}
                 type="text"
@@ -177,11 +162,7 @@ export function ChatBot() {
         )}
       </AnimatePresence>
 
-      {/* Floating Trigger with Speech Bubble & Clippo */}
-      <ClippoFloatingTrigger
-        isOpen={isOpen}
-        onToggle={() => setIsOpen((prev) => !prev)}
-      />
+      <ClippoFloatingTrigger isOpen={isOpen} onToggle={() => setIsOpen((prev) => !prev)} isThinking={isPending} />
     </div>
   );
 }

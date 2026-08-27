@@ -7,6 +7,7 @@ import { ClippoAvatar } from "./ClippoAvatar";
 interface ClippoFloatingTriggerProps {
   isOpen: boolean;
   onToggle: () => void;
+  isThinking?: boolean;
 }
 
 const DYNAMIC_PHRASES = [
@@ -20,35 +21,52 @@ const DYNAMIC_PHRASES = [
 export function ClippoFloatingTrigger({
   isOpen,
   onToggle,
+  isThinking = false,
 }: ClippoFloatingTriggerProps) {
   const [phraseIndex, setPhraseIndex] = useState(0);
 
   useEffect(() => {
-    if (isOpen) return;
+    if (isOpen || isThinking) return;
 
     const interval = setInterval(() => {
       setPhraseIndex((prev) => (prev + 1) % DYNAMIC_PHRASES.length);
     }, 6500);
 
     return () => clearInterval(interval);
-  }, [isOpen]);
+  }, [isOpen, isThinking]);
 
   if (isOpen) return null;
 
   return (
     <div className="relative flex flex-col items-end select-none">
-      {/* Dynamic Word 97 Speech Bubble */}
+      {/* Dynamic Speech / Thought Bubble */}
       <AnimatePresence mode="wait">
         <motion.div
-          key={phraseIndex}
+          key={isThinking ? "thinking" : phraseIndex}
           initial={{ opacity: 0, y: 12, scale: 0.9 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
           exit={{ opacity: 0, y: -8, scale: 0.9 }}
           transition={{ duration: 0.3 }}
           onClick={onToggle}
-          className="cursor-pointer max-w-[210px] bg-bg-surface text-text-primary text-xs font-medium px-3.5 py-2.5 rounded-2xl rounded-br-sm border border-border-base shadow-2xl mb-2 backdrop-blur-md relative hover:border-accent hover:shadow-accent/10 transition-all duration-200"
+          className={`cursor-pointer max-w-[215px] bg-bg-surface text-text-primary text-xs font-medium px-3.5 py-2.5 rounded-2xl rounded-br-sm border shadow-2xl mb-2 backdrop-blur-md relative transition-all duration-200 ${
+            isThinking
+              ? "border-accent/60 shadow-accent/20 ring-1 ring-accent/30"
+              : "border-border-base hover:border-accent hover:shadow-accent/10"
+          }`}
         >
-          <p className="leading-snug">{DYNAMIC_PHRASES[phraseIndex]}</p>
+          {isThinking ? (
+            <div className="flex items-center gap-2 text-accent">
+              <span className="flex gap-1 items-center">
+                <span className="w-1.5 h-1.5 rounded-full bg-accent animate-bounce" style={{ animationDelay: "0ms" }} />
+                <span className="w-1.5 h-1.5 rounded-full bg-accent animate-bounce" style={{ animationDelay: "150ms" }} />
+                <span className="w-1.5 h-1.5 rounded-full bg-accent animate-bounce" style={{ animationDelay: "300ms" }} />
+              </span>
+              <span className="text-text-primary text-[11px] font-semibold">Clippo is thinking...</span>
+            </div>
+          ) : (
+            <p className="leading-snug">{DYNAMIC_PHRASES[phraseIndex]}</p>
+          )}
+
           {/* Pointer tail pointing down to Clippo */}
           <div className="absolute -bottom-1.5 right-6 w-3 h-3 bg-bg-surface border-r border-b border-border-base transform rotate-45" />
         </motion.div>
@@ -72,8 +90,12 @@ export function ClippoFloatingTrigger({
       >
         <div className="relative flex items-center justify-center">
           {/* Subtle Ambient Pulse Ring */}
-          <div className="absolute inset-0 rounded-full bg-accent/15 blur-md group-hover:bg-accent/30 transition-all duration-300 transform scale-110" />
-          <ClippoAvatar size={58} />
+          <div
+            className={`absolute inset-0 rounded-full blur-md transition-all duration-300 transform scale-110 ${
+              isThinking ? "bg-accent/40 animate-pulse" : "bg-accent/15 group-hover:bg-accent/30"
+            }`}
+          />
+          <ClippoAvatar size={58} isThinking={isThinking} />
         </div>
       </motion.div>
     </div>
