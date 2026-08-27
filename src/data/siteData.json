@@ -328,19 +328,27 @@
   "metrics": [
     {
       "value": "70%",
-      "label": "Reduction in reporting time"
+      "label": "Reporting Velocity",
+      "subtitle": "Automated Data Pipelines",
+      "details": "Engineered automated Python ingestion scripts and interactive Power BI dashboards, eliminating manual multi-department spreadsheet bottlenecks."
     },
     {
       "value": "40+",
-      "label": "Documented incident patterns"
+      "label": "Incident Archetypes",
+      "subtitle": "Root-Cause Blueprints",
+      "details": "Authored systematic triage taxonomies and automated remediation SOPs across high-volume technical support shifts."
     },
     {
-      "value": "3",
-      "label": "2 Chrome extensions + 1 Android App"
+      "value": "6+",
+      "label": "Production Systems",
+      "subtitle": "Web, CLI & Packages",
+      "details": "Architected and shipped live software spanning 3D WebGL simulations, Chrome MV3 network terminals, and PyPI automation packages."
     },
     {
-      "value": "12%",
-      "label": "SLA improvement at HP"
+      "value": "150+",
+      "label": "Automated Tests",
+      "subtitle": "Continuous QA Coverage",
+      "details": "Engineered comprehensive unit and integration test suites with CI/CD automation ensuring regression-free production releases."
     }
   ],
   "philosophy": {

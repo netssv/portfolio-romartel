@@ -1,8 +1,8 @@
 "use client";
 
 import React, { useRef, useState } from "react";
-import { motion, useScroll, useMotionValueEvent } from "framer-motion";
-import { Briefcase, Calendar, MapPin, CheckCircle2, Terminal } from "lucide-react";
+import { motion, useScroll, useMotionValueEvent, AnimatePresence } from "framer-motion";
+import { Briefcase, Calendar, MapPin, CheckCircle2, Terminal, ChevronDown, Sparkles } from "lucide-react";
 import { CornerReticle } from "@/src/components/ui/CornerReticle";
 
 export interface ExperienceItem {
@@ -19,6 +19,7 @@ export interface ExperienceItem {
 export const PinnedExperienceScrollytelling: React.FC<{ items: ExperienceItem[] }> = ({ items }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const [activeIndex, setActiveIndex] = useState(0);
+  const [isDetailsOpen, setIsDetailsOpen] = useState(false);
 
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -30,6 +31,7 @@ export const PinnedExperienceScrollytelling: React.FC<{ items: ExperienceItem[] 
     const index = Math.min(total - 1, Math.max(0, Math.floor(latest * total)));
     if (index !== activeIndex) {
       setActiveIndex(index);
+      setIsDetailsOpen(false);
     }
   });
 
@@ -97,11 +99,11 @@ export const PinnedExperienceScrollytelling: React.FC<{ items: ExperienceItem[] 
             </div>
           </div>
 
-          {/* ── 2. Instant Sync Terminal Experience Stage ── */}
+          {/* ── 2. Terminal Stage with Progressive Disclosure ── */}
           <div className="relative w-full" style={{ perspective: "1000px" }}>
             <div
               key={activeIndex}
-              className="bg-zinc-950/90 border border-zinc-800/90 rounded-2xl overflow-hidden shadow-[0_25px_60px_rgba(0,0,0,0.9)] backdrop-blur-xl mirror-reflect-base animate-fadeIn"
+              className="bg-zinc-950/90 border border-zinc-800/90 rounded-2xl overflow-hidden shadow-[0_25px_60px_rgba(0,0,0,0.9)] backdrop-blur-xl mirror-reflect-base"
             >
               <CornerReticle size={8} color="rgba(255, 149, 0, 0.5)" />
 
@@ -112,7 +114,7 @@ export const PinnedExperienceScrollytelling: React.FC<{ items: ExperienceItem[] 
                   <span className="w-2 sm:w-2.5 h-2 sm:h-2.5 rounded-full bg-amber-500/80" />
                   <span className="w-2 sm:w-2.5 h-2 sm:h-2.5 rounded-full bg-emerald-500/80" />
                   <span className="ml-1 sm:ml-2 text-[11px] sm:text-xs font-mono text-zinc-400 font-semibold uppercase tracking-wider truncate">
-                    record_{String(activeIndex + 1).padStart(2, "0")}.sh
+                    career_record_0{activeIndex + 1}.sh
                   </span>
                 </div>
                 <div className="flex items-center gap-1.5 text-[11px] sm:text-xs font-mono text-accent font-bold">
@@ -139,49 +141,73 @@ export const PinnedExperienceScrollytelling: React.FC<{ items: ExperienceItem[] 
                 </div>
               </div>
 
-              {/* Narrative Summary */}
-              <div className="px-4 sm:px-6 py-3 sm:py-4 border-b border-zinc-800/40 bg-zinc-950/40">
-                <p className="text-xs sm:text-sm font-body text-zinc-300 leading-relaxed line-clamp-3 sm:line-clamp-none">
+              {/* Surface Summary Narrative */}
+              <div className="px-4 sm:px-6 py-3.5 sm:py-4 border-b border-zinc-800/40 bg-zinc-950/40 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                <p className="text-xs sm:text-sm font-body text-zinc-200 leading-relaxed max-w-2xl">
                   {active.description}
                 </p>
+                <button
+                  onClick={() => setIsDetailsOpen(!isDetailsOpen)}
+                  className={`px-3.5 py-1.5 rounded-xl border text-[11px] font-mono font-semibold flex items-center gap-1.5 transition-all cursor-pointer shrink-0 self-start sm:self-auto ${
+                    isDetailsOpen
+                      ? "bg-accent/15 border-accent text-accent"
+                      : "bg-zinc-900 border-zinc-700 text-zinc-300 hover:border-zinc-500 hover:text-white"
+                  }`}
+                >
+                  <Sparkles size={11} />
+                  <span>{isDetailsOpen ? "Hide Breakdown" : "Inspect Operations"}</span>
+                  <ChevronDown size={12} className={`transition-transform duration-200 ${isDetailsOpen ? "rotate-180" : ""}`} />
+                </button>
               </div>
 
-              {/* Operations & Impact Grid */}
-              <div className="p-4 sm:p-6 grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
-                <div>
-                  <p className="text-[11px] sm:text-xs font-mono font-bold uppercase tracking-wider text-accent mb-2 sm:mb-3 flex items-center gap-1.5">
-                    <Terminal size={12} />
-                    <span>// Technical Automation & Impact</span>
-                  </p>
-                  <ul className="space-y-1.5 sm:space-y-2">
-                    {(active.impact || []).map((item, i) => (
-                      <li key={i} className="flex items-start gap-2 text-[11px] sm:text-xs font-mono text-zinc-300 leading-snug">
-                        <CheckCircle2 size={12} className="text-emerald-400 shrink-0 mt-0.5" />
-                        <span>{item}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
+              {/* Progressive Disclosure: Operations & Impact Breakdown on Click */}
+              <AnimatePresence>
+                {isDetailsOpen && (
+                  <motion.div
+                    initial={{ opacity: 0, height: 0 }}
+                    animate={{ opacity: 1, height: "auto" }}
+                    exit={{ opacity: 0, height: 0 }}
+                    transition={{ duration: 0.22, ease: "easeOut" }}
+                    className="overflow-hidden"
+                  >
+                    <div className="p-4 sm:p-6 grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 bg-zinc-900/40 border-b border-zinc-800/50">
+                      <div>
+                        <p className="text-[11px] sm:text-xs font-mono font-bold uppercase tracking-wider text-accent mb-2 flex items-center gap-1.5">
+                          <Terminal size={12} />
+                          <span>// Technical Automation & Impact</span>
+                        </p>
+                        <ul className="space-y-1.5">
+                          {(active.impact || []).map((item, i) => (
+                            <li key={i} className="flex items-start gap-2 text-[11px] sm:text-xs font-mono text-zinc-300 leading-snug">
+                              <CheckCircle2 size={12} className="text-emerald-400 shrink-0 mt-0.5" />
+                              <span>{item}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
 
-                <div>
-                  <p className="text-[11px] sm:text-xs font-mono font-bold uppercase tracking-wider text-accent mb-2 sm:mb-3 flex items-center gap-1.5">
-                    <Briefcase size={12} />
-                    <span>// Operational Scope</span>
-                  </p>
-                  <ul className="space-y-1.5 sm:space-y-2">
-                    {(active.operations || []).map((item, i) => (
-                      <li key={i} className="flex items-start gap-2 text-[11px] sm:text-xs font-mono text-zinc-400 leading-snug">
-                        <CheckCircle2 size={12} className="text-accent shrink-0 mt-0.5" />
-                        <span>{item}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </div>
+                      <div>
+                        <p className="text-[11px] sm:text-xs font-mono font-bold uppercase tracking-wider text-accent mb-2 flex items-center gap-1.5">
+                          <Briefcase size={12} />
+                          <span>// Operational Scope</span>
+                        </p>
+                        <ul className="space-y-1.5">
+                          {(active.operations || []).map((item, i) => (
+                            <li key={i} className="flex items-start gap-2 text-[11px] sm:text-xs font-mono text-zinc-400 leading-snug">
+                              <CheckCircle2 size={12} className="text-accent shrink-0 mt-0.5" />
+                              <span>{item}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
 
               {/* Bottom Status Bar */}
               <div className="px-4 sm:px-5 py-2 sm:py-2.5 border-t border-zinc-800 bg-zinc-900/60 flex items-center justify-between text-[11px] sm:text-xs font-mono text-zinc-400">
-                <span>TIMELINE STAGE: <span className="text-emerald-400 font-bold">{activeIndex + 1} of {items.length}</span></span>
+                <span>TIMELINE STAGE: <span className="text-emerald-400 font-bold">0{activeIndex + 1} of 0{items.length}</span></span>
                 <span className="text-accent font-bold hidden sm:inline">SCROLL TO ADVANCE YEARS ↓</span>
               </div>
             </div>
