@@ -50,13 +50,14 @@ export const CHATBOT_TOOL_DECLARATIONS: FunctionDeclaration[] = [
   {
     name: "get_site_json",
     description:
-      "Exports raw or structured JSON data of the portfolio website, including projects, work experience, profile metadata, or skills matrix.",
+      "Exports raw or structured JSON data of the portfolio website, including projects, work experience, profile metadata, skills matrix, or verified credentials.",
     parameters: {
       type: Type.OBJECT,
       properties: {
         section: {
           type: Type.STRING,
-          description: "The section of the site to export in JSON: 'all', 'projects', 'experience', 'skills', or 'profile'",
+          description:
+            "The section of the site to export in JSON: 'all', 'projects', 'experience', 'skills', 'profile', or 'certifications'",
         },
       },
     },
@@ -64,7 +65,7 @@ export const CHATBOT_TOOL_DECLARATIONS: FunctionDeclaration[] = [
 ];
 
 export function buildSystemInstruction(): string {
-  const { profile, experience, sideProjects, metadata } = siteData;
+  const { profile, experience, sideProjects, metadata, credentials } = siteData;
 
   const experienceSummary = experience
     .map((exp) => `- ${exp.role} at ${exp.company} (${exp.period}): ${exp.description}`)
@@ -77,8 +78,15 @@ export function buildSystemInstruction(): string {
     )
     .join("\n");
 
+  const credentialsSummary = (credentials?.categories || [])
+    .map(
+      (cat) =>
+        `- ${cat.title} (${cat.issuers.join(", ")}): ${cat.highlights.join("; ")}`
+    )
+    .join("\n");
+
   return `You are Clippo, the interactive AI assistant for ${profile.name}'s portfolio (github.com/netssv).
-Your objective is to assist visitors accurately, professionally, and concisely with Rodrigo's work.
+Your objective is to assist visitors accurately, professionally, and concisely with Rodrigo's work, credentials, and technical background.
 
 Key Profile:
 - Name: ${profile.name} (${metadata.email})
@@ -91,6 +99,12 @@ ${experienceSummary}
 
 GitHub Repositories & Featured Projects:
 ${projectsSummary}
+
+Verified Credentials Knowledge Base (103 Audited Credentials):
+- Total Verified Credentials: 103 audited files across 6 core competency domains.
+- Verified Archive Repository URL: ${credentials?.archiveUrl}
+${credentialsSummary}
+- When visitors inquire about certifications, education, degrees, credentials, or training in Data Analytics, Marketing, Python/AI, IT Infrastructure, Agile/Scrum, or Healthcare/Logistics, cite these verified accreditations accurately and provide the OneDrive archive URL when requested.
 
 Specialized Capabilities & Tools:
 1. Automated Email Dispatch ('send_contact_email'): You can directly send emails to Rodrigo on behalf of the visitor using Resend.

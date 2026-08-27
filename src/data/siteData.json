@@ -426,5 +426,77 @@
       "demo": "https://metropolyca.vercel.app/",
       "github": "https://github.com/netssv/metropolyca"
     }
+  },
+  "credentials": {
+    "totalCount": 103,
+    "archiveUrl": "https://1drv.ms/f/c/c9136ada8a51a610/IgAQplGK2moTIIDJJKsAAAAAAd9ni2_70w9-q00a4Majbqk?e=AdFVPs",
+    "summary": "103 verified credentials audited across data analytics, digital marketing, AI automation, IT infrastructure, agile leadership, and specialized operations.",
+    "categories": [
+      {
+        "id": "data-analytics",
+        "title": "Data Analytics & Business Intelligence",
+        "issuers": ["Google", "Microsoft", "IBM", "Kodigo", "Fundación Carlos Slim"],
+        "highlights": [
+          "Google Data Analytics Professional Certificate",
+          "Data Analysis with R, Visual Analytics & Computational Case Studies",
+          "Microsoft Power BI Data Analyst & Advanced DAX Modeling",
+          "Kodigo Data Analyst Bootcamp",
+          "IBM Cognitive Class: Data Science Methodology, SQL & Relational Databases 101",
+          "Advanced Excel: Pivot Tables, Financial & Analytic Modeling"
+        ]
+      },
+      {
+        "id": "digital-marketing",
+        "title": "Digital Marketing, CRO & Business Strategy",
+        "issuers": ["HubSpot Academy", "LinkedIn Learning", "MTF Institute", "DisasterReady"],
+        "highlights": [
+          "HubSpot Academy: Inbound Digital Marketing, Social Media Strategy, Content Marketing",
+          "Market Research & Analysis (DisasterReady), Micro-AI Data Marketing Analysis",
+          "Professional in Business English and Communication (MTF Institute)"
+        ]
+      },
+      {
+        "id": "automation-ai",
+        "title": "Scripting, Automation & AI Tooling",
+        "issuers": ["Sololearn", "Mimo", "Cognitive Class", "Microsoft Azure", "IBM", "Salesforce", "LinkedIn Learning", "ESIT"],
+        "highlights": [
+          "Python Developer (Sololearn, Mimo), Python for Data Science & Applied Projects (Cognitive Class)",
+          "Microsoft Azure AI Fundamentals & IBM Artificial Intelligence Fundamentals",
+          "Salesforce AI Fundamentals & Generative AI / Prompt Engineering (LinkedIn Learning)",
+          "Blockchain Architecture Fundamentals (Cognitive Class, ESIT)"
+        ]
+      },
+      {
+        "id": "it-security",
+        "title": "IT Infrastructure, Networking & Information Security",
+        "issuers": ["Cisco", "ESIT", "HackerMentor", "ITIL"],
+        "highlights": [
+          "Cisco Packet Tracer & Network Simulation",
+          "ITIL International Governance Frameworks & ISO 27001 Information Security",
+          "Data Governance & Compliance (ESIT)",
+          "Ethical Hacking & Penetration Testing (HackerMentor), Online Transaction Security, SME IT Security Protocols"
+        ]
+      },
+      {
+        "id": "agile-operations",
+        "title": "Agile Project Management & Operations Leadership",
+        "issuers": ["CertiProf", "ESIT", "Organization of American States (OEA)"],
+        "highlights": [
+          "CertiProf & ESIT: Scrum Product Owner Professional (SPOP), Advanced Scrum Product Owner, Scrum Master",
+          "Six Sigma Yellow Belt & Master of Project Management Agile Training",
+          "Remote Work Certified (CertiProf)",
+          "Digital Project Execution (Organization of American States - OEA)"
+        ]
+      },
+      {
+        "id": "specialized-operations",
+        "title": "Cross-Functional Operations & Specialized Programs",
+        "issuers": ["IOM / OIM", "DisasterReady", "MARTTI"],
+        "highlights": [
+          "International Organization for Migration (IOM/OIM) & DisasterReady: Migration Trends in Latin America, Diaspora Analysis Toolkit, Humanitarian Project Management & Logistics",
+          "MARTTI Healthcare Interpretation: Medical Training Curriculum (MTC), HIPAA Compliance, Healthcare Interpretation Standards"
+        ]
+      }
+    ]
   }
 }

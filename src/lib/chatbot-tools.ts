@@ -101,5 +101,8 @@ export function executeGetSiteJson(section?: string) {
   if (key.includes("exp")) return { experience: siteData.experience };
   if (key.includes("skill")) return { skillsMatrix: siteData.skillsMatrix };
   if (key.includes("prof")) return { profile: siteData.profile };
+  if (key.includes("cert") || key.includes("cred") || key.includes("edu")) {
+    return { credentials: siteData.credentials };
+  }
   return siteData;
 }

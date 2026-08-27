@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { Sparkles, Terminal, Mail, Activity } from "lucide-react";
+import { Sparkles, Terminal, Mail, Activity, Award } from "lucide-react";
 
 interface ChatSuggestionsProps {
   onSelect: (prompt: string) => void;
@@ -9,6 +9,7 @@ interface ChatSuggestionsProps {
 }
 
 const DEFAULT_SUGGESTIONS = [
+  { text: "What verified certifications does Rodrigo have?", icon: Award },
   { text: "Check live BTC mempool & telemetry", icon: Activity },
   { text: "What open-source repos are on GitHub?", icon: Terminal },
   { text: "I want to send an email to Rodrigo", icon: Mail },
