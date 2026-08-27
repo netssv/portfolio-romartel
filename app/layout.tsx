@@ -6,6 +6,7 @@ import siteData from "@/src/data/siteData.json";
 import { NoiseOverlay } from "@/src/components/animations/NoiseOverlay";
 import { SpotlightCursor } from "@/src/components/animations/SpotlightCursor";
 import { DesignProvider } from "@/src/context/DesignContext";
+import { ChatBot } from "@/src/components/ui/chatbot/ChatBot";
 
 const inter = Inter({ variable: "--font-inter", subsets: ["latin"], display: "swap" });
 const spaceGrotesk = Space_Grotesk({ variable: "--font-space-grotesk", subsets: ["latin"], display: "swap" });
@@ -122,6 +123,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
           <NoiseOverlay />
           <SpotlightCursor />
           {children}
+          <ChatBot />
         </DesignProvider>
       </body>
     </html>

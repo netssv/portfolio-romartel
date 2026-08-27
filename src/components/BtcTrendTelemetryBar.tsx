@@ -111,16 +111,16 @@ export const BtcTrendTelemetryBar: React.FC = () => {
                 <div className="min-w-0">
                   <div className="flex items-center gap-2">
                     <span className="font-mono text-xs font-bold uppercase tracking-wider text-emerald-400">
-                      LIVE CLOUD PIPELINE
+                      LIVE PIPELINE DEMO
                     </span>
-                    <span className="rounded-md bg-emerald-500/10 border border-emerald-500/20 px-1.5 py-0.2 text-[10px] font-mono font-medium text-emerald-300">
-                      Render + Make.com
+                    <span className="rounded-md bg-emerald-500/10 border border-emerald-500/20 px-1.5 py-0.5 text-[10px] font-mono font-medium text-emerald-300">
+                      $0/mo Python + Cron Automation
                     </span>
                   </div>
                   <p className="font-mono text-[11px] text-zinc-400 mt-0.5 truncate">
                     {latest ? (
-                      <>Last: <span className="text-zinc-200 font-semibold">{latest.task}</span> · <span className="text-purple-400">[{latest.source}]</span> ({formatTime(latest.timestamp)})</>
-                    ) : "Autonomous keep-alive maintaining 24/7 API uptime"}
+                      <>Task: <span className="text-zinc-200 font-semibold">{latest.task}</span> · <span className="text-purple-400">[{latest.source}]</span> ({formatTime(latest.timestamp)})</>
+                    ) : "Autonomous serverless pipeline with 24/7 uptime monitoring"}
                   </p>
                 </div>
               </div>
