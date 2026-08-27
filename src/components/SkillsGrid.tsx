@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { FadeIn } from "@/src/components/ui/FadeIn";
 import { SectionLabel } from "@/src/components/ui/SectionLabel";
+import { Target, BarChart3, Cpu, LucideIcon } from "lucide-react";
 
 interface SkillCategory {
   title: string;
@@ -11,6 +12,12 @@ interface SkillCategory {
   skills: string[];
 }
 interface SkillsMatrixData { [key: string]: SkillCategory; }
+
+const ICON_MAP: Record<string, LucideIcon> = {
+  Target,
+  BarChart3,
+  Cpu,
+};
 
 const PROFICIENCY: Record<string, { level: number; label: string; color: string }> = {
   businessCore:    { level: 92, label: "Expert",       color: "#FF9500" },
@@ -32,6 +39,7 @@ const pillVariants = {
 const SkillCard: React.FC<{ catKey: string; cat: SkillCategory; index: number }> = ({ catKey, cat, index }) => {
   const [hovered, setHovered] = useState(false);
   const meta = PROFICIENCY[catKey] ?? { level: 70, label: "Proficient", color: "#FF9500" };
+  const IconComponent = cat.icon ? ICON_MAP[cat.icon] ?? Cpu : Cpu;
 
   return (
     <motion.div
@@ -42,10 +50,8 @@ const SkillCard: React.FC<{ catKey: string; cat: SkillCategory; index: number }>
       viewport={{ once: true, amount: 0.2 }}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
-      className="relative group flex flex-col gap-5 p-6 rounded-2xl border border-border-subtle bg-bg-surface overflow-hidden cursor-default
-                 hover:border-accent/40 hover:shadow-[0_0_32px_rgba(255,149,0,0.08)] transition-all duration-300"
+      className="relative group flex flex-col gap-5 p-6 rounded-2xl border border-border-subtle bg-bg-surface overflow-hidden cursor-default hover:border-accent/40 hover:shadow-[0_0_32px_rgba(255,149,0,0.08)] transition-all duration-300"
     >
-      {/* Ambient glow */}
       <motion.div
         className="absolute inset-0 pointer-events-none rounded-2xl"
         animate={{ opacity: hovered ? 1 : 0 }}
@@ -53,14 +59,14 @@ const SkillCard: React.FC<{ catKey: string; cat: SkillCategory; index: number }>
         style={{ background: `radial-gradient(280px circle at 50% 0%, ${meta.color}10, transparent 70%)` }}
       />
 
-      {/* Header */}
       <div className="flex items-start justify-between gap-4 relative z-10">
         <div>
-          <span className="text-2xl leading-none">{cat.icon}</span>
-          <h3 className="text-sm font-heading font-bold text-text-primary mt-2 leading-tight">{cat.title}</h3>
+          <div className="p-2 rounded-xl bg-bg-raised w-fit border border-border-subtle">
+            <IconComponent size={20} className="text-accent" />
+          </div>
+          <h3 className="text-sm font-heading font-bold text-text-primary mt-3 leading-tight">{cat.title}</h3>
           <p className="text-xs font-body text-text-muted mt-0.5">{cat.skills.length} capabilities</p>
         </div>
-        {/* Level badge */}
         <span
           className="shrink-0 px-2.5 py-1 rounded-full text-xs font-body font-bold tracking-wide border"
           style={{ color: meta.color, borderColor: `${meta.color}30`, background: `${meta.color}0D` }}
@@ -69,7 +75,6 @@ const SkillCard: React.FC<{ catKey: string; cat: SkillCategory; index: number }>
         </span>
       </div>
 
-      {/* Proficiency bar */}
       <div className="relative z-10 flex flex-col gap-1.5">
         <div className="flex justify-between items-center">
           <span className="text-xs font-body text-text-muted uppercase tracking-widest">Proficiency</span>
@@ -87,7 +92,6 @@ const SkillCard: React.FC<{ catKey: string; cat: SkillCategory; index: number }>
         </div>
       </div>
 
-      {/* Expandable Skill Pills */}
       <div className="relative z-10 min-h-[60px]">
         <AnimatePresence mode="wait">
           {hovered ? (
@@ -107,13 +111,7 @@ const SkillCard: React.FC<{ catKey: string; cat: SkillCategory; index: number }>
               ))}
             </motion.div>
           ) : (
-            <motion.div
-              key="preview"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              className="flex flex-wrap gap-1.5"
-            >
+            <motion.div key="preview" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="flex flex-wrap gap-1.5">
               {cat.skills.slice(0, 2).map((skill) => (
                 <span key={skill} className="px-2.5 py-1 rounded-lg text-xs font-body text-text-muted border border-border-subtle bg-bg-raised">
                   {skill}
@@ -150,7 +148,6 @@ export const SkillsGrid: React.FC<{ skillsMatrix: SkillsMatrixData }> = ({ skill
           ))}
         </div>
 
-        {/* Footer hint */}
         <FadeIn delay={400}>
           <p className="mt-8 text-xs font-body text-text-muted/40 text-center">
             Hover each card to explore all capabilities in that domain

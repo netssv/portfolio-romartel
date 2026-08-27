@@ -266,7 +266,7 @@
   "skillsMatrix": {
     "businessCore": {
       "title": "Business Core & Client Operations",
-      "icon": "🎯",
+      "icon": "Target",
       "skills": [
         "Escalation & Critical Incident Management",
         "Tier 2/3 Technical Support & Systems Diagnostics",
@@ -278,7 +278,7 @@
     },
     "dataIntelligence": {
       "title": "Data & Business Intelligence",
-      "icon": "📊",
+      "icon": "BarChart3",
       "skills": [
         "Power BI Dashboard Design & DAX",
         "Excel & Google Sheets Reporting",
@@ -290,7 +290,7 @@
     },
     "technicalTooling": {
       "title": "Technical Tooling & Automation",
-      "icon": "⚙️",
+      "icon": "Cpu",
       "skills": [
         "Python Scripting (Automation & Auditing)",
         "Bash & Unix Shell Scripting",
