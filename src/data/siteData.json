@@ -386,6 +386,8 @@
     "category": "3D Simulation & Gaming",
     "icon": "Gamepad2",
     "image": "/projects/metropolyca.png",
+    "video": "/metro.mp4",
+    "videoSrc": "/metro.mp4",
     "metrics": [
       {
         "label": "Performance",

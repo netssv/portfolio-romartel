@@ -14,6 +14,10 @@ import { ArchitectureSection } from "@/src/components/ArchitectureSection";
 import { CaseStudiesSection } from "@/src/components/CaseStudiesSection";
 import { ContactSection } from "@/src/components/ContactSection";
 import { ScrollIndicator } from "@/src/components/layout/ScrollIndicator";
+import { CustomScrollRail } from "@/src/components/layout/CustomScrollRail";
+import { SmoothScrollProvider } from "@/src/components/layout/SmoothScrollProvider";
+import { GlobalWebGLStage } from "@/src/components/canvas/GlobalWebGLStage";
+import { useViewportGrid } from "@/src/lib/useViewportGrid";
 
 const {
   profile, experience, flagshipProject, sideProjects,
@@ -21,9 +25,13 @@ const {
 } = siteData;
 
 export default function Home() {
+  useViewportGrid();
+
   return (
-    <>
+    <SmoothScrollProvider>
+      <GlobalWebGLStage />
       <ScrollIndicator />
+      <CustomScrollRail />
       <Navbar 
         authorName={profile.name} 
         navItems={[
@@ -35,7 +43,7 @@ export default function Home() {
           { name: "Case Studies", path: "#case-studies" },
         ]} 
       />
-      <main className="flex-1 w-full flex flex-col min-w-0">
+      <main className="flex-1 w-full flex flex-col min-w-0 relative z-10">
         {/* ── Hero ───────────────────────────────────── */}
         <HeroSection
           name={profile.name}
@@ -65,23 +73,31 @@ export default function Home() {
         <ExperienceTimeline items={experience} />
 
         {/* ── Skills ─────────────────────────────────── */}
-        <SkillsGrid skillsMatrix={skillsMatrix} />
+        <div className="content-auto">
+          <SkillsGrid skillsMatrix={skillsMatrix} />
+        </div>
 
         {/* ── Architecture ───────────────────────────── */}
-        <ArchitectureSection />
+        <div className="content-auto">
+          <ArchitectureSection />
+        </div>
 
         {/* ── Case Studies ──────────────────────────── */}
-        <CaseStudiesSection />
+        <div className="content-auto">
+          <CaseStudiesSection />
+        </div>
 
         {/* ── Philosophy ─────────────────────────────── */}
-        <PhilosophySection quote={philosophy.quote} focus={philosophy.focus} />
+        <div className="content-auto">
+          <PhilosophySection quote={philosophy.quote} focus={philosophy.focus} />
+        </div>
 
         {/* ── Contact ────────────────────────────────── */}
         <ContactSection contact={contact} />
       </main>
 
       {/* ── Footer ─────────────────────────────────── */}
-      <footer className="py-8 border-t border-border-subtle bg-zinc-950/20">
+      <footer className="py-8 border-t border-border-subtle bg-zinc-950/20 relative z-10">
         <div className="mx-auto max-w-6xl px-6 flex flex-col sm:flex-row items-center justify-between gap-3">
           <p className="text-xs font-body text-text-muted">
             &copy; {new Date().getFullYear()} {siteData.metadata.author}. All rights reserved.
@@ -93,6 +109,6 @@ export default function Home() {
           </div>
         </div>
       </footer>
-    </>
+    </SmoothScrollProvider>
   );
 }

@@ -1,7 +1,24 @@
 @import "tailwindcss";
 
-/* ─── Design Tokens (Default: Day Light Mode) ────────── */
+/* ─── Design Tokens (Default: High-Contrast Dark Tech / Forge Style) ── */
 :root {
+  --bg-base:        #050505;
+  --bg-surface:     #0C0C0D;
+  --bg-raised:      #141416;
+  --text-primary:   #FFFFFF;
+  --text-secondary: #E4E4E7;
+  --text-muted:     #A1A1AA;
+  --accent:         #FF9500;
+  --text-accent:    #FF9500;
+  --border-subtle:  rgba(255, 255, 255, 0.08);
+  --border-base:    rgba(255, 255, 255, 0.15);
+  
+  --bg-glass:       rgba(12, 12, 13, 0.85);
+  --grid-color:     rgba(255, 149, 0, 0.10);
+}
+
+/* ─── Design Tokens (Day Light Mode - Optional Inversion) ── */
+.theme-light {
   --bg-base:        #F4F4F6;
   --bg-surface:     #FFFFFF;
   --bg-raised:      #E5E7EB;
@@ -15,23 +32,6 @@
   
   --bg-glass:       rgba(255, 255, 255, 0.90);
   --grid-color:     rgba(0, 0, 0, 0.05);
-}
-
-/* ─── Design Tokens (Night Light Mode - High Contrast WCAG AAA) ── */
-.theme-dark {
-  --bg-base:        #050505;
-  --bg-surface:     #0C0C0D;
-  --bg-raised:      #141416;
-  --text-primary:   #FFFFFF;
-  --text-secondary: #D4D4D8;
-  --text-muted:     #9CA3AF;
-  --accent:         #FF9500;
-  --text-accent:    #FF9500;
-  --border-subtle:  rgba(255, 255, 255, 0.08);
-  --border-base:    rgba(255, 255, 255, 0.14);
-  
-  --bg-glass:       rgba(12, 12, 13, 0.75);
-  --grid-color:     rgba(255, 255, 255, 0.08);
 }
 
 /* ─── Tailwind v4 Theme Extension ─────────────────────── */
@@ -91,7 +91,7 @@ h1, h2, h3, h4, h5, h6 {
   scroll-margin-top: 80px;
 }
 
-/* ─── Animation utilities ─────────────────────────────── */
+/* ─── Animation utilities & Grid System ────────────────── */
 @keyframes fade-up {
   from { opacity: 0; transform: translateY(16px); }
   to   { opacity: 1; transform: translateY(0);    }
@@ -100,3 +100,92 @@ h1, h2, h3, h4, h5, h6 {
 .animate-fade-up {
   animation: fade-up 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
+
+/* ─── Mathematical Viewport Grid & Reticle System ────────── */
+:root {
+  --grid-block-size: 54px;
+  --grid-columns: 16;
+  --grid-rows: 12;
+  --grid-x-offset: 0px;
+}
+
+/* Lenis smooth scrolling reset */
+html.lenis, html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+.lenis.lenis-scrolling iframe {
+  pointer-events: none;
+}
+
+/* ─── Forge Infinite Mirror Reflection ──────────────────── */
+.mirror-reflect {
+  position: relative;
+}
+
+.mirror-reflect-base {
+  position: relative;
+}
+
+.mirror-reflect-base::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 5%;
+  right: 5%;
+  height: 45px;
+  background: radial-gradient(ellipse at top, rgba(255, 149, 0, 0.25), transparent 70%);
+  filter: blur(8px);
+  pointer-events: none;
+  z-index: -1;
+}
+
+/* ─── Sleek Minimalist Custom Scrollbar ─────────────────── */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #050505;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #27272A;
+  border-radius: 9999px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  transition: background-color 0.2s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #FF9500;
+  box-shadow: 0 0 10px rgba(255, 149, 0, 0.6);
+}
+
+/* Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #27272A #050505;
+}
+
+/* ─── CSS Paint & Layout Containment ────────────────────── */
+.content-auto {
+  content-visibility: auto;
+  contain-intrinsic-size: 0 750px;
+}
+
+
+
+
