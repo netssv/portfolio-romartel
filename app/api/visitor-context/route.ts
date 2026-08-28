@@ -15,7 +15,7 @@ function extractIp(req: NextRequest): string {
   const cfIp = req.headers.get("cf-connecting-ip");
   if (cfIp) return cfIp.trim();
 
-  return req.ip || "";
+  return "";
 }
 
 export async function GET(req: NextRequest) {
