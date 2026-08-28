@@ -8,16 +8,16 @@ describe("ChatSuggestions Component", () => {
     render(<ChatSuggestions sectionId="top" onSelect={handleSelect} />);
 
     expect(screen.getByText(/quick actions/i)).toBeInTheDocument();
-    expect(screen.getByText(/viewing: Overview & Bio/i)).toBeInTheDocument();
-    expect(screen.getByText(/How does Rodrigo approach CRM & workflow automation\?/i)).toBeInTheDocument();
+    expect(screen.getByText(/Overview & Bio/i)).toBeInTheDocument();
+    expect(screen.getByText(/How does Rodrigo approach CRM & automation\?/i)).toBeInTheDocument();
   });
 
   it("renders projects section specific suggestions", () => {
     const handleSelect = vi.fn();
     render(<ChatSuggestions sectionId="projects" onSelect={handleSelect} />);
 
-    expect(screen.getByText(/viewing: Featured Projects/i)).toBeInTheDocument();
-    expect(screen.getByText(/Tell me about the HODL Watcher live BTC telemetry pipeline/i)).toBeInTheDocument();
+    expect(screen.getByText(/Featured Projects/i)).toBeInTheDocument();
+    expect(screen.getByText(/Tell me about the HODL Watcher BTC pipeline/i)).toBeInTheDocument();
   });
 
   it("triggers onSelect callback when clicking a suggestion button", () => {

@@ -116,11 +116,11 @@ export const InteractivePuzzleAvatar: React.FC<PuzzleAvatarProps> = ({ src, alt 
   return (
     <div className="relative w-72 h-72 sm:w-80 sm:h-80 lg:w-96 lg:h-96 flex flex-col items-center group/avatar mirror-reflect-base select-none">
       {/* ── Strict Running Border Beam (1.5px Laser Line) ── */}
-      <div className="relative w-full h-full rounded-[24px] p-[1.5px] overflow-hidden shadow-[0_25px_60px_rgba(0,0,0,0.85)] bg-zinc-900/60">
+      <div className="relative w-full h-full rounded-[24px] p-[1.5px] overflow-hidden shadow-2xl bg-bg-raised/60">
         <div className="absolute inset-[-150%] animate-[spin_4s_linear_infinite] bg-[conic-gradient(from_0deg_at_50%_50%,transparent_0deg,transparent_270deg,#FF9500_330deg,#FFFFFF_360deg)] opacity-90 group-hover/avatar:opacity-100 transition-opacity" />
 
         {/* Inner Screen */}
-        <div className="relative w-full h-full rounded-[22.5px] overflow-hidden bg-zinc-950">
+        <div className="relative w-full h-full rounded-[22.5px] overflow-hidden bg-bg-base">
           <CornerReticle size={10} color="rgba(255, 149, 0, 0.6)" />
 
           {/* Unified Photo */}
@@ -148,10 +148,10 @@ export const InteractivePuzzleAvatar: React.FC<PuzzleAvatarProps> = ({ src, alt 
           </div>
 
           {/* Bottom HUD Bar */}
-          <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between px-3 py-1.5 rounded-xl bg-zinc-950/85 backdrop-blur-md border border-zinc-700/50 shadow-xl text-[11px] font-mono text-zinc-300 z-50">
+          <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between px-3 py-1.5 rounded-xl bg-bg-surface/85 backdrop-blur-md border border-border-subtle shadow-xl text-[11px] font-mono text-text-secondary z-50">
             <div className="flex items-center gap-1.5">
-              <span className={`h-2 w-2 rounded-full ${isPuzzleMode ? "bg-accent animate-ping" : "bg-emerald-500 animate-pulse"}`} />
-              <span className="font-semibold text-zinc-100">
+              <span className={`h-2 w-2 rounded-full ${isPuzzleMode ? "bg-accent animate-ping" : "bg-emerald-text animate-pulse"}`} />
+              <span className="font-semibold text-text-primary">
                 {isPuzzleMode ? (isSolved ? "Puzzle Completed!" : "Interactive Jigsaw") : "Remote / Global"}
               </span>
             </div>
@@ -159,13 +159,13 @@ export const InteractivePuzzleAvatar: React.FC<PuzzleAvatarProps> = ({ src, alt 
             {isPuzzleMode ? (
               <button
                 onClick={restorePhoto}
-                className="flex items-center gap-1 text-accent hover:text-white transition-colors cursor-pointer text-[10px]"
+                className="flex items-center gap-1 text-accent hover:text-text-primary transition-colors cursor-pointer text-[10px]"
               >
                 <RefreshCw size={11} />
                 <span>Restore</span>
               </button>
             ) : (
-              <div className="flex items-center gap-1 text-zinc-400">
+              <div className="flex items-center gap-1 text-text-muted">
                 <MapPin size={11} className="text-accent" />
                 <span>San Salvador</span>
               </div>

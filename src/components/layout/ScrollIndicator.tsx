@@ -38,11 +38,11 @@ const TerminalBody: React.FC<{ activeSection: string; onNavigate: () => void }> 
           {isActive ? (
             <span className="text-accent font-bold leading-relaxed">
               <span className="opacity-50">romartel@portfolio:~$</span>{" "}
-              <span className="text-white underline decoration-accent/40 decoration-2">{sec.cmd}</span>
+              <span className="text-text-primary underline decoration-accent/40 decoration-2">{sec.cmd}</span>
               <Cursor />
             </span>
           ) : (
-            <span className="text-zinc-400 group-hover:text-white transition-colors duration-150">$ {sec.cmd}</span>
+            <span className="text-text-muted group-hover:text-text-primary transition-colors duration-150">$ {sec.cmd}</span>
           )}
         </a>
       );
@@ -58,43 +58,12 @@ export const ScrollIndicator: React.FC = () => {
   const dragControls = useDragControls();
   const desktopConstraintsRef = useRef<HTMLDivElement>(null);
 
-  const x = useMotionValue(0);
-  const y = useMotionValue(0);
-
-  const handleCollapse = useCallback(() => {
-    setIsCollapsed(true);
-    // Guarantee snapped position at bottom-left corner
-    x.set(0);
-    y.set(0);
-  }, [x, y]);
-
-  const startAutoHideTimer = useCallback(() => {
-    if (hideTimerRef.current) clearTimeout(hideTimerRef.current);
-    hideTimerRef.current = setTimeout(() => {
-      handleCollapse();
-    }, 8000);
-  }, [handleCollapse]);
-
-  useEffect(() => {
-    return () => {
-      if (hideTimerRef.current) clearTimeout(hideTimerRef.current);
-    };
-  }, []);
-
-  useEffect(() => {
-    const el = desktopConstraintsRef.current;
-    if (!el) return;
-    el.style.cssText = "position:fixed;inset:0;pointer-events:none;z-index:0";
-    document.body.appendChild(el);
-    return () => { if (el.parentNode) el.parentNode.removeChild(el); };
-  }, []);
-
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
-        entries.forEach((e) => {
-          if (e.isIntersecting) {
-            const id = (e.target as HTMLElement).dataset.scrollSection ?? "top";
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const id = entry.target.id || "top";
             setActiveSection(id);
           }
         });
@@ -104,30 +73,37 @@ export const ScrollIndicator: React.FC = () => {
 
     sections.forEach(({ id }) => {
       const el = id === "top" ? document.body : document.getElementById(id);
-      if (el) {
-        (el as HTMLElement).dataset.scrollSection = id;
-        observer.observe(el);
-      }
+      if (el) observer.observe(el);
     });
+
     return () => observer.disconnect();
   }, []);
 
-  const activeCmd = sections.find((s) => s.id === activeSection)?.cmd ?? "cd ~";
+  const handleCollapse = () => {
+    setIsCollapsed(true);
+    if (hideTimerRef.current) clearTimeout(hideTimerRef.current);
+  };
+
+  const startAutoHideTimer = () => {
+    if (hideTimerRef.current) clearTimeout(hideTimerRef.current);
+    hideTimerRef.current = setTimeout(() => {
+      setIsCollapsed(true);
+    }, 6000);
+  };
+
+  const activeCmd = sections.find((s) => s.id === activeSection)?.cmd || "top";
 
   return (
     <>
-      <div ref={desktopConstraintsRef} className="hidden lg:block" />
+      <div ref={desktopConstraintsRef} className="fixed inset-4 pointer-events-none z-50 overflow-hidden" />
+
       <motion.div
         drag={!isCollapsed}
+        dragListener={false}
         dragControls={dragControls}
-        dragMomentum={false}
-        dragElastic={0.06}
         dragConstraints={desktopConstraintsRef}
-        style={{
-          x: isCollapsed ? 0 : x,
-          y: isCollapsed ? 0 : y,
-          cursor: isCollapsed ? "pointer" : isDragging ? "grabbing" : "default",
-        }}
+        dragElastic={0.08}
+        dragMomentum={false}
         onDragStart={() => setIsDragging(true)}
         onDragEnd={() => setIsDragging(false)}
         onClick={() => {
@@ -138,8 +114,8 @@ export const ScrollIndicator: React.FC = () => {
         }}
         onMouseEnter={() => !isCollapsed && startAutoHideTimer()}
         className={`fixed left-5 bottom-6 z-50 flex flex-col font-mono text-xs select-none origin-bottom-left
-          bg-zinc-950/95 border border-zinc-800 rounded-2xl shadow-2xl backdrop-blur-md
-          transition-all duration-200 ${isCollapsed ? "w-auto hover:border-zinc-700 hover:shadow-accent/20" : "w-[230px] p-4"}
+          bg-bg-surface/95 border border-border-subtle rounded-2xl shadow-2xl backdrop-blur-md
+          transition-all duration-200 ${isCollapsed ? "w-auto hover:border-border-base hover:shadow-accent/20" : "w-[230px] p-4"}
           ${isDragging ? "shadow-accent/30 border-accent/60" : ""}`}
       >
         <div
@@ -149,7 +125,7 @@ export const ScrollIndicator: React.FC = () => {
             }
           }}
           className={`flex items-center justify-between ${
-            isCollapsed ? "px-3.5 py-2.5 gap-3" : "border-b border-zinc-800 pb-2 mb-2 cursor-grab active:cursor-grabbing"
+            isCollapsed ? "px-3.5 py-2.5 gap-3" : "border-b border-border-subtle pb-2 mb-2 cursor-grab active:cursor-grabbing"
           }`}
         >
           <div className="flex items-center gap-1.5" onClick={(e) => e.stopPropagation()}>
@@ -174,21 +150,21 @@ export const ScrollIndicator: React.FC = () => {
           </div>
 
           {isCollapsed ? (
-            <div className="flex items-center gap-2 text-white font-semibold">
+            <div className="flex items-center gap-2 text-text-primary font-semibold">
               <Terminal size={12} className="text-accent" />
               <span className="truncate max-w-[130px] text-[11px]">$ {activeCmd}</span>
-              <ChevronUp size={12} className="text-zinc-400" />
+              <ChevronUp size={12} className="text-text-muted" />
             </div>
           ) : (
             <div className="flex items-center gap-1.5">
-              <span className="text-[10px] text-zinc-400 uppercase tracking-widest font-bold">bash · drag</span>
+              <span className="text-[10px] text-text-muted uppercase tracking-widest font-bold">bash · drag</span>
               <button
                 type="button"
                 onClick={(e) => {
                   e.stopPropagation();
                   handleCollapse();
                 }}
-                className="text-zinc-400 hover:text-white p-0.5 rounded cursor-pointer"
+                className="text-text-muted hover:text-text-primary p-0.5 rounded cursor-pointer"
                 title="Collapse"
               >
                 <ChevronDown size={12} />

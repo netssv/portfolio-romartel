@@ -52,7 +52,7 @@ export const PinnedExperienceScrollytelling: React.FC<{ items: ExperienceItem[] 
           
           {/* ── 1. Chronological Timeline Ribbon ── */}
           <div className="relative mb-4 sm:mb-6">
-            <div className="absolute top-1/2 left-0 right-0 h-[2px] -translate-y-1/2 bg-zinc-800" />
+            <div className="absolute top-1/2 left-0 right-0 h-[2px] -translate-y-1/2 bg-border-base" />
             <motion.div
               className="absolute top-1/2 left-0 h-[2px] -translate-y-1/2 bg-accent shadow-[0_0_12px_rgba(255,149,0,0.8)] transition-all duration-300"
               style={{ width: `${(activeIndex / (items.length - 1)) * 100}%` }}
@@ -76,8 +76,8 @@ export const PinnedExperienceScrollytelling: React.FC<{ items: ExperienceItem[] 
                         isActive
                           ? "bg-accent border-accent text-black scale-110 shadow-[0_0_15px_rgba(255,149,0,0.7)]"
                           : isPast
-                          ? "bg-zinc-900 border-accent/60 text-accent"
-                          : "bg-zinc-950 border-zinc-800 text-zinc-600 group-hover:border-zinc-700"
+                          ? "bg-bg-surface border-accent/60 text-accent"
+                          : "bg-bg-surface border-border-subtle text-text-muted group-hover:border-border-base"
                       }`}
                     >
                       <Briefcase size={11} className={isActive ? "text-black" : "text-current"} />
@@ -85,12 +85,12 @@ export const PinnedExperienceScrollytelling: React.FC<{ items: ExperienceItem[] 
 
                     <span
                       className={`text-[9px] sm:text-xs font-mono font-bold mt-1.5 transition-colors ${
-                        isActive ? "text-accent drop-shadow-[0_0_8px_rgba(255,149,0,0.5)]" : isPast ? "text-zinc-300" : "text-zinc-600"
+                        isActive ? "text-accent drop-shadow-[0_0_8px_rgba(255,149,0,0.5)]" : isPast ? "text-text-primary" : "text-text-muted"
                       }`}
                     >
                       {startYear}
                     </span>
-                    <span className="text-[9px] font-mono text-zinc-500 hidden sm:block max-w-[80px] truncate">
+                    <span className="text-[9px] font-mono text-text-muted hidden sm:block max-w-[80px] truncate">
                       {job.company}
                     </span>
                   </button>
@@ -103,17 +103,17 @@ export const PinnedExperienceScrollytelling: React.FC<{ items: ExperienceItem[] 
           <div className="relative w-full" style={{ perspective: "1000px" }}>
             <div
               key={activeIndex}
-              className="bg-zinc-950/90 border border-zinc-800/90 rounded-2xl overflow-hidden shadow-[0_25px_60px_rgba(0,0,0,0.9)] backdrop-blur-xl mirror-reflect-base"
+              className="bg-bg-surface/90 border border-border-subtle rounded-2xl overflow-hidden shadow-2xl backdrop-blur-xl mirror-reflect-base"
             >
               <CornerReticle size={8} color="rgba(255, 149, 0, 0.5)" />
 
               {/* Window Header */}
-              <div className="flex items-center justify-between px-4 sm:px-5 py-2.5 sm:py-3 border-b border-zinc-800 bg-zinc-900/60">
+              <div className="flex items-center justify-between px-4 sm:px-5 py-2.5 sm:py-3 border-b border-border-subtle bg-bg-raised/60">
                 <div className="flex items-center gap-1.5 sm:gap-2">
                   <span className="w-2 sm:w-2.5 h-2 sm:h-2.5 rounded-full bg-red-500/80" />
                   <span className="w-2 sm:w-2.5 h-2 sm:h-2.5 rounded-full bg-amber-500/80" />
                   <span className="w-2 sm:w-2.5 h-2 sm:h-2.5 rounded-full bg-emerald-500/80" />
-                  <span className="ml-1 sm:ml-2 text-[11px] sm:text-xs font-mono text-zinc-400 font-semibold uppercase tracking-wider truncate">
+                  <span className="ml-1 sm:ml-2 text-[11px] sm:text-xs font-mono text-text-muted font-semibold uppercase tracking-wider truncate">
                     career_record_0{activeIndex + 1}.sh
                   </span>
                 </div>
@@ -124,17 +124,17 @@ export const PinnedExperienceScrollytelling: React.FC<{ items: ExperienceItem[] 
               </div>
 
               {/* Title & Metadata */}
-              <div className="p-4 sm:p-6 border-b border-zinc-800/60 bg-gradient-to-r from-zinc-950 via-zinc-900/30 to-zinc-950">
+              <div className="p-4 sm:p-6 border-b border-border-subtle bg-bg-surface">
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 sm:gap-3">
                   <div>
-                    <h3 className="text-xl sm:text-2xl lg:text-3xl font-heading font-black text-white tracking-tight leading-tight">
+                    <h3 className="text-xl sm:text-2xl lg:text-3xl font-heading font-black text-text-primary tracking-tight leading-tight">
                       {active.role}
                     </h3>
                     <p className="text-sm sm:text-base font-mono font-bold text-accent mt-0.5 sm:mt-1 flex items-center gap-1.5">
                       <span>@ {active.company}</span>
                     </p>
                   </div>
-                  <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-zinc-900 border border-zinc-800 text-[11px] sm:text-xs font-mono text-zinc-300 self-start sm:self-auto">
+                  <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-bg-raised border border-border-subtle text-[11px] sm:text-xs font-mono text-text-secondary self-start sm:self-auto">
                     <MapPin size={11} className="text-accent" />
                     <span>{active.location}</span>
                   </span>
@@ -142,8 +142,8 @@ export const PinnedExperienceScrollytelling: React.FC<{ items: ExperienceItem[] 
               </div>
 
               {/* Surface Summary Narrative */}
-              <div className="px-4 sm:px-6 py-3.5 sm:py-4 border-b border-zinc-800/40 bg-zinc-950/40 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-                <p className="text-xs sm:text-sm font-body text-zinc-200 leading-relaxed max-w-2xl">
+              <div className="px-4 sm:px-6 py-3.5 sm:py-4 border-b border-border-subtle bg-bg-surface/40 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                <p className="text-xs sm:text-sm font-body text-text-secondary leading-relaxed max-w-2xl">
                   {active.description}
                 </p>
                 <button
@@ -151,7 +151,7 @@ export const PinnedExperienceScrollytelling: React.FC<{ items: ExperienceItem[] 
                   className={`px-3.5 py-1.5 rounded-xl border text-[11px] font-mono font-semibold flex items-center gap-1.5 transition-all cursor-pointer shrink-0 self-start sm:self-auto ${
                     isDetailsOpen
                       ? "bg-accent/15 border-accent text-accent"
-                      : "bg-zinc-900 border-zinc-700 text-zinc-300 hover:border-zinc-500 hover:text-white"
+                      : "bg-bg-raised border-border-subtle text-text-secondary hover:border-border-base hover:text-text-primary"
                   }`}
                 >
                   <Sparkles size={11} />
@@ -170,7 +170,7 @@ export const PinnedExperienceScrollytelling: React.FC<{ items: ExperienceItem[] 
                     transition={{ duration: 0.22, ease: "easeOut" }}
                     className="overflow-hidden"
                   >
-                    <div className="p-4 sm:p-6 grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 bg-zinc-900/40 border-b border-zinc-800/50">
+                    <div className="p-4 sm:p-6 grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 bg-bg-raised/40 border-b border-border-subtle">
                       <div>
                         <p className="text-[11px] sm:text-xs font-mono font-bold uppercase tracking-wider text-accent mb-2 flex items-center gap-1.5">
                           <Terminal size={12} />
@@ -178,7 +178,7 @@ export const PinnedExperienceScrollytelling: React.FC<{ items: ExperienceItem[] 
                         </p>
                         <ul className="space-y-1.5">
                           {(active.impact || []).map((item, i) => (
-                            <li key={i} className="flex items-start gap-2 text-[11px] sm:text-xs font-mono text-zinc-300 leading-snug">
+                            <li key={i} className="flex items-start gap-2 text-[11px] sm:text-xs font-mono text-text-secondary leading-snug">
                               <CheckCircle2 size={12} className="text-emerald-400 shrink-0 mt-0.5" />
                               <span>{item}</span>
                             </li>
@@ -193,7 +193,7 @@ export const PinnedExperienceScrollytelling: React.FC<{ items: ExperienceItem[] 
                         </p>
                         <ul className="space-y-1.5">
                           {(active.operations || []).map((item, i) => (
-                            <li key={i} className="flex items-start gap-2 text-[11px] sm:text-xs font-mono text-zinc-400 leading-snug">
+                            <li key={i} className="flex items-start gap-2 text-[11px] sm:text-xs font-mono text-text-muted leading-snug">
                               <CheckCircle2 size={12} className="text-accent shrink-0 mt-0.5" />
                               <span>{item}</span>
                             </li>
@@ -206,7 +206,7 @@ export const PinnedExperienceScrollytelling: React.FC<{ items: ExperienceItem[] 
               </AnimatePresence>
 
               {/* Bottom Status Bar */}
-              <div className="px-4 sm:px-5 py-2 sm:py-2.5 border-t border-zinc-800 bg-zinc-900/60 flex items-center justify-between text-[11px] sm:text-xs font-mono text-zinc-400">
+              <div className="px-4 sm:px-5 py-2 sm:py-2.5 border-t border-border-subtle bg-bg-raised/60 flex items-center justify-between text-[11px] sm:text-xs font-mono text-text-muted">
                 <span>TIMELINE STAGE: <span className="text-emerald-400 font-bold">0{activeIndex + 1} of 0{items.length}</span></span>
                 <span className="text-accent font-bold hidden sm:inline">SCROLL TO ADVANCE YEARS ↓</span>
               </div>

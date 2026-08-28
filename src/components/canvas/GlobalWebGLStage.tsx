@@ -4,12 +4,20 @@ import React, { useEffect, useRef } from "react";
 import * as THREE from "three";
 import { createInfiniteMirrorMaterial } from "./shaders/InfiniteMirrorGridShader";
 
-const PALETTES = [
+const NIGHT_PALETTES = [
   { stop: 0.0, accent: "#FF9500", base: "#050505" }, // Hero (Amber)
   { stop: 0.25, accent: "#10B981", base: "#040A07" }, // Telemetry/Tech (Emerald)
   { stop: 0.55, accent: "#0EA5E9", base: "#040810" }, // Projects (Cyber Cyan)
   { stop: 0.8, accent: "#6366F1", base: "#070612" }, // Architecture (Indigo)
   { stop: 1.0, accent: "#FF9500", base: "#050505" }, // Contact/Footer (Amber)
+];
+
+const DAY_PALETTES = [
+  { stop: 0.0, accent: "#E07A00", base: "#F4F4F6" }, // Hero (Warm Amber)
+  { stop: 0.25, accent: "#059669", base: "#F0FDF4" }, // Telemetry (Emerald)
+  { stop: 0.55, accent: "#0284C7", base: "#F0F9FF" }, // Projects (Sky)
+  { stop: 0.8, accent: "#4F46E5", base: "#EEF2FF" }, // Architecture (Indigo)
+  { stop: 1.0, accent: "#E07A00", base: "#F4F4F6" }, // Contact/Footer (Warm Amber)
 ];
 
 export const GlobalWebGLStage: React.FC = () => {
@@ -97,16 +105,18 @@ export const GlobalWebGLStage: React.FC = () => {
       mouse.y += (mouse.targetY - mouse.y) * 0.06;
 
       const scrollProgress = cachedScrollProgress;
+      const isDark = document.documentElement.classList.contains("theme-dark");
+      const activePalette = isDark ? NIGHT_PALETTES : DAY_PALETTES;
 
       // Color stop interpolation
-      let currentStop = PALETTES[0];
-      let nextStop = PALETTES[1];
+      let currentStop = activePalette[0];
+      let nextStop = activePalette[1];
       let t = 0;
 
-      for (let i = 0; i < PALETTES.length - 1; i++) {
-        if (scrollProgress >= PALETTES[i].stop && scrollProgress <= PALETTES[i + 1].stop) {
-          currentStop = PALETTES[i];
-          nextStop = PALETTES[i + 1];
+      for (let i = 0; i < activePalette.length - 1; i++) {
+        if (scrollProgress >= activePalette[i].stop && scrollProgress <= activePalette[i + 1].stop) {
+          currentStop = activePalette[i];
+          nextStop = activePalette[i + 1];
           const range = nextStop.stop - currentStop.stop;
           t = range > 0 ? (scrollProgress - currentStop.stop) / range : 0;
           break;
@@ -122,6 +132,7 @@ export const GlobalWebGLStage: React.FC = () => {
       material.uniforms.uMouse.value.set(mouse.x, mouse.y);
       material.uniforms.uColorAccent.value = activeAccent;
       material.uniforms.uColorBase.value = activeBase;
+      material.uniforms.uIsDark.value = isDark ? 1.0 : 0.0;
 
       renderer.render(scene, camera);
       animationFrameId = requestAnimationFrame(render);

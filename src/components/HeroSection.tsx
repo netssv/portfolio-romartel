@@ -77,17 +77,17 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
             </motion.div>
           ) : (
             <motion.div className="inline-flex flex-wrap items-center gap-2.5 mb-6" variants={itemVariants}>
-              <span className="relative inline-flex items-center gap-2 px-3.5 py-1.5 rounded-lg bg-emerald-500/10 border border-emerald-500/20 shadow-sm">
+              <span className="relative inline-flex items-center gap-2 px-3.5 py-1.5 rounded-lg bg-emerald-bg border border-emerald-border shadow-sm">
                 <CornerReticle size={5} color="rgba(16, 185, 129, 0.4)" />
                 <span className="relative flex h-2 w-2">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
-                  <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-text opacity-75" />
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-text" />
                 </span>
-                <span className="text-[11px] font-mono font-semibold uppercase tracking-[0.14em] text-emerald-400">
+                <span className="text-[11px] font-mono font-bold uppercase tracking-[0.14em] text-emerald-text">
                   Available for strategic execution
                 </span>
               </span>
-              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-zinc-900/90 border border-zinc-800 text-[11px] font-mono font-medium text-zinc-300">
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-bg-surface/90 border border-border-subtle text-[11px] font-mono font-medium text-text-muted">
                 <MapPin size={11} className="text-accent" />
                 <span>{location}</span>
               </span>
@@ -98,16 +98,16 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
             <KineticTextReveal
               text={name}
               as="h1"
-              className="text-5xl sm:text-6xl lg:text-7.5xl font-heading font-extrabold text-white tracking-[-0.04em] leading-[1.02] drop-shadow-[0_4px_16px_rgba(0,0,0,0.8)]"
+              className="text-5xl sm:text-6xl lg:text-7.5xl font-heading font-extrabold text-text-primary tracking-[-0.04em] leading-[1.02]"
               stagger={0.02}
             />
             <motion.span initial={{ opacity: 0 }} animate={{ opacity: [0, 1, 0] }} transition={{ repeat: Infinity, duration: 0.8, ease: "linear" }} className="inline-block w-[4px] sm:w-[6px] lg:w-[8px] h-[0.9em] bg-accent ml-1 sm:ml-2 rounded-sm shadow-[0_0_12px_rgba(255,149,0,0.8)]" />
           </motion.div>
 
-          <motion.p className="text-lg sm:text-xl font-body font-semibold text-zinc-200 mb-6 leading-relaxed" variants={itemVariants}>
+          <motion.p className="text-lg sm:text-xl font-body font-semibold text-text-primary mb-6 leading-relaxed" variants={itemVariants}>
             {title}
           </motion.p>
-          <motion.p className="text-sm sm:text-base text-zinc-300 leading-[1.8] max-w-xl mb-10" variants={itemVariants}>
+          <motion.p className="text-sm sm:text-base text-text-secondary leading-[1.8] max-w-xl mb-10" variants={itemVariants}>
             {bio}
           </motion.p>
 
@@ -126,11 +126,11 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
 
             <a
               href={`mailto:${email}`}
-              className="relative group h-12 px-6 flex items-center justify-center gap-2 rounded-xl border border-zinc-800 bg-zinc-950/70 backdrop-blur-md text-xs font-body font-semibold text-zinc-200 hover:text-white hover:border-accent/40 transition-all duration-200 shadow-md"
+              className="relative group h-12 px-6 flex items-center justify-center gap-2 rounded-xl border border-border-subtle bg-bg-surface/70 backdrop-blur-md text-xs font-body font-semibold text-text-secondary hover:text-text-primary hover:border-accent/40 transition-all duration-200 shadow-md"
             >
-              <CornerReticle size={5} color="rgba(255, 255, 255, 0.2)" />
+              <CornerReticle size={5} color="rgba(128, 128, 128, 0.2)" />
               <span>{email}</span>
-              <ArrowUpRight size={14} className="text-zinc-400 group-hover:text-accent transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all duration-200" />
+              <ArrowUpRight size={14} className="text-text-muted group-hover:text-accent transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all duration-200" />
             </a>
           </motion.div>
         </motion.div>

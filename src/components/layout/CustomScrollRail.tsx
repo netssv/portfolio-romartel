@@ -58,7 +58,7 @@ export const CustomScrollRail: React.FC = () => {
       aria-label="Section navigation"
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
-      className="fixed right-3 sm:right-4 top-1/2 -translate-y-1/2 z-40 hidden md:flex flex-col items-center gap-2 p-1.5 rounded-full bg-zinc-950/70 border border-zinc-800/80 backdrop-blur-md shadow-2xl transition-all duration-300 group"
+      className="fixed right-3 sm:right-4 top-1/2 -translate-y-1/2 z-40 hidden md:flex flex-col items-center gap-2 p-1.5 rounded-full bg-bg-surface/80 border border-border-subtle backdrop-blur-md shadow-2xl transition-all duration-300 group"
     >
       {SECTIONS.map((sec) => {
         const isActive = activeSection === sec.id;
@@ -74,13 +74,13 @@ export const CustomScrollRail: React.FC = () => {
               className={`block rounded-full transition-all duration-300 ${
                 isActive
                   ? "w-2.5 h-2.5 bg-accent shadow-[0_0_10px_rgba(255,149,0,0.9)] scale-110"
-                  : "w-1.5 h-1.5 bg-zinc-600 group-hover/dot:bg-zinc-300 group-hover/dot:scale-125"
+                  : "w-1.5 h-1.5 bg-border-base group-hover/dot:bg-text-primary group-hover/dot:scale-125"
               }`}
             />
 
             {/* Tooltip on Hover */}
             {hovered && (
-              <span className="absolute right-7 px-2.5 py-1 rounded-md bg-zinc-900 border border-zinc-700 text-[10px] font-mono font-semibold text-zinc-100 whitespace-nowrap shadow-lg pointer-events-none transition-all">
+              <span className="absolute right-7 px-2.5 py-1 rounded-md bg-bg-surface border border-border-subtle text-[10px] font-mono font-semibold text-text-primary whitespace-nowrap shadow-lg pointer-events-none transition-all">
                 {sec.label}
               </span>
             )}

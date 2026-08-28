@@ -1,24 +1,10 @@
 @import "tailwindcss";
 
-/* ─── Design Tokens (Default: High-Contrast Dark Tech / Forge Style) ── */
-:root {
-  --bg-base:        #050505;
-  --bg-surface:     #0C0C0D;
-  --bg-raised:      #141416;
-  --text-primary:   #FFFFFF;
-  --text-secondary: #E4E4E7;
-  --text-muted:     #A1A1AA;
-  --accent:         #FF9500;
-  --text-accent:    #FF9500;
-  --border-subtle:  rgba(255, 255, 255, 0.08);
-  --border-base:    rgba(255, 255, 255, 0.15);
-  
-  --bg-glass:       rgba(12, 12, 13, 0.85);
-  --grid-color:     rgba(255, 149, 0, 0.10);
-}
+/* ─── Custom Dark Variant explicitly tied to .theme-dark class ─── */
+@custom-variant dark (&:where(.theme-dark, .theme-dark *));
 
-/* ─── Design Tokens (Day Light Mode - Optional Inversion) ── */
-.theme-light {
+/* ─── Design Tokens (Day Light Mode - Default Base) ── */
+:root {
   --bg-base:        #F4F4F6;
   --bg-surface:     #FFFFFF;
   --bg-raised:      #E5E7EB;
@@ -32,6 +18,37 @@
   
   --bg-glass:       rgba(255, 255, 255, 0.90);
   --grid-color:     rgba(0, 0, 0, 0.05);
+
+  --emerald-text:   #065F46;
+  --emerald-bg:     rgba(5, 150, 105, 0.12);
+  --emerald-border: rgba(5, 150, 105, 0.30);
+  --purple-text:    #581C87;
+  --purple-bg:      rgba(126, 34, 206, 0.10);
+  --purple-border:  rgba(126, 34, 206, 0.25);
+}
+
+/* ─── Design Tokens (Night Dark Mode - Forge Style) ── */
+.theme-dark {
+  --bg-base:        #050505;
+  --bg-surface:     #0C0C0D;
+  --bg-raised:      #141416;
+  --text-primary:   #FFFFFF;
+  --text-secondary: #E4E4E7;
+  --text-muted:     #A1A1AA;
+  --accent:         #FF9500;
+  --text-accent:    #FF9500;
+  --border-subtle:  rgba(255, 255, 255, 0.08);
+  --border-base:    rgba(255, 255, 255, 0.15);
+  
+  --bg-glass:       rgba(12, 12, 13, 0.85);
+  --grid-color:     rgba(255, 149, 0, 0.10);
+
+  --emerald-text:   #34D399;
+  --emerald-bg:     rgba(16, 185, 129, 0.15);
+  --emerald-border: rgba(16, 185, 129, 0.30);
+  --purple-text:    #C084FC;
+  --purple-bg:      rgba(168, 85, 247, 0.15);
+  --purple-border:  rgba(168, 85, 247, 0.30);
 }
 
 /* ─── Tailwind v4 Theme Extension ─────────────────────── */
@@ -48,6 +65,13 @@
   --color-border-base:    var(--border-base);
   --color-bg-glass:       var(--bg-glass);
   --color-grid-color:     var(--grid-color);
+
+  --color-emerald-text:   var(--emerald-text);
+  --color-emerald-bg:     var(--emerald-bg);
+  --color-emerald-border: var(--emerald-border);
+  --color-purple-text:    var(--purple-text);
+  --color-purple-bg:      var(--purple-bg);
+  --color-purple-border:  var(--purple-border);
 
   --font-heading: var(--font-space-grotesk);
   --font-body:    var(--font-inter);
@@ -159,25 +183,25 @@ html.lenis, html.lenis body {
 }
 
 ::-webkit-scrollbar-track {
-  background: #050505;
+  background: var(--bg-base);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #27272A;
+  background: var(--border-base);
   border-radius: 9999px;
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--border-subtle);
   transition: background-color 0.2s ease;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #FF9500;
+  background: var(--accent);
   box-shadow: 0 0 10px rgba(255, 149, 0, 0.6);
 }
 
 /* Firefox */
 * {
   scrollbar-width: thin;
-  scrollbar-color: #27272A #050505;
+  scrollbar-color: var(--text-muted) var(--bg-base);
 }
 
 /* ─── CSS Paint & Layout Containment ────────────────────── */

@@ -82,13 +82,13 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
               description="Scroll continuously through the pinned showcase to inspect live simulations, machine learning tools, and production pipelines without losing focus."
             />
             {/* View Mode Toggle */}
-            <div className="flex items-center gap-1.5 p-1 rounded-xl bg-zinc-900 border border-zinc-800 shrink-0 self-start md:self-auto">
+            <div className="flex items-center gap-1.5 p-1 rounded-xl bg-bg-raised border border-border-subtle shrink-0 self-start md:self-auto">
               <button
                 onClick={() => setViewMode("cinematic")}
                 className={`px-3 py-1.5 rounded-lg text-xs font-mono font-semibold flex items-center gap-1.5 transition-all cursor-pointer ${
                   viewMode === "cinematic"
                     ? "bg-accent text-black shadow-md shadow-accent/20"
-                    : "text-zinc-400 hover:text-white"
+                    : "text-text-muted hover:text-text-primary"
                 }`}
               >
                 <Film size={13} />
@@ -99,7 +99,7 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
                 className={`px-3 py-1.5 rounded-lg text-xs font-mono font-semibold flex items-center gap-1.5 transition-all cursor-pointer ${
                   viewMode === "grid"
                     ? "bg-accent text-black shadow-md shadow-accent/20"
-                    : "text-zinc-400 hover:text-white"
+                    : "text-text-muted hover:text-text-primary"
                 }`}
               >
                 <LayoutGrid size={13} />
@@ -134,7 +134,7 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
                     className={`px-3.5 py-1.5 rounded-xl text-xs font-mono transition-all duration-200 cursor-pointer ${
                       isActive
                         ? "bg-accent text-black font-bold shadow-md shadow-accent/20"
-                        : "bg-zinc-900 border border-zinc-800 text-zinc-400 hover:text-white"
+                        : "bg-bg-surface border border-border-subtle text-text-muted hover:text-text-primary"
                     }`}
                   >
                     {cat}
@@ -142,7 +142,7 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
                 );
               })}
             </div>
-            <span className="text-xs font-mono text-zinc-400 font-medium">
+            <span className="text-xs font-mono text-text-muted font-medium">
               Showing {filteredProjects.length} project{filteredProjects.length !== 1 ? "s" : ""}
             </span>
           </div>

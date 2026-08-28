@@ -29,9 +29,7 @@ export const BtcTrendTelemetryBar: React.FC = () => {
       const res = await fetch("/api/hodl-insights");
       if (res.ok) {
         const data = await res.json();
-        if (data.sentiment) {
-          setSentiment(data.sentiment);
-        }
+        if (data.sentiment) setSentiment(data.sentiment);
       }
     } catch {}
   }, []);
@@ -47,12 +45,7 @@ export const BtcTrendTelemetryBar: React.FC = () => {
           setPriceFlash(newPrice > prev.price ? "up" : "down");
           setTimeout(() => setPriceFlash(null), 1200);
         }
-        return {
-          price: newPrice,
-          priceChangePercent: parseFloat(json.priceChangePercent),
-          highPrice: parseFloat(json.highPrice),
-          lowPrice: parseFloat(json.lowPrice),
-        };
+        return { price: newPrice, priceChangePercent: parseFloat(json.priceChangePercent), highPrice: parseFloat(json.highPrice), lowPrice: parseFloat(json.lowPrice) };
       });
     } catch {}
   }, []);
@@ -73,12 +66,7 @@ export const BtcTrendTelemetryBar: React.FC = () => {
       await fetch("/api/telemetry/ping", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          source: "visitor-test",
-          task: "Interactive Health Check",
-          status: "ok",
-          details: "Manual ping from portfolio visitor",
-        }),
+        body: JSON.stringify({ source: "visitor-test", task: "Interactive Health Check", status: "ok", details: "Manual ping from portfolio visitor" }),
       });
       await fetchTelemetry();
       setShowLogs(true);
@@ -94,11 +82,7 @@ export const BtcTrendTelemetryBar: React.FC = () => {
     const btcInt = setInterval(fetchBtcPrice, 8000);
     const telInt = setInterval(fetchTelemetry, 25000);
     const insInt = setInterval(fetchInsights, 60000);
-    return () => {
-      clearInterval(btcInt);
-      clearInterval(telInt);
-      clearInterval(insInt);
-    };
+    return () => { clearInterval(btcInt); clearInterval(telInt); clearInterval(insInt); };
   }, [fetchBtcPrice, fetchTelemetry, fetchInsights]);
 
   const events = telemetry?.events || [];
@@ -116,7 +100,7 @@ export const BtcTrendTelemetryBar: React.FC = () => {
     <section className="relative -mt-4 sm:-mt-6 mb-12 z-20">
       <div className="mx-auto max-w-6xl px-6">
         <FadeIn>
-          <div className="relative overflow-hidden rounded-2xl border border-zinc-800/90 bg-zinc-950/90 p-4 sm:px-6 sm:py-4 backdrop-blur-xl shadow-2xl transition-all duration-300 hover:border-zinc-700/80">
+          <div className="relative overflow-hidden rounded-2xl border border-border-subtle bg-bg-surface/90 p-4 sm:px-6 sm:py-4 backdrop-blur-xl shadow-2xl transition-all duration-300 hover:border-border-base">
             <div className="pointer-events-none absolute inset-x-0 top-0 h-[1px] bg-gradient-to-r from-transparent via-emerald-500/40 to-transparent" />
 
             {/* Main Aligned 1-Row Grid */}
@@ -124,28 +108,28 @@ export const BtcTrendTelemetryBar: React.FC = () => {
               {/* Left Column: Live Status */}
               <div className="flex items-center gap-3 min-w-0">
                 <div className="relative flex h-3.5 w-3.5 shrink-0 items-center justify-center">
-                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-60" />
-                  <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-emerald-500" />
+                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-text opacity-60" />
+                  <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-emerald-text" />
                 </div>
                 <div className="min-w-0">
                   <div className="flex items-center gap-2">
-                    <span className="font-mono text-xs font-bold uppercase tracking-wider text-emerald-400">
+                    <span className="font-mono text-xs font-bold uppercase tracking-wider text-emerald-text">
                       LIVE PIPELINE DEMO
                     </span>
-                    <span className="rounded-md bg-emerald-500/10 border border-emerald-500/20 px-1.5 py-0.5 text-[10px] font-mono font-medium text-emerald-300">
+                    <span className="rounded-md bg-emerald-bg border border-emerald-border px-1.5 py-0.5 text-[10px] font-mono font-semibold text-emerald-text">
                       $0/mo Python + Cron Automation
                     </span>
                   </div>
-                  <p className="font-mono text-[11px] text-zinc-400 mt-0.5 truncate">
+                  <p className="font-mono text-[11px] text-text-muted mt-0.5 truncate">
                     {latest ? (
-                      <>Task: <span className="text-zinc-200 font-semibold">{latest.task}</span> · <span className="text-purple-400">[{latest.source}]</span> ({formatTime(latest.timestamp)})</>
+                      <>Task: <span className="text-text-primary font-semibold">{latest.task}</span> · <span className="text-purple-text font-semibold">[{latest.source}]</span> ({formatTime(latest.timestamp)})</>
                     ) : "Autonomous serverless pipeline with 24/7 uptime monitoring"}
                   </p>
                 </div>
               </div>
 
               {/* Center + Right Group */}
-              <div className="flex flex-wrap items-center justify-between xl:justify-end gap-3 pt-3 xl:pt-0 border-t xl:border-t-0 border-zinc-800/80">
+              <div className="flex flex-wrap items-center justify-between xl:justify-end gap-3 pt-3 xl:pt-0 border-t xl:border-t-0 border-border-subtle">
                 {/* Center Ticker */}
                 <BtcPriceCard
                   price={btcTicker.price}
@@ -158,16 +142,16 @@ export const BtcTrendTelemetryBar: React.FC = () => {
 
                 {/* Right Action Buttons */}
                 <div className="flex items-center gap-2">
-                  <button type="button" onClick={handleTriggerPing} disabled={triggering} title="Send a test ping to the backend" className="flex items-center gap-1 rounded-xl border border-emerald-500/40 bg-emerald-500/10 px-3 py-2 text-xs font-mono font-semibold text-emerald-300 hover:bg-emerald-500/20 transition-all cursor-pointer">
-                    <Send size={11} className={triggering ? "animate-bounce" : ""} />
+                  <button type="button" onClick={handleTriggerPing} disabled={triggering} title="Send a test ping to the backend" className="flex items-center gap-1 rounded-xl border border-emerald-border bg-emerald-bg px-3 py-2 text-xs font-mono font-bold text-emerald-text hover:bg-emerald-bg/80 transition-all cursor-pointer">
+                    <Send size={11} className={triggering ? "animate-bounce text-emerald-text" : "text-emerald-text"} />
                     <span>{triggering ? "Testing..." : "Test API"}</span>
                   </button>
-                  <a href="https://hodl-watcher-api.onrender.com/docs" target="_blank" rel="noopener noreferrer" className="flex items-center gap-1 rounded-xl border border-zinc-700/80 bg-zinc-900 px-3 py-2 text-xs font-mono font-medium text-zinc-300 hover:bg-zinc-800 transition-all">
+                  <a href="https://hodl-watcher-api.onrender.com/docs" target="_blank" rel="noopener noreferrer" className="flex items-center gap-1 rounded-xl border border-border-subtle bg-bg-raised px-3 py-2 text-xs font-mono font-medium text-text-secondary hover:bg-bg-raised/80 hover:text-text-primary transition-all">
                     <BookOpen size={12} />
                     <span>Docs</span>
                   </a>
-                  <button type="button" onClick={() => setShowLogs(!showLogs)} className="flex items-center gap-1.5 rounded-xl border border-zinc-700/80 bg-zinc-900 px-3 py-2 text-xs font-mono font-semibold text-zinc-200 hover:bg-zinc-800 transition-all cursor-pointer">
-                    <Terminal size={13} className="text-emerald-400" />
+                  <button type="button" onClick={() => setShowLogs(!showLogs)} className="flex items-center gap-1.5 rounded-xl border border-border-subtle bg-bg-raised px-3 py-2 text-xs font-mono font-semibold text-text-secondary hover:bg-bg-raised/80 hover:text-text-primary transition-all cursor-pointer">
+                    <Terminal size={13} className="text-emerald-text" />
                     <span>{showLogs ? "Hide" : "Logs"}</span>
                     {showLogs ? <ChevronUp size={13} /> : <ChevronDown size={13} />}
                   </button>
