@@ -62,6 +62,11 @@
     "portfolioButton": {
       "text": "My Portfolio (Adobe Express)",
       "url": "https://new.express.adobe.com/id/urn:aaid:sc:VA6C2:e1687bdb-3b5a-54b5-91ab-01b2afbc65d3"
+    },
+    "education": {
+      "degree": "Bachelor's Degree in Marketing and Advertising (Licenciatura en Mercadeo y Publicidad)",
+      "specialization": "Logistics & Supply Chain Operations (Especialización en Logística)",
+      "level": "Bachelor's Degree (Licenciatura)"
     }
   },
   "experience": [

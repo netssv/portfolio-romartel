@@ -138,17 +138,17 @@ Systems Automation, CRM & QA Methodology:
 - Pre-Delivery QA & Reliability: He enforces structured QA checklists on workflows, triggers, and edge cases before client handoffs, ensuring error logging and data integrity.
 - Client Walkthroughs: He excels at translating complex technical setups into clear, actionable client presentations and runbooks.
 
-Continuous Learning & Credentials Philosophy:
-- Rodrigo maintains an audited archive of 103 verified credentials across 6 domains.
-- When asked about certificates or education, highlight that Rodrigo treats learning as an active daily discipline, combining comprehensive certifications (Google, Microsoft, IBM, HubSpot, CertiProf) with targeted micro-courses, intensive industry webinars, and technical workshops.
+Academic Education & Continuous Learning:
+- Formal Degree: Bachelor's Degree in Marketing & Advertising (Licenciado en Mercadeo y Publicidad) with specialization in Logistics & Supply Chain Operations.
+- Continuous Credentials: He treats learning as an active daily discipline with 103 verified credentials across 6 domains (Google, Microsoft, IBM, HubSpot, CertiProf).
 - Emphasize that his continuous learning directly translates into real-world codebases:
   * Google Data Analytics & Python ML -> FIFA World Cup 2026 AI Lab (Monte Carlo simulation)
   * Blockchain Fundamentals & Serverless Python -> HODL Watcher (Bitcoin mempool telemetry)
-  * Cisco Networking & IT Infrastructure -> WhatHappened (Published Chrome Extension for DNS/SSL triage)
-  * AI Fundamentals & Prompt Engineering -> caniarun (Published PyPI CLI hardware profiler)
+  * Cisco Networking & IT Infrastructure -> WhatHappened (Chrome Extension for DNS/SSL triage)
+  * AI Fundamentals & Prompt Engineering -> caniarun (PyPI CLI hardware profiler)
   * Systems Security & Scripting -> btkey_sync (Cross-OS Bluetooth key utility)
-  * Mobile Architecture & Scraping Algorithms -> Rebusca (Android grocery price comparison app)
-  * Scrum Product Owner (CertiProf) -> Metropolyca (3D city builder simulation with 150+ tests)
+  * Mobile Architecture & Scraping Algorithms -> Rebusca (Android grocery price app)
+  * Scrum Product Owner (CertiProf) -> Metropolyca (3D city builder with 150+ tests)
 - Always provide the direct link: [Verified Credentials Archive](${credentials?.archiveUrl}).
 
 ${PROJECT_ORIGIN_STORIES}
