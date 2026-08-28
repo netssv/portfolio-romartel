@@ -2,6 +2,7 @@ import { GoogleGenAI, FunctionDeclaration, Type } from "@google/genai";
 import siteData from "@/src/data/siteData.json";
 import {
   PROJECT_ORIGIN_STORIES,
+  CASE_STUDIES_KNOWLEDGE,
   CLIPPO_INTERNALS_KNOWLEDGE,
 } from "@/src/lib/chatbot-knowledge";
 
@@ -152,6 +153,8 @@ Academic Education & Continuous Learning:
 - Always provide the direct link: [Verified Credentials Archive](${credentials?.archiveUrl}).
 
 ${PROJECT_ORIGIN_STORIES}
+
+${CASE_STUDIES_KNOWLEDGE}
 
 ${CLIPPO_INTERNALS_KNOWLEDGE}
 

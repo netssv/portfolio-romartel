@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { FadeIn } from "@/src/components/ui/FadeIn";
 import { SectionLabel } from "@/src/components/ui/SectionLabel";
-import { Search, TrendingUp, BarChart3, CheckCircle2, Zap, Target, LucideIcon } from "lucide-react";
+import { Search, TrendingUp, BarChart3, CheckCircle2, Workflow, Target, LucideIcon } from "lucide-react";
 
 interface CaseStudy {
   id: string;
@@ -80,6 +80,26 @@ const CASE_STUDIES: CaseStudy[] = [
     ],
     tools: ["LinkedIn Analytics", "Claude CLI", "Notion"],
   },
+  {
+    id: "04",
+    tag: "Workflow & CRM",
+    icon: Workflow,
+    title: "Automated Lead Sync & CRM Pipeline",
+    subtitle: "Client Operations · Inbound Routing",
+    highlight: "<1.5s Instant Lead Routing",
+    challenge: "Manual lead copy-pasting from web forms causing 24-48hr delays and dropped inquiries.",
+    kpis: [
+      { value: "<1.5s", label: "Lead Notification Latency" },
+      { value: "100%", label: "Zero Dropped Inquiries" },
+      { value: "85%", label: "Manual Effort Reduction" },
+    ],
+    steps: [
+      "Connected contact webhooks directly to CRM with instant Slack & email alerts.",
+      "Added fallback logging so failed submissions never disappear.",
+      "Delivered a simple 1-page client handover runbook.",
+    ],
+    tools: ["Make.com", "Zapier", "Webhooks", "Slack API", "Google Sheets"],
+  },
 ];
 
 export const CaseStudiesSection: React.FC = () => {
@@ -88,19 +108,19 @@ export const CaseStudiesSection: React.FC = () => {
   const ActiveIcon = cs.icon;
 
   return (
-    <section id="case-studies" className="py-24 border-b border-border-subtle relative overflow-hidden">
+    <section id="case-studies" className="py-24 border-b border-border-subtle relative overflow-hidden bg-bg-base/40">
       <div className="mx-auto max-w-6xl px-6 relative z-10">
         <FadeIn>
           <SectionLabel
             index="03"
             eyebrow="Case Studies"
             heading="Real-World Impact"
-            description="Proven business outcomes across technical SEO restructuring, conversion optimization, and automated content operations."
+            description="Proven business outcomes across technical SEO restructuring, conversion optimization, content pipelines, and automated lead workflows."
           />
         </FadeIn>
 
         {/* Tab Selector with Icons */}
-        <div className="flex flex-wrap justify-start md:justify-center mb-10 gap-2.5" role="tablist" aria-label="Case Studies">
+        <div className="flex flex-wrap justify-start md:justify-center mb-10 gap-2" role="tablist" aria-label="Case Studies">
           {CASE_STUDIES.map((study, idx) => {
             const isActive = activeTab === idx;
             const Icon = study.icon;
@@ -110,57 +130,57 @@ export const CaseStudiesSection: React.FC = () => {
                 role="tab"
                 aria-selected={isActive}
                 onClick={() => setActiveTab(idx)}
-                className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-mono font-semibold transition-all duration-200 border cursor-pointer ${
+                className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs font-mono font-medium transition-all duration-200 border cursor-pointer ${
                   isActive
                     ? "border-accent bg-accent text-black font-bold shadow-md shadow-accent/20"
-                    : "border-border-base bg-bg-surface text-text-muted hover:text-text-primary hover:border-border-subtle"
+                    : "border-border-subtle bg-bg-surface text-text-muted hover:text-text-primary hover:border-border-base"
                 }`}
               >
-                <Icon size={14} />
+                <Icon size={13} />
                 <span>{study.id} · {study.tag}</span>
               </button>
             );
           })}
         </div>
 
-        {/* Bento Grid */}
+        {/* Bento Grid matching project styling */}
         <AnimatePresence mode="wait">
           <motion.div
             key={activeTab}
-            initial={{ opacity: 0, y: 12 }}
+            initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -12 }}
-            transition={{ duration: 0.25 }}
-            className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch"
+            exit={{ opacity: 0, y: -10 }}
+            transition={{ duration: 0.2 }}
+            className="grid grid-cols-1 lg:grid-cols-12 gap-5 items-stretch"
           >
             {/* Main Bento Hero Card */}
-            <div className="lg:col-span-7 flex flex-col justify-between p-6 sm:p-8 rounded-3xl border border-border-base bg-bg-surface shadow-lg">
+            <div className="lg:col-span-7 flex flex-col justify-between p-6 sm:p-7 rounded-2xl border border-border-subtle bg-bg-surface shadow-sm hover:border-accent/40 transition-colors">
               <div>
-                <div className="flex items-center justify-between gap-2 mb-4">
-                  <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-mono font-bold bg-accent/10 border border-accent/20 text-accent">
-                    <ActiveIcon size={13} />
+                <div className="flex items-center justify-between gap-2 mb-3.5">
+                  <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-md text-[11px] font-mono font-bold bg-accent/10 border border-accent/20 text-accent">
+                    <ActiveIcon size={12} />
                     {cs.tag}
                   </span>
-                  <span className="px-3 py-1 rounded-full text-xs font-mono font-bold bg-emerald-500/10 border border-emerald-500/20 text-emerald-500">
+                  <span className="px-2.5 py-0.5 rounded-md text-[11px] font-mono font-bold bg-emerald-500/10 border border-emerald-500/20 text-emerald-500">
                     {cs.highlight}
                   </span>
                 </div>
 
-                <h3 className="text-xl sm:text-2xl font-heading font-bold text-text-primary mb-1">
+                <h3 className="text-lg sm:text-xl font-heading font-bold text-text-primary mb-1">
                   {cs.title}
                 </h3>
-                <p className="text-xs font-mono text-text-muted mb-5">{cs.subtitle}</p>
+                <p className="text-xs font-mono text-text-muted mb-4">{cs.subtitle}</p>
 
-                <div className="p-4 rounded-xl bg-bg-base/60 border border-border-subtle mb-6">
-                  <span className="text-[11px] font-mono font-bold uppercase text-accent tracking-wider block mb-1">Challenge</span>
+                <div className="p-3.5 rounded-xl bg-bg-base/70 border border-border-subtle mb-4">
+                  <span className="text-[10px] font-mono font-bold uppercase text-accent tracking-wider block mb-1">Challenge</span>
                   <p className="text-xs font-body text-text-secondary leading-relaxed">{cs.challenge}</p>
                 </div>
 
-                <div className="space-y-2.5">
-                  <span className="text-[11px] font-mono font-bold uppercase text-text-muted tracking-wider block mb-2">Key Execution Steps</span>
+                <div className="space-y-2">
+                  <span className="text-[10px] font-mono font-bold uppercase text-text-muted tracking-wider block mb-1.5">Execution Steps</span>
                   {cs.steps.map((step, i) => (
-                    <div key={i} className="flex items-start gap-2.5 text-xs font-body text-text-secondary">
-                      <CheckCircle2 size={14} className="text-accent shrink-0 mt-0.5" />
+                    <div key={i} className="flex items-start gap-2 text-xs font-body text-text-secondary">
+                      <CheckCircle2 size={13} className="text-accent shrink-0 mt-0.5" />
                       <span>{step}</span>
                     </div>
                   ))}
@@ -168,9 +188,9 @@ export const CaseStudiesSection: React.FC = () => {
               </div>
 
               {/* Tools tags */}
-              <div className="flex flex-wrap gap-1.5 pt-6 mt-6 border-t border-border-subtle">
+              <div className="flex flex-wrap gap-1.5 pt-4 mt-5 border-t border-border-subtle">
                 {cs.tools.map((t) => (
-                  <span key={t} className="px-2.5 py-1 rounded-md text-[11px] font-mono bg-bg-raised border border-border-subtle text-text-secondary">
+                  <span key={t} className="px-2 py-0.5 rounded-md text-[10px] font-mono bg-bg-raised border border-border-subtle text-text-secondary">
                     {t}
                   </span>
                 ))}
@@ -178,14 +198,14 @@ export const CaseStudiesSection: React.FC = () => {
             </div>
 
             {/* KPI Cards Column */}
-            <div className="lg:col-span-5 flex flex-col gap-4">
+            <div className="lg:col-span-5 flex flex-col gap-3.5">
               {cs.kpis.map((kpi, idx) => (
-                <div key={idx} className="flex-1 p-6 rounded-2xl border border-border-base bg-bg-surface flex flex-col justify-center shadow-sm hover:border-accent transition-colors">
+                <div key={idx} className="flex-1 p-5 rounded-2xl border border-border-subtle bg-bg-surface flex flex-col justify-center shadow-sm hover:border-accent/40 transition-colors">
                   <div className="flex items-center gap-2 mb-1">
-                    <Target size={16} className="text-accent" />
-                    <span className="text-3xl sm:text-4xl font-mono font-bold text-text-primary tracking-tight">{kpi.value}</span>
+                    <Target size={15} className="text-accent" />
+                    <span className="text-2xl sm:text-3xl font-mono font-bold text-text-primary tracking-tight">{kpi.value}</span>
                   </div>
-                  <span className="text-xs font-mono text-text-secondary uppercase tracking-wider">{kpi.label}</span>
+                  <span className="text-[11px] font-mono text-text-secondary uppercase tracking-wider">{kpi.label}</span>
                 </div>
               ))}
             </div>
@@ -195,4 +215,3 @@ export const CaseStudiesSection: React.FC = () => {
     </section>
   );
 };
-

@@ -1,42 +1,49 @@
 export const PROJECT_ORIGIN_STORIES = `
 Project Origins & Authentic Naming Stories (Why they were created):
 1. FIFA World Cup 2026 AI Lab:
-   - Origin Story: Started as a personal hobby project to predict the 2026 World Cup tournament outcomes. Rodrigo initially built it for himself, and later published it online. The name is straightforward and descriptive.
-   - Outcome & Predictive Success: The model ran 1,000,000 Monte Carlo iterations combining Poisson distribution and Random Forest. In testing, it achieved a 6/10 match accuracy rate and predicted Spain as the 2026 World Cup champion. It demonstrated the practical potential of statistical simulation models.
+   - Origin Story: Started as a personal hobby project to predict the 2026 World Cup tournament outcomes. Rodrigo initially built it for himself, and later published it online.
+   - Outcome: Ran 1,000,000 Monte Carlo simulations combining Poisson distribution and Random Forest, achieving 6/10 match accuracy in testing and predicting Spain as champion.
 
 2. HODL Watcher:
-   - Origin Story: Born from a conversation with friends who are crypto enthusiasts asking for a real-time tool to track Bitcoin on-chain mempool fees per block.
-   - Innovation & Architecture: Rodrigo went further and engineered a full real-time blockchain telemetry platform with an autonomous $0/mo Make.com cron watchdog keeping a Python FastAPI server warm on Render Cloud.
-   - Multi-API Resilient Fallbacks: Features chained API fallbacks (e.g. Binance -> KuCoin -> secondary endpoints) so data feeds never break.
+   - Origin Story: Born from a conversation with crypto friends who needed real-time tracking of Bitcoin on-chain mempool block fees.
+   - Architecture: Built a live telemetry platform with a $0/mo Make.com watchdog keeping a Python FastAPI server warm on Render Cloud with resilient multi-API fallbacks.
 
 3. WhatHappened:
-   - Origin Story: Rodrigo has years of web operations and hosting experience, where the common frustration is knowing a website is down or slow without immediately knowing why ("What happened?").
-   - Solution: Built a Chrome MV3 browser extension that diagnoses DNS over HTTPS (DoH), SSL certificate expiration dates, IP blockades, and response times through an embedded POSIX-style terminal emulator safely inside the browser.
+   - Origin Story: Inspired by web hosting support experience where sites go down without clear diagnostics ("What happened?").
+   - Solution: Chrome MV3 extension testing DNS over HTTPS, SSL certificate expiry, and HTTP latencies through an embedded terminal emulator inside the browser.
 
 4. caniarun:
-   - Origin Story: A play on the classic gaming tool "Can You Run It", adapted for local open-source AI: "Can I Run [this AI model]?" (can-ia-run / caniarun).
-   - Problem Solved: Created when testing local LLMs and getting tired of downloading 20 GB model weights only to find GPU VRAM was insufficient. The CLI profiles hardware in 1 second and benchmarks GGUF quantization tiers (Q4, Q8, FP16). Distributed directly on PyPI.
+   - Origin Story: Play on "Can You Run It", adapted for local open-source AI: "Can I Run [this AI model]?".
+   - Solution: Fast 1-second CLI hardware profiler benchmarking GGUF quantization tiers (Q4, Q8, FP16) before downloading 20 GB weights. Distributed on PyPI.
 
 5. btkey_sync:
-   - Origin Story: Rodrigo works in a dual-boot setup with Windows and Linux. He grew tired of having to re-pair his Bluetooth keyboard and mouse every time he switched operating systems because Windows stores LTK keys in a format Linux BlueZ cannot read natively.
-   - Solution: A Python systems utility that automates the extraction of Windows SYSTEM registry keys, converts endian formats, and injects them into Linux BlueZ config files to eliminate re-pairing friction forever.
+   - Origin Story: Dual-boot Windows & Linux frustration where Bluetooth keyboards had to be re-paired every reboot.
+   - Solution: Systems utility that extracts Windows registry keys, converts endian formats, and injects them into Linux BlueZ.
+`;
+
+export const CASE_STUDIES_KNOWLEDGE = `
+Case Studies & Real-World Impact (Simple & Clear Explanations):
+1. SEO Restructure & Technical Indexing (E-commerce):
+   - Simple Summary: Fixed broken links, missing meta descriptions, and duplicate URLs across 40+ category pages using Screaming Frog and Google Search Console.
+   - Practical Outcome: Improved crawl efficiency by +40% and resolved 100% of crawl errors so search engines rank products properly.
+
+2. Landing Page Architecture & CRO (B2B):
+   - Simple Summary: Created dedicated landing pages with clear above-the-fold value propositions instead of dumping ad traffic onto a generic homepage. Added GA4 event tracking for form submissions and scroll depth.
+   - Practical Outcome: Achieved an 18% lift in form conversion rates and faster page loading.
+
+3. Multi-Platform Content Automation (Professional Services):
+   - Simple Summary: Grouped topics into 3 clear pillars, built a 90-day editorial schedule, and used AI research assistants to draft and schedule posts.
+   - Practical Outcome: Published 90+ consistent assets over 90 days without missing a beat.
+
+4. Workflow & CRM Automation (Client Operations):
+   - Simple Summary: Connected website contact forms directly to HubSpot CRM, Google Sheets, and team Slack notifications using Make.com and Zapier webhooks with built-in error alerts.
+   - Practical Outcome: Cut lead response time to under 1.5 seconds, eliminated manual copy-pasting by 85%, and ensured zero dropped inquiries.
 `;
 
 export const CLIPPO_INTERNALS_KNOWLEDGE = `
-Clippo Internal Architecture, API Handling & Error Recovery:
-- Framework & UI: Built with Next.js 15 App Router (/api/chat), React 19, Tailwind CSS, and Framer Motion.
-- Dual-Tier Gemini Routing:
-  * Primary Model: Google Gemini 3.6 Flash ('gemini-3.6-flash') for fast, highly accurate, context-aware reasoning.
-  * Fallback Model: Google Gemini 3.5 Flash-Lite ('gemini-3.5-flash-lite') for zero-downtime failover if primary encounters transient load.
-- Quotas & $0/mo Economics:
-  * 1,500 Requests Per Day (RPD) on the Google AI Studio free tier.
-  * 15 to 30 Requests Per Minute (RPM).
-  * 1,000,000 token context window.
-  * $0.00 monthly operating cost.
-- Resilient Tool Calling & Thought Signatures:
-  * Preserves native Gemini 'thought_signature' across conversation turns when executing tool calls ('get_btc_telemetry', 'get_site_json', 'send_contact_email').
-  * Uses 'user' role for functionResponse payloads in compliance with the Google Gen AI SDK.
-- API Fallbacks & Cold Start Handling:
-  * FastAPI on Render Cloud sleeps after 15 minutes of idle time. The telemetry tool ('get_btc_telemetry') enforces a strict 1.2s timeout with cached fallback data, ensuring Clippo never hangs during cold starts.
-  * 429 Rate Limit Interceptor: Automatically catches quota limits and responds with a friendly cooldown notice instead of technical JSON dumps.
+Clippo Internal Architecture & Fast Recovery:
+- Framework: Next.js 15 App Router (/api/chat), React 19, Tailwind CSS.
+- Dual-Tier Gemini Routing: Primary 'gemini-3.6-flash' with instant fallback to 'gemini-3.5-flash-lite'.
+- Cost & Economics: $0.00/mo operating cost on Google AI Studio tier (1,500 RPD, 1M context window).
+- Resilience: Preserves thought signatures and catches 429 quota pauses with friendly cooldown notices.
 `;
