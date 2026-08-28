@@ -9,6 +9,10 @@ interface BtcPriceCardProps {
   highPrice: number;
   lowPrice: number;
   flash: "up" | "down" | null;
+  sentiment?: {
+    fearGreed: number;
+    classification: string;
+  } | null;
 }
 
 export const BtcPriceCard: React.FC<BtcPriceCardProps> = ({
@@ -17,6 +21,7 @@ export const BtcPriceCard: React.FC<BtcPriceCardProps> = ({
   highPrice,
   lowPrice,
   flash,
+  sentiment,
 }) => {
   const isPositive = changePct >= 0;
 
@@ -42,6 +47,15 @@ export const BtcPriceCard: React.FC<BtcPriceCardProps> = ({
           {price > 0 ? `$${price.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}` : "Syncing..."}
         </span>
       </div>
+
+      {sentiment && (
+        <div className="hidden lg:flex flex-col pl-2.5 border-l border-zinc-800 text-[9px] font-mono leading-tight">
+          <span className="text-zinc-400">Sentiment</span>
+          <span className="font-semibold text-amber-400">
+            {sentiment.fearGreed} ({sentiment.classification})
+          </span>
+        </div>
+      )}
 
       {highPrice > 0 && (
         <div className="hidden md:flex flex-col pl-2 border-l border-zinc-800 text-[9px] font-mono text-zinc-400 leading-tight">

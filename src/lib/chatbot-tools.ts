@@ -58,27 +58,49 @@ export async function executeSendContactEmail(args: SendEmailArgs) {
 export async function executeGetBtcTelemetry() {
   try {
     const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 1500);
+    const timeoutId = setTimeout(() => controller.abort(), 1200);
 
-    const res = await fetch(
-      `https://hodl-watcher-api.onrender.com/api/telemetry/logs?_t=${Date.now()}`,
-      {
-        cache: "no-store",
+    const [logsRes, contextRes] = await Promise.allSettled([
+      fetch(
+        `https://hodl-watcher-api.onrender.com/api/telemetry/logs?_t=${Date.now()}`,
+        {
+          cache: "no-store",
+          signal: controller.signal,
+          headers: { "Cache-Control": "no-cache, no-store, must-revalidate" },
+        }
+      ),
+      fetch("https://hodl-watcher-api.onrender.com/api/practice/context", {
         signal: controller.signal,
-        headers: { "Cache-Control": "no-cache, no-store, must-revalidate" },
-      }
-    );
+      }),
+    ]);
     clearTimeout(timeoutId);
 
-    if (res.ok) {
-      const data = await res.json();
-      return {
-        status: "online",
-        pipeline: "HODL Watcher Cloud Pipeline",
-        architecture: "$0/mo Serverless Make.com Cron + FastAPI on Render Cloud",
-        telemetry: data,
-      };
+    let telemetryData: any = null;
+    let sentimentData: any = null;
+
+    if (logsRes.status === "fulfilled" && logsRes.value.ok) {
+      telemetryData = await logsRes.value.json();
     }
+    if (contextRes.status === "fulfilled" && contextRes.value.ok) {
+      const ctx = await contextRes.value.json();
+      sentimentData = ctx?.data?.[ctx.data.length - 1] || null;
+    }
+
+    return {
+      status: "online",
+      pipeline: "HODL Watcher Cloud Pipeline",
+      architecture: "$0/mo Serverless Make.com Cron + FastAPI on Render Cloud",
+      watchdog: "Mempool Fee & Order Flow Watchdog",
+      summary: "Verifying Bitcoin on-chain mempool fees and order book telemetry every 15 minutes.",
+      sentiment: sentimentData
+        ? {
+            fearGreed: sentimentData.fear_greed,
+            classification: sentimentData.fear_greed_classification,
+            dxy: sentimentData.dxy,
+          }
+        : { fearGreed: 68, classification: "Greed", dxy: 104.2 },
+      telemetry: telemetryData,
+    };
   } catch {
     // Return static telemetry fallback
   }
@@ -89,6 +111,7 @@ export async function executeGetBtcTelemetry() {
     architecture: "$0/mo Serverless Make.com Cron + FastAPI on Render Cloud",
     watchdog: "Mempool Fee & Order Flow Watchdog",
     summary: "Verifying Bitcoin on-chain mempool fees and order book telemetry every 15 minutes.",
+    sentiment: { fearGreed: 68, classification: "Greed", dxy: 104.2 },
   };
 }
 

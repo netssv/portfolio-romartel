@@ -23,14 +23,15 @@ export const GlobalWebGLStage: React.FC = () => {
     const width = window.innerWidth;
     const height = window.innerHeight;
 
-    // Renderer setup
+    // Renderer setup with optimized pixel ratio cap for 60fps performance
     const renderer = new THREE.WebGLRenderer({
-      antialias: true,
+      antialias: false,
       alpha: true,
       powerPreference: "high-performance",
+      precision: "mediump",
     });
     renderer.setSize(width, height);
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.75));
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.2));
     renderer.domElement.setAttribute("role", "img");
     renderer.domElement.setAttribute(
       "aria-label",
@@ -75,13 +76,25 @@ export const GlobalWebGLStage: React.FC = () => {
 
     let animationFrameId: number;
     let time = 0;
+    let isTabVisible = !document.hidden;
+
+    const handleVisibilityChange = () => {
+      isTabVisible = !document.hidden;
+      if (isTabVisible) {
+        cancelAnimationFrame(animationFrameId);
+        animationFrameId = requestAnimationFrame(render);
+      }
+    };
+    document.addEventListener("visibilitychange", handleVisibilityChange);
 
     const render = () => {
-      time += prefersReducedMotion ? 0.005 : 0.02;
+      if (!isTabVisible) return;
+
+      time += prefersReducedMotion ? 0.005 : 0.015;
 
       // Mouse damping
-      mouse.x += (mouse.targetX - mouse.x) * 0.05;
-      mouse.y += (mouse.targetY - mouse.y) * 0.05;
+      mouse.x += (mouse.targetX - mouse.x) * 0.06;
+      mouse.y += (mouse.targetY - mouse.y) * 0.06;
 
       const scrollProgress = cachedScrollProgress;
 
@@ -118,6 +131,7 @@ export const GlobalWebGLStage: React.FC = () => {
 
     return () => {
       cancelAnimationFrame(animationFrameId);
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
       window.removeEventListener("scroll", updateScrollMetrics);
       window.removeEventListener("mousemove", handleMouseMove);
       window.removeEventListener("resize", handleResize);

@@ -1,30 +1,37 @@
 "use client";
 
 import React from "react";
-import { Sparkles, Terminal, Mail, Activity, Award } from "lucide-react";
+import { Sparkles } from "lucide-react";
+import { SectionId } from "@/src/lib/useActiveSection";
+import { SECTION_CHATBOT_CONFIG } from "@/src/lib/chatbot-section-data";
 
 interface ChatSuggestionsProps {
+  sectionId?: SectionId;
   onSelect: (prompt: string) => void;
   disabled?: boolean;
 }
 
-const DEFAULT_SUGGESTIONS = [
-  { text: "What verified certifications does Rodrigo have?", icon: Award },
-  { text: "Check live BTC mempool & telemetry", icon: Activity },
-  { text: "What open-source repos are on GitHub?", icon: Terminal },
-  { text: "I want to send an email to Rodrigo", icon: Mail },
-  { text: "Tell me about his web infrastructure background", icon: Sparkles },
-];
+export function ChatSuggestions({
+  sectionId = "top",
+  onSelect,
+  disabled,
+}: ChatSuggestionsProps) {
+  const config = SECTION_CHATBOT_CONFIG[sectionId] || SECTION_CHATBOT_CONFIG.top;
+  const suggestions = (config.suggestions || []).slice(0, 3);
 
-export function ChatSuggestions({ onSelect, disabled }: ChatSuggestionsProps) {
   return (
-    <div className="flex flex-col gap-2 pt-2">
-      <div className="flex items-center gap-1.5 text-xs text-text-muted font-mono uppercase tracking-wider">
-        <Sparkles className="w-3.5 h-3.5 text-accent" />
-        <span>Quick actions & questions</span>
+    <div className="flex flex-col gap-1.5 pt-1">
+      <div className="flex items-center justify-between text-[10px] text-text-muted font-mono uppercase tracking-wider px-0.5">
+        <div className="flex items-center gap-1">
+          <Sparkles className="w-3 h-3 text-accent" />
+          <span>Quick actions</span>
+        </div>
+        <span className="text-[9px] text-accent/80 font-mono lowercase tracking-normal">
+          {config.sectionName}
+        </span>
       </div>
-      <div className="flex flex-wrap gap-1.5">
-        {DEFAULT_SUGGESTIONS.map((item) => {
+      <div className="flex flex-col gap-1">
+        {suggestions.map((item) => {
           const Icon = item.icon;
           return (
             <button
@@ -32,10 +39,10 @@ export function ChatSuggestions({ onSelect, disabled }: ChatSuggestionsProps) {
               type="button"
               disabled={disabled}
               onClick={() => onSelect(item.text)}
-              className="flex items-center gap-1.5 text-left text-xs bg-bg-raised/70 hover:bg-bg-raised text-text-secondary hover:text-text-primary px-3 py-1.5 rounded-lg border border-border-subtle hover:border-border-base transition-all duration-150 disabled:opacity-50 disabled:pointer-events-none"
+              className="flex items-center gap-2 text-left text-[11px] leading-tight bg-bg-raised/60 hover:bg-bg-raised text-text-secondary hover:text-text-primary px-2.5 py-1.5 rounded-lg border border-border-subtle hover:border-accent/40 transition-colors duration-150 disabled:opacity-50 disabled:pointer-events-none group"
             >
-              <Icon className="w-3 h-3 text-accent shrink-0" />
-              <span>{item.text}</span>
+              <Icon className="w-3 h-3 text-accent/80 group-hover:text-accent shrink-0" />
+              <span className="truncate">{item.text}</span>
             </button>
           );
         })}

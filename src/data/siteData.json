@@ -1,18 +1,18 @@
 {
   "metadata": {
-    "title": "Rodrigo Martel | Technical Solutions, Automation & Data Analytics",
-    "description": "Marketing professional with hands-on web infrastructure experience. Specializing in SEO, CRO, content strategy, and performance-driven digital growth.",
+    "title": "Rodrigo Martel | Systems & Workflow Automation Specialist",
+    "description": "Specializing in workflow automation (Make, Zapier, Python), CRM integrations (Salesforce, HubSpot, Webhooks), systems audits, and client operations.",
     "keywords": [
       "Rodrigo Martel",
-      "Technical Solutions",
-      "Automation",
-      "Data Analytics",
+      "Systems Specialist",
+      "Workflow Automation",
+      "CRM Integrations",
+      "Zapier",
+      "Make.com",
       "Python",
-      "Bash",
+      "Data Analytics",
       "Power BI",
-      "Next.js",
-      "Kotlin",
-      "Developer Portfolio"
+      "Operations Specialist"
     ],
     "author": "Rodrigo Martel",
     "email": "rop.martel@gmail.com",
@@ -51,10 +51,10 @@
   ],
   "profile": {
     "name": "Rodrigo Martel",
-    "title": "Technical Solutions, Automation & Data Analytics",
+    "title": "Systems & Workflow Automation Specialist",
     "location": "San Salvador, El Salvador",
-    "tagline": "Bridging engineering, automated systems, and data analytics to solve practical business problems.",
-    "bio": "Marketing professional bridging digital strategy, server infrastructure, and quantitative data analytics. Specializing in SEO architecture, CRO telemetry, and Python automation workflows.",
+    "tagline": "Streamlining data flows, designing automated CRM pipelines, and delivering high-quality systems audits.",
+    "bio": "Operations and systems specialist bridging no-code/low-code workflow automation (Make, Zapier, Python), CRM integrations (Salesforce, HubSpot, Webhooks), and client-facing technical audits. Passionate about eliminating friction and ensuring rock-solid data integrity.",
     "avatar": {
       "src": "/avatar.webp",
       "alt": "Rodrigo Martel Profile Portrait"
@@ -271,43 +271,66 @@
         "github": "https://github.com/netssv/btkey_sync",
         "demo": "https://pypi.org/project/Btkey-Sync/"
       }
+    },
+    {
+      "id": "rebusca",
+      "title": "Rebusca",
+      "subtitle": "Modular Android Grocery Price Intelligence Engine",
+      "description": "Clean-architecture Android application leveraging web scraping algorithms and semantic searching to compare consumer goods prices across major supermarkets in El Salvador.",
+      "valueProp": "Real-time supermarket price aggregation and consumer savings optimizer.",
+      "category": "Mobile & Web Scraping",
+      "status": "In Development",
+      "icon": "Smartphone",
+      "image": "/rebusca-preview.gif",
+      "videoSrc": "/rebusca.mp4",
+      "tags": [
+        "Android / Kotlin",
+        "Web Scraping",
+        "Clean Architecture",
+        "Price Intelligence",
+        "Semantic Search"
+      ],
+      "links": {
+        "github": "https://github.com/netssv/rebusca-app",
+        "demo": "/rebusca.mp4"
+      }
     }
   ],
   "skillsMatrix": {
     "businessCore": {
-      "title": "Business Core & Client Operations",
+      "title": "Systems Strategy & Client Operations",
       "icon": "Target",
       "skills": [
-        "Escalation & Critical Incident Management",
-        "Tier 2/3 Technical Support & Systems Diagnostics",
-        "SLA & KPI Performance Monitoring",
-        "Customer Experience (CX) Strategy",
-        "Cross-functional Team Coordination",
-        "Process Documentation & Runbook Writing"
+        "CRM & Platform Integrations (Salesforce, HubSpot, Webhooks)",
+        "Systems Audits & Onboarding Technical Discovery",
+        "Workflow QA & Integration Reliability Testing",
+        "Client Walkthroughs & Technical Runbook Delivery",
+        "Escalation & Incident Root-Cause Management",
+        "SLA & Performance KPI Monitoring"
       ]
     },
     "dataIntelligence": {
-      "title": "Data & Business Intelligence",
+      "title": "Data, BI & Dashboards",
       "icon": "BarChart3",
       "skills": [
         "Power BI Dashboard Design & DAX",
-        "Excel & Google Sheets Reporting",
-        "Data Migration & ETL Coordination",
-        "SQL & Relational Database Basics",
-        "Marketing Analytics & Campaign Reporting",
-        "KPI Tracking & Operational Visibility"
+        "Excel & Google Sheets Automated Modeling",
+        "Data Migration & ETL Validation",
+        "SQL & Relational Data Flow Basics",
+        "Marketing Analytics & Conversion Tracking",
+        "Operational Visibility & KPI Tracking"
       ]
     },
     "technicalTooling": {
-      "title": "Technical Tooling & Automation",
+      "title": "Automation Tooling & Infrastructure",
       "icon": "Cpu",
       "skills": [
-        "Python Scripting (Automation & Auditing)",
-        "Bash & Unix Shell Scripting",
-        "Next.js & React Frontend Development",
-        "Kotlin (Android Clean Architecture)",
-        "Trello, Asana & Remote Project Coordination",
-        "Git & Agile (Scrum) Workflows"
+        "Make.com & Zapier Webhook Orchestration",
+        "Python Scripting (Automation, APIs & Data Validation)",
+        "ClickUp, Asana & Agile Sprint Coordination",
+        "Bash & Serverless Cloud Watchdogs",
+        "Next.js, TypeScript & React",
+        "Git, CI/CD & Test-Driven QA"
       ]
     }
   },

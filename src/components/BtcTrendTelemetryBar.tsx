@@ -17,11 +17,24 @@ interface TelemetryData {
 
 export const BtcTrendTelemetryBar: React.FC = () => {
   const [telemetry, setTelemetry] = useState<TelemetryData | null>(null);
+  const [sentiment, setSentiment] = useState<{ fearGreed: number; classification: string } | null>(null);
   const [btcTicker, setBtcTicker] = useState({ price: 0, priceChangePercent: 0, highPrice: 0, lowPrice: 0 });
   const [priceFlash, setPriceFlash] = useState<"up" | "down" | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [triggering, setTriggering] = useState<boolean>(false);
   const [showLogs, setShowLogs] = useState<boolean>(false);
+
+  const fetchInsights = useCallback(async () => {
+    try {
+      const res = await fetch("/api/hodl-insights");
+      if (res.ok) {
+        const data = await res.json();
+        if (data.sentiment) {
+          setSentiment(data.sentiment);
+        }
+      }
+    } catch {}
+  }, []);
 
   const fetchBtcPrice = useCallback(async () => {
     try {
@@ -77,10 +90,16 @@ export const BtcTrendTelemetryBar: React.FC = () => {
   useEffect(() => {
     fetchBtcPrice();
     fetchTelemetry();
+    fetchInsights();
     const btcInt = setInterval(fetchBtcPrice, 8000);
     const telInt = setInterval(fetchTelemetry, 25000);
-    return () => { clearInterval(btcInt); clearInterval(telInt); };
-  }, [fetchBtcPrice, fetchTelemetry]);
+    const insInt = setInterval(fetchInsights, 60000);
+    return () => {
+      clearInterval(btcInt);
+      clearInterval(telInt);
+      clearInterval(insInt);
+    };
+  }, [fetchBtcPrice, fetchTelemetry, fetchInsights]);
 
   const events = telemetry?.events || [];
   const latest = events[0];
@@ -128,7 +147,14 @@ export const BtcTrendTelemetryBar: React.FC = () => {
               {/* Center + Right Group */}
               <div className="flex flex-wrap items-center justify-between xl:justify-end gap-3 pt-3 xl:pt-0 border-t xl:border-t-0 border-zinc-800/80">
                 {/* Center Ticker */}
-                <BtcPriceCard price={btcTicker.price} changePct={btcTicker.priceChangePercent} highPrice={btcTicker.highPrice} lowPrice={btcTicker.lowPrice} flash={priceFlash} />
+                <BtcPriceCard
+                  price={btcTicker.price}
+                  changePct={btcTicker.priceChangePercent}
+                  highPrice={btcTicker.highPrice}
+                  lowPrice={btcTicker.lowPrice}
+                  flash={priceFlash}
+                  sentiment={sentiment}
+                />
 
                 {/* Right Action Buttons */}
                 <div className="flex items-center gap-2">
@@ -155,7 +181,16 @@ export const BtcTrendTelemetryBar: React.FC = () => {
 
             <AnimatePresence>
               {showLogs && (
-                <TelemetryLogDrawer events={events} loading={loading} onRefresh={() => { fetchTelemetry(); fetchBtcPrice(); }} formatTime={formatTime} />
+                <TelemetryLogDrawer
+                  events={events}
+                  loading={loading}
+                  onRefresh={() => {
+                    fetchTelemetry();
+                    fetchBtcPrice();
+                    fetchInsights();
+                  }}
+                  formatTime={formatTime}
+                />
               )}
             </AnimatePresence>
           </div>

@@ -64,6 +64,7 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
       tags: p.tags || [],
       links: p.links,
       imageSrc: p.image,
+      videoSrc: p.videoSrc,
       icon: p.icon || "Terminal",
     })),
   ];

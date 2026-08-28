@@ -2,7 +2,7 @@
 
 import React, { useRef, useState, useEffect } from "react";
 import { motion, useScroll, useMotionValueEvent, AnimatePresence } from "framer-motion";
-import { ArrowUpRight, Play, Pause, Volume2, VolumeX, ShieldCheck, Film, Trophy, LineChart, Terminal, Cpu, Bluetooth, Layers, ChevronDown, Sparkles } from "lucide-react";
+import { ArrowUpRight, Play, Pause, Volume2, VolumeX, ShieldCheck, Film, Trophy, LineChart, Terminal, Cpu, Bluetooth, Smartphone, Search, Layers, ChevronDown, Sparkles } from "lucide-react";
 import { CornerReticle } from "@/src/components/ui/CornerReticle";
 
 export interface PinnedProjectItem {
@@ -28,6 +28,8 @@ const ICONS: Record<string, React.ReactNode> = {
   Terminal: <Terminal size={13} className="text-accent" />,
   Cpu: <Cpu size={13} className="text-accent" />,
   Bluetooth: <Bluetooth size={13} className="text-accent" />,
+  Smartphone: <Smartphone size={13} className="text-accent" />,
+  Search: <Search size={13} className="text-accent" />,
 };
 
 export const PinnedProjectsScrollytelling: React.FC<{ items: PinnedProjectItem[] }> = ({ items }) => {
@@ -36,6 +38,7 @@ export const PinnedProjectsScrollytelling: React.FC<{ items: PinnedProjectItem[]
   const [isPlaying, setIsPlaying] = useState(true);
   const [isMuted, setIsMuted] = useState(true);
   const [isDeepDiveOpen, setIsDeepDiveOpen] = useState(false);
+  const [isVerticalMedia, setIsVerticalMedia] = useState(false);
   const [hoveredDot, setHoveredDot] = useState<number | null>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
 
@@ -50,12 +53,14 @@ export const PinnedProjectsScrollytelling: React.FC<{ items: PinnedProjectItem[]
     if (index !== activeIndex) {
       setActiveIndex(index);
       setIsDeepDiveOpen(false);
+      setIsVerticalMedia(false);
     }
   });
 
   const active = items[activeIndex] || items[0];
 
   useEffect(() => {
+    setIsVerticalMedia(false);
     if (videoRef.current && active.videoSrc) {
       videoRef.current.play().catch(() => {});
       setIsPlaying(true);
@@ -215,21 +220,40 @@ export const PinnedProjectsScrollytelling: React.FC<{ items: PinnedProjectItem[]
           </div>
 
           {/* Right Column: Visual Stage Mockup */}
-          <div className="w-full lg:col-span-6 flex justify-center items-center z-10" style={{ perspective: "1200px" }}>
-            <div className="relative w-full aspect-video max-h-[36vh] sm:max-h-[42vh] lg:max-h-none rounded-2xl overflow-hidden border border-zinc-700/80 bg-zinc-950 shadow-[0_20px_60px_rgba(0,0,0,0.9)] mirror-reflect-base">
+          <div className="w-full lg:col-span-6 flex justify-center items-center z-10 min-h-[260px] sm:min-h-[320px] lg:min-h-[440px]" style={{ perspective: "1200px" }}>
+            <motion.div
+              layout
+              transition={{ type: "spring", stiffness: 220, damping: 24 }}
+              className={`relative overflow-hidden border border-zinc-700/80 bg-zinc-950 shadow-[0_20px_60px_rgba(0,0,0,0.9)] mirror-reflect-base transition-all duration-500 ${
+                (isVerticalMedia || active.id === "rebusca")
+                  ? "w-[240px] sm:w-[280px] lg:w-[300px] aspect-[9/18] max-h-[52vh] sm:max-h-[58vh] lg:max-h-[460px] rounded-[32px] ring-2 ring-zinc-800/80 shadow-[0_0_50px_rgba(255,149,0,0.15)]"
+                  : "w-full aspect-video max-h-[36vh] sm:max-h-[42vh] lg:max-h-none rounded-2xl"
+              }`}
+            >
               <CornerReticle size={8} color="rgba(255, 149, 0, 0.5)" />
-              <div key={active.id} className="w-full h-full">
+              
+              {(isVerticalMedia || active.id === "rebusca") && (
+                /* Dynamic notch indicator for smartphone card aesthetic */
+                <div className="absolute top-2.5 left-1/2 -translate-x-1/2 w-16 h-3.5 bg-black/90 rounded-full border border-white/10 z-30 pointer-events-none flex items-center justify-end px-2">
+                  <div className="w-1.5 h-1.5 rounded-full bg-accent/60" />
+                </div>
+              )}
+
+              <div key={active.id} className="w-full h-full relative flex items-center justify-center overflow-hidden bg-black">
                 {active.videoSrc ? (
-                  <div className="relative w-full h-full bg-black">
+                  <div className="relative w-full h-full bg-black flex items-center justify-center overflow-hidden">
                     <video
                       ref={videoRef}
                       src={active.videoSrc}
-                      poster="/projects/metropolyca.png"
+                      poster={active.imageSrc || "/projects/metropolyca.png"}
                       autoPlay
                       loop
                       muted={isMuted}
                       playsInline
                       preload="auto"
+                      onLoadedMetadata={(e) => {
+                        setIsVerticalMedia(e.currentTarget.videoHeight > e.currentTarget.videoWidth);
+                      }}
                       className="w-full h-full object-cover"
                     />
                     <div className="absolute bottom-2.5 right-2.5 flex items-center gap-1.5 z-20">
@@ -254,11 +278,14 @@ export const PinnedProjectsScrollytelling: React.FC<{ items: PinnedProjectItem[]
                   <img
                     src={active.imageSrc || "/projects/fifa-predictor.png"}
                     alt={active.title}
+                    onLoad={(e) => {
+                      setIsVerticalMedia(e.currentTarget.naturalHeight > e.currentTarget.naturalWidth);
+                    }}
                     className="w-full h-full object-cover"
                   />
                 )}
               </div>
-            </div>
+            </motion.div>
           </div>
         </div>
       </div>

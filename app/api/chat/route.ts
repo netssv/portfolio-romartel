@@ -21,8 +21,8 @@ function normalizeContents(messages: IncomingMessage[]) {
   const firstUserIndex = messages.findIndex((m) => m.role === "user");
   if (firstUserIndex === -1) return [];
 
-  // Limit context to last 10 messages
-  const recentMessages = messages.slice(firstUserIndex).slice(-10);
+  // Limit context to last 6 messages for faster generation
+  const recentMessages = messages.slice(firstUserIndex).slice(-6);
   const contents: Array<{ role: "user" | "model"; parts: Array<{ text: string }> }> = [];
 
   for (const m of recentMessages) {
@@ -46,6 +46,8 @@ export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
     const rawMessages: IncomingMessage[] = body.messages || [];
+    const currentSection = typeof body.currentSection === "string" ? body.currentSection : undefined;
+    const visitorContext = body.visitorContext && typeof body.visitorContext === "object" ? body.visitorContext : undefined;
 
     const contents = normalizeContents(rawMessages);
     if (contents.length === 0) {
@@ -56,20 +58,36 @@ export async function POST(req: NextRequest) {
     }
 
     const ai = getGeminiClient();
-    const systemInstruction = buildSystemInstruction();
+    const systemInstruction = buildSystemInstruction(currentSection, visitorContext);
 
-    // Initial model invocation with low temperature for precision
-    const initialResponse = await ai.models.generateContent({
-      model: "gemini-2.5-flash",
-      contents,
-      config: {
-        systemInstruction,
-        temperature: 0.3,
-        maxOutputTokens: 800,
-        thinkingConfig: { thinkingBudget: 0 },
-        tools: [{ functionDeclarations: CHATBOT_TOOL_DECLARATIONS }],
-      },
-    });
+    // Primary model: gemini-3.5-flash-lite (fast latency) with gemini-3.6-flash fallback
+    const PRIMARY_MODEL = "gemini-3.5-flash-lite";
+    const FALLBACK_MODEL = "gemini-3.6-flash";
+
+    let initialResponse: any;
+    try {
+      initialResponse = await ai.models.generateContent({
+        model: PRIMARY_MODEL,
+        contents,
+        config: {
+          systemInstruction,
+          temperature: 0.3,
+          maxOutputTokens: 600,
+          tools: [{ functionDeclarations: CHATBOT_TOOL_DECLARATIONS }],
+        },
+      });
+    } catch {
+      initialResponse = await ai.models.generateContent({
+        model: FALLBACK_MODEL,
+        contents,
+        config: {
+          systemInstruction,
+          temperature: 0.3,
+          maxOutputTokens: 600,
+          tools: [{ functionDeclarations: CHATBOT_TOOL_DECLARATIONS }],
+        },
+      });
+    }
 
     const functionCalls = initialResponse.functionCalls;
 
@@ -88,14 +106,16 @@ export async function POST(req: NextRequest) {
         toolResult = { error: `Unknown function ${call.name}` };
       }
 
+      const modelTurn = initialResponse.candidates?.[0]?.content || {
+        role: "model",
+        parts: [{ functionCall: call }],
+      };
+
       const toolContents = [
         ...contents,
+        modelTurn,
         {
-          role: "model",
-          parts: [{ functionCall: call }],
-        },
-        {
-          role: "tool",
+          role: "user",
           parts: [
             {
               functionResponse: {
@@ -107,16 +127,30 @@ export async function POST(req: NextRequest) {
         },
       ];
 
-      const secondResponse = await ai.models.generateContent({
-        model: "gemini-2.5-flash",
-        contents: toolContents,
-        config: {
-          systemInstruction,
-          temperature: 0.3,
-          maxOutputTokens: 800,
-          thinkingConfig: { thinkingBudget: 0 },
-        },
-      });
+      let secondResponse: any;
+      try {
+        secondResponse = await ai.models.generateContent({
+          model: PRIMARY_MODEL,
+          contents: toolContents,
+          config: {
+            systemInstruction,
+            temperature: 0.3,
+            maxOutputTokens: 800,
+            tools: [{ functionDeclarations: CHATBOT_TOOL_DECLARATIONS }],
+          },
+        });
+      } catch {
+        secondResponse = await ai.models.generateContent({
+          model: FALLBACK_MODEL,
+          contents: toolContents,
+          config: {
+            systemInstruction,
+            temperature: 0.3,
+            maxOutputTokens: 800,
+            tools: [{ functionDeclarations: CHATBOT_TOOL_DECLARATIONS }],
+          },
+        });
+      }
 
       return NextResponse.json({
         reply: secondResponse.text || "Action executed successfully.",
@@ -129,6 +163,14 @@ export async function POST(req: NextRequest) {
   } catch (error: unknown) {
     const err = error as { message?: string; status?: number };
     console.error("[Clippo Chat API Error]:", error);
+
+    const isRateLimit = typeof err?.message === "string" && (err.message.includes("429") || err.message.includes("quota") || err.message.includes("RESOURCE_EXHAUSTED"));
+
+    if (isRateLimit) {
+      return NextResponse.json({
+        reply: "Soy Clippo. El servicio de IA recibió muchas consultas simultáneas y está en una breve pausa de enfriamiento de unos segundos. Por favor intenta preguntarme de nuevo en un instante.",
+      });
+    }
 
     const errorMessage =
       err?.message || "Failed to process request with AI assistant.";

@@ -3,46 +3,52 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ClippoAvatar } from "./ClippoAvatar";
+import { SectionId } from "@/src/lib/useActiveSection";
+import { SECTION_CHATBOT_CONFIG } from "@/src/lib/chatbot-section-data";
 
 interface ClippoFloatingTriggerProps {
   isOpen: boolean;
   onToggle: () => void;
   isThinking?: boolean;
+  sectionId?: SectionId;
 }
-
-const DYNAMIC_PHRASES = [
-  "It looks like you're exploring Rodrigo's portfolio!",
-  "Want to check live Bitcoin mempool telemetry?",
-  "Curious about Rodrigo's open-source projects?",
-  "Want me to send a direct message to Rodrigo for you?",
-  "Ask me about his hosting & automation stack!",
-];
 
 export function ClippoFloatingTrigger({
   isOpen,
   onToggle,
   isThinking = false,
+  sectionId = "top",
 }: ClippoFloatingTriggerProps) {
   const [phraseIndex, setPhraseIndex] = useState(0);
 
+  const activeConfig = SECTION_CHATBOT_CONFIG[sectionId] || SECTION_CHATBOT_CONFIG.top;
+  const phrases = activeConfig.speechPhrases;
+
+  // Reset phrase index when section changes
   useEffect(() => {
-    if (isOpen || isThinking) return;
+    setPhraseIndex(0);
+  }, [sectionId]);
+
+  useEffect(() => {
+    if (isOpen || isThinking || phrases.length <= 1) return;
 
     const interval = setInterval(() => {
-      setPhraseIndex((prev) => (prev + 1) % DYNAMIC_PHRASES.length);
+      setPhraseIndex((prev) => (prev + 1) % phrases.length);
     }, 6500);
 
     return () => clearInterval(interval);
-  }, [isOpen, isThinking]);
+  }, [isOpen, isThinking, phrases.length, sectionId]);
 
   if (isOpen) return null;
+
+  const currentPhrase = phrases[phraseIndex] || phrases[0];
 
   return (
     <div className="relative flex flex-col items-end select-none">
       {/* Dynamic Speech / Thought Bubble */}
       <AnimatePresence mode="wait">
         <motion.div
-          key={isThinking ? "thinking" : phraseIndex}
+          key={isThinking ? "thinking" : `${sectionId}-${phraseIndex}`}
           initial={{ opacity: 0, y: 12, scale: 0.9 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
           exit={{ opacity: 0, y: -8, scale: 0.9 }}
@@ -64,7 +70,7 @@ export function ClippoFloatingTrigger({
               <span className="text-text-primary text-[11px] font-semibold">Clippo is thinking...</span>
             </div>
           ) : (
-            <p className="leading-snug">{DYNAMIC_PHRASES[phraseIndex]}</p>
+            <p className="leading-snug">{currentPhrase}</p>
           )}
 
           {/* Pointer tail pointing down to Clippo */}

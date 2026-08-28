@@ -1,36 +1,67 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Rodrigo Martel | Portfolio & Systems Architecture
 
-## Getting Started
+Engineering-driven portfolio showcasing production codebases, webhook automations, CRM integrations, and serverless data pipelines.
 
-First, run the development server:
+---
+
+## Systems & Cloud Architecture ($0/mo Infrastructure)
+
+### 1. Dual-Tier AI Assistant (Clippo)
+* **Primary Model:** Google Gemini 3.5 Flash-Lite (`gemini-3.5-flash-lite`) for ultra-low latency (~2-3s).
+* **Fallback Model:** Google Gemini 3.6 Flash (`gemini-3.6-flash`) for deep reasoning resilience.
+* **Economics & Free Tier Specs:**
+  * **Daily Quota:** 1,500 Requests Per Day (RPD).
+  * **Rate Limit:** 15–30 Requests Per Minute (RPM).
+  * **Context Window:** 1,000,000 tokens.
+  * **Operating Cost:** $0.00 / month.
+* **Tool Calling & Execution Strategy:**
+  * Native Function Calling (`get_btc_telemetry`, `get_site_json`, `send_contact_email`).
+  * Preserves Google Gen AI `thought_signature` across conversation turns.
+  * Employs strict 1.2s timeout on external microservice calls to prevent cold-start delays.
+* **Client-Side UX & Error Recovery:**
+  * Controlled `isLoading` state replacing asynchronous transitions.
+  * 45-second `AbortController` safety window for complex multi-turn prompts.
+  * Built-in interactive **"Reintentar" (Retry)** action directly in error banners.
+  * Animated SVG avatar with explicit `cx`/`cy` baseline attributes preventing Framer Motion warnings.
+
+### 2. Live Bitcoin & Mempool Telemetry Pipeline (HODL Watcher)
+* **Backend:** Python FastAPI deployed on Render Cloud.
+* **Autonomous Cron Watchdog:** Make.com scheduled scenario executing every 15 minutes.
+* **Purpose:**
+  * Eliminates free-tier idle sleep (cold starts) by keeping the FastAPI instance active 24/7 at $0/mo.
+  * Verifies Bitcoin on-chain mempool fees and order flow telemetry.
+  * Logs events into an In-Memory Ring Buffer (15 execution slots) with zero database overhead.
+* **Frontend Telemetry Bar:**
+  * Real-time Binance REST/WebSocket ticker feed.
+  * Integrated **Fear & Greed Market Sentiment Index** via [`/api/hodl-insights`](file:///home/netss/Projects/websites/portfolio-romartel/app/api/hodl-insights/route.ts).
+  * Interactive execution buffer drawer with manual ping testing (`visitor-test`).
+
+### 3. Project Naming Stories & Portfolio Strategy
+* Centralized in [`PROJECT_NAMING_STORIES.md`](file:///home/netss/Projects/websites/portfolio-romartel/PROJECT_NAMING_STORIES.md), documenting authentic problem-solving origins:
+  * **FIFA World Cup 2026 AI Lab:** Monte Carlo simulation engine with 1M iterations, predicting Spain as champion with 6/10 test accuracy.
+  * **HODL Watcher:** Real-time on-chain mempool fee tracker with multi-API fallbacks (Binance, KuCoin).
+  * **WhatHappened:** Chrome MV3 triage terminal for edge DNS (DoH), SSL certificate expiration, and network health.
+  * **caniarun:** 1-second CLI hardware profiler for local LLM quantization tiers (Q4, Q8, FP16) distributed on PyPI.
+  * **btkey_sync:** Windows-to-Linux Bluetooth LTK encryption key synchronizer eliminating dual-boot re-pairing.
+  * **Rebusca:** Android grocery price intelligence engine with defensive scraping and mobile API parsing.
+
+### 4. Web Platform & Observability
+* **Framework:** Next.js 15 (App Router), React 19, TypeScript, Tailwind CSS, Framer Motion.
+* **Modularity Standard:** Strict < 200 lines-of-code limit per modular component, hook, and route handler.
+* **CRO & Analytics:** Custom zero-latency localStorage A/B testing engine, Google Analytics 4 (GA4), Microsoft Clarity heatmaps.
+* **Transactional Email:** Secure serverless routing via Resend API.
+
+---
+
+## Local Development
 
 ```bash
+# Install dependencies
+npm install
+
+# Configure environment variables
+cp .env.example .env.local
+
+# Start development server
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.

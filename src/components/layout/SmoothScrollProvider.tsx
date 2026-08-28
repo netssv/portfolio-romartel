@@ -45,7 +45,6 @@ export const SmoothScrollProvider: React.FC<{ children: React.ReactNode }> = ({ 
 
     const onScroll = (e: { progress: number; velocity: number }) => {
       setScrollState({ progress: e.progress, velocity: e.velocity });
-      document.documentElement.style.setProperty("--scroll-progress", e.progress.toFixed(4));
     };
 
     lenis.on("scroll", onScroll);

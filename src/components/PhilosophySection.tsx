@@ -36,7 +36,7 @@ const PILLARS: Pillar[] = [
 
 export const PhilosophySection: React.FC<PhilosophyProps> = ({ quote }) => {
   return (
-    <section className="py-24 border-b border-border-subtle relative overflow-hidden">
+    <section id="philosophy" className="py-24 border-b border-border-subtle relative overflow-hidden">
       <div className="mx-auto max-w-6xl px-6 relative z-10">
         <FadeIn>
           <div className="mb-14 max-w-3xl">

@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { ArrowUpRight, Trophy, LineChart, Terminal, Cpu, Bluetooth, Gamepad2, Layers, LucideIcon } from "lucide-react";
+import { ArrowUpRight, Trophy, LineChart, Terminal, Cpu, Bluetooth, Gamepad2, Layers, Smartphone, Search, LucideIcon } from "lucide-react";
 import { motion } from "framer-motion";
 
 const ICON_MAP: Record<string, LucideIcon> = {
@@ -12,6 +12,8 @@ const ICON_MAP: Record<string, LucideIcon> = {
   Bluetooth,
   Gamepad2,
   Layers,
+  Smartphone,
+  Search,
 };
 
 const GithubIcon = ({ size = 13 }: { size?: number }) => (
@@ -31,6 +33,7 @@ export interface ProjectCardProps {
   status: string;
   icon?: string;
   image?: string;
+  videoSrc?: string;
   tags?: string[];
   links: { github: string; demo: string };
 }
@@ -48,6 +51,7 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
   links,
 }) => {
   const [coords, setCoords] = useState({ x: 0, y: 0 });
+  const [isVertical, setIsVertical] = useState(false);
   const IconComponent = icon && ICON_MAP[icon] ? ICON_MAP[icon] : Layers;
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -67,17 +71,35 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
     >
       {/* Visual Screenshot Preview Banner */}
       {image && (
-        <div className="relative w-full aspect-[16/9] overflow-hidden bg-bg-raised border-b border-border-subtle">
+        <div className="relative w-full aspect-[16/9] overflow-hidden bg-bg-raised border-b border-border-subtle flex items-center justify-center">
+          {isVertical && (
+            <img
+              src={image}
+              alt=""
+              aria-hidden="true"
+              className="absolute inset-0 w-full h-full object-cover blur-xl opacity-35 scale-125 pointer-events-none"
+            />
+          )}
           <motion.img
             src={image}
             alt={`${title} Preview`}
-            className="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
+            onLoad={(e) => {
+              const img = e.currentTarget;
+              if (img.naturalHeight > img.naturalWidth) {
+                setIsVertical(true);
+              }
+            }}
+            className={
+              isVertical
+                ? "relative z-10 h-full w-auto max-w-full object-contain py-1 drop-shadow-md transition-transform duration-500 group-hover:scale-105"
+                : "w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
+            }
             loading="lazy"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-bg-surface/90 via-transparent to-transparent opacity-60" />
+          <div className="absolute inset-0 bg-gradient-to-t from-bg-surface/90 via-transparent to-transparent opacity-60 pointer-events-none" />
           
           {/* Floating Status & Category on image */}
-          <div className="absolute top-3 left-3 right-3 flex items-center justify-between pointer-events-none">
+          <div className="absolute top-3 left-3 right-3 flex items-center justify-between pointer-events-none z-20">
             <span className="flex items-center gap-1.5 px-2.5 py-1 rounded-md text-[10px] font-mono font-semibold bg-bg-surface/90 backdrop-blur-md border border-border-subtle text-text-primary shadow-xs">
               <IconComponent className="w-3.5 h-3.5 text-accent" />
               <span>{category}</span>
