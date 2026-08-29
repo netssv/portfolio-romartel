@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useRef } from "react";
-import { ArrowUpRight, ArrowDown, MapPin } from "lucide-react";
+import { ArrowUpRight, ArrowDown, MapPin, MessageSquare } from "lucide-react";
 import { motion, useInView } from "framer-motion";
 import { ExecutivePortrait } from "@/src/components/ui/ExecutivePortrait";
 
@@ -11,7 +11,7 @@ interface HeroSectionProps {
   bio: string;
   location: string;
   avatar: { src: string; alt: string };
-  email: string;
+  email?: string;
 }
 
 export const HeroSection: React.FC<HeroSectionProps> = ({
@@ -20,7 +20,6 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
   bio,
   location,
   avatar,
-  email,
 }) => {
   const heroRef = useRef<HTMLDivElement>(null);
   const imgRef = useRef<HTMLDivElement>(null);
@@ -109,13 +108,17 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
               <ArrowDown size={13} className="group-hover:translate-y-0.5 transition-transform" />
             </a>
 
-            <a
-              href={`mailto:${email}`}
-              className="h-11 px-5 flex items-center justify-center gap-2 rounded-xl border border-border-base bg-bg-surface text-xs font-body font-medium text-text-secondary hover:text-text-primary hover:border-accent transition-colors shadow-xs group"
+            <button
+              type="button"
+              onClick={() => {
+                window.dispatchEvent(new CustomEvent("open-clippo-contact"));
+              }}
+              className="h-11 px-5 flex items-center justify-center gap-2 rounded-xl border border-border-base bg-bg-surface text-xs font-body font-medium text-text-secondary hover:text-text-primary hover:border-accent transition-colors shadow-xs group cursor-pointer"
             >
-              <span>{email}</span>
+              <MessageSquare size={14} className="text-accent" />
+              <span>Quick Message</span>
               <ArrowUpRight size={13} className="text-text-muted group-hover:text-accent group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all" />
-            </a>
+            </button>
           </motion.div>
         </motion.div>
 

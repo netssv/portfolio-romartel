@@ -40,6 +40,25 @@ export function ChatBot() {
     }
   }, [isOpen, messages]);
 
+  useEffect(() => {
+    const handleContactOpen = () => {
+      setIsOpen(true);
+      setMessages((prev) => {
+        const contactMsg: MessageItem = {
+          id: `contact-${Date.now()}`,
+          role: "model",
+          text: "I see you would like to reach Rodrigo! Feel free to share your name, email, and a message here, and I will deliver it straight to his inbox.",
+          timestamp: "Just now",
+        };
+        return [...prev, contactMsg];
+      });
+      setTimeout(() => inputRef.current?.focus(), 150);
+    };
+
+    window.addEventListener("open-clippo-contact", handleContactOpen);
+    return () => window.removeEventListener("open-clippo-contact", handleContactOpen);
+  }, []);
+
   const dispatchChat = async (history: MessageItem[]) => {
     setError(null);
     setIsLoading(true);
