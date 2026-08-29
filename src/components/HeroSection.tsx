@@ -59,11 +59,11 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
           <motion.div className="inline-flex flex-wrap items-center gap-3 mb-6" variants={itemVariants}>
             <span className="relative inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-bg-raised border border-border-subtle shadow-xs">
               <span className="relative flex h-2 w-2">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent-signal opacity-75" />
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-accent-signal" />
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-signal-success opacity-75" />
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-signal-success" />
               </span>
               <span className="text-xs font-body font-semibold text-text-primary">
-                Available for Workflow &amp; Systems Audits
+                Available for Work
               </span>
             </span>
 

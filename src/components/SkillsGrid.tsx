@@ -1,10 +1,10 @@
 "use client";
 
-import React, { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import React from "react";
+import { motion } from "framer-motion";
 import { FadeIn } from "@/src/components/ui/FadeIn";
 import { SectionLabel } from "@/src/components/ui/SectionLabel";
-import { Target, BarChart3, Cpu, LucideIcon } from "lucide-react";
+import { Target, BarChart3, Cpu, LucideIcon, CheckCircle2 } from "lucide-react";
 
 interface SkillCategory {
   title: string;
@@ -22,17 +22,17 @@ const ICON_MAP: Record<string, LucideIcon> = {
 };
 
 const PROFICIENCY: Record<string, { label: string }> = {
-  businessCore: { label: "Core Competency" },
-  dataIntelligence: { label: "Advanced Analytics" },
-  technicalTooling: { label: "Production Tooling" },
+  businessCore: { label: "Core Operations" },
+  dataIntelligence: { label: "Data & BI" },
+  technicalTooling: { label: "Tooling & Infra" },
 };
 
 const cardVariants = {
-  initial: { opacity: 0, y: 20 },
+  initial: { opacity: 0, y: 16 },
   visible: (i: number) => ({
     opacity: 1,
     y: 0,
-    transition: { delay: i * 0.1, type: "spring" as const, stiffness: 200, damping: 22 },
+    transition: { delay: i * 0.08, type: "spring" as const, stiffness: 200, damping: 22 },
   }),
 };
 
@@ -41,7 +41,6 @@ const SkillCard: React.FC<{ catKey: string; cat: SkillCategory; index: number }>
   cat,
   index,
 }) => {
-  const [hovered, setHovered] = useState(false);
   const meta = PROFICIENCY[catKey] ?? { label: "Capability" };
   const IconComponent = cat.icon ? ICON_MAP[cat.icon] ?? Cpu : Cpu;
 
@@ -51,71 +50,40 @@ const SkillCard: React.FC<{ catKey: string; cat: SkillCategory; index: number }>
       variants={cardVariants}
       initial="initial"
       whileInView="visible"
-      viewport={{ once: true, amount: 0.2 }}
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
-      className="relative group flex flex-col justify-between gap-5 p-6 rounded-2xl border border-border-base bg-bg-surface overflow-hidden hover:border-accent hover:shadow-lg transition-all duration-200"
+      viewport={{ once: true, amount: 0.15 }}
+      className="relative flex flex-col justify-between p-6 rounded-2xl border border-border-base bg-bg-surface hover:border-accent transition-all duration-200 shadow-xs h-full"
     >
-      <div className="flex items-start justify-between gap-4 relative z-10">
-        <div>
-          <div className="p-2.5 rounded-xl bg-accent/10 w-fit text-accent">
+      <div>
+        {/* Header */}
+        <div className="flex items-start justify-between gap-3 mb-4">
+          <div className="p-2.5 rounded-xl bg-accent/10 text-accent">
             <IconComponent size={20} />
           </div>
-          <h3 className="text-base font-heading font-bold text-text-primary mt-3.5 leading-tight">
-            {cat.title}
-          </h3>
-          <p className="text-xs font-body text-text-muted mt-0.5">
-            {cat.skills.length} capabilities
-          </p>
+          <span className="shrink-0 px-2.5 py-1 rounded-full text-xs font-body font-semibold border bg-bg-raised text-accent border-border-subtle">
+            {meta.label}
+          </span>
         </div>
-        <span className="shrink-0 px-2.5 py-1 rounded-full text-xs font-body font-semibold border bg-bg-raised text-accent border-border-subtle">
-          {meta.label}
-        </span>
-      </div>
 
-      <div className="relative z-10 min-h-[70px]">
-        <AnimatePresence mode="wait">
-          {hovered ? (
-            <motion.div
-              key="expanded"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              className="flex flex-wrap gap-1.5"
+        {/* Title */}
+        <h3 className="text-base font-heading font-bold text-text-primary leading-snug mb-1">
+          {cat.title}
+        </h3>
+        <p className="text-xs font-body text-text-muted mb-4">
+          {cat.skills.length} core capabilities
+        </p>
+
+        {/* Capability Items */}
+        <ul className="space-y-2">
+          {cat.skills.map((skill) => (
+            <li
+              key={skill}
+              className="flex items-start gap-2 text-xs font-body text-text-secondary leading-relaxed p-1.5 rounded-lg hover:bg-bg-raised/70 transition-colors"
             >
-              {cat.skills.map((skill) => (
-                <span
-                  key={skill}
-                  className="px-2.5 py-1 rounded-lg text-xs font-body text-text-primary border border-border-subtle bg-bg-raised"
-                >
-                  {skill}
-                </span>
-              ))}
-            </motion.div>
-          ) : (
-            <motion.div
-              key="preview"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              className="flex flex-wrap gap-1.5"
-            >
-              {cat.skills.slice(0, 3).map((skill) => (
-                <span
-                  key={skill}
-                  className="px-2.5 py-1 rounded-lg text-xs font-body text-text-secondary border border-border-subtle bg-bg-surface"
-                >
-                  {skill}
-                </span>
-              ))}
-              {cat.skills.length > 3 && (
-                <span className="px-2.5 py-1 rounded-lg text-xs font-body text-text-muted border border-dashed border-border-subtle">
-                  +{cat.skills.length - 3} more
-                </span>
-              )}
-            </motion.div>
-          )}
-        </AnimatePresence>
+              <CheckCircle2 size={13} className="text-accent shrink-0 mt-0.5" />
+              <span>{skill}</span>
+            </li>
+          ))}
+        </ul>
       </div>
     </motion.div>
   );
@@ -126,7 +94,7 @@ export const SkillsGrid: React.FC<{ skillsMatrix: SkillsMatrixData }> = ({ skill
 
   return (
     <section id="skills" className="py-24 border-b border-border-subtle bg-bg-base">
-      <div className="mx-auto max-w-5xl px-6">
+      <div className="mx-auto max-w-6xl px-6">
         <FadeIn>
           <SectionLabel
             eyebrow="Capabilities"
@@ -135,7 +103,8 @@ export const SkillsGrid: React.FC<{ skillsMatrix: SkillsMatrixData }> = ({ skill
           />
         </FadeIn>
 
-        <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+        {/* Stable 3-column grid without orphan cards */}
+        <div className="mt-10 grid grid-cols-1 md:grid-cols-3 gap-6 items-stretch">
           {categories.map(([key, cat], index) => (
             <SkillCard key={key} catKey={key} cat={cat} index={index} />
           ))}

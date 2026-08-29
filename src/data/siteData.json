@@ -1,9 +1,10 @@
 {
   "metadata": {
-    "title": "Rodrigo Martel | Technical Solutions, Automation & Data Analytics",
-    "description": "Specializing in workflow automation (Make, Zapier, Python), CRM integrations (Salesforce, HubSpot, Webhooks), systems audits, and client operations.",
+    "title": "Rodrigo Martel | Marketing Operations & Systems Specialist",
+    "description": "Marketing professional specializing in workflow automation (Make, Zapier, Python), CRM integrations (Salesforce, HubSpot), practical data analytics, and web operations.",
     "keywords": [
       "Rodrigo Martel",
+      "Marketing Operations",
       "Systems Specialist",
       "Workflow Automation",
       "CRM Integrations",
@@ -12,7 +13,7 @@
       "Python",
       "Data Analytics",
       "Power BI",
-      "Operations Specialist"
+      "Web Operations"
     ],
     "author": "Rodrigo Martel",
     "email": "rop.martel@gmail.com",
@@ -29,16 +30,16 @@
       "path": "/"
     },
     {
-      "name": "Projects",
-      "path": "#projects"
-    },
-    {
       "name": "Experience",
       "path": "#experience"
     },
     {
       "name": "Skills",
       "path": "#skills"
+    },
+    {
+      "name": "Projects",
+      "path": "#projects"
     },
     {
       "name": "Architecture",
@@ -51,10 +52,10 @@
   ],
   "profile": {
     "name": "Rodrigo Martel",
-    "title": "Systems & Workflow Automation Specialist",
+    "title": "Marketing Operations & Systems Specialist",
     "location": "San Salvador, El Salvador",
     "tagline": "Streamlining data flows, designing automated CRM pipelines, and delivering high-quality systems audits.",
-    "bio": "Operations and systems specialist bridging no-code/low-code workflow automation (Make, Zapier, Python), CRM integrations (Salesforce, HubSpot, Webhooks), and client-facing technical audits. Passionate about eliminating friction and ensuring rock-solid data integrity.",
+    "bio": "Marketing professional bridging no-code/low-code workflow automation (Make, Zapier, Python), CRM integrations (Salesforce, HubSpot, Webhooks), and practical data analytics. Passionate about eliminating friction and ensuring rock-solid data integrity.",
     "avatar": {
       "src": "/avatar.webp",
       "alt": "Rodrigo Martel Profile Portrait"
