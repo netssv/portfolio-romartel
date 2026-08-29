@@ -1,11 +1,18 @@
 "use client";
 
 import React, { useState, useEffect, useCallback } from "react";
+import dynamic from "next/dynamic";
 import { ArrowUpRight, ChevronDown, ChevronUp, BookOpen, Activity } from "lucide-react";
 import { AnimatePresence } from "framer-motion";
 import { FadeIn } from "@/src/components/ui/FadeIn";
-import { TelemetryLogDrawer, TelemetryEvent } from "@/src/components/TelemetryLogDrawer";
+import type { TelemetryEvent } from "@/src/components/TelemetryLogDrawer";
 import { BtcPriceCard } from "@/src/components/BtcPriceCard";
+import { useLanguage } from "@/src/context/LanguageContext";
+
+const TelemetryLogDrawer = dynamic(
+  () => import("@/src/components/TelemetryLogDrawer").then((m) => m.TelemetryLogDrawer),
+  { ssr: false }
+);
 
 interface TelemetryData {
   status: string;
@@ -14,8 +21,6 @@ interface TelemetryData {
   count: number;
   events: TelemetryEvent[];
 }
-
-import { useLanguage } from "@/src/context/LanguageContext";
 
 export const BtcTrendTelemetryBar: React.FC = () => {
   const { isSpanish } = useLanguage();
@@ -74,9 +79,15 @@ export const BtcTrendTelemetryBar: React.FC = () => {
       void fetchInsights();
     }, 600);
 
-    const btcInt = setInterval(() => void fetchBtcPrice(), 8000);
-    const telInt = setInterval(() => void fetchTelemetry(), 25000);
-    const insInt = setInterval(() => void fetchInsights(), 60000);
+    const btcInt = setInterval(() => {
+      if (typeof document === "undefined" || !document.hidden) void fetchBtcPrice();
+    }, 8000);
+    const telInt = setInterval(() => {
+      if (typeof document === "undefined" || !document.hidden) void fetchTelemetry();
+    }, 30000);
+    const insInt = setInterval(() => {
+      if (typeof document === "undefined" || !document.hidden) void fetchInsights();
+    }, 60000);
 
     return () => {
       clearTimeout(initTimer);
@@ -131,40 +142,18 @@ export const BtcTrendTelemetryBar: React.FC = () => {
 
               {/* Center + Right Group */}
               <div className="flex flex-wrap items-center justify-between xl:justify-end gap-3 pt-3 xl:pt-0 border-t xl:border-t-0 border-border-subtle">
-                <BtcPriceCard
-                  price={btcTicker.price}
-                  changePct={btcTicker.priceChangePercent}
-                  highPrice={btcTicker.highPrice}
-                  lowPrice={btcTicker.lowPrice}
-                  flash={priceFlash}
-                  sentiment={sentiment}
-                />
-
+                <BtcPriceCard price={btcTicker.price} changePct={btcTicker.priceChangePercent} highPrice={btcTicker.highPrice} lowPrice={btcTicker.lowPrice} flash={priceFlash} sentiment={sentiment} />
                 <div className="flex items-center gap-2">
-                  <a
-                    href="https://hodl-watcher-api.onrender.com/docs"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center gap-1.5 rounded-xl border border-border-subtle bg-bg-surface px-3 py-2 text-xs font-body font-medium text-text-secondary hover:border-accent hover:text-text-primary transition-all shadow-xs"
-                  >
+                  <a href="https://hodl-watcher-api.onrender.com/docs" target="_blank" rel="noopener noreferrer" className="flex items-center gap-1.5 rounded-xl border border-border-subtle bg-bg-surface px-3 py-2 text-xs font-body font-medium text-text-secondary hover:border-accent hover:text-text-primary transition-all shadow-xs">
                     <BookOpen size={12} className="text-accent" />
                     <span>API Docs</span>
                   </a>
-                  <button
-                    type="button"
-                    onClick={() => setShowLogs(!showLogs)}
-                    className="flex items-center gap-1.5 rounded-xl border border-border-subtle bg-bg-raised px-3 py-2 text-xs font-body font-medium text-text-secondary hover:border-border-base hover:text-text-primary transition-all cursor-pointer shadow-xs"
-                  >
+                  <button type="button" onClick={() => setShowLogs(!showLogs)} className="flex items-center gap-1.5 rounded-xl border border-border-subtle bg-bg-raised px-3 py-2 text-xs font-body font-medium text-text-secondary hover:border-border-base hover:text-text-primary transition-all cursor-pointer shadow-xs">
                     <Activity size={13} className="text-accent" />
                     <span>{showLogs ? (isSpanish ? "Ocultar Registros" : "Hide Logs") : (isSpanish ? "Registros" : "Logs")}</span>
                     {showLogs ? <ChevronUp size={13} /> : <ChevronDown size={13} />}
                   </button>
-                  <a
-                    href="https://hodl-watcher.vercel.app/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center gap-1.5 rounded-xl bg-accent px-3.5 py-2 text-xs font-body font-semibold text-white hover:bg-accent-hover transition-all shadow-xs"
-                  >
+                  <a href="https://hodl-watcher.vercel.app/" target="_blank" rel="noopener noreferrer" className="flex items-center gap-1.5 rounded-xl bg-accent px-3.5 py-2 text-xs font-body font-semibold text-white hover:bg-accent-hover transition-all shadow-xs">
                     <span>{isSpanish ? "Mesa de Señales" : "Signal Desk"}</span>
                     <ArrowUpRight size={13} />
                   </a>

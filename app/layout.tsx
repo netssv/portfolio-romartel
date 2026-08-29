@@ -1,17 +1,13 @@
 import type { Metadata } from "next";
 import { Inter, Space_Grotesk, Geist_Mono } from "next/font/google";
 import Script from "next/script";
-import dynamic from "next/dynamic";
 import "./globals.css";
 import siteData from "@/src/data/siteData.json";
 import { NoiseOverlay } from "@/src/components/animations/NoiseOverlay";
 import { SpotlightCursor } from "@/src/components/animations/SpotlightCursor";
 import { DesignProvider } from "@/src/context/DesignContext";
 import { LanguageProvider } from "@/src/context/LanguageContext";
-
-const ChatBot = dynamic(() => import("@/src/components/ui/chatbot/ChatBot").then((m) => m.ChatBot), {
-  ssr: false,
-});
+import { ChatBot } from "@/src/components/ui/chatbot/ChatBotClient";
 
 const inter = Inter({ variable: "--font-inter", subsets: ["latin"], display: "swap" });
 const spaceGrotesk = Space_Grotesk({ variable: "--font-space-grotesk", subsets: ["latin"], display: "swap" });

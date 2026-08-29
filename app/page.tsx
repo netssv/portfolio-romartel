@@ -1,5 +1,6 @@
 "use client";
 
+import dynamic from "next/dynamic";
 import { useLanguage } from "@/src/context/LanguageContext";
 import { Navbar } from "@/src/components/Navbar";
 import { HeroSection } from "@/src/components/HeroSection";
@@ -15,8 +16,12 @@ import { CaseStudiesSection } from "@/src/components/CaseStudiesSection";
 import { ContactSection } from "@/src/components/ContactSection";
 import { CustomScrollRail } from "@/src/components/layout/CustomScrollRail";
 import { SmoothScrollProvider } from "@/src/components/layout/SmoothScrollProvider";
-import { GlobalWebGLStage } from "@/src/components/canvas/GlobalWebGLStage";
 import { useViewportGrid } from "@/src/lib/useViewportGrid";
+
+const GlobalWebGLStage = dynamic(
+  () => import("@/src/components/canvas/GlobalWebGLStage").then((m) => m.GlobalWebGLStage),
+  { ssr: false }
+);
 
 export default function Home() {
   useViewportGrid();

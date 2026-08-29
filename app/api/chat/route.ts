@@ -59,36 +59,24 @@ export async function POST(req: NextRequest) {
 
     const ai = getGeminiClient();
     const systemInstruction = buildSystemInstruction(currentSection, visitorContext);
-
-    // Primary model: gemini-3.5-flash-lite (fast latency) with gemini-3.6-flash fallback
     const PRIMARY_MODEL = "gemini-3.5-flash-lite";
     const FALLBACK_MODEL = "gemini-3.6-flash";
 
-    let initialResponse: Awaited<ReturnType<typeof ai.models.generateContent>>;
-    try {
-      initialResponse = await ai.models.generateContent({
-        model: PRIMARY_MODEL,
-        contents,
-        config: {
-          systemInstruction,
-          temperature: 0.3,
-          maxOutputTokens: 600,
-          tools: [{ functionDeclarations: CHATBOT_TOOL_DECLARATIONS }],
-        },
-      });
-    } catch {
-      initialResponse = await ai.models.generateContent({
-        model: FALLBACK_MODEL,
-        contents,
-        config: {
-          systemInstruction,
-          temperature: 0.3,
-          maxOutputTokens: 600,
-          tools: [{ functionDeclarations: CHATBOT_TOOL_DECLARATIONS }],
-        },
-      });
-    }
+    const generateWithFallback = async (contentPayload: typeof contents, maxTokens = 600) => {
+      const config = {
+        systemInstruction,
+        temperature: 0.3,
+        maxOutputTokens: maxTokens,
+        tools: [{ functionDeclarations: CHATBOT_TOOL_DECLARATIONS }],
+      };
+      try {
+        return await ai.models.generateContent({ model: PRIMARY_MODEL, contents: contentPayload, config });
+      } catch {
+        return await ai.models.generateContent({ model: FALLBACK_MODEL, contents: contentPayload, config });
+      }
+    };
 
+    const initialResponse = await generateWithFallback(contents, 600);
     const functionCalls = initialResponse.functionCalls;
 
     if (functionCalls && functionCalls.length > 0) {
@@ -130,41 +118,11 @@ export async function POST(req: NextRequest) {
         modelTurn,
         {
           role: "user",
-          parts: [
-            {
-              functionResponse: {
-                name: call.name,
-                response: toolResult as Record<string, unknown>,
-              },
-            },
-          ],
+          parts: [{ functionResponse: { name: call.name, response: toolResult as Record<string, unknown> } }],
         },
       ];
 
-      let secondResponse: Awaited<ReturnType<typeof ai.models.generateContent>>;
-      try {
-        secondResponse = await ai.models.generateContent({
-          model: PRIMARY_MODEL,
-          contents: toolContents,
-          config: {
-            systemInstruction,
-            temperature: 0.3,
-            maxOutputTokens: 800,
-            tools: [{ functionDeclarations: CHATBOT_TOOL_DECLARATIONS }],
-          },
-        });
-      } catch {
-        secondResponse = await ai.models.generateContent({
-          model: FALLBACK_MODEL,
-          contents: toolContents,
-          config: {
-            systemInstruction,
-            temperature: 0.3,
-            maxOutputTokens: 800,
-            tools: [{ functionDeclarations: CHATBOT_TOOL_DECLARATIONS }],
-          },
-        });
-      }
+      const secondResponse = await generateWithFallback(toolContents, 800);
 
       return NextResponse.json({
         reply: secondResponse.text || "Action executed successfully.",
@@ -176,22 +134,26 @@ export async function POST(req: NextRequest) {
     const replyText = initialResponse.text || "I am here to assist with Rodrigo's portfolio. How can I help?";
     return NextResponse.json({ reply: replyText });
   } catch (error: unknown) {
-    const err = error as { message?: string; status?: number };
+    const err = error as { message?: string; status?: number; cause?: { code?: string } };
     console.error("[Clippo Chat API Error]:", error);
 
-    const isRateLimit = typeof err?.message === "string" && (err.message.includes("429") || err.message.includes("quota") || err.message.includes("RESOURCE_EXHAUSTED"));
-
+    const msg = typeof err?.message === "string" ? err.message : "";
+    const isRateLimit = msg.includes("429") || msg.includes("quota") || msg.includes("RESOURCE_EXHAUSTED");
     if (isRateLimit) {
       return NextResponse.json({
-        reply: "Soy Clippo. El servicio de IA recibió muchas consultas simultáneas y está en una breve pausa de enfriamiento de unos segundos. Por favor intenta preguntarme de nuevo en un instante.",
+        reply: "Soy Clippo. El servicio de IA recibió muchas consultas simultáneas y está en una breve pausa de enfriamiento. Por favor intenta de nuevo en un momento.",
       });
     }
 
-    const errorMessage =
-      err?.message || "Failed to process request with AI assistant.";
+    const isTimeout = msg.includes("fetch failed") || msg.includes("ConnectTimeoutError") || msg.includes("ETIMEDOUT") || err?.cause?.code === "UND_ERR_CONNECT_TIMEOUT";
+    if (isTimeout) {
+      return NextResponse.json({
+        reply: "Clippo experimentó un breve tiempo de espera de conexión con el servicio de IA. Por favor intenta enviar tu mensaje nuevamente.",
+      });
+    }
 
     return NextResponse.json(
-      { error: errorMessage },
+      { error: msg || "Failed to process request with AI assistant." },
       { status: 500 }
     );
   }

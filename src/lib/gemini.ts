@@ -1,3 +1,4 @@
+import dns from "node:dns";
 import { GoogleGenAI, FunctionDeclaration, Type } from "@google/genai";
 import siteData from "@/src/data/siteData.json";
 import {
@@ -5,6 +6,10 @@ import {
   CASE_STUDIES_KNOWLEDGE,
   CLIPPO_INTERNALS_KNOWLEDGE,
 } from "@/src/lib/chatbot-knowledge";
+
+if (typeof dns.setDefaultResultOrder === "function") {
+  dns.setDefaultResultOrder("ipv4first");
+}
 
 function getApiKey(): string {
   const key =
@@ -27,8 +32,7 @@ export function getGeminiClient(): GoogleGenAI {
 export const CHATBOT_TOOL_DECLARATIONS: FunctionDeclaration[] = [
   {
     name: "send_contact_email",
-    description:
-      "Sends a direct message to Rodrigo Martel's inbox via Resend. Gathers name, email, purpose, and message.",
+    description: "Sends a direct message to Rodrigo Martel's inbox via Resend. Gathers name, email, purpose, and message.",
     parameters: {
       type: Type.OBJECT,
       properties: {
@@ -42,14 +46,12 @@ export const CHATBOT_TOOL_DECLARATIONS: FunctionDeclaration[] = [
   },
   {
     name: "get_btc_telemetry",
-    description:
-      "Fetches real-time status and telemetry from Rodrigo's HODL Watcher serverless pipeline.",
+    description: "Fetches real-time status and telemetry from Rodrigo's HODL Watcher serverless pipeline.",
     parameters: { type: Type.OBJECT, properties: {} },
   },
   {
     name: "get_site_json",
-    description:
-      "Exports raw or structured JSON data of the portfolio website.",
+    description: "Exports raw or structured JSON data of the portfolio website.",
     parameters: {
       type: Type.OBJECT,
       properties: {
@@ -62,8 +64,7 @@ export const CHATBOT_TOOL_DECLARATIONS: FunctionDeclaration[] = [
   },
   {
     name: "navigate_to_section",
-    description:
-      "Smoothly scrolls the visitor's page to a section ('top', 'projects', 'experience', 'skills', 'architecture', 'case-studies', 'philosophy', 'contact').",
+    description: "Smoothly scrolls the visitor's page to a section ('top', 'projects', 'experience', 'skills', 'architecture', 'case-studies', 'philosophy', 'contact').",
     parameters: {
       type: Type.OBJECT,
       properties: {
@@ -74,26 +75,18 @@ export const CHATBOT_TOOL_DECLARATIONS: FunctionDeclaration[] = [
   },
   {
     name: "filter_projects",
-    description:
-      "Filters the projects gallery by category or tech tag and scrolls to the projects section.",
+    description: "Filters the projects gallery by category or tech tag and scrolls to the projects section.",
     parameters: {
       type: Type.OBJECT,
       properties: {
-        category: {
-          type: Type.STRING,
-          description: "Category: 'All', 'Automation & Data Systems', 'Core Software & Web Tools', etc.",
-        },
-        tag: {
-          type: Type.STRING,
-          description: "Tech tag to filter by, e.g. 'Python', 'FastAPI', 'Make.com', 'TypeScript'",
-        },
+        category: { type: Type.STRING, description: "Category to filter by" },
+        tag: { type: Type.STRING, description: "Tech tag to filter by, e.g. 'Python', 'FastAPI'" },
       },
     },
   },
   {
     name: "set_site_preferences",
-    description:
-      "Updates website preferences such as language ('en' | 'es') or theme ('dark' | 'light').",
+    description: "Updates website preferences such as language ('en' | 'es') or theme ('dark' | 'light').",
     parameters: {
       type: Type.OBJECT,
       properties: {
