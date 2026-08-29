@@ -1,8 +1,9 @@
 "use client";
 
 import React, { useState } from "react";
-import { User, Copy, Check, ExternalLink } from "lucide-react";
+import { User, Copy, Check } from "lucide-react";
 import { ClippoAvatar } from "./ClippoAvatar";
+import { ActionLinkButton } from "./ActionLinkButton";
 
 export interface MessageItem {
   id: string;
@@ -16,7 +17,7 @@ interface ChatMessageProps {
 }
 
 function renderFormattedInline(text: string) {
-  const regex = /(\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)|\*\*([^*]+)\*\*|`([^`]+)`)/g;
+  const regex = /(\[([^\]]+)\]\((https?:\/\/[^\s)]+|#[a-zA-Z0-9_-]+|mailto:[^\s)]+)\)|\*\*([^*]+)\*\*|`([^`]+)`)/g;
   const parts: React.ReactNode[] = [];
   let lastIndex = 0;
   let match: RegExpExecArray | null;
@@ -28,16 +29,7 @@ function renderFormattedInline(text: string) {
 
     if (match[2] && match[3]) {
       parts.push(
-        <a
-          key={match.index}
-          href={match[3]}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-accent underline font-medium hover:opacity-80 inline-flex items-center gap-0.5 break-all"
-        >
-          {match[2]}
-          <ExternalLink className="w-2.5 h-2.5 inline-block opacity-70 ml-0.5" />
-        </a>
+        <ActionLinkButton key={match.index} href={match[3]} label={match[2]} />
       );
     } else if (match[4]) {
       parts.push(

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { FadeIn } from "@/src/components/ui/FadeIn";
 import { SectionLabel } from "@/src/components/ui/SectionLabel";
 import { FlagshipProjectCard, FlagshipProjectProps } from "./FlagshipProjectCard";
@@ -23,6 +23,36 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
   const [selectedCategory, setSelectedCategory] = useState<string>("All");
 
   const allLabel = isSpanish ? "Todos" : "All";
+
+  useEffect(() => {
+    const handleFilterEvent = (e: Event) => {
+      const customEvent = e as CustomEvent<{ category?: string; tag?: string }>;
+      const { category, tag } = customEvent.detail || {};
+      setViewMode("grid");
+
+      if (category) {
+        const catLower = category.toLowerCase();
+        if (catLower === "all" || catLower === "todos") {
+          setSelectedCategory(allLabel);
+        } else {
+          const matched = projects.find((p) =>
+            p.category.toLowerCase().includes(catLower)
+          );
+          if (matched) setSelectedCategory(matched.category);
+        }
+      } else if (tag) {
+        const tagLower = tag.toLowerCase();
+        const matched = projects.find((p) =>
+          p.tags?.some((t) => t.toLowerCase().includes(tagLower))
+        );
+        if (matched) setSelectedCategory(matched.category);
+      }
+    };
+
+    window.addEventListener("portfolio:filter-projects", handleFilterEvent);
+    return () => window.removeEventListener("portfolio:filter-projects", handleFilterEvent);
+  }, [projects, allLabel]);
+
   const defaultStory = isSpanish
     ? "Arquitectura de simulación espacial 3D con automatización de QA continuo y 60 FPS estables."
     : "Architected 3D spatial simulation with continuous QA automation, responsive physics, and 60fps performance.";

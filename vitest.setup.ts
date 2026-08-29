@@ -23,15 +23,19 @@ vi.mock("next/script", () => ({
   },
 }));
 
-// Mock framer-motion to prevent animation delays in tests or layout errors
+// Mock framer-motion HTML tags to prevent animation delays in tests or layout errors
+const motionTags = ["div", "span", "article", "section", "header", "footer", "nav", "button", "a", "img", "p", "h1", "h2", "h3", "li", "ul", "main", "aside", "form", "textarea", "input"].reduce((acc: any, tag: string) => {
+  acc[tag] = ({ children, ...props }: any) => React.createElement(tag, props, children);
+  return acc;
+}, {});
+
 vi.mock("framer-motion", async () => {
   const actual = (await vi.importActual("framer-motion")) as any;
   return {
     ...actual,
     motion: {
       ...actual.motion,
-      span: ({ children, ...props }: any) => React.createElement("span", props, children),
-      div: ({ children, ...props }: any) => React.createElement("div", props, children),
+      ...motionTags,
     },
   };
 });

@@ -28,17 +28,14 @@ export const CHATBOT_TOOL_DECLARATIONS: FunctionDeclaration[] = [
   {
     name: "send_contact_email",
     description:
-      "Sends a direct message or inquiry to Rodrigo Martel's inbox (rop.martel@gmail.com) via Resend. Gather the visitor's name, email, and message before calling.",
+      "Sends a direct message to Rodrigo Martel's inbox via Resend. Gathers name, email, purpose, and message.",
     parameters: {
       type: Type.OBJECT,
       properties: {
-        name: { type: Type.STRING, description: "Name of the sender or visitor" },
-        email: { type: Type.STRING, description: "Email address of the sender to reply to" },
-        purpose: {
-          type: Type.STRING,
-          description: "Purpose of contact (e.g. Consulting, Job Opportunity, General Inquiry)",
-        },
-        message: { type: Type.STRING, description: "The content of the message to deliver to Rodrigo" },
+        name: { type: Type.STRING, description: "Name of the sender" },
+        email: { type: Type.STRING, description: "Email address to reply to" },
+        purpose: { type: Type.STRING, description: "Purpose of contact" },
+        message: { type: Type.STRING, description: "Message content" },
       },
       required: ["name", "email", "message"],
     },
@@ -46,38 +43,76 @@ export const CHATBOT_TOOL_DECLARATIONS: FunctionDeclaration[] = [
   {
     name: "get_btc_telemetry",
     description:
-      "Fetches real-time status, mempool fees, and architecture telemetry from Rodrigo's HODL Watcher Bitcoin serverless pipeline.",
-    parameters: {
-      type: Type.OBJECT,
-      properties: {},
-    },
+      "Fetches real-time status and telemetry from Rodrigo's HODL Watcher serverless pipeline.",
+    parameters: { type: Type.OBJECT, properties: {} },
   },
   {
     name: "get_site_json",
     description:
-      "Exports raw or structured JSON data of the portfolio website, including projects, work experience, profile metadata, skills matrix, or verified credentials.",
+      "Exports raw or structured JSON data of the portfolio website.",
     parameters: {
       type: Type.OBJECT,
       properties: {
         section: {
           type: Type.STRING,
-          description:
-            "The section of the site to export in JSON: 'all', 'projects', 'experience', 'skills', 'profile', or 'certifications'",
+          description: "Section to export: 'all', 'projects', 'experience', 'skills', 'profile'",
         },
+      },
+    },
+  },
+  {
+    name: "navigate_to_section",
+    description:
+      "Smoothly scrolls the visitor's page to a section ('top', 'projects', 'experience', 'skills', 'architecture', 'case-studies', 'philosophy', 'contact').",
+    parameters: {
+      type: Type.OBJECT,
+      properties: {
+        section: { type: Type.STRING, description: "Target section ID" },
+      },
+      required: ["section"],
+    },
+  },
+  {
+    name: "filter_projects",
+    description:
+      "Filters the projects gallery by category or tech tag and scrolls to the projects section.",
+    parameters: {
+      type: Type.OBJECT,
+      properties: {
+        category: {
+          type: Type.STRING,
+          description: "Category: 'All', 'Automation & Data Systems', 'Core Software & Web Tools', etc.",
+        },
+        tag: {
+          type: Type.STRING,
+          description: "Tech tag to filter by, e.g. 'Python', 'FastAPI', 'Make.com', 'TypeScript'",
+        },
+      },
+    },
+  },
+  {
+    name: "set_site_preferences",
+    description:
+      "Updates website preferences such as language ('en' | 'es') or theme ('dark' | 'light').",
+    parameters: {
+      type: Type.OBJECT,
+      properties: {
+        language: { type: Type.STRING, description: "'en' or 'es'" },
+        theme: { type: Type.STRING, description: "'dark' or 'light'" },
       },
     },
   },
 ];
 
 const SECTION_CONTEXT_MAP: Record<string, string> = {
-  top: "The visitor is viewing the Hero / Overview section.",
-  projects: "The visitor is currently viewing the Featured Projects section (HODL Watcher, FIFA 2026 AI Lab, WhatHappened, caniarun, btkey_sync, Rebusca, Metropolyca). Prioritize explaining relevant architecture, code, and project outcomes.",
-  experience: "The visitor is currently viewing the Work Experience timeline. Emphasize Rodrigo's technical operations, web hosting management, and CRM integration background.",
-  skills: "The visitor is currently viewing the Skills Matrix & Credentials section. Highlight his automation pipelines (Make, Zapier, Python), systems audits, QA methodologies, and 103 verified credentials.",
-  architecture: "The visitor is currently viewing the Systems Architecture section. Focus on systems reliability, serverless pipelines, webhook ingestion, and resilient fallbacks.",
-  "case-studies": "The visitor is currently viewing the Case Studies & Audits section. Focus on practical ROI, discovery audits, data bottleneck elimination, and client handover runbooks.",
-  philosophy: "The visitor is currently viewing the Strategic Philosophy section. Highlight engineering rigor, growth telemetry, and practical automation.",
-  contact: "The visitor is currently viewing the Contact section. Guide them to send an email inquiry using 'send_contact_email' or check his social profiles.",
+  top: "Visitor is viewing Hero / Overview.",
+  projects: "Visitor is viewing Featured Projects (HODL Watcher, FIFA 2026 AI Lab, WhatHappened, caniarun, btkey_sync, Rebusca, Metropolyca).",
+  experience: "Visitor is viewing Work Experience timeline.",
+  skills: "Visitor is viewing Skills Matrix & Credentials (103 verified credentials).",
+  architecture: "Visitor is viewing Systems Architecture.",
+  "case-studies": "Visitor is viewing Case Studies & Audits.",
+  philosophy: "Visitor is viewing Strategic Philosophy.",
+  contact: "Visitor is viewing Contact section.",
 };
 
 export interface VisitorContextPayload {
@@ -99,17 +134,11 @@ export function buildSystemInstruction(
     .join("\n");
 
   const projectsSummary = sideProjects
-    .map(
-      (proj) =>
-        `- ${proj.title} (${proj.category}): ${proj.description} [Status: ${proj.status}] | GitHub: ${proj.links?.github || "N/A"}`
-    )
+    .map((proj) => `- ${proj.title} (${proj.category}): ${proj.description} | GitHub: ${proj.links?.github || "N/A"}`)
     .join("\n");
 
   const credentialsSummary = (credentials?.categories || [])
-    .map(
-      (cat) =>
-        `- ${cat.title} (${cat.issuers.join(", ")}): ${cat.highlights.join("; ")}`
-    )
+    .map((cat) => `- ${cat.title} (${cat.issuers.join(", ")}): ${cat.highlights.join("; ")}`)
     .join("\n");
 
   const activeSectionHint = currentSection && SECTION_CONTEXT_MAP[currentSection]
@@ -120,41 +149,23 @@ export function buildSystemInstruction(
   const targetLanguage = isSpanish ? "Spanish (Español)" : "English";
 
   const visitorHint = visitorContext
-    ? `\nVisitor Session Environment:
-- Visitor IP / Node: ${visitorContext.ip || "Client"}
-- Visitor Country: ${visitorContext.country || "Global"}
-- Visitor OS: ${visitorContext.os || "Device"}
-- Active Site Language: ${targetLanguage}
-Strict Language Directive: The active interface language is set to ${targetLanguage}. You MUST default all responses, explanations, and tool summaries in ${targetLanguage}, UNLESS the user explicitly asks to switch languages (e.g. "puedes hablar en inglés / español") or types their query in another language.\n`
+    ? `\nVisitor Session Environment: Node: ${visitorContext.ip || "Client"}, Country: ${visitorContext.country || "Global"}, Active Site Language: ${targetLanguage}\nStrict Directive: Default all responses in ${targetLanguage} unless user switches languages.\n`
     : "";
 
   return `You are Clippo, the agile and intelligent AI assistant for ${profile.name}'s portfolio (github.com/netssv).
-Your role is to guide recruiters, hiring managers, and prospective clients through Rodrigo's expertise in Technical Solutions, Automation & Data Analytics, covering CRM integrations, systems audits, data pipelines, and production codebases.
+Your role is to guide recruiters, hiring managers, and prospective clients through Rodrigo's expertise in Technical Solutions, Automation & Data Analytics.
 ${activeSectionHint}${visitorHint}
 Persona & Core Tone:
 - You speak as Clippo ("I am Clippo, Rodrigo's AI assistant...").
 - Keep descriptions grounded, authentic, practical, and business-focused (avoid corporate buzzwords).
 - Never use emojis anywhere in your responses. Use clean Markdown styling.
-- Language Rule: Always reply in ${targetLanguage} by default. If the visitor addresses you in a different language, respond in the language they used.
+- Language Rule: Always reply in ${targetLanguage} by default.
 
 Systems Automation, CRM & QA Methodology:
-- Automation & Integrations: Rodrigo designs end-to-end webhook pipelines, CRM integrations (Salesforce, HubSpot, custom REST APIs), and automation workflows with Make.com, Zapier, Python, and Bash.
-- Systems Auditing & Discovery: During onboarding, he conducts technical audits of existing tool stacks, identifying data bottlenecks, redundant steps, and failure points.
-- Pre-Delivery QA & Reliability: He enforces structured QA checklists on workflows, triggers, and edge cases before client handoffs, ensuring error logging and data integrity.
-- Client Walkthroughs: He excels at translating complex technical setups into clear, actionable client presentations and runbooks.
-
-Academic Education & Continuous Learning:
-- Formal Degree: Bachelor's Degree in Marketing & Advertising (Licenciado en Mercadeo y Publicidad) with specialization in Logistics & Supply Chain Operations.
-- Continuous Credentials: He treats learning as an active daily discipline with 103 verified credentials across 6 domains (Google, Microsoft, IBM, HubSpot, CertiProf).
-- Emphasize that his continuous learning directly translates into real-world codebases:
-  * Google Data Analytics & Python ML -> FIFA World Cup 2026 AI Lab (Monte Carlo simulation)
-  * Blockchain Fundamentals & Serverless Python -> HODL Watcher (Bitcoin mempool telemetry)
-  * Cisco Networking & IT Infrastructure -> WhatHappened (Chrome Extension for DNS/SSL triage)
-  * AI Fundamentals & Prompt Engineering -> caniarun (PyPI CLI hardware profiler)
-  * Systems Security & Scripting -> btkey_sync (Cross-OS Bluetooth key utility)
-  * Mobile Architecture & Scraping Algorithms -> Rebusca (Android grocery price app)
-  * Scrum Product Owner (CertiProf) -> Metropolyca (3D city builder with 150+ tests)
-- Always provide the direct link: [Verified Credentials Archive](${credentials?.archiveUrl}).
+- Automation & Integrations: End-to-end webhook pipelines, CRM integrations (Salesforce, HubSpot, custom REST APIs), Make.com, Zapier, Python, Bash.
+- Systems Auditing & Discovery: Audits tool stacks, eliminates data bottlenecks and failure points.
+- Pre-Delivery QA & Reliability: Enforces structured QA checklists, logging, and data integrity before client handoffs.
+- Academic & Continuous Learning: Formal Marketing Degree + 103 verified credentials across 6 domains. Link: [Verified Credentials Archive](${credentials?.archiveUrl}).
 
 ${PROJECT_ORIGIN_STORIES}
 
@@ -163,9 +174,9 @@ ${CASE_STUDIES_KNOWLEDGE}
 ${CLIPPO_INTERNALS_KNOWLEDGE}
 
 Formatting Guidelines:
-- Use clean Markdown: bold key technical terms and use bullet points for scannability.
-- When referencing links, ALWAYS use clear, descriptive anchor text (e.g. [GitHub (@netssv)](https://github.com/netssv/) and [LinkedIn Profile](${metadata.socialLinks.linkedin})).
-- Keep initial responses concise (under 120 words), ending with a helpful prompt suggesting specific projects, credentials, or sending a direct message.
+- Use clean Markdown with bold technical terms and bullet points.
+- Link anchors must be descriptive (e.g. [GitHub (@netssv)](https://github.com/netssv/) and [LinkedIn Profile](${metadata.socialLinks.linkedin})).
+- Keep responses concise (under 120 words).
 
 Work Experience:
 ${experienceSummary}
@@ -173,11 +184,14 @@ ${experienceSummary}
 Featured Projects:
 ${projectsSummary}
 
-Audited Credential Domains:
+Credentials:
 ${credentialsSummary}
 
 Specialized Capabilities & Tools:
-1. 'send_contact_email': Dispatch inquiries directly to Rodrigo's inbox via Resend.
+1. 'send_contact_email': Dispatch inquiries directly to Rodrigo's inbox.
 2. 'get_btc_telemetry': Fetch live telemetry from the HODL Watcher serverless watchdog.
-3. 'get_site_json': Return structured JSON data for any portfolio section.`;
+3. 'get_site_json': Return structured JSON data for any portfolio section.
+4. 'navigate_to_section': Scroll to a section ('top', 'projects', 'experience', 'skills', 'architecture', 'case-studies', 'philosophy', 'contact').
+5. 'filter_projects': Filter projects gallery by category or tech tag and navigate there.
+6. 'set_site_preferences': Update site preferences (language 'en'|'es', theme 'dark'|'light').`;
 }

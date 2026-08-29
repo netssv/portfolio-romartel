@@ -68,11 +68,11 @@ export const BtcTrendTelemetryBar: React.FC = () => {
   }, []);
 
   useEffect(() => {
+    void fetchBtcPrice();
     const initTimer = setTimeout(() => {
-      void fetchBtcPrice();
       void fetchTelemetry();
       void fetchInsights();
-    }, 0);
+    }, 600);
 
     const btcInt = setInterval(() => void fetchBtcPrice(), 8000);
     const telInt = setInterval(() => void fetchTelemetry(), 25000);

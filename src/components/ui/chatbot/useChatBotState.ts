@@ -46,6 +46,39 @@ export function useChatBotState(greeting?: string) {
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || "Failed to retrieve response");
 
+      if (data.clientAction) {
+        const { type, target, category, tag, language, theme } = data.clientAction;
+        if (type === "NAVIGATE" && target) {
+          if (target === "top") {
+            window.scrollTo({ top: 0, behavior: "smooth" });
+          } else {
+            const elem = document.getElementById(target);
+            if (elem) elem.scrollIntoView({ behavior: "smooth" });
+          }
+        } else if (type === "FILTER_PROJECTS") {
+          window.dispatchEvent(
+            new CustomEvent("portfolio:filter-projects", { detail: { category, tag } })
+          );
+          const elem = document.getElementById("projects");
+          if (elem) elem.scrollIntoView({ behavior: "smooth" });
+        } else if (type === "SET_PREFERENCES") {
+          if (language) {
+            window.dispatchEvent(
+              new CustomEvent("portfolio:set-language", { detail: { language } })
+            );
+          }
+          if (theme) {
+            const isNight = theme === "dark" || theme === "night";
+            document.documentElement.classList.toggle("theme-dark", isNight);
+            try {
+              localStorage.setItem("theme-override", isNight ? "night" : "day");
+            } catch {
+              // Ignore localStorage write failures
+            }
+          }
+        }
+      }
+
       setMessages((prev) => [
         ...prev,
         {

@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowUpRight, ShieldCheck, Film, Trophy, LineChart, Cpu, Bluetooth, Smartphone, Search, Layers, ChevronDown, Sparkles } from "lucide-react";
+import { ArrowUpRight, ShieldCheck, Film, Trophy, LineChart, Cpu, Smartphone, Search, Layers, ChevronDown, Sparkles } from "lucide-react";
 import type { PinnedProjectItem } from "./PinnedProjectsScrollytelling";
 
 const ICONS: Record<string, React.ReactNode> = {
@@ -10,7 +10,11 @@ const ICONS: Record<string, React.ReactNode> = {
   Trophy: <Trophy size={13} className="text-accent" />,
   LineChart: <LineChart size={13} className="text-accent" />,
   Cpu: <Cpu size={13} className="text-accent" />,
-  Bluetooth: <Bluetooth size={13} className="text-accent" />,
+  Bluetooth: (
+    <svg viewBox="0 0 24 24" width={13} height={13} stroke="currentColor" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round" className="text-accent">
+      <polyline points="6.5 6.5 17.5 17.5 12 23 12 1 17.5 6.5 6.5 17.5" />
+    </svg>
+  ),
   Smartphone: <Smartphone size={13} className="text-accent" />,
   Search: <Search size={13} className="text-accent" />,
 };

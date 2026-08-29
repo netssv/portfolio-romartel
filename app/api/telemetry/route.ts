@@ -8,6 +8,7 @@ export async function GET() {
     const res = await fetch(`https://hodl-watcher-api.onrender.com/api/telemetry/logs?_t=${Date.now()}`, {
       cache: "no-store",
       headers: { "Cache-Control": "no-cache, no-store, must-revalidate" },
+      signal: AbortSignal.timeout(2500),
     });
     if (!res.ok) throw new Error(`Render status ${res.status}`);
     const data = await res.json();

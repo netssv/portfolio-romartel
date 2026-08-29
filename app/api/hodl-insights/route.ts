@@ -5,7 +5,7 @@ export const revalidate = 60;
 
 export async function GET() {
   const controller = new AbortController();
-  const timeoutId = setTimeout(() => controller.abort(), 4000);
+  const timeoutId = setTimeout(() => controller.abort(), 2500);
 
   try {
     const [contextRes, indicatorsRes] = await Promise.allSettled([

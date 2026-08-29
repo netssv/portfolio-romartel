@@ -1,13 +1,17 @@
 import type { Metadata } from "next";
 import { Inter, Space_Grotesk, Geist_Mono } from "next/font/google";
 import Script from "next/script";
+import dynamic from "next/dynamic";
 import "./globals.css";
 import siteData from "@/src/data/siteData.json";
 import { NoiseOverlay } from "@/src/components/animations/NoiseOverlay";
 import { SpotlightCursor } from "@/src/components/animations/SpotlightCursor";
 import { DesignProvider } from "@/src/context/DesignContext";
 import { LanguageProvider } from "@/src/context/LanguageContext";
-import { ChatBot } from "@/src/components/ui/chatbot/ChatBot";
+
+const ChatBot = dynamic(() => import("@/src/components/ui/chatbot/ChatBot").then((m) => m.ChatBot), {
+  ssr: false,
+});
 
 const inter = Inter({ variable: "--font-inter", subsets: ["latin"], display: "swap" });
 const spaceGrotesk = Space_Grotesk({ variable: "--font-space-grotesk", subsets: ["latin"], display: "swap" });
@@ -31,6 +35,15 @@ export const metadata: Metadata = {
     title: siteData.metadata.title,
     description: siteData.metadata.description,
     creator: "@netssv",
+  },
+  icons: {
+    icon: [
+      { url: "/icon.svg", type: "image/svg+xml" },
+      { url: "/favicon.ico", sizes: "any" },
+    ],
+    apple: [
+      { url: "/apple-icon.png", sizes: "180x180", type: "image/png" },
+    ],
   },
 };
 
@@ -86,39 +99,44 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
           `}
         </Script>
 
-        {/* Microsoft Clarity */}
-        <Script
-          id="microsoft-clarity"
-          strategy="afterInteractive"
-          dangerouslySetInnerHTML={{
-            __html: `
-              (function(c,l,a,r,i,t,y){
-                  c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
-                  t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
-                  y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
-              })(window, document, "clarity", "script", "wxz1d7lj48");
-            `,
-          }}
-        />
+        {/* Third-Party Analytics — Only loaded in production to keep local dev fast & clean */}
+        {process.env.NODE_ENV === "production" && (
+          <>
+            {/* Microsoft Clarity */}
+            <Script
+              id="microsoft-clarity"
+              strategy="afterInteractive"
+              dangerouslySetInnerHTML={{
+                __html: `
+                  (function(c,l,a,r,i,t,y){
+                      c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+                      t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+                      y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+                  })(window, document, "clarity", "script", "wxz1d7lj48");
+                `,
+              }}
+            />
 
-        {/* Google Analytics 4 */}
-        <Script
-          id="ga4-loader"
-          strategy="afterInteractive"
-          src="https://www.googletagmanager.com/gtag/js?id=G-J2MMB7MF32"
-        />
-        <Script
-          id="ga4-init"
-          strategy="afterInteractive"
-          dangerouslySetInnerHTML={{
-            __html: `
-              window.dataLayer = window.dataLayer || [];
-              function gtag(){dataLayer.push(arguments);}
-              gtag('js', new Date());
-              gtag('config', 'G-J2MMB7MF32');
-            `,
-          }}
-        />
+            {/* Google Analytics 4 */}
+            <Script
+              id="ga4-loader"
+              strategy="afterInteractive"
+              src="https://www.googletagmanager.com/gtag/js?id=G-J2MMB7MF32"
+            />
+            <Script
+              id="ga4-init"
+              strategy="afterInteractive"
+              dangerouslySetInnerHTML={{
+                __html: `
+                  window.dataLayer = window.dataLayer || [];
+                  function gtag(){dataLayer.push(arguments);}
+                  gtag('js', new Date());
+                  gtag('config', 'G-J2MMB7MF32');
+                `,
+              }}
+            />
+          </>
+        )}
 
         <LanguageProvider>
           <DesignProvider>

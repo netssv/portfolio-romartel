@@ -46,6 +46,17 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     setLocaleState(initial);
     setIsInitialized(true);
     document.documentElement.lang = initial;
+
+    const handleLanguageEvent = (e: Event) => {
+      const customEvent = e as CustomEvent<{ language?: string }>;
+      const lang = customEvent.detail?.language;
+      if (lang === "es" || lang === "en") {
+        setLocale(lang);
+      }
+    };
+
+    window.addEventListener("portfolio:set-language", handleLanguageEvent);
+    return () => window.removeEventListener("portfolio:set-language", handleLanguageEvent);
   }, []);
 
   const setLocale = (newLocale: Locale) => {

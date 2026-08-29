@@ -79,4 +79,21 @@ describe("LanguageContext & LanguageToggle", () => {
     expect(mockLocalStorage.setItem).toHaveBeenCalledWith("portfolio-locale", "es");
     expect(document.documentElement.lang).toBe("es");
   });
+
+  it("updates locale when receiving portfolio:set-language custom event", () => {
+    render(
+      <LanguageProvider>
+        <ConsumerComponent />
+      </LanguageProvider>
+    );
+
+    act(() => {
+      window.dispatchEvent(
+        new CustomEvent("portfolio:set-language", { detail: { language: "es" } })
+      );
+    });
+
+    expect(screen.getByTestId("locale").textContent).toBe("es");
+    expect(screen.getByTestId("is-spanish").textContent).toBe("yes");
+  });
 });

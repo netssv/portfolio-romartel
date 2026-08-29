@@ -1,15 +1,21 @@
 "use client";
 
 import React, { useState } from "react";
-import { ArrowUpRight, Trophy, LineChart, Cpu, Bluetooth, Gamepad2, Layers, Smartphone, Search, LucideIcon } from "lucide-react";
+import { ArrowUpRight, Trophy, LineChart, Cpu, Gamepad2, Layers, Smartphone, Search } from "lucide-react";
 import { motion } from "framer-motion";
 import { useLanguage } from "@/src/context/LanguageContext";
 
-const ICON_MAP: Record<string, LucideIcon> = {
+const BluetoothIcon: React.FC<{ className?: string }> = ({ className = "w-3.5 h-3.5" }) => (
+  <svg viewBox="0 0 24 24" width={14} height={14} stroke="currentColor" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round" className={className}>
+    <polyline points="6.5 6.5 17.5 17.5 12 23 12 1 17.5 6.5 6.5 17.5" />
+  </svg>
+);
+
+const ICON_MAP: Record<string, React.ComponentType<{ className?: string }>> = {
   Trophy,
   LineChart,
   Cpu,
-  Bluetooth,
+  Bluetooth: BluetoothIcon,
   Gamepad2,
   Layers,
   Smartphone,

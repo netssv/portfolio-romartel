@@ -94,6 +94,7 @@ export async function POST(req: NextRequest) {
     if (functionCalls && functionCalls.length > 0) {
       const call = functionCalls[0];
       let toolResult: unknown;
+      let clientAction: Record<string, unknown> | undefined;
 
       if (call.name === "send_contact_email") {
         toolResult = await executeSendContactEmail(call.args as unknown as SendEmailArgs);
@@ -102,6 +103,19 @@ export async function POST(req: NextRequest) {
       } else if (call.name === "get_site_json") {
         const args = (call.args || {}) as { section?: string };
         toolResult = executeGetSiteJson(args.section);
+      } else if (call.name === "navigate_to_section") {
+        const args = (call.args || {}) as { section?: string };
+        const target = (args.section || "top").toLowerCase().replace("#", "");
+        toolResult = { success: true, navigatedTo: target, message: `Navigated viewport to ${target} section.` };
+        clientAction = { type: "NAVIGATE", target };
+      } else if (call.name === "filter_projects") {
+        const args = (call.args || {}) as { category?: string; tag?: string };
+        toolResult = { success: true, category: args.category, tag: args.tag, message: "Filtered projects gallery." };
+        clientAction = { type: "FILTER_PROJECTS", category: args.category, tag: args.tag };
+      } else if (call.name === "set_site_preferences") {
+        const args = (call.args || {}) as { language?: string; theme?: string };
+        toolResult = { success: true, language: args.language, theme: args.theme, message: "Site preferences updated." };
+        clientAction = { type: "SET_PREFERENCES", language: args.language, theme: args.theme };
       } else {
         toolResult = { error: `Unknown function ${call.name}` };
       }
@@ -155,6 +169,7 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({
         reply: secondResponse.text || "Action executed successfully.",
         toolExecuted: call.name,
+        clientAction,
       });
     }
 

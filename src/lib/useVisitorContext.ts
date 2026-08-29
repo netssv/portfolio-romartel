@@ -29,6 +29,7 @@ export function useVisitorContext() {
       try {
         const res = await fetch("/api/visitor-context", {
           headers: { "Cache-Control": "no-cache" },
+          signal: AbortSignal.timeout(2000),
         });
 
         if (res.ok) {
