@@ -14,7 +14,7 @@ export async function POST(request: Request) {
     if (!res.ok) throw new Error(`Render status ${res.status}`);
     const data = await res.json();
     return NextResponse.json(data);
-  } catch (error: any) {
+  } catch {
     return NextResponse.json(
       {
         status: "success",

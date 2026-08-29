@@ -2,7 +2,7 @@
 
 import React, { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Play, Pause, Volume2, VolumeX, Maximize2, Minimize2 } from "lucide-react";
+import { Play, Pause, Volume2, VolumeX, Maximize2 } from "lucide-react";
 import { CornerReticle } from "@/src/components/ui/CornerReticle";
 import type { PinnedProjectItem } from "./PinnedProjectsScrollytelling";
 
@@ -50,11 +50,6 @@ export const ProjectMediaStage: React.FC<ProjectMediaStageProps> = ({
   };
 
   useEffect(() => {
-    setIsHoverExpanded(false);
-    clearHoverTimer();
-  }, [active.id]);
-
-  useEffect(() => {
     return () => clearHoverTimer();
   }, []);
 
@@ -78,11 +73,11 @@ export const ProjectMediaStage: React.FC<ProjectMediaStageProps> = ({
           isHoverExpanded ? "ring-2 ring-accent shadow-[0_30px_100px_rgba(0,0,0,0.6)]" : ""
         } ${
           isPhoneMockup
-            ? "w-[240px] sm:w-[280px] lg:w-[300px] aspect-[9/18] max-h-[52vh] sm:max-h-[58vh] lg:max-h-[460px] rounded-[32px] ring-2 ring-border-subtle shadow-[0_0_50px_rgba(255,149,0,0.15)]"
+            ? "w-[240px] sm:w-[280px] lg:w-[300px] aspect-[9/18] max-h-[52vh] sm:max-h-[58vh] lg:max-h-[460px] rounded-[32px] ring-2 ring-border-subtle shadow-[0_0_40px_rgba(30,75,143,0.15)]"
             : "w-full aspect-video max-h-[36vh] sm:max-h-[42vh] lg:max-h-none rounded-2xl"
         }`}
       >
-        <CornerReticle size={8} color="rgba(255, 149, 0, 0.5)" />
+        <CornerReticle size={8} color="rgba(74, 127, 201, 0.4)" />
 
         {/* Dynamic notch for smartphone card */}
         {isPhoneMockup && (

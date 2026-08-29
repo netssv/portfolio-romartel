@@ -14,7 +14,7 @@ export async function GET() {
     return NextResponse.json(data, {
       headers: { "Cache-Control": "no-store, max-age=0" },
     });
-  } catch (error: any) {
+  } catch {
     return NextResponse.json(
       {
         status: "online",

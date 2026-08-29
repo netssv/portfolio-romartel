@@ -64,7 +64,7 @@ export async function POST(req: NextRequest) {
     const PRIMARY_MODEL = "gemini-3.5-flash-lite";
     const FALLBACK_MODEL = "gemini-3.6-flash";
 
-    let initialResponse: any;
+    let initialResponse: Awaited<ReturnType<typeof ai.models.generateContent>>;
     try {
       initialResponse = await ai.models.generateContent({
         model: PRIMARY_MODEL,
@@ -93,7 +93,7 @@ export async function POST(req: NextRequest) {
 
     if (functionCalls && functionCalls.length > 0) {
       const call = functionCalls[0];
-      let toolResult: any;
+      let toolResult: unknown;
 
       if (call.name === "send_contact_email") {
         toolResult = await executeSendContactEmail(call.args as unknown as SendEmailArgs);
@@ -120,14 +120,14 @@ export async function POST(req: NextRequest) {
             {
               functionResponse: {
                 name: call.name,
-                response: toolResult,
+                response: toolResult as Record<string, unknown>,
               },
             },
           ],
         },
       ];
 
-      let secondResponse: any;
+      let secondResponse: Awaited<ReturnType<typeof ai.models.generateContent>>;
       try {
         secondResponse = await ai.models.generateContent({
           model: PRIMARY_MODEL,

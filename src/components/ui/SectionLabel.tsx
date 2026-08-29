@@ -5,7 +5,6 @@ interface SectionLabelProps {
   heading: string;
   description?: string;
   align?: "left" | "center";
-  index?: string;
 }
 
 export const SectionLabel: React.FC<SectionLabelProps> = ({
@@ -13,18 +12,13 @@ export const SectionLabel: React.FC<SectionLabelProps> = ({
   heading,
   description,
   align = "left",
-  index,
 }) => {
   const alignClass = align === "center" ? "items-center text-center" : "items-start text-left";
   return (
-    <div className={`flex flex-col ${alignClass} mb-16`}>
+    <div className={`flex flex-col ${alignClass} mb-12 sm:mb-16`}>
       <div className="flex items-center gap-2 mb-3">
-        {index && (
-          <span className="inline-flex items-center px-1.5 py-0.5 text-[11px] font-mono font-medium text-text-accent bg-accent/10 border border-accent/20 rounded">
-            {index}
-          </span>
-        )}
-        <p className="text-xs font-mono font-medium uppercase tracking-[0.14em] text-text-accent">
+        <span className="h-1.5 w-1.5 rounded-full bg-accent" aria-hidden="true" />
+        <p className="text-xs font-body font-semibold uppercase tracking-[0.18em] text-accent">
           {eyebrow}
         </p>
       </div>
@@ -32,11 +26,10 @@ export const SectionLabel: React.FC<SectionLabelProps> = ({
         {heading}
       </h2>
       {description && (
-        <p className="mt-4 text-base text-text-secondary leading-relaxed max-w-xl">
+        <p className="mt-3.5 text-sm sm:text-base font-body text-text-secondary leading-relaxed max-w-2xl">
           {description}
         </p>
       )}
     </div>
   );
 };
-

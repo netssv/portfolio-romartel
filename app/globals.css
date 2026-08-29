@@ -3,52 +3,50 @@
 /* ─── Custom Dark Variant explicitly tied to .theme-dark class ─── */
 @custom-variant dark (&:where(.theme-dark, .theme-dark *));
 
-/* ─── Design Tokens (Day Light Mode - Default Base) ── */
+/* ─── Design Tokens (Day Light Mode - Azul Istmo Editorial Base) ── */
 :root {
-  --bg-base:        #F4F4F6;
+  --bg-base:        #FAFAF8;
   --bg-surface:     #FFFFFF;
-  --bg-raised:      #E5E7EB;
-  --text-primary:   #111827;
-  --text-secondary: #374151;
-  --text-muted:     #4B5563;
-  --accent:         #FF9500;
-  --text-accent:    #B84A00;
-  --border-subtle:  rgba(0, 0, 0, 0.08);
-  --border-base:    rgba(0, 0, 0, 0.15);
+  --bg-raised:      #F0F1ED;
+  --text-primary:   #0B1F3A;
+  --text-secondary: #3D5470;
+  --text-muted:     #6B7C93;
+  --accent:         #1E4B8F;
+  --accent-hover:   #163A70;
+  --accent-signal:  #C81E3A;
+  --border-subtle:  rgba(11, 31, 58, 0.08);
+  --border-base:    rgba(11, 31, 58, 0.14);
   
-  --bg-glass:       rgba(255, 255, 255, 0.90);
-  --grid-color:     rgba(0, 0, 0, 0.05);
+  --bg-glass:       rgba(255, 255, 255, 0.92);
+  --grid-color:     rgba(30, 75, 143, 0.04);
 
+  --signal-success: #059669;
   --emerald-text:   #065F46;
-  --emerald-bg:     rgba(5, 150, 105, 0.12);
-  --emerald-border: rgba(5, 150, 105, 0.30);
-  --purple-text:    #581C87;
-  --purple-bg:      rgba(126, 34, 206, 0.10);
-  --purple-border:  rgba(126, 34, 206, 0.25);
+  --emerald-bg:     rgba(5, 150, 105, 0.10);
+  --emerald-border: rgba(5, 150, 105, 0.25);
 }
 
-/* ─── Design Tokens (Night Dark Mode - Forge Style) ── */
+/* ─── Design Tokens (Night Dark Mode - Deep Oceanic Obsidian) ── */
 .theme-dark {
-  --bg-base:        #050505;
-  --bg-surface:     #0C0C0D;
-  --bg-raised:      #141416;
-  --text-primary:   #FFFFFF;
-  --text-secondary: #E4E4E7;
-  --text-muted:     #A1A1AA;
-  --accent:         #FF9500;
-  --text-accent:    #FF9500;
+  --bg-base:        #0A1220;
+  --bg-surface:     #101A2E;
+  --bg-raised:      #182437;
+  --text-primary:   #F7F7F5;
+  --text-secondary: #C5CBD6;
+  --text-muted:     #8B96A8;
+  --accent:         #4A7FC9;
+  --accent-hover:   #6897DC;
+  --accent-signal:  #E0435C;
   --border-subtle:  rgba(255, 255, 255, 0.08);
   --border-base:    rgba(255, 255, 255, 0.15);
   
-  --bg-glass:       rgba(12, 12, 13, 0.85);
-  --grid-color:     rgba(255, 149, 0, 0.10);
+  --bg-glass:       rgba(16, 26, 46, 0.88);
+  --grid-color:     rgba(74, 127, 201, 0.08);
 
+  --signal-success: #10B981;
   --emerald-text:   #34D399;
-  --emerald-bg:     rgba(16, 185, 129, 0.15);
-  --emerald-border: rgba(16, 185, 129, 0.30);
-  --purple-text:    #C084FC;
-  --purple-bg:      rgba(168, 85, 247, 0.15);
-  --purple-border:  rgba(168, 85, 247, 0.30);
+  --emerald-bg:     rgba(16, 185, 129, 0.12);
+  --emerald-border: rgba(16, 185, 129, 0.25);
 }
 
 /* ─── Tailwind v4 Theme Extension ─────────────────────── */
@@ -60,18 +58,17 @@
   --color-text-secondary: var(--text-secondary);
   --color-text-muted:     var(--text-muted);
   --color-accent:         var(--accent);
-  --color-text-accent:    var(--text-accent);
+  --color-accent-hover:   var(--accent-hover);
+  --color-accent-signal:  var(--accent-signal);
   --color-border-subtle:  var(--border-subtle);
   --color-border-base:    var(--border-base);
   --color-bg-glass:       var(--bg-glass);
   --color-grid-color:     var(--grid-color);
 
+  --color-signal-success: var(--signal-success);
   --color-emerald-text:   var(--emerald-text);
   --color-emerald-bg:     var(--emerald-bg);
   --color-emerald-border: var(--emerald-border);
-  --color-purple-text:    var(--purple-text);
-  --color-purple-bg:      var(--purple-bg);
-  --color-purple-border:  var(--purple-border);
 
   --font-heading: var(--font-space-grotesk);
   --font-body:    var(--font-inter);
@@ -101,7 +98,7 @@ h1, h2, h3, h4, h5, h6 {
 
 ::selection {
   background-color: var(--accent);
-  color: #000;
+  color: #FFFFFF;
 }
 
 /* ─── Accessible Focus Management ────────────────────── */
@@ -115,7 +112,7 @@ h1, h2, h3, h4, h5, h6 {
   scroll-margin-top: 80px;
 }
 
-/* ─── Animation utilities & Grid System ────────────────── */
+/* ─── Animation utilities & Viewport System ──────────── */
 @keyframes fade-up {
   from { opacity: 0; transform: translateY(16px); }
   to   { opacity: 1; transform: translateY(0);    }
@@ -123,14 +120,6 @@ h1, h2, h3, h4, h5, h6 {
 
 .animate-fade-up {
   animation: fade-up 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
-}
-
-/* ─── Mathematical Viewport Grid & Reticle System ────────── */
-:root {
-  --grid-block-size: 54px;
-  --grid-columns: 16;
-  --grid-rows: 12;
-  --grid-x-offset: 0px;
 }
 
 /* Lenis smooth scrolling reset */
@@ -154,11 +143,7 @@ html.lenis, html.lenis body {
   pointer-events: none;
 }
 
-/* ─── Forge Infinite Mirror Reflection ──────────────────── */
-.mirror-reflect {
-  position: relative;
-}
-
+/* ─── Executive Reflection ────────────────────────────── */
 .mirror-reflect-base {
   position: relative;
 }
@@ -169,14 +154,14 @@ html.lenis, html.lenis body {
   top: 100%;
   left: 5%;
   right: 5%;
-  height: 45px;
-  background: radial-gradient(ellipse at top, rgba(255, 149, 0, 0.25), transparent 70%);
+  height: 40px;
+  background: radial-gradient(ellipse at top, rgba(30, 75, 143, 0.15), transparent 70%);
   filter: blur(8px);
   pointer-events: none;
   z-index: -1;
 }
 
-/* ─── Sleek Minimalist Custom Scrollbar ─────────────────── */
+/* ─── Minimalist Custom Scrollbar ─────────────────────── */
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
@@ -195,7 +180,6 @@ html.lenis, html.lenis body {
 
 ::-webkit-scrollbar-thumb:hover {
   background: var(--accent);
-  box-shadow: 0 0 10px rgba(255, 149, 0, 0.6);
 }
 
 /* Firefox */
@@ -204,12 +188,8 @@ html.lenis, html.lenis body {
   scrollbar-color: var(--text-muted) var(--bg-base);
 }
 
-/* ─── CSS Paint & Layout Containment ────────────────────── */
+/* ─── Content Containment ─────────────────────────────── */
 .content-auto {
   content-visibility: auto;
   contain-intrinsic-size: 0 750px;
 }
-
-
-
-

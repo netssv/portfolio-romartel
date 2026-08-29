@@ -2,7 +2,6 @@
 
 import React, { useEffect, useState } from "react";
 import { Home, Briefcase, FolderGit2, Compass, Mail, Sun, Moon, Cpu } from "lucide-react";
-import { motion } from "framer-motion";
 import { MobileNav } from "./MobileNav";
 
 interface SidebarProps {
@@ -23,21 +22,31 @@ export const Sidebar: React.FC<SidebarProps> = ({ authorName }) => {
   const [theme, setTheme] = useState<"day" | "night">("day");
 
   useEffect(() => {
-    const sections = NAV_ITEMS.map(i => i.path === "#top" ? document.body : document.getElementById(i.path.substring(1)));
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          const id = entry.target.id || "top";
-          const match = NAV_ITEMS.find((item) => item.path === `#${id}`);
-          if (match) setActiveSection(match.name);
-        }
-      });
-    }, { root: null, rootMargin: "-40% 0px -50% 0px", threshold: 0 });
+    const sections = NAV_ITEMS.map((i) =>
+      i.path === "#top" ? document.body : document.getElementById(i.path.substring(1))
+    );
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const id = entry.target.id || "top";
+            const match = NAV_ITEMS.find((item) => item.path === `#${id}`);
+            if (match) setActiveSection(match.name);
+          }
+        });
+      },
+      { root: null, rootMargin: "-40% 0px -50% 0px", threshold: 0 }
+    );
 
     sections.forEach((section) => section && observer.observe(section));
 
-    // Detect initial theme on client mount
-    setTimeout(() => setTheme(document.documentElement.classList.contains("theme-dark") ? "night" : "day"), 0);
+    setTimeout(
+      () =>
+        setTheme(
+          document.documentElement.classList.contains("theme-dark") ? "night" : "day"
+        ),
+      0
+    );
     return () => observer.disconnect();
   }, []);
 
@@ -57,40 +66,20 @@ export const Sidebar: React.FC<SidebarProps> = ({ authorName }) => {
   return (
     <>
       {/* ── Desktop Floating Sidebar (Fixed Left) ────────── */}
-      <aside className="hidden lg:flex fixed top-0 left-0 h-screen w-64 flex-col justify-between py-12 px-8 border-r border-border-subtle bg-bg-base/60 backdrop-blur-md z-40">
+      <aside className="hidden lg:flex fixed top-0 left-0 h-screen w-64 flex-col justify-between py-12 px-8 border-r border-border-subtle bg-bg-base/70 backdrop-blur-md z-40">
         <div>
           {/* Logo / Brand Name */}
-          <a href="#top" onClick={(e) => handleClick(e, "#top")} className="group block mb-16">
-            <div className="text-xl font-heading font-bold text-text-primary tracking-tight flex">
-              {authorName.split("").map((char, index) => (
-                <motion.span
-                  key={index}
-                  initial={{ opacity: 0, y: 10, filter: "blur(4px)" }}
-                  animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-                  transition={{
-                    duration: 0.4,
-                    delay: index * 0.05,
-                    type: "spring",
-                    stiffness: 120
-                  }}
-                  className={char === " " ? "w-1.5" : "inline-block"}
-                >
-                  {char}
-                </motion.span>
-              ))}
+          <a href="#top" onClick={(e) => handleClick(e, "#top")} className="group block mb-14">
+            <div className="text-xl font-heading font-bold text-text-primary tracking-tight">
+              {authorName}
             </div>
-            <motion.span 
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.8, delay: 0.5 }}
-              className="text-xs font-body tracking-[0.2em] uppercase text-text-accent font-semibold block mt-1"
-            >
-              Technology Architecture
-            </motion.span>
+            <span className="text-xs font-body tracking-[0.14em] uppercase text-accent font-semibold block mt-1.5">
+              Marketing &amp; Systems
+            </span>
           </a>
 
           {/* Nav Items */}
-          <nav className="flex flex-col gap-6">
+          <nav className="flex flex-col gap-2">
             {NAV_ITEMS.map((item) => {
               const Icon = item.icon;
               const isActive = activeSection === item.name;
@@ -100,39 +89,19 @@ export const Sidebar: React.FC<SidebarProps> = ({ authorName }) => {
                   key={item.name}
                   href={item.path}
                   onClick={(e) => handleClick(e, item.path)}
-                  className={`group relative flex items-center gap-4 py-2.5 px-3 rounded-xl text-sm font-body font-medium transition-all duration-300 ${
+                  className={`group relative flex items-center gap-3.5 py-2 px-3 rounded-xl text-xs font-body font-medium transition-all duration-200 ${
                     isActive
-                      ? "text-text-primary bg-accent/8"
-                      : "text-text-muted hover:text-text-secondary hover:bg-bg-raised/50"
+                      ? "text-white bg-accent font-semibold shadow-xs"
+                      : "text-text-secondary hover:text-text-primary hover:bg-bg-raised/70"
                   }`}
                 >
-                  {/* Active left accent bar */}
-                  {isActive && (
-                    <motion.span
-                      layoutId="activeBar"
-                      className="absolute left-0 top-1/2 -translate-y-1/2 w-[3px] h-6 rounded-r-full bg-accent shadow-[0_0_10px_rgba(255,149,0,0.6)]"
-                      transition={{ type: "spring", stiffness: 400, damping: 32 }}
-                    />
-                  )}
-
                   <Icon
-                    size={16}
-                    className={`transition-colors duration-200 flex-shrink-0 ${
-                      isActive ? "text-accent" : "text-text-muted group-hover:text-text-secondary"
+                    size={15}
+                    className={`transition-colors duration-150 flex-shrink-0 ${
+                      isActive ? "text-white" : "text-text-muted group-hover:text-text-secondary"
                     }`}
                   />
                   <span>{item.name}</span>
-
-                  {/* Active pill badge on right */}
-                  {isActive && (
-                    <motion.span
-                      layoutId="activePill"
-                      initial={{ opacity: 0, scale: 0.8 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      className="ml-auto w-1.5 h-1.5 rounded-full bg-accent shadow-[0_0_6px_rgba(255,149,0,0.8)]"
-                      transition={{ type: "spring", stiffness: 400, damping: 32 }}
-                    />
-                  )}
                 </a>
               );
             })}
@@ -140,26 +109,21 @@ export const Sidebar: React.FC<SidebarProps> = ({ authorName }) => {
         </div>
 
         {/* Desktop Theme Switcher + Copyright bottom stack */}
-        <div className="flex flex-col gap-6">
+        <div className="flex flex-col gap-5">
           <button
             onClick={toggleTheme}
-            className="flex items-center gap-3 text-xs font-body font-semibold text-text-secondary hover:text-text-primary transition-all duration-200 focus:outline-none text-left border border-border-base hover:border-border-subtle rounded-xl px-4 py-2.5 bg-bg-raised cursor-pointer"
+            className="flex items-center justify-between text-xs font-body font-medium text-text-secondary hover:text-text-primary transition-all duration-200 focus:outline-none text-left border border-border-subtle hover:border-border-base rounded-xl px-3.5 py-2.5 bg-bg-surface cursor-pointer shadow-xs"
           >
+            <span>{theme === "night" ? "Day Light Mode" : "Dark Mode"}</span>
             {theme === "night" ? (
-              <>
-                <Sun size={14} className="text-accent" />
-                <span>Day Light Theme</span>
-              </>
+              <Sun size={14} className="text-accent" />
             ) : (
-              <>
-                <Moon size={14} className="text-accent" />
-                <span>Night Light Theme</span>
-              </>
+              <Moon size={14} className="text-accent" />
             )}
           </button>
 
           <div className="text-xs font-body text-text-muted">
-            &copy; {new Date().getFullYear()} · Core Strategy
+            &copy; {new Date().getFullYear()} Rodrigo Martel
           </div>
         </div>
       </aside>
@@ -167,18 +131,18 @@ export const Sidebar: React.FC<SidebarProps> = ({ authorName }) => {
       {/* ── Mobile Floating Theme Toggle (Top Right) ─────── */}
       <button
         onClick={toggleTheme}
-        className="lg:hidden fixed top-6 right-6 z-40 h-11 px-4 bg-bg-glass backdrop-blur-md border border-border-base rounded-xl flex items-center gap-2 shadow-lg active:scale-95 cursor-pointer transition-all duration-200"
+        className="lg:hidden fixed top-5 right-5 z-40 h-10 px-3.5 bg-bg-glass backdrop-blur-md border border-border-base rounded-xl flex items-center gap-2 shadow-md active:scale-95 cursor-pointer transition-all duration-200"
         aria-label="Toggle Theme"
       >
         {theme === "night" ? (
           <>
-            <span className="text-xs font-semibold text-text-secondary">Daylight</span>
-            <Sun size={16} className="text-accent" />
+            <span className="text-xs font-medium text-text-secondary">Day</span>
+            <Sun size={15} className="text-accent" />
           </>
         ) : (
           <>
-            <span className="text-xs font-semibold text-text-secondary">Night</span>
-            <Moon size={16} className="text-accent" />
+            <span className="text-xs font-medium text-text-secondary">Night</span>
+            <Moon size={15} className="text-accent" />
           </>
         )}
       </button>

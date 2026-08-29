@@ -23,19 +23,21 @@ export async function GET() {
 
     clearTimeout(timeoutId);
 
-    let contextData: any = null;
-    let indicatorData: any = null;
+    let contextData: Record<string, unknown> | null = null;
+    let indicatorData: Record<string, unknown> | null = null;
 
     if (contextRes.status === "fulfilled" && contextRes.value.ok) {
-      contextData = await contextRes.value.json();
+      contextData = (await contextRes.value.json()) as Record<string, unknown>;
     }
 
     if (indicatorsRes.status === "fulfilled" && indicatorsRes.value.ok) {
-      indicatorData = await indicatorsRes.value.json();
+      indicatorData = (await indicatorsRes.value.json()) as Record<string, unknown>;
     }
 
-    const latestContext = contextData?.data?.[contextData.data.length - 1] || null;
-    const latestIndicator = indicatorData?.data?.[0] || null;
+    const contextList = contextData?.data as Array<Record<string, unknown>> | undefined;
+    const indicatorList = indicatorData?.data as Array<Record<string, unknown>> | undefined;
+    const latestContext = contextList && contextList.length > 0 ? contextList[contextList.length - 1] : null;
+    const latestIndicator = indicatorList && indicatorList.length > 0 ? indicatorList[0] : null;
 
     return NextResponse.json(
       {

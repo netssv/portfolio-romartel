@@ -6,7 +6,7 @@ import { SectionLabel } from "@/src/components/ui/SectionLabel";
 import { FlagshipProjectCard, FlagshipProjectProps } from "./FlagshipProjectCard";
 import { ProjectCard, ProjectCardProps } from "./ProjectCard";
 import { PinnedProjectsScrollytelling, PinnedProjectItem } from "./scrollytelling/PinnedProjectsScrollytelling";
-import { LayoutGrid, Film } from "lucide-react";
+import { LayoutGrid, Layers } from "lucide-react";
 
 interface ProjectsSectionProps {
   flagship: FlagshipProjectProps;
@@ -33,14 +33,13 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
       ? projects
       : projects.filter((p) => p.category === selectedCategory);
 
-  // Include ALL 6 projects (Flagship + All Production Side Projects)
   const pinnedItems: PinnedProjectItem[] = [
     {
       id: "metropolyca",
       title: flagship.title,
       subtitle: flagship.subtitle,
       eyebrow: "Flagship Simulation",
-      category: "Interactive 3D & QA Automation",
+      category: "Interactive 3D & Systems",
       description: flagship.description,
       story: "Architected 3D spatial simulation with continuous QA automation, responsive physics, and 60fps performance.",
       metrics: flagship.metrics.map((m) => ({ label: m.label, value: m.value })),
@@ -65,7 +64,7 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
       links: p.links,
       imageSrc: p.image,
       videoSrc: p.videoSrc,
-      icon: p.icon || "Terminal",
+      icon: p.icon || "Layers",
     })),
   ];
 
@@ -76,30 +75,29 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
         <FadeIn>
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-6">
             <SectionLabel
-              index="01"
-              eyebrow="Explore Projects"
-              heading="Interactive Systems & Software Architecture"
-              description="Scroll continuously through the pinned showcase to inspect live simulations, machine learning tools, and production pipelines without losing focus."
+              eyebrow="Selected Work"
+              heading="Systems Architecture &amp; Production Software"
+              description="Explore production-grade automation pipelines, full-stack applications, and interactive web software engineered for stability and performance."
             />
             {/* View Mode Toggle */}
-            <div className="flex items-center gap-1.5 p-1 rounded-xl bg-bg-raised border border-border-subtle shrink-0 self-start md:self-auto">
+            <div className="flex items-center gap-1 p-1 rounded-xl bg-bg-raised border border-border-subtle shrink-0 self-start md:self-auto shadow-xs">
               <button
                 onClick={() => setViewMode("cinematic")}
-                className={`px-3 py-1.5 rounded-lg text-xs font-mono font-semibold flex items-center gap-1.5 transition-all cursor-pointer ${
+                className={`px-3 py-1.5 rounded-lg text-xs font-body font-semibold flex items-center gap-1.5 transition-all cursor-pointer ${
                   viewMode === "cinematic"
-                    ? "bg-accent text-black shadow-md shadow-accent/20"
-                    : "text-text-muted hover:text-text-primary"
+                    ? "bg-accent text-white shadow-xs"
+                    : "text-text-secondary hover:text-text-primary"
                 }`}
               >
-                <Film size={13} />
-                <span>Cinematic</span>
+                <Layers size={13} />
+                <span>Showcase</span>
               </button>
               <button
                 onClick={() => setViewMode("grid")}
-                className={`px-3 py-1.5 rounded-lg text-xs font-mono font-semibold flex items-center gap-1.5 transition-all cursor-pointer ${
+                className={`px-3 py-1.5 rounded-lg text-xs font-body font-semibold flex items-center gap-1.5 transition-all cursor-pointer ${
                   viewMode === "grid"
-                    ? "bg-accent text-black shadow-md shadow-accent/20"
-                    : "text-text-muted hover:text-text-primary"
+                    ? "bg-accent text-white shadow-xs"
+                    : "text-text-secondary hover:text-text-primary"
                 }`}
               >
                 <LayoutGrid size={13} />
@@ -115,7 +113,6 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
         <PinnedProjectsScrollytelling items={pinnedItems} />
       ) : (
         <div className="mx-auto max-w-6xl px-6 pb-24">
-          {/* Flagship Hero Card in Grid View */}
           <div className="mb-12">
             <FlagshipProjectCard {...flagship} />
           </div>
@@ -131,10 +128,10 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
                     role="tab"
                     aria-selected={isActive}
                     onClick={() => setSelectedCategory(cat)}
-                    className={`px-3.5 py-1.5 rounded-xl text-xs font-mono transition-all duration-200 cursor-pointer ${
+                    className={`px-3.5 py-1.5 rounded-xl text-xs font-body transition-all duration-150 cursor-pointer ${
                       isActive
-                        ? "bg-accent text-black font-bold shadow-md shadow-accent/20"
-                        : "bg-bg-surface border border-border-subtle text-text-muted hover:text-text-primary"
+                        ? "bg-accent text-white font-semibold shadow-xs"
+                        : "bg-bg-surface border border-border-subtle text-text-secondary hover:text-text-primary hover:border-border-base"
                     }`}
                   >
                     {cat}
@@ -142,7 +139,7 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
                 );
               })}
             </div>
-            <span className="text-xs font-mono text-text-muted font-medium">
+            <span className="text-xs font-body text-text-muted">
               Showing {filteredProjects.length} project{filteredProjects.length !== 1 ? "s" : ""}
             </span>
           </div>

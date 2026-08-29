@@ -129,10 +129,10 @@ export const TelemetryMeshCanvas: React.FC<{ className?: string }> = ({
             const size = Math.max(1, 2.2 * scale);
             const alpha = Math.min(0.85, Math.max(0.12, (scale - 0.4) * 1.5));
 
-            // Orange accent highlights on crests
+            // Istmo Blue accent highlights on wave crests
             const isAccent = wave > 6;
             ctx.fillStyle = isAccent
-              ? `rgba(255, 149, 0, ${alpha})`
+              ? `rgba(74, 127, 201, ${alpha})`
               : `rgba(160, 160, 170, ${alpha * 0.45})`;
 
             ctx.fillRect(px - size / 2, py - size / 2, size, size);

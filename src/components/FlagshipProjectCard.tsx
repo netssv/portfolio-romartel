@@ -1,9 +1,8 @@
 "use client";
 
 import React, { useState, useRef } from "react";
-import { ArrowUpRight, Play, Pause, Volume2, VolumeX, Maximize2, ShieldCheck, Gamepad2, Film } from "lucide-react";
+import { ArrowUpRight, Play, Pause, Volume2, VolumeX, ShieldCheck, Gamepad2, Film } from "lucide-react";
 import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
-import { CornerReticle } from "@/src/components/ui/CornerReticle";
 
 const GithubIcon = ({ size = 14 }: { size?: number }) => (
   <svg viewBox="0 0 24 24" width={size} height={size} stroke="currentColor" strokeWidth="2.25" fill="none" strokeLinecap="round" strokeLinejoin="round">
@@ -28,19 +27,25 @@ export interface FlagshipProjectProps {
 }
 
 export const FlagshipProjectCard: React.FC<FlagshipProjectProps> = ({
-  title, subtitle, description, orchestrationStory, metrics, tags, links, videoSrc = "/metro.mp4",
+  title,
+  subtitle,
+  description,
+  orchestrationStory,
+  metrics,
+  tags,
+  links,
+  videoSrc = "/metro.mp4",
 }) => {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [isPlaying, setIsPlaying] = useState(true);
   const [isMuted, setIsMuted] = useState(true);
 
-  // 3D Perspective Tilt Motion
   const x = useMotionValue(0);
   const y = useMotionValue(0);
-  const mouseXSpring = useSpring(x, { stiffness: 400, damping: 30 });
-  const mouseYSpring = useSpring(y, { stiffness: 400, damping: 30 });
-  const rotateX = useTransform(mouseYSpring, [-0.5, 0.5], ["5deg", "-5deg"]);
-  const rotateY = useTransform(mouseXSpring, [-0.5, 0.5], ["-5deg", "5deg"]);
+  const mouseXSpring = useSpring(x, { stiffness: 350, damping: 28 });
+  const mouseYSpring = useSpring(y, { stiffness: 350, damping: 28 });
+  const rotateX = useTransform(mouseYSpring, [-0.5, 0.5], ["3deg", "-3deg"]);
+  const rotateY = useTransform(mouseXSpring, [-0.5, 0.5], ["-3deg", "3deg"]);
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     const rect = e.currentTarget.getBoundingClientRect();
@@ -70,57 +75,64 @@ export const FlagshipProjectCard: React.FC<FlagshipProjectProps> = ({
     setIsMuted(!isMuted);
   };
 
-  const handleFullscreen = () => {
-    if (videoRef.current?.requestFullscreen) videoRef.current.requestFullscreen();
-  };
-
   return (
     <div style={{ perspective: "1500px" }}>
       <motion.div
-        className="relative rounded-3xl border border-accent/30 bg-gradient-to-b from-bg-surface via-bg-surface/90 to-bg-base p-6 sm:p-8 lg:p-10 shadow-2xl overflow-hidden mb-12 group transition-all duration-300 hover:border-accent"
+        className="relative rounded-3xl border border-border-base bg-bg-surface p-6 sm:p-8 lg:p-10 shadow-xl overflow-hidden mb-12 group transition-all duration-200 hover:border-accent"
         onMouseMove={handleMouseMove}
         onMouseLeave={handleMouseLeave}
         style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}
       >
-        <CornerReticle size={10} color="rgba(255, 149, 0, 0.5)" />
-
         <div className="relative z-10 flex flex-col gap-6">
-          {/* Top Header Badge Bar */}
+          {/* Header Badge */}
           <div className="flex flex-wrap items-center justify-between gap-3">
             <div className="flex flex-wrap items-center gap-2">
-              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg text-xs font-mono font-bold bg-accent/15 text-accent border border-accent/30">
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg text-xs font-body font-bold bg-accent/10 text-accent border border-accent/20">
                 <Gamepad2 size={13} className="text-accent" />
-                FLAGSHIP PROJECT
+                FLAGSHIP SIMULATION
               </span>
-              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg text-xs font-mono font-semibold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
-                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg text-xs font-body font-semibold bg-bg-raised text-text-secondary border border-border-subtle">
+                <span className="w-2 h-2 rounded-full bg-accent-signal animate-pulse" />
                 Early Access Live
               </span>
             </div>
-            <span className="text-xs font-mono uppercase tracking-widest text-text-muted">
-              3D Web Simulation & Game
+            <span className="text-xs font-body text-text-muted">
+              Interactive 3D Web &amp; Game Architecture
             </span>
           </div>
 
           {/* Video Mockup Shell */}
-          <div className="relative rounded-2xl overflow-hidden border border-border-base bg-black/90 aspect-video shadow-2xl group/video">
-            <CornerReticle size={8} color="rgba(255, 255, 255, 0.2)" />
-            <video ref={videoRef} src={videoSrc} autoPlay loop muted={isMuted} playsInline className="w-full h-full object-cover cursor-pointer" onClick={togglePlay} />
-            <div className="absolute top-3.5 left-3.5 z-20 flex items-center gap-2 px-3 py-1.5 rounded-xl bg-black/75 backdrop-blur-md border border-white/10 text-xs font-mono text-white/90">
+          <div className="relative rounded-2xl overflow-hidden border border-border-base bg-black aspect-video shadow-lg group/video">
+            <video
+              ref={videoRef}
+              src={videoSrc}
+              autoPlay
+              loop
+              muted={isMuted}
+              playsInline
+              className="w-full h-full object-cover cursor-pointer"
+              onClick={togglePlay}
+            />
+            <div className="absolute top-3.5 left-3.5 z-20 flex items-center gap-2 px-3 py-1.5 rounded-xl bg-black/75 backdrop-blur-md border border-white/10 text-xs font-body text-white/90">
               <Film size={13} className="text-accent" />
-              <span className="font-semibold">Official Trailer 1 · Metropolyca Engine</span>
+              <span className="font-semibold">Official Trailer · Metropolyca Engine</span>
             </div>
 
             <div className="absolute bottom-3.5 right-3.5 z-20 flex items-center gap-2">
-              <button onClick={togglePlay} className="p-2 rounded-xl bg-black/75 backdrop-blur-md border border-white/15 text-white hover:border-accent hover:text-accent transition-all cursor-pointer" aria-label={isPlaying ? "Pause" : "Play"}>
+              <button
+                onClick={togglePlay}
+                className="p-2 rounded-xl bg-black/75 backdrop-blur-md border border-white/15 text-white hover:text-accent transition-all cursor-pointer"
+                aria-label={isPlaying ? "Pause" : "Play"}
+              >
                 {isPlaying ? <Pause size={14} /> : <Play size={14} className="fill-current" />}
               </button>
-              <button onClick={toggleMute} className="px-3 py-1.5 rounded-xl bg-black/75 backdrop-blur-md border border-white/15 text-xs font-mono text-white hover:border-accent hover:text-accent transition-all flex items-center gap-1.5 cursor-pointer" aria-label={isMuted ? "Unmute" : "Mute"}>
+              <button
+                onClick={toggleMute}
+                className="px-3 py-1.5 rounded-xl bg-black/75 backdrop-blur-md border border-white/15 text-xs font-body text-white hover:text-accent transition-all flex items-center gap-1.5 cursor-pointer"
+                aria-label={isMuted ? "Unmute" : "Mute"}
+              >
                 {isMuted ? <VolumeX size={14} /> : <Volume2 size={14} className="text-accent" />}
                 <span>{isMuted ? "Unmute" : "Mute"}</span>
-              </button>
-              <button onClick={handleFullscreen} className="p-2 rounded-xl bg-black/75 backdrop-blur-md border border-white/15 text-white hover:border-accent hover:text-accent transition-all cursor-pointer" aria-label="Fullscreen">
-                <Maximize2 size={14} />
               </button>
             </div>
           </div>
@@ -129,51 +141,60 @@ export const FlagshipProjectCard: React.FC<FlagshipProjectProps> = ({
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
             <div className="lg:col-span-8 flex flex-col gap-3.5">
               <div>
-                <h3 className="text-2xl sm:text-3xl font-heading font-black tracking-tight text-text-primary group-hover:text-accent transition-colors duration-200">
+                <h3 className="text-2xl sm:text-3xl font-heading font-bold tracking-tight text-text-primary group-hover:text-accent transition-colors duration-150">
                   {title}
                 </h3>
-                <p className="text-sm font-mono font-medium text-accent mt-0.5">{subtitle}</p>
+                <p className="text-sm font-body font-semibold text-accent mt-0.5">{subtitle}</p>
               </div>
               <p className="text-sm font-body text-text-secondary leading-relaxed">{description}</p>
               <div className="rounded-xl border border-border-subtle bg-bg-raised/70 p-3.5 flex items-start gap-2.5">
                 <ShieldCheck className="w-4 h-4 text-accent shrink-0 mt-0.5" />
-                <div className="text-xs font-mono text-text-secondary leading-relaxed">
-                  <span className="font-semibold text-text-primary">QA Standards: </span>
+                <div className="text-xs font-body text-text-secondary leading-relaxed">
+                  <strong className="font-semibold text-text-primary">QA Standards: </strong>
                   {orchestrationStory}
                 </div>
               </div>
               <div className="flex flex-wrap gap-1.5 pt-1">
                 {tags.map((tag) => (
-                  <span key={tag} className="px-2.5 py-0.5 rounded-md text-[11px] font-mono bg-bg-base border border-border-subtle text-text-muted">
+                  <span key={tag} className="px-2.5 py-0.5 rounded-md text-[11px] font-mono bg-bg-raised border border-border-subtle text-text-secondary">
                     {tag}
                   </span>
                 ))}
               </div>
             </div>
 
-            {/* Highlights & CTAs */}
-            <div className="lg:col-span-4 flex flex-col gap-3 bg-bg-base/70 rounded-2xl border border-border-subtle p-4 relative">
-              <CornerReticle size={6} color="rgba(255, 255, 255, 0.1)" />
-              <span className="text-[11px] font-mono font-bold uppercase tracking-wider text-text-muted">
-                Telemetry Metrics
+            {/* Metrics & CTAs */}
+            <div className="lg:col-span-4 flex flex-col gap-3 bg-bg-raised/50 rounded-2xl border border-border-subtle p-4">
+              <span className="text-xs font-body font-bold uppercase tracking-wider text-text-muted">
+                System Metrics
               </span>
               <div className="grid grid-cols-1 gap-2">
                 {metrics.map((m, i) => (
-                  <div key={i} className="flex items-center justify-between px-3 py-1.5 rounded-lg bg-bg-surface border border-border-subtle/60 text-xs font-mono">
+                  <div key={i} className="flex items-center justify-between px-3 py-2 rounded-lg bg-bg-surface border border-border-subtle text-xs font-body">
                     <span className="text-text-secondary">{m.label}</span>
-                    <span className="font-bold text-accent">{m.value}</span>
+                    <span className="font-mono font-bold text-accent">{m.value}</span>
                   </div>
                 ))}
               </div>
               <div className="flex flex-col gap-2 pt-2 mt-auto">
-                <a href={links.demo} target="_blank" rel="noopener noreferrer" className="w-full h-10 px-4 flex items-center justify-center gap-2 rounded-xl bg-accent text-black font-body font-bold text-xs shadow-md hover:shadow-accent/30 transition-all">
-                  <Play size={13} className="fill-black" />
+                <a
+                  href={links.demo}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full h-10 px-4 flex items-center justify-center gap-2 rounded-xl bg-accent text-white font-body font-semibold text-xs shadow-xs hover:bg-accent-hover transition-all"
+                >
+                  <Play size={13} className="fill-white" />
                   <span>Play in Browser</span>
                   <ArrowUpRight size={13} />
                 </a>
-                <a href={links.github} target="_blank" rel="noopener noreferrer" className="w-full h-9 px-3 flex items-center justify-center gap-2 rounded-xl border border-border-base bg-bg-surface text-text-secondary hover:text-text-primary font-body font-semibold text-xs transition-all">
+                <a
+                  href={links.github}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full h-9 px-3 flex items-center justify-center gap-2 rounded-xl border border-border-base bg-bg-surface text-text-secondary hover:text-text-primary font-body font-medium text-xs transition-all shadow-xs"
+                >
                   <GithubIcon size={13} />
-                  <span>Source on GitHub</span>
+                  <span>Source Code</span>
                 </a>
               </div>
             </div>

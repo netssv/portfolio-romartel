@@ -13,7 +13,7 @@ import { useVisitorContext } from "@/src/lib/useVisitorContext";
 const DEFAULT_INITIAL_MESSAGE: MessageItem = {
   id: "init-1",
   role: "model",
-  text: "Hola, soy Clippo, el asistente de IA del portafolio de Rodrigo Martel. Pregúntame sobre sus proyectos, automatizaciones o certificaciones.",
+  text: "Hello! I am Clippo, the interactive assistant for Rodrigo Martel's portfolio. Ask me about his workflow automations, projects, or technical credentials.",
   timestamp: "Just now",
 };
 
@@ -21,24 +21,17 @@ export function ChatBot() {
   const activeSection = useActiveSection();
   const { context: visitorContext, greeting } = useVisitorContext();
   const [isOpen, setIsOpen] = useState(false);
-  const [messages, setMessages] = useState<MessageItem[]>([DEFAULT_INITIAL_MESSAGE]);
+  const [messages, setMessages] = useState<MessageItem[]>([
+    {
+      ...DEFAULT_INITIAL_MESSAGE,
+      text: greeting || DEFAULT_INITIAL_MESSAGE.text,
+    },
+  ]);
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
-
-  // Sync personalized greeting when context resolves and no user messages exist yet
-  useEffect(() => {
-    if (greeting) {
-      setMessages((prev) => {
-        if (prev.length === 1 && prev[0].role === "model") {
-          return [{ ...prev[0], text: greeting }];
-        }
-        return prev;
-      });
-    }
-  }, [greeting]);
 
   useEffect(() => {
     if (isOpen) {
@@ -79,7 +72,7 @@ export function ChatBot() {
     } catch (err: unknown) {
       clearTimeout(timeoutId);
       const isAbort = err instanceof DOMException && err.name === "AbortError";
-      setError(isAbort ? "La respuesta tardó más de lo esperado." : err instanceof Error ? err.message : "Something went wrong.");
+      setError(isAbort ? "Response timed out. Please try again." : err instanceof Error ? err.message : "Something went wrong.");
     } finally {
       setIsLoading(false);
     }
@@ -121,7 +114,7 @@ export function ChatBot() {
                 <div>
                   <h3 className="text-xs font-semibold text-text-primary tracking-wide">Clippo</h3>
                   <div className="flex items-center gap-1.5">
-                    <span className={`w-1.5 h-1.5 rounded-full ${isLoading ? "bg-accent animate-ping" : "bg-green-500 animate-pulse"}`} />
+                    <span className={`w-1.5 h-1.5 rounded-full ${isLoading ? "bg-accent animate-ping" : "bg-emerald-500 animate-pulse"}`} />
                     <span className={`text-[10px] ${isLoading ? "text-accent font-medium" : "text-text-muted"}`}>{isLoading ? "Thinking..." : "Online"}</span>
                   </div>
                 </div>
@@ -143,7 +136,7 @@ export function ChatBot() {
                   <div className="w-8 h-8 rounded-full flex items-center justify-center shrink-0 text-xs border bg-bg-raised border-border-subtle overflow-visible">
                     <ClippoAvatar size={26} isThinking />
                   </div>
-                  <div className="relative max-w-[85%] rounded-2xl rounded-tl-sm px-3.5 py-2.5 bg-bg-raised/80 border border-border-subtle shadow-sm flex items-center gap-2 text-xs">
+                  <div className="relative max-w-[85%] rounded-2xl rounded-tl-sm px-3.5 py-2.5 bg-bg-raised/80 border border-border-subtle shadow-xs flex items-center gap-2 text-xs">
                     <span className="text-text-muted font-medium">Thinking</span>
                     <span className="flex gap-1 items-center">
                       <span className="w-1.5 h-1.5 rounded-full bg-accent animate-bounce" style={{ animationDelay: "0ms" }} />
@@ -155,17 +148,17 @@ export function ChatBot() {
               )}
 
               {error && (
-                <div className="flex items-center justify-between gap-2 text-xs text-rose-400 bg-rose-500/10 p-2.5 rounded-xl border border-rose-500/20">
+                <div className="flex items-center justify-between gap-2 text-xs text-accent-signal bg-accent-signal/10 p-2.5 rounded-xl border border-accent-signal/20">
                   <span className="truncate">{error}</span>
                   <button
                     type="button"
                     onClick={() => !isLoading && messages.length > 0 && dispatchChat(messages)}
                     disabled={isLoading}
-                    className="flex items-center gap-1 shrink-0 font-medium text-amber-400 hover:text-amber-300 transition-colors cursor-pointer"
-                    title="Reintentar mensaje"
+                    className="flex items-center gap-1 shrink-0 font-medium text-accent hover:underline transition-colors cursor-pointer"
+                    title="Retry message"
                   >
                     <RefreshCw className="w-3 h-3" />
-                    <span>Reintentar</span>
+                    <span>Retry</span>
                   </button>
                 </div>
               )}
@@ -180,21 +173,21 @@ export function ChatBot() {
               <div ref={messagesEndRef} />
             </div>
 
-            {/* Input Form */}
-            <form onSubmit={(e) => { e.preventDefault(); handleSend(); }} className="p-3 border-t border-border-subtle bg-bg-raised/30 flex gap-2 items-center">
+            {/* Input Bar */}
+            <form onSubmit={(e) => { e.preventDefault(); handleSend(); }} className="p-3 bg-bg-raised/70 border-t border-border-subtle flex items-center gap-2 shrink-0">
               <input
                 ref={inputRef}
                 type="text"
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
-                placeholder="Ask Clippo about Rodrigo..."
+                placeholder="Ask about systems, automations, or experience..."
                 disabled={isLoading}
-                className="flex-1 text-xs sm:text-sm bg-bg-surface border border-border-subtle focus:border-accent text-text-primary placeholder:text-text-muted px-3 py-2 rounded-xl focus:outline-none transition-colors disabled:opacity-50"
+                className="flex-1 bg-bg-surface border border-border-base rounded-xl px-3 py-2 text-xs text-text-primary placeholder:text-text-muted focus:outline-none focus:border-accent transition-all"
               />
               <button
                 type="submit"
-                disabled={isLoading || !input.trim()}
-                className="p-2 bg-accent text-black rounded-xl hover:opacity-90 disabled:opacity-40 disabled:hover:opacity-40 transition-opacity shrink-0 font-medium"
+                disabled={!input.trim() || isLoading}
+                className="p-2 rounded-xl bg-accent text-white hover:bg-accent-hover disabled:opacity-40 transition-colors cursor-pointer"
                 title="Send message"
               >
                 {isLoading ? <Loader2 className="w-4 h-4 animate-spin" /> : <Send className="w-4 h-4" />}
@@ -204,12 +197,14 @@ export function ChatBot() {
         )}
       </AnimatePresence>
 
-      <ClippoFloatingTrigger
-        isOpen={isOpen}
-        onToggle={() => setIsOpen((prev) => !prev)}
-        isThinking={isLoading}
-        sectionId={activeSection}
-      />
+      {!isOpen && (
+        <ClippoFloatingTrigger
+          isOpen={isOpen}
+          onToggle={() => setIsOpen(true)}
+          isThinking={isLoading}
+          sectionId={activeSection}
+        />
+      )}
     </div>
   );
 }

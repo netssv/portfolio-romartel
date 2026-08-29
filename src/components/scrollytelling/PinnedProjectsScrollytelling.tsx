@@ -48,10 +48,8 @@ export const PinnedProjectsScrollytelling: React.FC<{ items: PinnedProjectItem[]
   const active = items[activeIndex] || items[0];
 
   useEffect(() => {
-    setIsVerticalMedia(false);
     if (videoRef.current && active.videoSrc) {
       videoRef.current.play().catch(() => {});
-      setIsPlaying(true);
     }
   }, [activeIndex, active.videoSrc]);
 

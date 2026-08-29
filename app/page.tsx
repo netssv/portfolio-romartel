@@ -13,15 +13,21 @@ import { PhilosophySection } from "@/src/components/PhilosophySection";
 import { ArchitectureSection } from "@/src/components/ArchitectureSection";
 import { CaseStudiesSection } from "@/src/components/CaseStudiesSection";
 import { ContactSection } from "@/src/components/ContactSection";
-import { ScrollIndicator } from "@/src/components/layout/ScrollIndicator";
 import { CustomScrollRail } from "@/src/components/layout/CustomScrollRail";
 import { SmoothScrollProvider } from "@/src/components/layout/SmoothScrollProvider";
 import { GlobalWebGLStage } from "@/src/components/canvas/GlobalWebGLStage";
 import { useViewportGrid } from "@/src/lib/useViewportGrid";
 
 const {
-  profile, experience, flagshipProject, sideProjects,
-  skillsMatrix, contact, trustedStack, metrics, philosophy,
+  profile,
+  experience,
+  flagshipProject,
+  sideProjects,
+  skillsMatrix,
+  contact,
+  trustedStack,
+  metrics,
+  philosophy,
 } = siteData;
 
 export default function Home() {
@@ -30,10 +36,9 @@ export default function Home() {
   return (
     <SmoothScrollProvider>
       <GlobalWebGLStage />
-      <ScrollIndicator />
       <CustomScrollRail />
-      <Navbar 
-        authorName={profile.name} 
+      <Navbar
+        authorName={profile.name}
         navItems={[
           { name: "Home", path: "#top" },
           { name: "Projects", path: "#projects" },
@@ -41,7 +46,7 @@ export default function Home() {
           { name: "Insights", path: "#skills" },
           { name: "Architecture", path: "#architecture" },
           { name: "Case Studies", path: "#case-studies" },
-        ]} 
+        ]}
       />
       <main className="flex-1 w-full flex flex-col min-w-0 relative z-10">
         {/* ── Hero ───────────────────────────────────── */}
@@ -60,52 +65,68 @@ export default function Home() {
         {/* ── Tech Stack ─────────────────────────────── */}
         <TrustedStack stack={trustedStack} />
 
-        {/* ── Projects (Flagship + 5 Specialized Projects) ──── */}
-        <ProjectsSection
-          flagship={flagshipProject}
-          projects={sideProjects}
-        />
+        {/* ── Projects Showcase ──────────────────────── */}
+        <ProjectsSection flagship={flagshipProject} projects={sideProjects} />
 
         {/* ── Metrics ────────────────────────────────── */}
         <MetricsSection metrics={metrics} />
 
-        {/* ── Experience ─────────────────────────────── */}
+        {/* ── Experience Timeline ────────────────────── */}
         <ExperienceTimeline items={experience} />
 
-        {/* ── Skills ─────────────────────────────────── */}
+        {/* ── Skills & Capabilities ──────────────────── */}
         <div className="content-auto">
           <SkillsGrid skillsMatrix={skillsMatrix} />
         </div>
 
-        {/* ── Architecture ───────────────────────────── */}
+        {/* ── Architecture & Strategy ────────────────── */}
         <div className="content-auto">
           <ArchitectureSection />
         </div>
 
-        {/* ── Case Studies ──────────────────────────── */}
+        {/* ── Case Studies ───────────────────────────── */}
         <div className="content-auto">
           <CaseStudiesSection />
         </div>
 
-        {/* ── Philosophy ─────────────────────────────── */}
+        {/* ── Philosophy & Vision ────────────────────── */}
         <div className="content-auto">
           <PhilosophySection quote={philosophy.quote} focus={philosophy.focus} />
         </div>
 
-        {/* ── Contact ────────────────────────────────── */}
+        {/* ── Contact Funnel ─────────────────────────── */}
         <ContactSection contact={contact} />
       </main>
 
       {/* ── Footer ─────────────────────────────────── */}
-      <footer className="py-8 border-t border-border-subtle bg-zinc-950/20 relative z-10">
+      <footer className="py-8 border-t border-border-subtle bg-bg-surface/50 relative z-10">
         <div className="mx-auto max-w-6xl px-6 flex flex-col sm:flex-row items-center justify-between gap-3">
           <p className="text-xs font-body text-text-muted">
             &copy; {new Date().getFullYear()} {siteData.metadata.author}. All rights reserved.
           </p>
           <div className="flex gap-5 text-xs font-body text-text-muted">
-            <a href={siteData.metadata.socialLinks.github} target="_blank" rel="noopener noreferrer" className="hover:text-text-secondary transition-colors duration-150">GitHub</a>
-            <a href={siteData.metadata.socialLinks.linkedin} target="_blank" rel="noopener noreferrer" className="hover:text-text-secondary transition-colors duration-150">LinkedIn</a>
-            <a href="#top" className="hover:text-text-secondary transition-colors duration-150">↑ Top</a>
+            <a
+              href={siteData.metadata.socialLinks.github}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-text-primary transition-colors duration-150"
+            >
+              GitHub
+            </a>
+            <a
+              href={siteData.metadata.socialLinks.linkedin}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-text-primary transition-colors duration-150"
+            >
+              LinkedIn
+            </a>
+            <a
+              href="#top"
+              className="hover:text-accent transition-colors duration-150"
+            >
+              Top
+            </a>
           </div>
         </div>
       </footer>

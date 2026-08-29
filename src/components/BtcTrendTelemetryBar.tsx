@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useCallback } from "react";
-import { Terminal, ArrowUpRight, ChevronDown, ChevronUp, BookOpen, Send } from "lucide-react";
+import { ArrowUpRight, ChevronDown, ChevronUp, BookOpen, Activity } from "lucide-react";
 import { AnimatePresence } from "framer-motion";
 import { FadeIn } from "@/src/components/ui/FadeIn";
 import { TelemetryLogDrawer, TelemetryEvent } from "@/src/components/TelemetryLogDrawer";
@@ -21,7 +21,6 @@ export const BtcTrendTelemetryBar: React.FC = () => {
   const [btcTicker, setBtcTicker] = useState({ price: 0, priceChangePercent: 0, highPrice: 0, lowPrice: 0 });
   const [priceFlash, setPriceFlash] = useState<"up" | "down" | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
-  const [triggering, setTriggering] = useState<boolean>(false);
   const [showLogs, setShowLogs] = useState<boolean>(false);
 
   const fetchInsights = useCallback(async () => {
@@ -45,7 +44,12 @@ export const BtcTrendTelemetryBar: React.FC = () => {
           setPriceFlash(newPrice > prev.price ? "up" : "down");
           setTimeout(() => setPriceFlash(null), 1200);
         }
-        return { price: newPrice, priceChangePercent: parseFloat(json.priceChangePercent), highPrice: parseFloat(json.highPrice), lowPrice: parseFloat(json.lowPrice) };
+        return {
+          price: newPrice,
+          priceChangePercent: parseFloat(json.priceChangePercent),
+          highPrice: parseFloat(json.highPrice),
+          lowPrice: parseFloat(json.lowPrice),
+        };
       });
     } catch {}
   }, []);
@@ -60,29 +64,23 @@ export const BtcTrendTelemetryBar: React.FC = () => {
     }
   }, []);
 
-  const handleTriggerPing = async () => {
-    try {
-      setTriggering(true);
-      await fetch("/api/telemetry/ping", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ source: "visitor-test", task: "Interactive Health Check", status: "ok", details: "Manual ping from portfolio visitor" }),
-      });
-      await fetchTelemetry();
-      setShowLogs(true);
-    } catch {} finally {
-      setTriggering(false);
-    }
-  };
-
   useEffect(() => {
-    fetchBtcPrice();
-    fetchTelemetry();
-    fetchInsights();
-    const btcInt = setInterval(fetchBtcPrice, 8000);
-    const telInt = setInterval(fetchTelemetry, 25000);
-    const insInt = setInterval(fetchInsights, 60000);
-    return () => { clearInterval(btcInt); clearInterval(telInt); clearInterval(insInt); };
+    const initTimer = setTimeout(() => {
+      void fetchBtcPrice();
+      void fetchTelemetry();
+      void fetchInsights();
+    }, 0);
+
+    const btcInt = setInterval(() => void fetchBtcPrice(), 8000);
+    const telInt = setInterval(() => void fetchTelemetry(), 25000);
+    const insInt = setInterval(() => void fetchInsights(), 60000);
+
+    return () => {
+      clearTimeout(initTimer);
+      clearInterval(btcInt);
+      clearInterval(telInt);
+      clearInterval(insInt);
+    };
   }, [fetchBtcPrice, fetchTelemetry, fetchInsights]);
 
   const events = telemetry?.events || [];
@@ -90,47 +88,44 @@ export const BtcTrendTelemetryBar: React.FC = () => {
 
   const formatTime = (iso?: string) => {
     if (!iso) return "Active";
-    const diff = Math.floor((Date.now() - new Date(iso).getTime()) / 1000);
-    if (diff < 60) return `${diff}s ago`;
-    if (diff < 3600) return `${Math.floor(diff / 60)}m ago`;
-    return `${Math.floor(diff / 3600)}h ago`;
+    const ts = new Date(iso).getTime();
+    if (isNaN(ts)) return "Active";
+    return "Recently";
   };
 
   return (
     <section className="relative -mt-4 sm:-mt-6 mb-12 z-20">
       <div className="mx-auto max-w-6xl px-6">
         <FadeIn>
-          <div className="relative overflow-hidden rounded-2xl border border-border-subtle bg-bg-surface/90 p-4 sm:px-6 sm:py-4 backdrop-blur-xl shadow-2xl transition-all duration-300 hover:border-border-base">
-            <div className="pointer-events-none absolute inset-x-0 top-0 h-[1px] bg-gradient-to-r from-transparent via-emerald-500/40 to-transparent" />
-
-            {/* Main Aligned 1-Row Grid */}
+          <div className="relative overflow-hidden rounded-2xl border border-border-subtle bg-bg-surface p-4 sm:px-6 sm:py-4 shadow-sm transition-all duration-200 hover:border-border-base">
             <div className="flex flex-col xl:flex-row xl:items-center xl:justify-between gap-4">
               {/* Left Column: Live Status */}
               <div className="flex items-center gap-3 min-w-0">
-                <div className="relative flex h-3.5 w-3.5 shrink-0 items-center justify-center">
-                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-text opacity-60" />
-                  <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-emerald-text" />
+                <div className="relative flex h-3 w-3 shrink-0 items-center justify-center">
+                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-accent-signal opacity-75" />
+                  <span className="relative inline-flex h-2 w-2 rounded-full bg-accent-signal" />
                 </div>
                 <div className="min-w-0">
                   <div className="flex items-center gap-2">
-                    <span className="font-mono text-xs font-bold uppercase tracking-wider text-emerald-text">
-                      LIVE PIPELINE DEMO
+                    <span className="font-body text-xs font-bold uppercase tracking-wider text-accent-signal">
+                      Live Telemetry
                     </span>
-                    <span className="rounded-md bg-emerald-bg border border-emerald-border px-1.5 py-0.5 text-[10px] font-mono font-semibold text-emerald-text">
-                      $0/mo Python + Cron Automation
+                    <span className="rounded-md bg-bg-raised px-2 py-0.5 text-[11px] font-body text-text-secondary font-medium border border-border-subtle">
+                      $0/mo Python &amp; Cron Watchdog
                     </span>
                   </div>
-                  <p className="font-mono text-[11px] text-text-muted mt-0.5 truncate">
+                  <p className="text-xs font-body text-text-secondary mt-0.5 truncate">
                     {latest ? (
-                      <>Task: <span className="text-text-primary font-semibold">{latest.task}</span> · <span className="text-purple-text font-semibold">[{latest.source}]</span> ({formatTime(latest.timestamp)})</>
-                    ) : "Autonomous serverless pipeline with 24/7 uptime monitoring"}
+                      <>Task: <strong className="text-text-primary font-semibold">{latest.task}</strong> · <span className="font-mono text-[11px] text-text-primary font-medium">[{latest.source}]</span> ({formatTime(latest.timestamp)})</>
+                    ) : (
+                      "Autonomous serverless pipeline with 24/7 uptime monitoring"
+                    )}
                   </p>
                 </div>
               </div>
 
               {/* Center + Right Group */}
               <div className="flex flex-wrap items-center justify-between xl:justify-end gap-3 pt-3 xl:pt-0 border-t xl:border-t-0 border-border-subtle">
-                {/* Center Ticker */}
                 <BtcPriceCard
                   price={btcTicker.price}
                   changePct={btcTicker.priceChangePercent}
@@ -140,22 +135,31 @@ export const BtcTrendTelemetryBar: React.FC = () => {
                   sentiment={sentiment}
                 />
 
-                {/* Right Action Buttons */}
                 <div className="flex items-center gap-2">
-                  <button type="button" onClick={handleTriggerPing} disabled={triggering} title="Send a test ping to the backend" className="flex items-center gap-1 rounded-xl border border-emerald-border bg-emerald-bg px-3 py-2 text-xs font-mono font-bold text-emerald-text hover:bg-emerald-bg/80 transition-all cursor-pointer">
-                    <Send size={11} className={triggering ? "animate-bounce text-emerald-text" : "text-emerald-text"} />
-                    <span>{triggering ? "Testing..." : "Test API"}</span>
-                  </button>
-                  <a href="https://hodl-watcher-api.onrender.com/docs" target="_blank" rel="noopener noreferrer" className="flex items-center gap-1 rounded-xl border border-border-subtle bg-bg-raised px-3 py-2 text-xs font-mono font-medium text-text-secondary hover:bg-bg-raised/80 hover:text-text-primary transition-all">
-                    <BookOpen size={12} />
-                    <span>Docs</span>
+                  <a
+                    href="https://hodl-watcher-api.onrender.com/docs"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-1.5 rounded-xl border border-border-subtle bg-bg-surface px-3 py-2 text-xs font-body font-medium text-text-secondary hover:border-accent hover:text-text-primary transition-all shadow-xs"
+                  >
+                    <BookOpen size={12} className="text-accent" />
+                    <span>API Docs</span>
                   </a>
-                  <button type="button" onClick={() => setShowLogs(!showLogs)} className="flex items-center gap-1.5 rounded-xl border border-border-subtle bg-bg-raised px-3 py-2 text-xs font-mono font-semibold text-text-secondary hover:bg-bg-raised/80 hover:text-text-primary transition-all cursor-pointer">
-                    <Terminal size={13} className="text-emerald-text" />
-                    <span>{showLogs ? "Hide" : "Logs"}</span>
+                  <button
+                    type="button"
+                    onClick={() => setShowLogs(!showLogs)}
+                    className="flex items-center gap-1.5 rounded-xl border border-border-subtle bg-bg-raised px-3 py-2 text-xs font-body font-medium text-text-secondary hover:border-border-base hover:text-text-primary transition-all cursor-pointer shadow-xs"
+                  >
+                    <Activity size={13} className="text-accent" />
+                    <span>{showLogs ? "Hide Logs" : "Logs"}</span>
                     {showLogs ? <ChevronUp size={13} /> : <ChevronDown size={13} />}
                   </button>
-                  <a href="https://hodl-watcher.vercel.app/" target="_blank" rel="noopener noreferrer" className="flex items-center gap-1.5 rounded-xl bg-accent px-3.5 py-2 text-xs font-body font-bold text-black shadow-md hover:bg-amber-400 transition-all">
+                  <a
+                    href="https://hodl-watcher.vercel.app/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-1.5 rounded-xl bg-accent px-3.5 py-2 text-xs font-body font-semibold text-white hover:bg-accent-hover transition-all shadow-xs"
+                  >
                     <span>Signal Desk</span>
                     <ArrowUpRight size={13} />
                   </a>

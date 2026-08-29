@@ -24,11 +24,6 @@ export function ClippoFloatingTrigger({
   const activeConfig = SECTION_CHATBOT_CONFIG[sectionId] || SECTION_CHATBOT_CONFIG.top;
   const phrases = activeConfig.speechPhrases;
 
-  // Reset phrase index when section changes
-  useEffect(() => {
-    setPhraseIndex(0);
-  }, [sectionId]);
-
   useEffect(() => {
     if (isOpen || isThinking || phrases.length <= 1) return;
 
@@ -37,11 +32,11 @@ export function ClippoFloatingTrigger({
     }, 6500);
 
     return () => clearInterval(interval);
-  }, [isOpen, isThinking, phrases.length, sectionId]);
+  }, [isOpen, isThinking, phrases.length]);
 
   if (isOpen) return null;
 
-  const currentPhrase = phrases[phraseIndex] || phrases[0];
+  const currentPhrase = phrases[phraseIndex % phrases.length] || phrases[0];
 
   return (
     <div className="relative flex flex-col items-end select-none">

@@ -128,7 +128,7 @@ export function ChatMessage({ message }: ChatMessageProps) {
         className={`relative group max-w-[85%] rounded-2xl px-3.5 py-2.5 text-xs sm:text-sm leading-relaxed border ${
           isModel
             ? "bg-bg-raised/80 text-text-primary border-border-subtle rounded-tl-sm shadow-sm"
-            : "bg-accent text-black font-medium border-accent rounded-tr-sm"
+            : "bg-accent text-white font-medium border-accent rounded-tr-sm"
         }`}
       >
         <FormattedContent text={message.text} isModel={isModel} />

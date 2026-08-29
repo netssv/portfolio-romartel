@@ -1,10 +1,9 @@
 "use client";
 
 import React, { useEffect, useState, useRef } from "react";
-import { Zap, ShieldCheck, Layers, Terminal, ChevronDown, Sparkles } from "lucide-react";
+import { Zap, ShieldCheck, Layers, Cpu, ChevronDown, Sparkles } from "lucide-react";
 import { motion, useInView, AnimatePresence } from "framer-motion";
 import { FadeIn } from "@/src/components/ui/FadeIn";
-import { CornerReticle } from "@/src/components/ui/CornerReticle";
 
 export interface MetricItem {
   value: string;
@@ -27,15 +26,11 @@ const AnimatedCounter: React.FC<{ value: string }> = ({ value }) => {
 
   useEffect(() => {
     const match = value.match(/^([+-]?\d+)(.*)$/);
-    if (!isInView) {
-      if (match) setDisplayValue("0");
-      return;
-    }
-    if (!match) return;
+    if (!isInView || !match) return;
 
     const targetNum = parseInt(match[1], 10);
     const suffix = match[2] || "";
-    const duration = 1200;
+    const duration = 1000;
     const startTime = performance.now();
     let frameId: number;
 
@@ -60,7 +55,7 @@ const AnimatedCounter: React.FC<{ value: string }> = ({ value }) => {
   return <span ref={ref}>{displayValue}</span>;
 };
 
-const ICONS = [Zap, ShieldCheck, Layers, Terminal];
+const ICONS = [Zap, ShieldCheck, Layers, Cpu];
 
 export const MetricsSection: React.FC<MetricsSectionProps> = ({ metrics }) => {
   const [expandedIndex, setExpandedIndex] = useState<number | null>(null);
@@ -73,78 +68,72 @@ export const MetricsSection: React.FC<MetricsSectionProps> = ({ metrics }) => {
     <section className="py-20 border-b border-border-subtle relative overflow-hidden z-10">
       <div className="mx-auto max-w-6xl px-6">
         <FadeIn>
-          <div className="relative rounded-3xl p-[1px] bg-gradient-to-b from-border-base via-border-subtle to-border-subtle shadow-2xl mirror-reflect-base">
-            <div className="relative rounded-[23px] overflow-hidden bg-bg-surface/90 backdrop-blur-xl p-6 sm:p-8">
-              <CornerReticle size={8} color="rgba(255, 149, 0, 0.5)" />
+          <div className="rounded-3xl border border-border-base bg-bg-surface p-6 sm:p-8 shadow-sm">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+              {metrics.map((m, i) => {
+                const Icon = ICONS[i % ICONS.length];
+                const isExpanded = expandedIndex === i;
 
-              {/* ── 4 Main Metric Cards Grid ── */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
-                {metrics.map((m, i) => {
-                  const Icon = ICONS[i % ICONS.length];
-                  const isExpanded = expandedIndex === i;
-
-                  return (
-                    <motion.div
-                      key={i}
-                      onClick={() => toggleExpand(i)}
-                      whileHover={{ scale: 1.02 }}
-                      whileTap={{ scale: 0.98 }}
-                      className={`relative flex flex-col p-5 rounded-2xl border transition-all duration-200 cursor-pointer group select-none ${
-                        isExpanded
-                          ? "bg-bg-raised border-accent shadow-[0_0_20px_rgba(255,149,0,0.25)]"
-                          : "bg-bg-surface/60 border-border-subtle hover:border-border-base hover:bg-bg-surface"
-                      }`}
-                    >
-                      <div className="flex items-center justify-between mb-3">
-                        <span className="p-2 rounded-xl bg-accent/10 border border-accent/20 text-accent group-hover:scale-110 transition-transform">
-                          <Icon size={16} />
-                        </span>
-                        <span className="text-[10px] font-mono font-semibold px-2 py-0.5 rounded-md bg-bg-raised text-text-muted flex items-center gap-1">
-                          <span>Details</span>
-                          <ChevronDown size={11} className={`transition-transform duration-200 ${isExpanded ? "rotate-180 text-accent" : ""}`} />
-                        </span>
-                      </div>
-
-                      <div className="text-3.5xl sm:text-4xl lg:text-4.5xl font-heading font-black text-text-primary tracking-tight leading-none mb-1.5">
-                        <AnimatedCounter value={m.value} />
-                      </div>
-
-                      <span className="text-sm font-body font-bold text-text-primary mb-0.5">
-                        {m.label}
-                      </span>
-                      <span className="text-xs font-mono text-accent font-medium">
-                        {m.subtitle}
-                      </span>
-                    </motion.div>
-                  );
-                })}
-              </div>
-
-              {/* ── Progressive Disclosure Drawer (On-Demand Context) ── */}
-              <AnimatePresence>
-                {expandedIndex !== null && metrics[expandedIndex] && (
+                return (
                   <motion.div
-                    initial={{ opacity: 0, height: 0, marginTop: 0 }}
-                    animate={{ opacity: 1, height: "auto", marginTop: 16 }}
-                    exit={{ opacity: 0, height: 0, marginTop: 0 }}
-                    transition={{ duration: 0.25, ease: "easeOut" }}
-                    className="overflow-hidden"
+                    key={i}
+                    onClick={() => toggleExpand(i)}
+                    whileHover={{ y: -2 }}
+                    className={`relative flex flex-col justify-between p-5 rounded-2xl border transition-all duration-200 cursor-pointer group select-none ${
+                      isExpanded
+                        ? "bg-bg-raised border-accent shadow-xs"
+                        : "bg-bg-surface border-border-subtle hover:border-border-base hover:bg-bg-raised/40"
+                    }`}
                   >
-                    <div className="p-4 sm:p-5 rounded-xl border border-border-subtle bg-bg-raised shadow-inner flex items-start gap-3">
-                      <Sparkles className="w-4 h-4 text-accent shrink-0 mt-0.5" />
-                      <div>
-                        <span className="text-xs font-mono font-bold text-text-primary uppercase tracking-wider">
-                          Operational Insight: {metrics[expandedIndex].label} ({metrics[expandedIndex].value})
-                        </span>
-                        <p className="text-xs sm:text-sm font-body text-text-secondary leading-relaxed mt-1">
-                          {metrics[expandedIndex].details}
-                        </p>
-                      </div>
+                    <div className="flex items-center justify-between mb-3">
+                      <span className="p-2 rounded-xl bg-accent/10 text-accent">
+                        <Icon size={16} />
+                      </span>
+                      <span className="text-[11px] font-body text-text-muted flex items-center gap-1 font-medium">
+                        <span>Context</span>
+                        <ChevronDown size={11} className={`transition-transform duration-200 ${isExpanded ? "rotate-180 text-accent" : ""}`} />
+                      </span>
                     </div>
+
+                    <div className="text-3xl sm:text-4xl font-heading font-extrabold text-text-primary tracking-tight leading-none mb-1.5">
+                      <AnimatedCounter value={m.value} />
+                    </div>
+
+                    <span className="text-sm font-body font-semibold text-text-primary mb-0.5">
+                      {m.label}
+                    </span>
+                    <span className="text-xs font-body text-accent font-medium">
+                      {m.subtitle}
+                    </span>
                   </motion.div>
-                )}
-              </AnimatePresence>
+                );
+              })}
             </div>
+
+            {/* Context Drawer */}
+            <AnimatePresence>
+              {expandedIndex !== null && metrics[expandedIndex] && (
+                <motion.div
+                  initial={{ opacity: 0, height: 0, marginTop: 0 }}
+                  animate={{ opacity: 1, height: "auto", marginTop: 16 }}
+                  exit={{ opacity: 0, height: 0, marginTop: 0 }}
+                  transition={{ duration: 0.2, ease: "easeOut" }}
+                  className="overflow-hidden"
+                >
+                  <div className="p-4 sm:p-5 rounded-xl border border-border-subtle bg-bg-raised/70 flex items-start gap-3">
+                    <Sparkles className="w-4 h-4 text-accent shrink-0 mt-0.5" />
+                    <div>
+                      <span className="text-xs font-body font-bold text-text-primary uppercase tracking-wider">
+                        Operational Context: {metrics[expandedIndex].label}
+                      </span>
+                      <p className="text-xs sm:text-sm font-body text-text-secondary leading-relaxed mt-1">
+                        {metrics[expandedIndex].details}
+                      </p>
+                    </div>
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
           </div>
         </FadeIn>
       </div>

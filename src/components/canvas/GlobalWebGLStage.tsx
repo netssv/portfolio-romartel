@@ -5,19 +5,19 @@ import * as THREE from "three";
 import { createInfiniteMirrorMaterial } from "./shaders/InfiniteMirrorGridShader";
 
 const NIGHT_PALETTES = [
-  { stop: 0.0, accent: "#FF9500", base: "#050505" }, // Hero (Amber)
-  { stop: 0.25, accent: "#10B981", base: "#040A07" }, // Telemetry/Tech (Emerald)
-  { stop: 0.55, accent: "#0EA5E9", base: "#040810" }, // Projects (Cyber Cyan)
-  { stop: 0.8, accent: "#6366F1", base: "#070612" }, // Architecture (Indigo)
-  { stop: 1.0, accent: "#FF9500", base: "#050505" }, // Contact/Footer (Amber)
+  { stop: 0.0, accent: "#4A7FC9", base: "#0B0F17" }, // Hero (Azul Istmo)
+  { stop: 0.25, accent: "#3B6EB5", base: "#090D15" }, // Telemetry/Tech
+  { stop: 0.55, accent: "#2B5E9F", base: "#070B12" }, // Projects
+  { stop: 0.8, accent: "#4A7FC9", base: "#0B0F17" }, // Architecture
+  { stop: 1.0, accent: "#3B6EB5", base: "#090D15" }, // Contact/Footer
 ];
 
 const DAY_PALETTES = [
-  { stop: 0.0, accent: "#E07A00", base: "#F4F4F6" }, // Hero (Warm Amber)
-  { stop: 0.25, accent: "#059669", base: "#F0FDF4" }, // Telemetry (Emerald)
-  { stop: 0.55, accent: "#0284C7", base: "#F0F9FF" }, // Projects (Sky)
-  { stop: 0.8, accent: "#4F46E5", base: "#EEF2FF" }, // Architecture (Indigo)
-  { stop: 1.0, accent: "#E07A00", base: "#F4F4F6" }, // Contact/Footer (Warm Amber)
+  { stop: 0.0, accent: "#1E4B8F", base: "#F8F9FA" }, // Hero (Azul Istmo)
+  { stop: 0.25, accent: "#163A70", base: "#F4F6F9" }, // Telemetry
+  { stop: 0.55, accent: "#1E4B8F", base: "#F8F9FA" }, // Projects
+  { stop: 0.8, accent: "#163A70", base: "#F4F6F9" }, // Architecture
+  { stop: 1.0, accent: "#1E4B8F", base: "#F8F9FA" }, // Contact/Footer
 ];
 
 export const GlobalWebGLStage: React.FC = () => {
@@ -27,11 +27,9 @@ export const GlobalWebGLStage: React.FC = () => {
     if (typeof window === "undefined" || !containerRef.current) return;
 
     const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
     const width = window.innerWidth;
     const height = window.innerHeight;
 
-    // Renderer setup with optimized pixel ratio cap for 60fps performance
     const renderer = new THREE.WebGLRenderer({
       antialias: false,
       alpha: true,
@@ -43,11 +41,10 @@ export const GlobalWebGLStage: React.FC = () => {
     renderer.domElement.setAttribute("role", "img");
     renderer.domElement.setAttribute(
       "aria-label",
-      "Infinite 3D mirror perspective grid and ambient depth lighting"
+      "Ambient 3D Azul Istmo spatial depth background"
     );
     containerRef.current.appendChild(renderer.domElement);
 
-    // Full-screen Quad Scene
     const scene = new THREE.Scene();
     const camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
     const geometry = new THREE.PlaneGeometry(2, 2);
@@ -55,7 +52,6 @@ export const GlobalWebGLStage: React.FC = () => {
     const mesh = new THREE.Mesh(geometry, material);
     scene.add(mesh);
 
-    // Cached layout metrics to prevent 60fps forced reflows
     let cachedScrollProgress = 0;
     const updateScrollMetrics = () => {
       const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
@@ -65,7 +61,6 @@ export const GlobalWebGLStage: React.FC = () => {
     updateScrollMetrics();
     window.addEventListener("scroll", updateScrollMetrics, { passive: true });
 
-    // Cursor tracking with spring damping
     const mouse = { x: 0, y: 0, targetX: 0, targetY: 0 };
     const handleMouseMove = (e: MouseEvent) => {
       mouse.targetX = (e.clientX / window.innerWidth) * 2 - 1;
@@ -73,7 +68,6 @@ export const GlobalWebGLStage: React.FC = () => {
     };
     window.addEventListener("mousemove", handleMouseMove, { passive: true });
 
-    // Resize handler
     const handleResize = () => {
       const w = window.innerWidth;
       const h = window.innerHeight;
@@ -98,17 +92,15 @@ export const GlobalWebGLStage: React.FC = () => {
     const render = () => {
       if (!isTabVisible) return;
 
-      time += prefersReducedMotion ? 0.005 : 0.015;
+      time += prefersReducedMotion ? 0.003 : 0.008;
 
-      // Mouse damping
-      mouse.x += (mouse.targetX - mouse.x) * 0.06;
-      mouse.y += (mouse.targetY - mouse.y) * 0.06;
+      mouse.x += (mouse.targetX - mouse.x) * 0.05;
+      mouse.y += (mouse.targetY - mouse.y) * 0.05;
 
       const scrollProgress = cachedScrollProgress;
       const isDark = document.documentElement.classList.contains("theme-dark");
       const activePalette = isDark ? NIGHT_PALETTES : DAY_PALETTES;
 
-      // Color stop interpolation
       let currentStop = activePalette[0];
       let nextStop = activePalette[1];
       let t = 0;
@@ -126,7 +118,6 @@ export const GlobalWebGLStage: React.FC = () => {
       const activeAccent = new THREE.Color(currentStop.accent).lerp(new THREE.Color(nextStop.accent), t);
       const activeBase = new THREE.Color(currentStop.base).lerp(new THREE.Color(nextStop.base), t);
 
-      // Update shader uniforms
       material.uniforms.uTime.value = time;
       material.uniforms.uScroll.value = scrollProgress;
       material.uniforms.uMouse.value.set(mouse.x, mouse.y);

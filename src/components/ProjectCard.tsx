@@ -1,13 +1,12 @@
 "use client";
 
 import React, { useState } from "react";
-import { ArrowUpRight, Trophy, LineChart, Terminal, Cpu, Bluetooth, Gamepad2, Layers, Smartphone, Search, LucideIcon } from "lucide-react";
+import { ArrowUpRight, Trophy, LineChart, Cpu, Bluetooth, Gamepad2, Layers, Smartphone, Search, LucideIcon } from "lucide-react";
 import { motion } from "framer-motion";
 
 const ICON_MAP: Record<string, LucideIcon> = {
   Trophy,
   LineChart,
-  Terminal,
   Cpu,
   Bluetooth,
   Gamepad2,
@@ -61,15 +60,15 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
 
   return (
     <motion.article
-      className="group relative flex flex-col justify-between rounded-2xl border border-border-base bg-bg-surface overflow-hidden transition-all duration-300 hover:border-accent hover:shadow-xl"
-      whileHover={{ y: -4 }}
+      className="group relative flex flex-col justify-between rounded-2xl border border-border-base bg-bg-surface overflow-hidden transition-all duration-200 hover:border-accent hover:shadow-lg"
+      whileHover={{ y: -3 }}
       transition={{ type: "spring", stiffness: 240, damping: 20 }}
       onMouseMove={handleMouseMove}
       style={{
-        background: `radial-gradient(400px circle at ${coords.x}px ${coords.y}px, rgba(255, 149, 0, 0.06), transparent 80%), var(--bg-surface)`,
+        background: `radial-gradient(400px circle at ${coords.x}px ${coords.y}px, rgba(30, 75, 143, 0.04), transparent 80%), var(--bg-surface)`,
       }}
     >
-      {/* Visual Screenshot Preview Banner */}
+      {/* Screenshot Preview */}
       {image && (
         <div className="relative w-full aspect-[16/9] overflow-hidden bg-bg-raised border-b border-border-subtle flex items-center justify-center">
           {isVertical && (
@@ -77,7 +76,7 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
               src={image}
               alt=""
               aria-hidden="true"
-              className="absolute inset-0 w-full h-full object-cover blur-xl opacity-35 scale-125 pointer-events-none"
+              className="absolute inset-0 w-full h-full object-cover blur-xl opacity-30 scale-125 pointer-events-none"
             />
           )}
           <motion.img
@@ -85,26 +84,24 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
             alt={`${title} Preview`}
             onLoad={(e) => {
               const img = e.currentTarget;
-              if (img.naturalHeight > img.naturalWidth) {
-                setIsVertical(true);
-              }
+              if (img.naturalHeight > img.naturalWidth) setIsVertical(true);
             }}
             className={
               isVertical
-                ? "relative z-10 h-full w-auto max-w-full object-contain py-1 drop-shadow-md transition-transform duration-500 group-hover:scale-105"
-                : "w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
+                ? "relative z-10 h-full w-auto max-w-full object-contain py-1 drop-shadow-sm transition-transform duration-300 group-hover:scale-105"
+                : "w-full h-full object-cover object-top transition-transform duration-300 group-hover:scale-105"
             }
             loading="lazy"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-bg-surface/90 via-transparent to-transparent opacity-60 pointer-events-none" />
-          
-          {/* Floating Status & Category on image */}
+
+          {/* Floating Tags on image */}
           <div className="absolute top-3 left-3 right-3 flex items-center justify-between pointer-events-none z-20">
-            <span className="flex items-center gap-1.5 px-2.5 py-1 rounded-md text-[10px] font-mono font-semibold bg-bg-surface/90 backdrop-blur-md border border-border-subtle text-text-primary shadow-xs">
+            <span className="flex items-center gap-1.5 px-2.5 py-1 rounded-md text-[11px] font-body font-semibold bg-bg-surface/95 backdrop-blur-md border border-border-subtle text-text-primary shadow-xs">
               <IconComponent className="w-3.5 h-3.5 text-accent" />
               <span>{category}</span>
             </span>
-            <span className="px-2 py-0.5 rounded-full text-[10px] font-mono font-semibold tracking-wide border bg-emerald-500/20 text-emerald-700 dark:text-emerald-300 border-emerald-500/40 backdrop-blur-sm">
+            <span className="px-2 py-0.5 rounded-full text-[10px] font-body font-semibold border bg-bg-surface/95 text-text-secondary border-border-subtle shadow-xs">
               {status}
             </span>
           </div>
@@ -115,20 +112,20 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
       <div className="p-5 flex-1 flex flex-col">
         {!image && (
           <div className="flex items-center justify-between gap-3 mb-3">
-            <span className="flex items-center gap-1.5 text-[11px] font-mono font-bold uppercase tracking-wider text-text-accent">
+            <span className="flex items-center gap-1.5 text-[11px] font-body font-bold uppercase tracking-wider text-accent">
               <IconComponent className="w-3.5 h-3.5 text-accent" />
               <span>{category}</span>
             </span>
-            <span className="px-2 py-0.5 rounded-full text-[10px] font-mono font-semibold border bg-emerald-500/10 text-emerald-700 dark:text-emerald-300 border-emerald-500/30">
+            <span className="px-2 py-0.5 rounded-full text-[10px] font-body font-semibold border bg-bg-raised text-text-secondary border-border-subtle">
               {status}
             </span>
           </div>
         )}
 
-        <h3 className="text-base sm:text-lg font-heading font-bold text-text-primary group-hover:text-accent transition-colors duration-200">
+        <h3 className="text-base sm:text-lg font-heading font-bold text-text-primary group-hover:text-accent transition-colors duration-150">
           {title}
         </h3>
-        <p className="text-xs font-mono text-text-muted mt-0.5 mb-2">
+        <p className="text-xs font-body text-accent mt-0.5 mb-2 font-medium">
           {subtitle}
         </p>
         <p className="text-xs font-body text-text-secondary leading-relaxed mb-3 line-clamp-2">
@@ -136,8 +133,8 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
         </p>
 
         {valueProp && (
-          <div className="mb-3 text-[11px] font-mono text-text-secondary border-l-2 border-accent pl-2 py-0.5 bg-bg-base/50 rounded-r">
-            <span className="font-semibold text-text-primary">Impact: </span>
+          <div className="mb-3 text-xs font-body text-text-secondary border-l-2 border-accent pl-2.5 py-1 bg-bg-raised/60 rounded-r">
+            <strong className="text-text-primary font-semibold">Outcome: </strong>
             {valueProp}
           </div>
         )}
@@ -154,21 +151,20 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
         )}
       </div>
 
-      {/* Footer CTA Links */}
-      <div className="flex items-center justify-between px-5 py-3 border-t border-border-subtle bg-bg-base/30 font-body text-xs font-semibold">
-        <a href={links.github} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 text-text-secondary hover:text-text-primary transition-colors duration-200">
+      {/* Footer Actions */}
+      <div className="flex items-center justify-between px-5 py-3 border-t border-border-subtle bg-bg-raised/30 font-body text-xs font-semibold">
+        <a href={links.github} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 text-text-secondary hover:text-text-primary transition-colors">
           <GithubIcon size={13} />
           <span>Source</span>
         </a>
 
         {links.demo && (
-          <a href={links.demo} target="_blank" rel="noopener noreferrer" className="group/btn inline-flex items-center gap-1 text-accent hover:text-amber-500 transition-colors duration-200">
+          <a href={links.demo} target="_blank" rel="noopener noreferrer" className="group/btn inline-flex items-center gap-1 text-accent hover:text-accent-hover transition-colors">
             <span>Live Project</span>
-            <ArrowUpRight size={13} className="group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5 transition-transform duration-200" />
+            <ArrowUpRight size={13} className="group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5 transition-transform" />
           </a>
         )}
       </div>
     </motion.article>
   );
 };
-

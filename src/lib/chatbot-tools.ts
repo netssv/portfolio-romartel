@@ -75,11 +75,11 @@ export async function executeGetBtcTelemetry() {
     ]);
     clearTimeout(timeoutId);
 
-    let telemetryData: any = null;
-    let sentimentData: any = null;
+    let telemetryData: Record<string, unknown> | null = null;
+    let sentimentData: Record<string, unknown> | null = null;
 
     if (logsRes.status === "fulfilled" && logsRes.value.ok) {
-      telemetryData = await logsRes.value.json();
+      telemetryData = (await logsRes.value.json()) as Record<string, unknown>;
     }
     if (contextRes.status === "fulfilled" && contextRes.value.ok) {
       const ctx = await contextRes.value.json();

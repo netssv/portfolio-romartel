@@ -9,7 +9,6 @@ import {
   CheckCircle2,
   FileText,
   Search,
-  Smartphone,
   ExternalLink,
   LucideIcon,
 } from "lucide-react";

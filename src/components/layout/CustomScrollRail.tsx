@@ -19,7 +19,7 @@ const SECTIONS: SectionTick[] = [
 
 export const CustomScrollRail: React.FC = () => {
   const [activeSection, setActiveSection] = useState("top");
-  const [hovered, setHovered] = useState(false);
+  const [hoveredId, setHoveredId] = useState<string | null>(null);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -56,31 +56,33 @@ export const CustomScrollRail: React.FC = () => {
   return (
     <aside
       aria-label="Section navigation"
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
-      className="fixed right-3 sm:right-4 top-1/2 -translate-y-1/2 z-40 hidden md:flex flex-col items-center gap-2 p-1.5 rounded-full bg-bg-surface/80 border border-border-subtle backdrop-blur-md shadow-2xl transition-all duration-300 group"
+      className="fixed right-3 sm:right-4 top-1/2 -translate-y-1/2 z-40 hidden md:flex flex-col items-center gap-2.5 p-2 rounded-full bg-bg-surface/85 border border-border-subtle backdrop-blur-md shadow-lg transition-all duration-200"
     >
       {SECTIONS.map((sec) => {
         const isActive = activeSection === sec.id;
+        const isHovered = hoveredId === sec.id;
+
         return (
           <button
             key={sec.id}
             onClick={() => scrollToSection(sec.id)}
+            onMouseEnter={() => setHoveredId(sec.id)}
+            onMouseLeave={() => setHoveredId(null)}
             aria-label={`Scroll to ${sec.label}`}
-            className="relative flex items-center justify-center p-1 cursor-pointer group/dot focus:outline-none"
+            className="relative flex items-center justify-center p-1 cursor-pointer focus:outline-none"
           >
-            {/* Minimalist Dot */}
+            {/* Dot indicator */}
             <span
-              className={`block rounded-full transition-all duration-300 ${
+              className={`block rounded-full transition-all duration-200 ${
                 isActive
-                  ? "w-2.5 h-2.5 bg-accent shadow-[0_0_10px_rgba(255,149,0,0.9)] scale-110"
-                  : "w-1.5 h-1.5 bg-border-base group-hover/dot:bg-text-primary group-hover/dot:scale-125"
+                  ? "w-2.5 h-2.5 bg-accent shadow-xs scale-110"
+                  : "w-1.5 h-1.5 bg-border-base hover:bg-text-secondary hover:scale-125"
               }`}
             />
 
-            {/* Tooltip on Hover */}
-            {hovered && (
-              <span className="absolute right-7 px-2.5 py-1 rounded-md bg-bg-surface border border-border-subtle text-[10px] font-mono font-semibold text-text-primary whitespace-nowrap shadow-lg pointer-events-none transition-all">
+            {/* Individual Tooltip on Hover */}
+            {isHovered && (
+              <span className="absolute right-8 px-2.5 py-1 rounded-lg bg-bg-surface border border-border-subtle text-[11px] font-body font-medium text-text-primary whitespace-nowrap shadow-md pointer-events-none z-50 animate-in fade-in duration-150">
                 {sec.label}
               </span>
             )}

@@ -340,18 +340,17 @@
     }
   },
   "trustedStack": [
-    "SEO",
-    "CRO",
-    "Content Strategy",
+    "SEO & CRO",
+    "Workflow Automation",
     "Google Analytics 4",
     "Microsoft Clarity",
     "Google Search Console",
     "Microsoft Power BI",
     "A/B Testing",
     "Claude CLI",
-    "Antigravity Bash",
+    "Python & Webhooks",
     "Next.js",
-    "AI Tools"
+    "AI Systems"
   ],
   "metrics": [
     {

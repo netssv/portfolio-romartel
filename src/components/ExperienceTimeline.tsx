@@ -12,10 +12,9 @@ export const ExperienceTimeline: React.FC<{ items: ExperienceItem[] }> = ({ item
       <div className="mx-auto max-w-5xl px-6 pt-24 pb-6">
         <FadeIn>
           <SectionLabel
-            index="04"
-            eyebrow="Employment History"
-            heading="Work Experience & Technical Leadership"
-            description="Scroll continuously through the chronological timeline ribbon to trace career milestones, server infrastructure operations, and marketing automation systems across the years."
+            eyebrow="Career Timeline"
+            heading="Operations &amp; Technical Leadership"
+            description="A track record spanning web infrastructure, marketing technology, workflow automation, and cross-functional operations management."
           />
         </FadeIn>
       </div>

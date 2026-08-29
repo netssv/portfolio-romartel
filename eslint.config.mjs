@@ -9,6 +9,7 @@ const eslintConfig = defineConfig([
       "node_modules/**",
       "out/**",
       "build/**",
+      ".agents/**",
       "next-env.d.ts",
       "duyn491kcolsw.cloudfront.net/**",
       "romartel.webnode.page/**",
