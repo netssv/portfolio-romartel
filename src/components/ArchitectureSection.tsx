@@ -5,56 +5,29 @@ import { motion } from "framer-motion";
 import { FadeIn } from "@/src/components/ui/FadeIn";
 import { SectionLabel } from "@/src/components/ui/SectionLabel";
 import { Cpu, Split, Search, BarChart3, ShieldCheck, Zap } from "lucide-react";
+import { useLanguage } from "@/src/context/LanguageContext";
 
-const features = [
-  {
-    title: "Next.js App Router Architecture",
-    desc: "Engineered for optimal Server-Side Rendering (SSR) and client hydration, achieving sub-second paint times and optimal Core Web Vitals.",
-    icon: Cpu,
-  },
-  {
-    title: "Zero-Latency Client-Side A/B Engine",
-    desc: "Lightweight localStorage-driven experiment engine delivering instant variant routing without external SDK overhead.",
-    icon: Split,
-  },
-  {
-    title: "Dynamic UTM Context Personalization",
-    desc: "Reads query parameters on load to adapt copy for referral traffic, boosting relevance and funnel conversion rates.",
-    icon: Search,
-  },
-  {
-    title: "Strict JSON-LD & Technical Indexing",
-    desc: "Dynamic XML sitemaps, semantic OpenGraph metadata, and structured Schema.org definitions for crawler indexing.",
-    icon: ShieldCheck,
-  },
-  {
-    title: "Serverless Email & Pipeline Security",
-    desc: "Next.js Route Handlers securely process form submissions through Resend API with rate limiting and automated fallbacks.",
-    icon: Zap,
-  },
-  {
-    title: "GA4 Measurement & Telemetry Protocol",
-    desc: "Custom event telemetry tracking scroll depth, outbound links, and interaction metrics to measure true engagement.",
-    icon: BarChart3,
-  },
-];
+const featureIcons = [Cpu, Split, Search, ShieldCheck, Zap, BarChart3];
 
 export const ArchitectureSection: React.FC = () => {
+  const { t } = useLanguage();
+  const { eyebrow, heading, description, features } = t.architecture;
+
   return (
     <section id="architecture" className="py-24 relative overflow-hidden bg-bg-surface border-t border-b border-border-subtle">
       <div className="mx-auto max-w-6xl px-6 relative z-10">
         <FadeIn>
           <SectionLabel
-            eyebrow="Under The Hood"
-            heading="Infrastructure &amp; Optimization Strategy"
-            description="This portfolio is a live demonstration of modern web engineering, performance optimization, and data analytics."
+            eyebrow={eyebrow}
+            heading={heading}
+            description={description}
           />
         </FadeIn>
 
         {/* Features Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {features.map((feature, idx) => {
-            const Icon = feature.icon;
+            const Icon = featureIcons[idx] || Cpu;
             return (
               <FadeIn key={feature.title} delay={idx * 80}>
                 <motion.div

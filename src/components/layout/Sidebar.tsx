@@ -4,6 +4,8 @@ import React, { useEffect, useState } from "react";
 import { Home, Briefcase, FolderGit2, Compass, Mail, Sun, Moon, Cpu } from "lucide-react";
 import { MobileNav } from "./MobileNav";
 
+import { useSmoothScroll } from "./SmoothScrollProvider";
+
 interface SidebarProps {
   authorName: string;
 }
@@ -18,6 +20,7 @@ const NAV_ITEMS = [
 ];
 
 export const Sidebar: React.FC<SidebarProps> = ({ authorName }) => {
+  const { getLenis } = useSmoothScroll();
   const [activeSection, setActiveSection] = useState("Home");
   const [theme, setTheme] = useState<"day" | "night">("day");
 
@@ -59,8 +62,27 @@ export const Sidebar: React.FC<SidebarProps> = ({ authorName }) => {
 
   const handleClick = (e: React.MouseEvent<HTMLAnchorElement>, path: string) => {
     e.preventDefault();
-    const target = path === "#top" ? document.body : document.getElementById(path.substring(1));
-    if (target) target.scrollIntoView({ behavior: "smooth" });
+    const targetId = path.startsWith("#") ? path.slice(1) : path;
+    const lenis = getLenis();
+
+    if (path === "/" || path === "#" || targetId === "top") {
+      if (lenis) {
+        lenis.scrollTo(0, { duration: 1.2 });
+      } else {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+      return;
+    }
+
+    const target = document.getElementById(targetId) || document.querySelector(path);
+    if (target) {
+      if (lenis) {
+        lenis.scrollTo(target as HTMLElement, { offset: -70, duration: 1.2 });
+      } else {
+        const top = (target as HTMLElement).getBoundingClientRect().top + window.scrollY - 70;
+        window.scrollTo({ top, behavior: "smooth" });
+      }
+    }
   };
 
   return (

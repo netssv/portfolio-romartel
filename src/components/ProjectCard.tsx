@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import { ArrowUpRight, Trophy, LineChart, Cpu, Bluetooth, Gamepad2, Layers, Smartphone, Search, LucideIcon } from "lucide-react";
 import { motion } from "framer-motion";
+import { useLanguage } from "@/src/context/LanguageContext";
 
 const ICON_MAP: Record<string, LucideIcon> = {
   Trophy,
@@ -49,6 +50,7 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
   tags = [],
   links,
 }) => {
+  const { isSpanish } = useLanguage();
   const [coords, setCoords] = useState({ x: 0, y: 0 });
   const [isVertical, setIsVertical] = useState(false);
   const IconComponent = icon && ICON_MAP[icon] ? ICON_MAP[icon] : Layers;
@@ -68,7 +70,7 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
         background: `radial-gradient(400px circle at ${coords.x}px ${coords.y}px, rgba(30, 75, 143, 0.04), transparent 80%), var(--bg-surface)`,
       }}
     >
-      {/* Screenshot Preview */}
+      {/* Screenshot / Media Header */}
       {image && (
         <div className="relative w-full aspect-[16/9] overflow-hidden bg-bg-raised border-b border-border-subtle flex items-center justify-center">
           {isVertical && (
@@ -95,7 +97,6 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
           />
           <div className="absolute inset-0 bg-gradient-to-t from-bg-surface/90 via-transparent to-transparent opacity-60 pointer-events-none" />
 
-          {/* Floating Tags on image */}
           <div className="absolute top-3 left-3 right-3 flex items-center justify-between pointer-events-none z-20">
             <span className="flex items-center gap-1.5 px-2.5 py-1 rounded-md text-[11px] font-body font-semibold bg-bg-surface/95 backdrop-blur-md border border-border-subtle text-text-primary shadow-xs">
               <IconComponent className="w-3.5 h-3.5 text-accent" />
@@ -134,7 +135,9 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
 
         {valueProp && (
           <div className="mb-3 text-xs font-body text-text-secondary border-l-2 border-accent pl-2.5 py-1 bg-bg-raised/60 rounded-r">
-            <strong className="text-text-primary font-semibold">Outcome: </strong>
+            <strong className="text-text-primary font-semibold">
+              {isSpanish ? "Impacto: " : "Outcome: "}
+            </strong>
             {valueProp}
           </div>
         )}
@@ -155,12 +158,12 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
       <div className="flex items-center justify-between px-5 py-3 border-t border-border-subtle bg-bg-raised/30 font-body text-xs font-semibold">
         <a href={links.github} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 text-text-secondary hover:text-text-primary transition-colors">
           <GithubIcon size={13} />
-          <span>Source</span>
+          <span>{isSpanish ? "Código" : "Source"}</span>
         </a>
 
         {links.demo && (
           <a href={links.demo} target="_blank" rel="noopener noreferrer" className="group/btn inline-flex items-center gap-1 text-accent hover:text-accent-hover transition-colors">
-            <span>Live Project</span>
+            <span>{isSpanish ? "Ver Proyecto" : "Live Project"}</span>
             <ArrowUpRight size={13} className="group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5 transition-transform" />
           </a>
         )}

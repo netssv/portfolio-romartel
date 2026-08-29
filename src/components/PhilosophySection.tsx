@@ -4,6 +4,7 @@ import React from "react";
 import { motion } from "framer-motion";
 import { FadeIn } from "@/src/components/ui/FadeIn";
 import { Cpu, LineChart, Workflow, LucideIcon } from "lucide-react";
+import { useLanguage } from "@/src/context/LanguageContext";
 
 interface PhilosophyProps {
   quote: string;
@@ -16,7 +17,7 @@ interface Pillar {
   icon: LucideIcon;
 }
 
-const PILLARS: Pillar[] = [
+const PILLARS_EN: Pillar[] = [
   {
     title: "Systems Reliability",
     description: "Deep server and web infrastructure understanding behind every marketing decision.",
@@ -34,14 +35,35 @@ const PILLARS: Pillar[] = [
   },
 ];
 
+const PILLARS_ES: Pillar[] = [
+  {
+    title: "Fiabilidad de Sistemas",
+    description: "Entendimiento profundo de infraestructura web y servidores respaldando cada decisión estratégica.",
+    icon: Cpu,
+  },
+  {
+    title: "Telemetría de Crecimiento",
+    description: "CRO guiado por datos, seguimiento de eventos en GA4 y modelado cuantitativo de métricas.",
+    icon: LineChart,
+  },
+  {
+    title: "Automatización Pragmática",
+    description: "Herramientas en Python, webhooks y serverless que eliminan fricción y aceleran la ejecución.",
+    icon: Workflow,
+  },
+];
+
 export const PhilosophySection: React.FC<PhilosophyProps> = ({ quote }) => {
+  const { isSpanish } = useLanguage();
+  const pillars = isSpanish ? PILLARS_ES : PILLARS_EN;
+
   return (
     <section id="philosophy" className="py-24 border-b border-border-subtle relative overflow-hidden bg-bg-surface">
       <div className="mx-auto max-w-6xl px-6 relative z-10">
         <FadeIn>
           <div className="mb-12 max-w-3xl">
             <span className="text-xs font-body font-semibold uppercase tracking-[0.18em] text-accent block mb-3">
-              Strategic Approach
+              {isSpanish ? "Enfoque Estratégico" : "Strategic Approach"}
             </span>
             <h2 className="text-2xl sm:text-3xl font-heading font-bold text-text-primary leading-snug">
               &ldquo;{quote}&rdquo;
@@ -50,7 +72,7 @@ export const PhilosophySection: React.FC<PhilosophyProps> = ({ quote }) => {
 
           {/* 3 Pillar Cards */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {PILLARS.map((p, idx) => {
+            {pillars.map((p, idx) => {
               const Icon = p.icon;
               return (
                 <motion.div

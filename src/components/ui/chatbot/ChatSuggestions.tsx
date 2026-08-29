@@ -3,7 +3,8 @@
 import React from "react";
 import { Sparkles } from "lucide-react";
 import { SectionId } from "@/src/lib/useActiveSection";
-import { SECTION_CHATBOT_CONFIG } from "@/src/lib/chatbot-section-data";
+import { getSectionChatbotConfig } from "@/src/lib/chatbot-section-data";
+import { useLanguage } from "@/src/context/LanguageContext";
 
 interface ChatSuggestionsProps {
   sectionId?: SectionId;
@@ -16,7 +17,8 @@ export function ChatSuggestions({
   onSelect,
   disabled,
 }: ChatSuggestionsProps) {
-  const config = SECTION_CHATBOT_CONFIG[sectionId] || SECTION_CHATBOT_CONFIG.top;
+  const { isSpanish } = useLanguage();
+  const config = getSectionChatbotConfig(sectionId, isSpanish);
   const suggestions = (config.suggestions || []).slice(0, 3);
 
   return (
@@ -24,7 +26,7 @@ export function ChatSuggestions({
       <div className="flex items-center justify-between text-[10px] text-text-muted font-mono uppercase tracking-wider px-0.5">
         <div className="flex items-center gap-1">
           <Sparkles className="w-3 h-3 text-accent" />
-          <span>Quick actions</span>
+          <span>{isSpanish ? "Acciones rápidas" : "Quick actions"}</span>
         </div>
         <span className="text-[9px] text-accent/80 font-mono lowercase tracking-normal">
           {config.sectionName}

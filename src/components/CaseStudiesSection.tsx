@@ -4,107 +4,16 @@ import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { FadeIn } from "@/src/components/ui/FadeIn";
 import { SectionLabel } from "@/src/components/ui/SectionLabel";
-import { Search, TrendingUp, BarChart3, CheckCircle2, Workflow, Target, LucideIcon } from "lucide-react";
-
-interface CaseStudy {
-  id: string;
-  tag: string;
-  icon: LucideIcon;
-  title: string;
-  subtitle: string;
-  highlight: string;
-  challenge: string;
-  kpis: { value: string; label: string }[];
-  steps: string[];
-  tools: string[];
-}
-
-const CASE_STUDIES: CaseStudy[] = [
-  {
-    id: "01",
-    tag: "SEO Restructure",
-    icon: Search,
-    title: "Organic Search & Technical Indexing",
-    subtitle: "E-commerce · Latin American Market",
-    highlight: "+40% Crawl Efficiency",
-    challenge: "High reliance on paid search with zero organic visibility across 40+ category lines.",
-    kpis: [
-      { value: "40+", label: "Pages Restructured" },
-      { value: "100%", label: "Crawl Issues Resolved" },
-      { value: "3x", label: "Intent Keyword Clusters" },
-    ],
-    steps: [
-      "Audited search intent across informational and transactional queries.",
-      "Fixed duplicate meta tags, canonicals, and broken internal links.",
-      "Delivered structured schema templates for ongoing editorial teams.",
-    ],
-    tools: ["Google Search Console", "Screaming Frog", "GA4"],
-  },
-  {
-    id: "02",
-    tag: "CRO & Performance",
-    icon: TrendingUp,
-    title: "Landing Page Architecture & CRO",
-    subtitle: "B2B SaaS · Paid Acquisition Funnel",
-    highlight: "+18% Form Conversion Lift",
-    challenge: "High ad traffic bounce rate due to generic homepage routing without intent match.",
-    kpis: [
-      { value: "+18%", label: "Conversion Lift" },
-      { value: "5", label: "GA4 Custom Telemetry Events" },
-      { value: "3x", label: "Asset Speed Optimizations" },
-    ],
-    steps: [
-      "Built dedicated modular landing page with above-the-fold CTA.",
-      "Configured GA4 scroll depth and form interaction telemetry.",
-      "A/B tested outcome-led value propositions against feature lists.",
-    ],
-    tools: ["GA4", "Google Tag Manager", "Microsoft Clarity"],
-  },
-  {
-    id: "03",
-    tag: "Content Strategy",
-    icon: BarChart3,
-    title: "Multi-Platform Content Automation",
-    subtitle: "Professional Services · Brand Scaling",
-    highlight: "90+ Content Assets Produced",
-    challenge: "Fragmented social scheduling and lack of structured editorial pipelines.",
-    kpis: [
-      { value: "90+", label: "Assets Published" },
-      { value: "3", label: "Core Content Pillars" },
-      { value: "90d", label: "Sustained Execution" },
-    ],
-    steps: [
-      "Audited engagement metrics and established 3 core content pillars.",
-      "Created structured 90-day calendar and automated AI research workflows.",
-      "Implemented monthly stakeholder reporting dashboard.",
-    ],
-    tools: ["LinkedIn Analytics", "Claude CLI", "Notion"],
-  },
-  {
-    id: "04",
-    tag: "Workflow & CRM",
-    icon: Workflow,
-    title: "Automated Lead Sync & CRM Pipeline",
-    subtitle: "Client Operations · Inbound Routing",
-    highlight: "<1.5s Instant Lead Routing",
-    challenge: "Manual lead copy-pasting from web forms causing 24-48hr delays and dropped inquiries.",
-    kpis: [
-      { value: "<1.5s", label: "Lead Routing Latency" },
-      { value: "100%", label: "Zero Dropped Inquiries" },
-      { value: "85%", label: "Manual Effort Reduction" },
-    ],
-    steps: [
-      "Connected contact webhooks directly to CRM with instant Slack & email alerts.",
-      "Added fallback logging so failed submissions never disappear.",
-      "Delivered a simple 1-page client handover runbook.",
-    ],
-    tools: ["Make.com", "Zapier", "Webhooks", "Slack API", "Google Sheets"],
-  },
-];
+import { CheckCircle2, Target } from "lucide-react";
+import { useLanguage } from "@/src/context/LanguageContext";
+import { CASE_STUDIES_EN, CASE_STUDIES_ES } from "@/src/data/i18n/caseStudies";
 
 export const CaseStudiesSection: React.FC = () => {
+  const { t, isSpanish } = useLanguage();
   const [activeTab, setActiveTab] = useState(0);
-  const cs = CASE_STUDIES[activeTab];
+
+  const caseStudies = isSpanish ? CASE_STUDIES_ES : CASE_STUDIES_EN;
+  const cs = caseStudies[activeTab] || caseStudies[0];
   const ActiveIcon = cs.icon;
 
   return (
@@ -112,15 +21,15 @@ export const CaseStudiesSection: React.FC = () => {
       <div className="mx-auto max-w-6xl px-6 relative z-10">
         <FadeIn>
           <SectionLabel
-            eyebrow="Case Studies"
-            heading="Demonstrated Business Outcomes"
-            description="Concrete results across technical SEO restructuring, conversion rate optimization, content pipelines, and automated lead workflows."
+            eyebrow={t.caseStudies.eyebrow}
+            heading={t.caseStudies.heading}
+            description={t.caseStudies.description}
           />
         </FadeIn>
 
         {/* Tab Selector */}
         <div className="flex flex-wrap justify-start md:justify-center mb-10 gap-2" role="tablist" aria-label="Case Studies">
-          {CASE_STUDIES.map((study, idx) => {
+          {caseStudies.map((study, idx) => {
             const isActive = activeTab === idx;
             const Icon = study.icon;
             return (
@@ -145,7 +54,7 @@ export const CaseStudiesSection: React.FC = () => {
         {/* Bento Grid */}
         <AnimatePresence mode="wait">
           <motion.div
-            key={activeTab}
+            key={`${isSpanish ? "es" : "en"}-${activeTab}`}
             initial={{ opacity: 0, y: 8 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -8 }}
@@ -171,12 +80,16 @@ export const CaseStudiesSection: React.FC = () => {
                 <p className="text-xs font-body text-accent mb-4 font-medium">{cs.subtitle}</p>
 
                 <div className="p-4 rounded-xl bg-bg-raised/70 border border-border-subtle mb-4">
-                  <span className="text-xs font-body font-bold uppercase text-accent tracking-wider block mb-1">Challenge</span>
+                  <span className="text-xs font-body font-bold uppercase text-accent tracking-wider block mb-1">
+                    {isSpanish ? "Desafío" : "Challenge"}
+                  </span>
                   <p className="text-xs font-body text-text-secondary leading-relaxed">{cs.challenge}</p>
                 </div>
 
                 <div className="space-y-2">
-                  <span className="text-xs font-body font-bold uppercase text-text-muted tracking-wider block mb-2">Execution Steps</span>
+                  <span className="text-xs font-body font-bold uppercase text-text-muted tracking-wider block mb-2">
+                    {isSpanish ? "Pasos de Ejecución" : "Execution Steps"}
+                  </span>
                   {cs.steps.map((step, i) => (
                     <div key={i} className="flex items-start gap-2.5 text-xs font-body text-text-secondary leading-relaxed">
                       <CheckCircle2 size={14} className="text-accent shrink-0 mt-0.5" />
@@ -188,9 +101,9 @@ export const CaseStudiesSection: React.FC = () => {
 
               {/* Tools */}
               <div className="flex flex-wrap gap-1.5 pt-4 mt-5 border-t border-border-subtle">
-                {cs.tools.map((t) => (
-                  <span key={t} className="px-2.5 py-1 rounded-lg text-xs font-body bg-bg-raised border border-border-subtle text-text-secondary">
-                    {t}
+                {cs.tools.map((tool) => (
+                  <span key={tool} className="px-2.5 py-1 rounded-lg text-xs font-body bg-bg-raised border border-border-subtle text-text-secondary">
+                    {tool}
                   </span>
                 ))}
               </div>

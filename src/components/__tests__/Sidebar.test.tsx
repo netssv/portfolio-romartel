@@ -43,7 +43,7 @@ describe("Sidebar Component", () => {
     render(<Sidebar authorName="Rodrigo Martel" />);
     
     // Tapping the desktop theme switch triggers state swap and sets localStorage
-    const toggleButton = screen.getByText("Night Light Theme");
+    const toggleButton = screen.getByText("Dark Mode");
     expect(toggleButton).toBeInTheDocument();
 
     await act(async () => {
@@ -55,6 +55,6 @@ describe("Sidebar Component", () => {
     expect(localStorage.getItem("theme-override")).toBe("night");
 
     // Button label swaps dynamically to prompt light theme return
-    expect(screen.getByText("Day Light Theme")).toBeInTheDocument();
+    expect(screen.getByText("Day Light Mode")).toBeInTheDocument();
   });
 });

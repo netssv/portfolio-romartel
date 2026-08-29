@@ -1,8 +1,9 @@
 "use client";
 
 import React, { useState, useRef } from "react";
-import { ArrowUpRight, Play, Pause, Volume2, VolumeX, ShieldCheck, Gamepad2, Film } from "lucide-react";
+import { ArrowUpRight, Play, Pause, Volume2, VolumeX, ShieldCheck, Gamepad2 } from "lucide-react";
 import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
+import { useLanguage } from "@/src/context/LanguageContext";
 
 const GithubIcon = ({ size = 14 }: { size?: number }) => (
   <svg viewBox="0 0 24 24" width={size} height={size} stroke="currentColor" strokeWidth="2.25" fill="none" strokeLinecap="round" strokeLinejoin="round">
@@ -36,6 +37,7 @@ export const FlagshipProjectCard: React.FC<FlagshipProjectProps> = ({
   links,
   videoSrc = "/metro.mp4",
 }) => {
+  const { isSpanish } = useLanguage();
   const videoRef = useRef<HTMLVideoElement>(null);
   const [isPlaying, setIsPlaying] = useState(true);
   const [isMuted, setIsMuted] = useState(true);
@@ -89,19 +91,19 @@ export const FlagshipProjectCard: React.FC<FlagshipProjectProps> = ({
             <div className="flex flex-wrap items-center gap-2">
               <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg text-xs font-body font-bold bg-accent/10 text-accent border border-accent/20">
                 <Gamepad2 size={13} className="text-accent" />
-                FLAGSHIP SIMULATION
+                {isSpanish ? "SIMULACIÓN INSIGNIA" : "FLAGSHIP SIMULATION"}
               </span>
               <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg text-xs font-body font-semibold bg-bg-raised text-text-secondary border border-border-subtle">
                 <span className="w-2 h-2 rounded-full bg-accent-signal animate-pulse" />
-                Early Access Live
+                {isSpanish ? "Acceso Anticipado en Vivo" : "Early Access Live"}
               </span>
             </div>
             <span className="text-xs font-body text-text-muted">
-              Interactive 3D Web &amp; Game Architecture
+              {isSpanish ? "Simulación Web 3D y Arquitectura de Juegos" : "Interactive 3D Web & Game Architecture"}
             </span>
           </div>
 
-          {/* Video Mockup Shell */}
+          {/* Video Mockup */}
           <div className="relative rounded-2xl overflow-hidden border border-border-base bg-black aspect-video shadow-lg group/video">
             <video
               ref={videoRef}
@@ -113,10 +115,6 @@ export const FlagshipProjectCard: React.FC<FlagshipProjectProps> = ({
               className="w-full h-full object-cover cursor-pointer"
               onClick={togglePlay}
             />
-            <div className="absolute top-3.5 left-3.5 z-20 flex items-center gap-2 px-3 py-1.5 rounded-xl bg-black/75 backdrop-blur-md border border-white/10 text-xs font-body text-white/90">
-              <Film size={13} className="text-accent" />
-              <span className="font-semibold">Official Trailer · Metropolyca Engine</span>
-            </div>
 
             <div className="absolute bottom-3.5 right-3.5 z-20 flex items-center gap-2">
               <button
@@ -132,12 +130,12 @@ export const FlagshipProjectCard: React.FC<FlagshipProjectProps> = ({
                 aria-label={isMuted ? "Unmute" : "Mute"}
               >
                 {isMuted ? <VolumeX size={14} /> : <Volume2 size={14} className="text-accent" />}
-                <span>{isMuted ? "Unmute" : "Mute"}</span>
+                <span>{isMuted ? (isSpanish ? "Silenciado" : "Muted") : (isSpanish ? "Audio Activo" : "Audio On")}</span>
               </button>
             </div>
           </div>
 
-          {/* Info Grid */}
+          {/* Details & Metrics */}
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
             <div className="lg:col-span-8 flex flex-col gap-3.5">
               <div>
@@ -150,7 +148,9 @@ export const FlagshipProjectCard: React.FC<FlagshipProjectProps> = ({
               <div className="rounded-xl border border-border-subtle bg-bg-raised/70 p-3.5 flex items-start gap-2.5">
                 <ShieldCheck className="w-4 h-4 text-accent shrink-0 mt-0.5" />
                 <div className="text-xs font-body text-text-secondary leading-relaxed">
-                  <strong className="font-semibold text-text-primary">QA Standards: </strong>
+                  <strong className="font-semibold text-text-primary">
+                    {isSpanish ? "Estándares QA: " : "QA Standards: "}
+                  </strong>
                   {orchestrationStory}
                 </div>
               </div>
@@ -163,10 +163,9 @@ export const FlagshipProjectCard: React.FC<FlagshipProjectProps> = ({
               </div>
             </div>
 
-            {/* Metrics & CTAs */}
             <div className="lg:col-span-4 flex flex-col gap-3 bg-bg-raised/50 rounded-2xl border border-border-subtle p-4">
               <span className="text-xs font-body font-bold uppercase tracking-wider text-text-muted">
-                System Metrics
+                {isSpanish ? "Métricas del Sistema" : "System Metrics"}
               </span>
               <div className="grid grid-cols-1 gap-2">
                 {metrics.map((m, i) => (
@@ -184,7 +183,7 @@ export const FlagshipProjectCard: React.FC<FlagshipProjectProps> = ({
                   className="w-full h-10 px-4 flex items-center justify-center gap-2 rounded-xl bg-accent text-white font-body font-semibold text-xs shadow-xs hover:bg-accent-hover transition-all"
                 >
                   <Play size={13} className="fill-white" />
-                  <span>Play in Browser</span>
+                  <span>{isSpanish ? "Jugar en Navegador" : "Play in Browser"}</span>
                   <ArrowUpRight size={13} />
                 </a>
                 <a
@@ -194,7 +193,7 @@ export const FlagshipProjectCard: React.FC<FlagshipProjectProps> = ({
                   className="w-full h-9 px-3 flex items-center justify-center gap-2 rounded-xl border border-border-base bg-bg-surface text-text-secondary hover:text-text-primary font-body font-medium text-xs transition-all shadow-xs"
                 >
                   <GithubIcon size={13} />
-                  <span>Source Code</span>
+                  <span>{isSpanish ? "Código Fuente" : "Source Code"}</span>
                 </a>
               </div>
             </div>

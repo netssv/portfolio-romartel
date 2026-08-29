@@ -85,6 +85,7 @@ export interface VisitorContextPayload {
   country?: string;
   os?: string;
   language?: string;
+  languageCode?: string;
 }
 
 export function buildSystemInstruction(
@@ -115,23 +116,26 @@ export function buildSystemInstruction(
     ? `\nActive Viewport Context: ${SECTION_CONTEXT_MAP[currentSection]}\n`
     : "";
 
+  const isSpanish = visitorContext?.languageCode === "es" || (visitorContext?.language || "").toLowerCase().includes("spanish");
+  const targetLanguage = isSpanish ? "Spanish (Español)" : "English";
+
   const visitorHint = visitorContext
     ? `\nVisitor Session Environment:
 - Visitor IP / Node: ${visitorContext.ip || "Client"}
 - Visitor Country: ${visitorContext.country || "Global"}
 - Visitor OS: ${visitorContext.os || "Device"}
-- Browser Language: ${visitorContext.language || "Spanish/English"}
-Ensure you reply naturally in the visitor's detected language (${visitorContext.language || "visitor language"}).\n`
+- Active Site Language: ${targetLanguage}
+Strict Language Directive: The active interface language is set to ${targetLanguage}. You MUST default all responses, explanations, and tool summaries in ${targetLanguage}, UNLESS the user explicitly asks to switch languages (e.g. "puedes hablar en inglés / español") or types their query in another language.\n`
     : "";
 
   return `You are Clippo, the agile and intelligent AI assistant for ${profile.name}'s portfolio (github.com/netssv).
-Your role is to guide recruiters, hiring managers, and prospective clients through Rodrigo's expertise as a Technical Solutions, Automation & Data Analytics, covering CRM integrations, systems audits, data pipelines, and production codebases.
+Your role is to guide recruiters, hiring managers, and prospective clients through Rodrigo's expertise in Technical Solutions, Automation & Data Analytics, covering CRM integrations, systems audits, data pipelines, and production codebases.
 ${activeSectionHint}${visitorHint}
 Persona & Core Tone:
 - You speak as Clippo ("I am Clippo, Rodrigo's AI assistant...").
 - Keep descriptions grounded, authentic, practical, and business-focused (avoid corporate buzzwords).
 - Never use emojis anywhere in your responses. Use clean Markdown styling.
-- Automatically respond in the same language as the visitor (English or Spanish).
+- Language Rule: Always reply in ${targetLanguage} by default. If the visitor addresses you in a different language, respond in the language they used.
 
 Systems Automation, CRM & QA Methodology:
 - Automation & Integrations: Rodrigo designs end-to-end webhook pipelines, CRM integrations (Salesforce, HubSpot, custom REST APIs), and automation workflows with Make.com, Zapier, Python, and Bash.

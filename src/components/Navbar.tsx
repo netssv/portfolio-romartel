@@ -1,8 +1,13 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { motion, useScroll, useMotionValueEvent, AnimatePresence } from "framer-motion";
 import { ArrowUpRight, Menu, X, Sun, Moon } from "lucide-react";
+import { useSmoothScroll } from "./layout/SmoothScrollProvider";
+import { DesktopNav } from "./layout/DesktopNav";
+import { MobileMenuDropdown } from "./layout/MobileMenuDropdown";
+import { LanguageToggle } from "./ui/LanguageToggle";
+import { useLanguage } from "@/src/context/LanguageContext";
 
 interface NavItem {
   name: string;
@@ -15,7 +20,9 @@ interface NavbarProps {
 }
 
 export const Navbar: React.FC<NavbarProps> = ({ navItems, authorName }) => {
+  const { t } = useLanguage();
   const { scrollY } = useScroll();
+  const { getLenis } = useSmoothScroll();
   const [hidden, setHidden] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState("Home");
@@ -48,17 +55,33 @@ export const Navbar: React.FC<NavbarProps> = ({ navItems, authorName }) => {
     }
   });
 
-  const scrollToPath = (path: string) => {
-    setMobileMenuOpen(false);
-    if (path === "/" || path === "#" || path === "#top") {
-      window.scrollTo({ top: 0, behavior: "smooth" });
-      return;
-    }
-    const el = document.querySelector(path);
-    if (el) {
-      el.scrollIntoView({ behavior: "smooth" });
-    }
-  };
+  const scrollToPath = useCallback(
+    (path: string) => {
+      setMobileMenuOpen(false);
+      const targetId = path.startsWith("#") ? path.slice(1) : path;
+      const lenis = getLenis();
+
+      if (path === "/" || path === "#" || targetId === "top") {
+        if (lenis) {
+          lenis.scrollTo(0, { duration: 1.2 });
+        } else {
+          window.scrollTo({ top: 0, behavior: "smooth" });
+        }
+        return;
+      }
+
+      const targetEl = document.getElementById(targetId) || document.querySelector(path);
+      if (targetEl) {
+        if (lenis) {
+          lenis.scrollTo(targetEl as HTMLElement, { offset: -70, duration: 1.2 });
+        } else {
+          const top = (targetEl as HTMLElement).getBoundingClientRect().top + window.scrollY - 70;
+          window.scrollTo({ top, behavior: "smooth" });
+        }
+      }
+    },
+    [getLenis]
+  );
 
   useEffect(() => {
     const sections = navItems.map((item) => {
@@ -106,7 +129,6 @@ export const Navbar: React.FC<NavbarProps> = ({ navItems, authorName }) => {
       }`}
     >
       <div className="mx-auto max-w-6xl px-4 sm:px-6 h-16 flex items-center justify-between gap-4">
-        {/* Brand */}
         <a
           href="#top"
           onClick={(e) => {
@@ -124,43 +146,22 @@ export const Navbar: React.FC<NavbarProps> = ({ navItems, authorName }) => {
           </span>
         </a>
 
-        {/* Desktop Navigation (Visible exclusively on 1024px+ to avoid collision) */}
-        <nav className="hidden lg:flex items-center gap-1 bg-bg-raised/70 p-1 rounded-xl border border-border-subtle" aria-label="Main navigation">
-          {navItems.map((item) => {
-            const isActive = activeSection === item.name;
-            return (
-              <a
-                key={item.name}
-                href={item.path}
-                onClick={(e) => {
-                  e.preventDefault();
-                  scrollToPath(item.path);
-                }}
-                className={`relative px-3 py-1.5 rounded-lg text-xs font-body font-medium transition-all duration-150 ${
-                  isActive
-                    ? "text-white bg-accent font-semibold shadow-xs"
-                    : "text-text-secondary hover:text-text-primary hover:bg-bg-surface/80"
-                }`}
-              >
-                {item.name}
-              </a>
-            );
-          })}
-        </nav>
+        <DesktopNav
+          navItems={navItems}
+          activeSection={activeSection}
+          onNavigate={scrollToPath}
+        />
 
-        {/* Right Actions */}
         <div className="flex items-center gap-2 shrink-0">
+          <LanguageToggle />
+
           <button
             type="button"
             onClick={toggleTheme}
             aria-label="Toggle dark/light theme"
             className="h-9 w-9 flex items-center justify-center rounded-xl border border-border-subtle bg-bg-surface text-text-secondary hover:text-text-primary hover:border-accent transition-colors cursor-pointer shadow-xs"
           >
-            {theme === "night" ? (
-              <Sun size={14} className="text-accent" />
-            ) : (
-              <Moon size={14} className="text-accent" />
-            )}
+            {theme === "night" ? <Sun size={14} className="text-accent" /> : <Moon size={14} className="text-accent" />}
           </button>
 
           <a
@@ -171,11 +172,10 @@ export const Navbar: React.FC<NavbarProps> = ({ navItems, authorName }) => {
             }}
             className="hidden sm:inline-flex h-9 px-3.5 items-center gap-1.5 rounded-xl text-xs font-body font-semibold text-white bg-accent hover:bg-accent-hover transition-colors shadow-xs"
           >
-            <span>Let&apos;s Connect</span>
+            <span>{t.nav.contact}</span>
             <ArrowUpRight size={13} />
           </a>
 
-          {/* Mobile Menu Toggle */}
           <button
             type="button"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
@@ -187,48 +187,13 @@ export const Navbar: React.FC<NavbarProps> = ({ navItems, authorName }) => {
         </div>
       </div>
 
-      {/* Mobile Slide-down Menu */}
       <AnimatePresence>
         {mobileMenuOpen && (
-          <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "auto" }}
-            exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.2 }}
-            className="lg:hidden border-b border-border-subtle bg-bg-surface/95 backdrop-blur-xl px-6 py-4 flex flex-col gap-2 shadow-xl"
-          >
-            {navItems.map((item) => {
-              const isActive = activeSection === item.name;
-              return (
-                <a
-                  key={item.name}
-                  href={item.path}
-                  onClick={(e) => {
-                    e.preventDefault();
-                    scrollToPath(item.path);
-                  }}
-                  className={`px-3 py-2.5 rounded-xl text-xs font-body font-medium transition-all ${
-                    isActive
-                      ? "text-white bg-accent font-semibold shadow-xs"
-                      : "text-text-secondary hover:text-text-primary hover:bg-bg-raised"
-                  }`}
-                >
-                  {item.name}
-                </a>
-              );
-            })}
-            <a
-              href="#contact"
-              onClick={(e) => {
-                e.preventDefault();
-                scrollToPath("#contact");
-              }}
-              className="sm:hidden mt-2 h-10 flex items-center justify-center gap-1.5 rounded-xl text-xs font-body font-semibold text-white bg-accent hover:bg-accent-hover transition-colors shadow-xs"
-            >
-              <span>Let&apos;s Connect</span>
-              <ArrowUpRight size={13} />
-            </a>
-          </motion.div>
+          <MobileMenuDropdown
+            navItems={navItems}
+            activeSection={activeSection}
+            onNavigate={scrollToPath}
+          />
         )}
       </AnimatePresence>
     </motion.header>

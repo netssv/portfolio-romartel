@@ -6,6 +6,7 @@ import { FadeIn } from "@/src/components/ui/FadeIn";
 import { SectionLabel } from "@/src/components/ui/SectionLabel";
 import { CheckCircle2, ArrowRight } from "lucide-react";
 import Clarity from "@microsoft/clarity";
+import { useLanguage } from "@/src/context/LanguageContext";
 
 interface SocialLink {
   name: string;
@@ -21,6 +22,7 @@ interface ContactData {
 }
 
 export const ContactSection: React.FC<{ contact: ContactData }> = ({ contact }) => {
+  const { t, isSpanish } = useLanguage();
   const [step, setStep] = useState(0);
   const [formData, setFormData] = useState({ purpose: "", name: "", email: "", message: "" });
   const [submitted, setSubmitted] = useState(false);
@@ -43,12 +45,12 @@ export const ContactSection: React.FC<{ contact: ContactData }> = ({ contact }) 
 
       if (!response.ok) {
         setIsSubmitting(false);
-        alert("There was a problem sending your message. Please try again.");
+        alert(t.contact.errorMessage);
         return;
       }
     } catch {
       setIsSubmitting(false);
-      alert("Connection error. Please try again later.");
+      alert(t.contact.errorMessage);
       return;
     }
 
@@ -60,7 +62,7 @@ export const ContactSection: React.FC<{ contact: ContactData }> = ({ contact }) 
     setSubmitted(true);
   };
 
-  const purposes = ["Technical Automation", "Marketing Operations", "Consulting Audit", "General Inquiry"];
+  const purposes = t.contact.purposeOptions;
 
   return (
     <section id="contact" className="py-24 bg-bg-base border-t border-border-subtle">
@@ -69,8 +71,8 @@ export const ContactSection: React.FC<{ contact: ContactData }> = ({ contact }) 
         <div className="lg:col-span-5">
           <FadeIn>
             <SectionLabel
-              eyebrow="Get In Touch"
-              heading="Let's Discuss Systems &amp; Strategy"
+              eyebrow={t.contact.eyebrow}
+              heading={t.contact.heading}
               description={contact.description}
             />
 
@@ -118,9 +120,11 @@ export const ContactSection: React.FC<{ contact: ContactData }> = ({ contact }) 
                     <div className="w-14 h-14 mx-auto rounded-2xl bg-signal-success/10 flex items-center justify-center text-emerald-text mb-4">
                       <CheckCircle2 size={28} />
                     </div>
-                    <h3 className="text-xl font-heading font-bold text-text-primary mb-1.5">Message Sent</h3>
+                    <h3 className="text-xl font-heading font-bold text-text-primary mb-1.5">
+                      {isSpanish ? "Mensaje Enviado" : "Message Sent"}
+                    </h3>
                     <p className="text-text-secondary text-xs font-body max-w-sm mx-auto">
-                      Thank you for reaching out. I will respond to your inquiry within 24 business hours.
+                      {t.contact.successMessage}
                     </p>
                   </motion.div>
                 ) : (
@@ -139,7 +143,9 @@ export const ContactSection: React.FC<{ contact: ContactData }> = ({ contact }) 
                       <AnimatePresence mode="wait">
                         {step === 0 && (
                           <motion.div key="step0" initial={{ opacity: 0, x: 15 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -15 }} className="flex-1">
-                            <h4 className="text-base font-heading font-bold text-text-primary mb-4">What type of engagement are you exploring?</h4>
+                            <h4 className="text-base font-heading font-bold text-text-primary mb-4">
+                              {isSpanish ? "¿Qué tipo de consulta o proyecto estás explorando?" : "What type of engagement are you exploring?"}
+                            </h4>
                             <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
                               {purposes.map((p) => (
                                 <button
@@ -160,61 +166,83 @@ export const ContactSection: React.FC<{ contact: ContactData }> = ({ contact }) 
 
                         {step === 1 && (
                           <motion.div key="step1" initial={{ opacity: 0, x: 15 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -15 }} className="flex-1">
-                            <h4 className="text-base font-heading font-bold text-text-primary mb-1">What is your name?</h4>
-                            <p className="text-xs text-text-muted mb-4">Please share your name or organization.</p>
+                            <h4 className="text-base font-heading font-bold text-text-primary mb-1">
+                              {isSpanish ? "¿Cuál es tu nombre?" : "What is your name?"}
+                            </h4>
+                            <p className="text-xs text-text-muted mb-4">
+                              {isSpanish ? "Comparte tu nombre o empresa." : "Please share your name or organization."}
+                            </p>
                             <input
                               type="text"
                               autoFocus
                               required
                               value={formData.name}
                               onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                              placeholder="Jane Doe"
+                              placeholder={t.contact.namePlaceholder}
                               className="w-full bg-bg-raised border border-border-base rounded-xl px-4 py-2.5 text-xs text-text-primary placeholder:text-text-muted focus:outline-none focus:border-accent transition-all"
                             />
                             <div className="mt-6 flex gap-2.5">
-                              <button type="button" onClick={handlePrev} className="px-4 py-2 rounded-xl border border-border-base text-text-secondary text-xs font-body hover:bg-bg-raised transition-colors cursor-pointer">Back</button>
-                              <button type="button" onClick={handleNext} disabled={!formData.name} className="px-5 py-2 rounded-xl bg-accent text-white text-xs font-body font-semibold hover:bg-accent-hover disabled:opacity-50 transition-colors cursor-pointer">Continue</button>
+                              <button type="button" onClick={handlePrev} className="px-4 py-2 rounded-xl border border-border-base text-text-secondary text-xs font-body hover:bg-bg-raised transition-colors cursor-pointer">
+                                {isSpanish ? "Atrás" : "Back"}
+                              </button>
+                              <button type="button" onClick={handleNext} disabled={!formData.name} className="px-5 py-2 rounded-xl bg-accent text-white text-xs font-body font-semibold hover:bg-accent-hover disabled:opacity-50 transition-colors cursor-pointer">
+                                {isSpanish ? "Continuar" : "Continue"}
+                              </button>
                             </div>
                           </motion.div>
                         )}
 
                         {step === 2 && (
                           <motion.div key="step2" initial={{ opacity: 0, x: 15 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -15 }} className="flex-1">
-                            <h4 className="text-base font-heading font-bold text-text-primary mb-1">How can I reply to you?</h4>
-                            <p className="text-xs text-text-muted mb-4">We will use this email address for direct follow-up.</p>
+                            <h4 className="text-base font-heading font-bold text-text-primary mb-1">
+                              {isSpanish ? "¿A qué correo podemos responderte?" : "How can I reply to you?"}
+                            </h4>
+                            <p className="text-xs text-text-muted mb-4">
+                              {isSpanish ? "Usaremos este correo para seguimiento directo." : "We will use this email address for direct follow-up."}
+                            </p>
                             <input
                               type="email"
                               autoFocus
                               required
                               value={formData.email}
                               onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                              placeholder="jane@company.com"
+                              placeholder={t.contact.emailPlaceholder}
                               className="w-full bg-bg-raised border border-border-base rounded-xl px-4 py-2.5 text-xs text-text-primary placeholder:text-text-muted focus:outline-none focus:border-accent transition-all"
                             />
                             <div className="mt-6 flex gap-2.5">
-                              <button type="button" onClick={handlePrev} className="px-4 py-2 rounded-xl border border-border-base text-text-secondary text-xs font-body hover:bg-bg-raised transition-colors cursor-pointer">Back</button>
-                              <button type="button" onClick={handleNext} disabled={!formData.email || !/\S+@\S+\.\S+/.test(formData.email)} className="px-5 py-2 rounded-xl bg-accent text-white text-xs font-body font-semibold hover:bg-accent-hover disabled:opacity-50 transition-colors cursor-pointer">Continue</button>
+                              <button type="button" onClick={handlePrev} className="px-4 py-2 rounded-xl border border-border-base text-text-secondary text-xs font-body hover:bg-bg-raised transition-colors cursor-pointer">
+                                {isSpanish ? "Atrás" : "Back"}
+                              </button>
+                              <button type="button" onClick={handleNext} disabled={!formData.email || !/\S+@\S+\.\S+/.test(formData.email)} className="px-5 py-2 rounded-xl bg-accent text-white text-xs font-body font-semibold hover:bg-accent-hover disabled:opacity-50 transition-colors cursor-pointer">
+                                {isSpanish ? "Continuar" : "Continue"}
+                              </button>
                             </div>
                           </motion.div>
                         )}
 
                         {step === 3 && (
                           <motion.div key="step3" initial={{ opacity: 0, x: 15 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -15 }} className="flex-1 flex flex-col">
-                            <h4 className="text-base font-heading font-bold text-text-primary mb-1">Project Details &amp; Objectives</h4>
-                            <p className="text-xs text-text-muted mb-3">Briefly describe the systems or challenge you wish to solve.</p>
+                            <h4 className="text-base font-heading font-bold text-text-primary mb-1">
+                              {isSpanish ? "Detalles del Proyecto u Objetivos" : "Project Details & Objectives"}
+                            </h4>
+                            <p className="text-xs text-text-muted mb-3">
+                              {isSpanish ? "Describe brevemente el sistema o desafío que buscas resolver." : "Briefly describe the systems or challenge you wish to solve."}
+                            </p>
                             <textarea
                               autoFocus
                               required
                               rows={3}
                               value={formData.message}
                               onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                              placeholder="We are looking to streamline our operations..."
+                              placeholder={t.contact.messagePlaceholder}
                               className="w-full bg-bg-raised border border-border-base rounded-xl px-4 py-2.5 text-xs text-text-primary placeholder:text-text-muted focus:outline-none focus:border-accent transition-all resize-none flex-1"
                             />
                             <div className="mt-5 flex gap-2.5">
-                              <button type="button" onClick={handlePrev} className="px-4 py-2 rounded-xl border border-border-base text-text-secondary text-xs font-body hover:bg-bg-raised transition-colors cursor-pointer">Back</button>
+                              <button type="button" onClick={handlePrev} className="px-4 py-2 rounded-xl border border-border-base text-text-secondary text-xs font-body hover:bg-bg-raised transition-colors cursor-pointer">
+                                {isSpanish ? "Atrás" : "Back"}
+                              </button>
                               <button type="submit" disabled={!formData.message || isSubmitting} className="px-6 py-2 rounded-xl bg-accent text-white text-xs font-body font-semibold hover:bg-accent-hover disabled:opacity-50 transition-colors shadow-xs flex items-center gap-1.5 cursor-pointer">
-                                <span>{isSubmitting ? "Sending..." : "Submit Inquiry"}</span>
+                                <span>{isSubmitting ? (isSpanish ? "Enviando..." : "Sending...") : t.contact.sendButton}</span>
                                 <ArrowRight size={13} />
                               </button>
                             </div>

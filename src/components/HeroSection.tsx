@@ -4,6 +4,7 @@ import React, { useRef } from "react";
 import { ArrowUpRight, ArrowDown, MapPin, MessageSquare } from "lucide-react";
 import { motion, useInView } from "framer-motion";
 import { ExecutivePortrait } from "@/src/components/ui/ExecutivePortrait";
+import { useLanguage } from "@/src/context/LanguageContext";
 
 interface HeroSectionProps {
   name: string;
@@ -21,6 +22,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
   location,
   avatar,
 }) => {
+  const { t, isSpanish } = useLanguage();
   const heroRef = useRef<HTMLDivElement>(null);
   const imgRef = useRef<HTMLDivElement>(null);
   const imgInView = useInView(imgRef, { once: true, margin: "-50px" });
@@ -62,7 +64,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-signal-success" />
               </span>
               <span className="text-xs font-body font-semibold text-text-primary">
-                Available for Work
+                {isSpanish ? "Disponible para Proyectos" : "Available for Work"}
               </span>
             </span>
 
@@ -104,7 +106,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
               href="#projects"
               className="h-11 px-6 flex items-center justify-center gap-2 rounded-xl bg-accent text-white text-xs font-body font-semibold hover:bg-accent-hover transition-colors shadow-xs group"
             >
-              <span>Explore Projects</span>
+              <span>{t.hero.viewProjects}</span>
               <ArrowDown size={13} className="group-hover:translate-y-0.5 transition-transform" />
             </a>
 
@@ -116,7 +118,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
               className="h-11 px-5 flex items-center justify-center gap-2 rounded-xl border border-border-base bg-bg-surface text-xs font-body font-medium text-text-secondary hover:text-text-primary hover:border-accent transition-colors shadow-xs group cursor-pointer"
             >
               <MessageSquare size={14} className="text-accent" />
-              <span>Quick Message</span>
+              <span>{isSpanish ? "Mensaje Rápido" : "Quick Message"}</span>
               <ArrowUpRight size={13} className="text-text-muted group-hover:text-accent group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all" />
             </button>
           </motion.div>

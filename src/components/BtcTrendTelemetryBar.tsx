@@ -15,7 +15,10 @@ interface TelemetryData {
   events: TelemetryEvent[];
 }
 
+import { useLanguage } from "@/src/context/LanguageContext";
+
 export const BtcTrendTelemetryBar: React.FC = () => {
+  const { isSpanish } = useLanguage();
   const [telemetry, setTelemetry] = useState<TelemetryData | null>(null);
   const [sentiment, setSentiment] = useState<{ fearGreed: number; classification: string } | null>(null);
   const [btcTicker, setBtcTicker] = useState({ price: 0, priceChangePercent: 0, highPrice: 0, lowPrice: 0 });
@@ -87,10 +90,10 @@ export const BtcTrendTelemetryBar: React.FC = () => {
   const latest = events[0];
 
   const formatTime = (iso?: string) => {
-    if (!iso) return "Active";
+    if (!iso) return isSpanish ? "Activo" : "Active";
     const ts = new Date(iso).getTime();
-    if (isNaN(ts)) return "Active";
-    return "Recently";
+    if (isNaN(ts)) return isSpanish ? "Activo" : "Active";
+    return isSpanish ? "Reciente" : "Recently";
   };
 
   return (
@@ -108,17 +111,19 @@ export const BtcTrendTelemetryBar: React.FC = () => {
                 <div className="min-w-0">
                   <div className="flex items-center gap-2">
                     <span className="font-body text-xs font-bold uppercase tracking-wider text-accent-signal">
-                      Live Telemetry
+                      {isSpanish ? "Telemetría en Vivo" : "Live Telemetry"}
                     </span>
                     <span className="rounded-md bg-bg-raised px-2 py-0.5 text-[11px] font-body text-text-secondary font-medium border border-border-subtle">
-                      $0/mo Python &amp; Cron Watchdog
+                      {isSpanish ? "Watchdog Python y Cron $0/mes" : "$0/mo Python & Cron Watchdog"}
                     </span>
                   </div>
                   <p className="text-xs font-body text-text-secondary mt-0.5 truncate">
                     {latest ? (
-                      <>Task: <strong className="text-text-primary font-semibold">{latest.task}</strong> · <span className="font-mono text-[11px] text-text-primary font-medium">[{latest.source}]</span> ({formatTime(latest.timestamp)})</>
+                      <>{isSpanish ? "Tarea: " : "Task: "}<strong className="text-text-primary font-semibold">{latest.task}</strong> · <span className="font-mono text-[11px] text-text-primary font-medium">[{latest.source}]</span> ({formatTime(latest.timestamp)})</>
                     ) : (
-                      "Autonomous serverless pipeline with 24/7 uptime monitoring"
+                      isSpanish
+                        ? "Pipeline serverless autónomo con monitoreo de disponibilidad 24/7"
+                        : "Autonomous serverless pipeline with 24/7 uptime monitoring"
                     )}
                   </p>
                 </div>
@@ -151,7 +156,7 @@ export const BtcTrendTelemetryBar: React.FC = () => {
                     className="flex items-center gap-1.5 rounded-xl border border-border-subtle bg-bg-raised px-3 py-2 text-xs font-body font-medium text-text-secondary hover:border-border-base hover:text-text-primary transition-all cursor-pointer shadow-xs"
                   >
                     <Activity size={13} className="text-accent" />
-                    <span>{showLogs ? "Hide Logs" : "Logs"}</span>
+                    <span>{showLogs ? (isSpanish ? "Ocultar Registros" : "Hide Logs") : (isSpanish ? "Registros" : "Logs")}</span>
                     {showLogs ? <ChevronUp size={13} /> : <ChevronDown size={13} />}
                   </button>
                   <a
@@ -160,7 +165,7 @@ export const BtcTrendTelemetryBar: React.FC = () => {
                     rel="noopener noreferrer"
                     className="flex items-center gap-1.5 rounded-xl bg-accent px-3.5 py-2 text-xs font-body font-semibold text-white hover:bg-accent-hover transition-all shadow-xs"
                   >
-                    <span>Signal Desk</span>
+                    <span>{isSpanish ? "Mesa de Señales" : "Signal Desk"}</span>
                     <ArrowUpRight size={13} />
                   </a>
                 </div>

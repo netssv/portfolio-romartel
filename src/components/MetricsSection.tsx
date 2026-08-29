@@ -57,7 +57,10 @@ const AnimatedCounter: React.FC<{ value: string }> = ({ value }) => {
 
 const ICONS = [Zap, ShieldCheck, Layers, Cpu];
 
+import { useLanguage } from "@/src/context/LanguageContext";
+
 export const MetricsSection: React.FC<MetricsSectionProps> = ({ metrics }) => {
+  const { isSpanish } = useLanguage();
   const [expandedIndex, setExpandedIndex] = useState<number | null>(null);
 
   const toggleExpand = (i: number) => {
@@ -90,7 +93,7 @@ export const MetricsSection: React.FC<MetricsSectionProps> = ({ metrics }) => {
                         <Icon size={16} />
                       </span>
                       <span className="text-[11px] font-body text-text-muted flex items-center gap-1 font-medium">
-                        <span>Context</span>
+                        <span>{isSpanish ? "Contexto" : "Context"}</span>
                         <ChevronDown size={11} className={`transition-transform duration-200 ${isExpanded ? "rotate-180 text-accent" : ""}`} />
                       </span>
                     </div>
@@ -124,7 +127,8 @@ export const MetricsSection: React.FC<MetricsSectionProps> = ({ metrics }) => {
                     <Sparkles className="w-4 h-4 text-accent shrink-0 mt-0.5" />
                     <div>
                       <span className="text-xs font-body font-bold text-text-primary uppercase tracking-wider">
-                        Operational Context: {metrics[expandedIndex].label}
+                        {isSpanish ? "Contexto Operativo: " : "Operational Context: "}
+                        {metrics[expandedIndex].label}
                       </span>
                       <p className="text-xs sm:text-sm font-body text-text-secondary leading-relaxed mt-1">
                         {metrics[expandedIndex].details}

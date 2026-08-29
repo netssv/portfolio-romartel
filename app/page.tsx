@@ -1,6 +1,6 @@
 "use client";
 
-import siteData from "@/src/data/siteData.json";
+import { useLanguage } from "@/src/context/LanguageContext";
 import { Navbar } from "@/src/components/Navbar";
 import { HeroSection } from "@/src/components/HeroSection";
 import { BtcTrendTelemetryBar } from "@/src/components/BtcTrendTelemetryBar";
@@ -18,20 +18,31 @@ import { SmoothScrollProvider } from "@/src/components/layout/SmoothScrollProvid
 import { GlobalWebGLStage } from "@/src/components/canvas/GlobalWebGLStage";
 import { useViewportGrid } from "@/src/lib/useViewportGrid";
 
-const {
-  profile,
-  experience,
-  flagshipProject,
-  sideProjects,
-  skillsMatrix,
-  contact,
-  trustedStack,
-  metrics,
-  philosophy,
-} = siteData;
-
 export default function Home() {
   useViewportGrid();
+  const { data, t } = useLanguage();
+
+  const {
+    profile,
+    experience,
+    flagshipProject,
+    sideProjects,
+    skillsMatrix,
+    contact,
+    trustedStack,
+    metrics,
+    philosophy,
+    metadata,
+  } = data;
+
+  const navItems = [
+    { name: t.nav.home, path: "#top" },
+    { name: t.nav.projects, path: "#projects" },
+    { name: t.nav.experience, path: "#experience" },
+    { name: t.nav.insights, path: "#skills" },
+    { name: t.nav.architecture, path: "#architecture" },
+    { name: t.nav.caseStudies, path: "#case-studies" },
+  ];
 
   return (
     <SmoothScrollProvider>
@@ -39,14 +50,7 @@ export default function Home() {
       <CustomScrollRail />
       <Navbar
         authorName={profile.name}
-        navItems={[
-          { name: "Home", path: "#top" },
-          { name: "Projects", path: "#projects" },
-          { name: "Experience", path: "#experience" },
-          { name: "Insights", path: "#skills" },
-          { name: "Architecture", path: "#architecture" },
-          { name: "Case Studies", path: "#case-studies" },
-        ]}
+        navItems={navItems}
       />
       <main className="flex-1 w-full flex flex-col min-w-0 relative z-10">
         {/* ── Hero ───────────────────────────────────── */}
@@ -102,11 +106,11 @@ export default function Home() {
       <footer className="py-8 border-t border-border-subtle bg-bg-surface/50 relative z-10">
         <div className="mx-auto max-w-6xl px-6 flex flex-col sm:flex-row items-center justify-between gap-3">
           <p className="text-xs font-body text-text-muted">
-            &copy; {new Date().getFullYear()} {siteData.metadata.author}. All rights reserved.
+            &copy; {new Date().getFullYear()} {metadata.author}. {t.footer.rights}
           </p>
           <div className="flex gap-5 text-xs font-body text-text-muted">
             <a
-              href={siteData.metadata.socialLinks.github}
+              href={metadata.socialLinks.github}
               target="_blank"
               rel="noopener noreferrer"
               className="hover:text-text-primary transition-colors duration-150"
@@ -114,7 +118,7 @@ export default function Home() {
               GitHub
             </a>
             <a
-              href={siteData.metadata.socialLinks.linkedin}
+              href={metadata.socialLinks.linkedin}
               target="_blank"
               rel="noopener noreferrer"
               className="hover:text-text-primary transition-colors duration-150"
@@ -125,7 +129,7 @@ export default function Home() {
               href="#top"
               className="hover:text-accent transition-colors duration-150"
             >
-              Top
+              {t.footer.topLink}
             </a>
           </div>
         </div>

@@ -1,0 +1,470 @@
+{
+  "metadata": {
+    "title": "Rodrigo Martel | Especialista en Operaciones de Marketing y Sistemas",
+    "description": "Profesional de marketing especializado en automatización de flujos de trabajo (Make, Zapier, Python), integraciones CRM (Salesforce, HubSpot), analítica práctica de datos y operaciones web.",
+    "keywords": [
+      "Rodrigo Martel",
+      "Operaciones de Marketing",
+      "Especialista en Sistemas",
+      "Automatización de Procesos",
+      "Integraciones CRM",
+      "Zapier",
+      "Make.com",
+      "Python",
+      "Analítica de Datos",
+      "Power BI",
+      "Operaciones Web"
+    ],
+    "author": "Rodrigo Martel",
+    "email": "rop.martel@gmail.com",
+    "location": "San Salvador, El Salvador",
+    "socialLinks": {
+      "linkedin": "https://linkedin.com/in/ropmartel",
+      "github": "https://github.com/netssv/",
+      "twitter": "https://x.com/netssv"
+    }
+  },
+  "navigation": [
+    { "name": "Inicio", "path": "/" },
+    { "name": "Proyectos", "path": "#projects" },
+    { "name": "Experiencia", "path": "#experience" },
+    { "name": "Habilidades", "path": "#skills" },
+    { "name": "Arquitectura", "path": "#architecture" },
+    { "name": "Casos de Estudio", "path": "#case-studies" },
+    { "name": "Contacto", "path": "#contact" }
+  ],
+  "profile": {
+    "name": "Rodrigo Martel",
+    "title": "Especialista en Operaciones de Marketing y Sistemas",
+    "location": "San Salvador, El Salvador",
+    "tagline": "Optimizando flujos de datos, diseñando pipelines CRM automatizados y ejecutando auditorías técnicas de sistemas.",
+    "bio": "Profesional de marketing conectando automatización no-code/low-code (Make, Zapier, Python), integraciones CRM (Salesforce, HubSpot, Webhooks) y analítica práctica de datos. Apasionado por eliminar fricciones y garantizar la integridad de datos.",
+    "avatar": {
+      "src": "/avatar.webp",
+      "alt": "Retrato de Perfil de Rodrigo Martel"
+    },
+    "portfolioButton": {
+      "text": "Mi Portafolio (Adobe Express)",
+      "url": "https://new.express.adobe.com/id/urn:aaid:sc:VA6C2:e1687bdb-3b5a-54b5-91ab-01b2afbc65d3"
+    },
+    "education": {
+      "degree": "Licenciatura en Mercadeo y Publicidad",
+      "specialization": "Especialización en Logística y Operaciones de Cadena de Suministro",
+      "level": "Grado Universitario (Licenciatura)"
+    }
+  },
+  "experience": [
+    {
+      "company": "HostPapa",
+      "role": "Especialista CX – Infraestructura y Web Hosting",
+      "period": "2025 - Presente",
+      "location": "Remoto",
+      "description": "Contexto técnico que la mayoría de estrategas web no posee. Trabajar en la infraestructura de HostPapa —WordPress, DNS, SSL y entornos de servidor— me da un entendimiento directo para resolver problemas desde la raíz.",
+      "impact": [
+        "Implementé scripts en Python y Bash para automatizar auditorías de sitios web y validaciones repetitivas.",
+        "Contribuí a la base de conocimiento interna, reduciendo la fricción de autoservicio para clientes.",
+        "Coordiné escalaciones con equipos de Nivel 2 aportando diagnósticos estructurados y pasos de replicación."
+      ],
+      "operations": [
+        "Brindé soporte técnico para WordPress, DNS, SSL, cPanel y gestión de dominios para clientes B2B y B2C.",
+        "Diagnostiqué incidentes de hosting en entornos Linux (correo, conflictos de plugins y errores de accesibilidad).",
+        "Traduje configuraciones técnicas a un lenguaje orientado al negocio para respaldar el éxito del cliente."
+      ]
+    },
+    {
+      "company": "Proyectos Remotos / Upwork y Fiverr",
+      "role": "Consultor de Marketing y Freelancer",
+      "period": "2024 - 2025",
+      "location": "Remoto",
+      "description": "Ejecuté campañas de marketing digital, gestioné contenido orgánico multiplataforma y monitoreé métricas de rendimiento.",
+      "impact": [
+        "Realicé investigación de palabras clave e intención de búsqueda para estructurar landing pages de alta conversión.",
+        "Implementé mejoras de tasa de conversión en páginas de clientes mediante pruebas de copy y reposicionamiento de CTAs (+18% en envíos de formularios)."
+      ],
+      "operations": [
+        "Utilicé herramientas de IA para apoyar en la clasificación de datos, investigación y organización de flujos de trabajo rutinarios."
+      ]
+    },
+    {
+      "company": "Banco Central de Reserva",
+      "role": "Consultor Supervisor de Proyectos de Campo",
+      "period": "2023",
+      "location": "El Salvador",
+      "isSecondary": true,
+      "description": "Compromiso de fin de semana apoyando la iniciativa nacional de recolección de datos y cartografía — gestionando equipos de campo y herramientas móviles de datos.",
+      "impact": [
+        "Capacité al personal de campo en herramientas de captura móvil (Survey123 y sistemas de geolocalización).",
+        "Monitoreé el seguimiento de KPIs y alineación operativa con los objetivos del proyecto.",
+        "Optimicé la logística, reportes y comunicación entre equipos de campo y coordinadores generales."
+      ],
+      "operations": [
+        "Coordiné y supervisé equipos de campo durante actividades de recolección de datos in situ.",
+        "Brindé soporte en herramientas digitales multiplataforma (Google Workspace y apps de colaboración segura).",
+        "Mantuve reportes operativos consistentes y coordinación de equipo durante toda la duración del proyecto."
+      ]
+    },
+    {
+      "company": "Laboratorios ROMAChemical",
+      "role": "Analista de Datos de Mercado y Negocios",
+      "period": "2023 - 2025",
+      "location": "El Salvador",
+      "description": "Respaldé la reportería de negocios y transformación digital — integrando datos de múltiples departamentos en dashboards centralizados y flujos eficientes.",
+      "impact": [
+        "Desarrollé dashboards y reportes en Power BI y Excel para el monitoreo operativo y toma de decisiones comerciales.",
+        "Contribuí a la documentación de procesos vinculados al ERP y coordinación durante iniciativas de digitalización.",
+        "Apoyé en analítica de marketing y reportes de campañas para optimización de presupuestos."
+      ],
+      "operations": [
+        "Colaboré entre Ventas, Servicio al Cliente y Operaciones para mejorar la accesibilidad y consistencia de los datos.",
+        "Impulsé la adopción del CRM y herramientas digitales internas mediante coordinación interdepartamental.",
+        "Ayudé a migrar flujos manuales hacia procesos digitales centralizados y medibles."
+      ]
+    },
+    {
+      "company": "HP (vía SmartFriend)",
+      "role": "Supervisor de Soporte Técnico al Cliente",
+      "period": "2021 - 2024",
+      "location": "Remoto",
+      "description": "Supervisé operaciones nocturnas de soporte técnico — asegurando desempeño del equipo, gestión de escalaciones y cumplimiento de SLAs en un entorno remoto de alto volumen.",
+      "impact": [
+        "Asistí al equipo en casos técnicos complejos y comunicación con clientes durante turnos de alta demanda.",
+        "Contribuí a procesos de inducción y capacitación para nuevos agentes de soporte.",
+        "Documenté problemas técnicos recurrentes y aporté a la mejora continua de procesos."
+      ],
+      "operations": [
+        "Monitoreé cumplimiento de SLAs, resolución de tickets y organización de flujos de trabajo.",
+        "Guié a clientes en la identificación de soluciones técnicas para hardware, software y conectividad.",
+        "Asistí en flujos de trabajo de soporte de garantías y coordinación de servicios técnicos."
+      ]
+    },
+    {
+      "company": "INTELITECSA",
+      "role": "Coordinador de Mercadeo y Negocios",
+      "period": "2018 - 2022",
+      "location": "El Salvador",
+      "description": "Coordiné campañas de mercadeo, iniciativas de fidelización y reportería comercial en áreas clave de una empresa enfocada en tecnología y ventas.",
+      "impact": [
+        "Contribuí al análisis de rendimiento de campañas y reportes de métricas de interacción con clientes.",
+        "Respaldé esfuerzos de organización digital y documentación mediante herramientas colaborativas.",
+        "Participé en iniciativas de retención de clientes y procesos de seguimiento."
+      ],
+      "operations": [
+        "Preparé reportes operativos y de ventas para uso interno y revisión gerencial.",
+        "Coordiné procesos administrativos y seguimiento a clientes entre diversas áreas del negocio.",
+        "Participé en gestión de redes sociales y estrategias de comunicación digital."
+      ]
+    }
+  ],
+  "sideProjects": [
+    {
+      "id": "fifa-predictor",
+      "title": "FIFA World Cup 2026 AI Lab",
+      "subtitle": "Simulador ML Monte Carlo y Motor de Llaves",
+      "description": "Simulación predictiva de torneo combinando modelos Random Forest y Poisson en 10 pipelines de datos con más de 5,000 ciclos Monte Carlo.",
+      "valueProp": "Modelado predictivo estadístico con 10 pipelines de variables y más de 5,000 ciclos Monte Carlo.",
+      "category": "Machine Learning y Datos",
+      "status": "Producción",
+      "icon": "Trophy",
+      "image": "/projects/fifa-predictor.png",
+      "tags": ["Python ML", "Random Forest", "Next.js", "TypeScript"],
+      "links": {
+        "github": "https://github.com/netssv/fifa-world-cup-2026-predictor",
+        "demo": "https://fifa2026worldcup.vercel.app/"
+      }
+    },
+    {
+      "id": "hodl-watcher",
+      "title": "HODL Watcher",
+      "subtitle": "Copiloto Cuantitativo BTC y Pipeline Serverless",
+      "description": "Copiloto de inteligencia de mercado cuantitativo que entrega payloads estructurados de Bitcoin respaldado por un cron watchdog serverless de $0/mes.",
+      "valueProp": "Pipeline en la nube autónomo a $0/mes con cron watchdog Make.com y telemetría en memoria.",
+      "category": "Machine Learning y Datos",
+      "status": "Producción",
+      "icon": "LineChart",
+      "image": "/projects/hodl-watcher.png",
+      "tags": ["Python FastAPI", "Make.com Cron", "Render Cloud", "React 19"],
+      "links": {
+        "github": "https://github.com/netssv/HODL_watcher",
+        "demo": "https://hodl-watcher.vercel.app/"
+      }
+    },
+    {
+      "id": "whathappened",
+      "title": "WhatHappened",
+      "subtitle": "Terminal de Triaje de Infraestructura Web Chrome MV3",
+      "description": "Extensión publicada en Chrome Web Store que brinda un emulador de terminal estilo POSIX para DNS edge (DoH), inspección de certificados SSL y triaje de red.",
+      "valueProp": "CLI estilo POSIX en Chrome para DNS edge, inspección SSL y diagnóstico de red.",
+      "category": "Infraestructura Web y Seguridad",
+      "status": "Producción",
+      "icon": "Terminal",
+      "image": "/projects/whathappened.png",
+      "tags": ["Chrome MV3", "TypeScript", "Triaje DNS / SSL", "POSIX CLI"],
+      "links": {
+        "github": "https://github.com/netssv/whathappend",
+        "demo": "https://chromewebstore.google.com/detail/whathappened/jkohefabbnobompohkedfaodcnfdplom"
+      }
+    },
+    {
+      "id": "caniarun",
+      "title": "caniarun",
+      "subtitle": "Perfilador de Hardware PyPI para IA Open-Source",
+      "description": "Herramienta CLI distribuida en PyPI que evalúa GPU/VRAM local para contrastar compatibilidad real con más de 80 modelos de IA en niveles de cuantización GGUF.",
+      "valueProp": "Perfilado instantáneo de hardware y clasificación de compatibilidad de cuantización.",
+      "category": "Herramientas de Desarrollador y CLI",
+      "status": "Producción",
+      "icon": "Cpu",
+      "image": "/projects/caniarun.png",
+      "tags": ["Python CLI", "Paquete PyPI", "Cuantización LLM", "CUDA / GPU"],
+      "links": {
+        "github": "https://github.com/netssv/can_ia_run",
+        "demo": "https://pypi.org/project/caniarun/"
+      }
+    },
+    {
+      "id": "btkey-sync",
+      "title": "btkey_sync",
+      "subtitle": "Sincronizador de Llaves Bluetooth LE Multi-SO",
+      "description": "Utilidad de automatización de sistemas que extrae llaves Bluetooth LTK de Windows a nivel SYSTEM y las convierte al formato BlueZ de Linux, eliminando re-emparejamientos en dual-boot.",
+      "valueProp": "Elimina la fricción de re-emparejamiento BLE entre particiones de doble arranque.",
+      "category": "Sistemas y Automatización",
+      "status": "Producción",
+      "icon": "Bluetooth",
+      "image": "/projects/btkey-sync.png",
+      "tags": ["Python", "Registro Windows", "Linux BlueZ", "Bluetooth LE"],
+      "links": {
+        "github": "https://github.com/netssv/btkey_sync",
+        "demo": "https://pypi.org/project/Btkey-Sync/"
+      }
+    },
+    {
+      "id": "rebusca",
+      "title": "Rebusca",
+      "subtitle": "Motor Modular Android de Inteligencia de Precios",
+      "description": "Aplicación Android con arquitectura limpia que utiliza algoritmos de web scraping y búsqueda semántica para comparar precios de consumo en los principales supermercados de El Salvador.",
+      "valueProp": "Agregación de precios de supermercados en tiempo real y optimizador de ahorro.",
+      "category": "Móvil y Web Scraping",
+      "status": "En Desarrollo",
+      "icon": "Smartphone",
+      "image": "/rebusca-preview.gif",
+      "videoSrc": "/rebusca.mp4",
+      "tags": ["Android / Kotlin", "Web Scraping", "Arquitectura Limpia", "Inteligencia de Precios", "Búsqueda Semántica"],
+      "links": {
+        "github": "https://github.com/netssv/rebusca-app",
+        "demo": "/rebusca.mp4"
+      }
+    }
+  ],
+  "skillsMatrix": {
+    "businessCore": {
+      "title": "Estrategia de Sistemas y Operaciones con Clientes",
+      "icon": "Target",
+      "skills": [
+        "Integraciones CRM y Plataformas (Salesforce, HubSpot, Webhooks)",
+        "Auditorías Técnicas de Sistemas y Descubrimiento en Onboarding",
+        "QA de Flujos de Trabajo y Pruebas de Fiabilidad de Integración",
+        "Sesiones Técnicas con Clientes y Entrega de Runbooks",
+        "Gestión de Escalaciones y Análisis Causa-Raíz de Incidentes",
+        "Monitoreo de SLAs y KPIs de Rendimiento"
+      ]
+    },
+    "dataIntelligence": {
+      "title": "Datos, BI y Paneles de Control",
+      "icon": "BarChart3",
+      "skills": [
+        "Diseño de Dashboards en Power BI y Modelado DAX",
+        "Modelado Automatizado en Excel y Google Sheets",
+        "Migración de Datos y Validación ETL",
+        "Fundamentos de SQL y Flujos de Datos Relacionales",
+        "Analítica de Marketing y Seguimiento de Conversiones",
+        "Visibilidad Operativa y Seguimiento de KPIs"
+      ]
+    },
+    "technicalTooling": {
+      "title": "Herramientas de Automatización e Infraestructura",
+      "icon": "Cpu",
+      "skills": [
+        "Orquestación con Make.com y Webhooks de Zapier",
+        "Scripts en Python (Automatización, APIs y Validación de Datos)",
+        "Coordinación de Sprints Ágiles en ClickUp y Asana",
+        "Watchdogs en la Nube con Bash y Serverless",
+        "Next.js, TypeScript y React",
+        "Git, CI/CD y QA Dirigido por Pruebas"
+      ]
+    }
+  },
+  "trustedStack": [
+    "SEO y CRO",
+    "Automatización de Procesos",
+    "Google Analytics 4",
+    "Microsoft Clarity",
+    "Google Search Console",
+    "Microsoft Power BI",
+    "Pruebas A/B",
+    "Claude CLI",
+    "Python y Webhooks",
+    "Next.js",
+    "Sistemas de IA"
+  ],
+  "metrics": [
+    {
+      "value": "70%",
+      "label": "Velocidad de Reportes",
+      "subtitle": "Pipelines de Datos Automatizados",
+      "details": "Desarrollé scripts de ingesta en Python y dashboards interactivos en Power BI, eliminando cuellos de botella manuales con hojas de cálculo."
+    },
+    {
+      "value": "40+",
+      "label": "Arquetipos de Incidentes",
+      "subtitle": "Planos Causa-Raíz",
+      "details": "Diseñé taxonomías sistemáticas de triaje y procedimientos estandarizados de resolución para turnos de soporte de alto volumen."
+    },
+    {
+      "value": "6+",
+      "label": "Sistemas en Producción",
+      "subtitle": "Web, CLI y Paquetes",
+      "details": "Arquitecté y publiqué software en vivo incluyendo simulaciones WebGL 3D, terminales de red en Chrome MV3 y paquetes en PyPI."
+    },
+    {
+      "value": "150+",
+      "label": "Pruebas Automatizadas",
+      "subtitle": "Cobertura Continua de QA",
+      "details": "Diseñé suites completas de pruebas unitarias y de integración con automatización CI/CD para lanzamientos libres de regresiones."
+    }
+  ],
+  "philosophy": {
+    "quote": "La tecnología sin estrategia es solo sobrecosto. Construyo sistemas que reducen fricción, visibilizan datos y permiten a las organizaciones avanzar más rápido — no más ruidoso.",
+    "focus": [
+      "Automatización",
+      "Arquitectura de Datos",
+      "Transformación Digital",
+      "Eficiencia Operativa"
+    ]
+  },
+  "contact": {
+    "title": "Conectemos",
+    "description": "¿Interesado en automatizar flujos de trabajo, escalar pipelines de datos u optimizar estrategias de transformación digital? Conversemos sobre soluciones técnicas.",
+    "email": "rop.martel@gmail.com",
+    "location": "San Salvador, El Salvador",
+    "social": [
+      {
+        "name": "LinkedIn",
+        "url": "https://linkedin.com/in/ropmartel",
+        "display": "linkedin.com/in/ropmartel"
+      },
+      {
+        "name": "GitHub",
+        "url": "https://github.com/netssv/",
+        "display": "github.com/netssv/"
+      },
+      {
+        "name": "Twitter / X",
+        "url": "https://x.com/netssv",
+        "display": "x.com/netssv"
+      }
+    ]
+  },
+  "flagshipProject": {
+    "id": "metropolyca",
+    "title": "Metropolyca",
+    "subtitle": "Constructor de ciudades 3D vivo y simulación económica en tu navegador",
+    "eyebrow": "Proyecto Insignia · Acceso Anticipado en Vivo · Rumbo a Steam",
+    "description": "Juego de simulación urbana en web gestionando zonas metropolitanas vivas, redes dinámicas de tráfico, necesidades ciudadanas y economía simulada a 60 FPS estables.",
+    "orchestrationStory": "Arquitectura de juego personalizada con más de 150 pruebas unitarias/integración automatizadas y QA continuo.",
+    "status": "Acceso Anticipado en Vivo",
+    "category": "Simulación 3D y Juegos",
+    "icon": "Gamepad2",
+    "image": "/projects/metropolyca.png",
+    "video": "/metro.mp4",
+    "videoSrc": "/metro.mp4",
+    "metrics": [
+      { "label": "Rendimiento", "value": "60 FPS Estables" },
+      { "label": "Cobertura QA", "value": "150+ Pruebas Pasadas" },
+      { "label": "Motor de Mundo", "value": "Ciudad 3D Viva" },
+      { "label": "Estado de Lanzamiento", "value": "Rumbo a Steam" }
+    ],
+    "tags": [
+      "Constructor de Ciudades",
+      "Simulación Web 3D",
+      "TypeScript",
+      "Economía Viva",
+      "Logística Urbana",
+      "Rumbo a Steam"
+    ],
+    "links": {
+      "demo": "https://metropolyca.vercel.app/",
+      "github": "https://github.com/netssv/metropolyca"
+    }
+  },
+  "credentials": {
+    "totalCount": 103,
+    "archiveUrl": "https://1drv.ms/f/c/c9136ada8a51a610/IgAQplGK2moTIIDJJKsAAAAAAd9ni2_70w9-q00a4Majbqk?e=AdFVPs",
+    "summary": "103 certificaciones auditadas en analítica de datos, marketing digital, automatización con IA, infraestructura TI, liderazgo ágil y operaciones especializadas.",
+    "categories": [
+      {
+        "id": "data-analytics",
+        "title": "Analítica de Datos e Inteligencia de Negocios",
+        "issuers": ["Google", "Microsoft", "IBM", "Kodigo", "Fundación Carlos Slim"],
+        "highlights": [
+          "Certificado Profesional de Analítica de Datos de Google",
+          "Análisis de Datos con R, Analítica Visual y Casos de Estudio Computacionales",
+          "Analista de Datos Microsoft Power BI y Modelado Avanzado DAX",
+          "Bootcamp de Analista de Datos en Kodigo",
+          "IBM Cognitive Class: Metodología de Ciencia de Datos, SQL y Bases Relacionales 101",
+          "Excel Avanzado: Tablas Dinámicas y Modelado Analítico/Financiero"
+        ]
+      },
+      {
+        "id": "digital-marketing",
+        "title": "Marketing Digital, CRO y Estrategia de Negocios",
+        "issuers": ["HubSpot Academy", "LinkedIn Learning", "MTF Institute", "DisasterReady"],
+        "highlights": [
+          "HubSpot Academy: Inbound Marketing, Estrategia en Redes Sociales, Marketing de Contenidos",
+          "Investigación y Análisis de Mercado (DisasterReady), Micro-AI Data Marketing Analysis",
+          "Profesional en Inglés de Negocios y Comunicación (MTF Institute)"
+        ]
+      },
+      {
+        "id": "automation-ai",
+        "title": "Automatización, Scripts y Herramientas de IA",
+        "issuers": ["Sololearn", "Mimo", "Cognitive Class", "Microsoft Azure", "IBM", "Salesforce", "LinkedIn Learning", "ESIT"],
+        "highlights": [
+          "Desarrollador Python (Sololearn, Mimo), Python para Ciencia de Datos (Cognitive Class)",
+          "Fundamentos de IA en Microsoft Azure y Fundamentos de Inteligencia Artificial en IBM",
+          "Fundamentos de IA en Salesforce e Ingeniería de Prompts / IA Generativa (LinkedIn Learning)",
+          "Fundamentos de Arquitectura Blockchain (Cognitive Class, ESIT)"
+        ]
+      },
+      {
+        "id": "it-security",
+        "title": "Infraestructura TI, Redes y Seguridad de la Información",
+        "issuers": ["Cisco", "ESIT", "HackerMentor", "ITIL"],
+        "highlights": [
+          "Cisco Packet Tracer y Simulación de Redes",
+          "Marcos Internacionales de Gobernanza ITIL y Seguridad de la Información ISO 27001",
+          "Gobernanza de Datos y Cumplimiento (ESIT)",
+          "Hacking Ético y Pruebas de Penetración (HackerMentor), Seguridad en Transacciones Online"
+        ]
+      },
+      {
+        "id": "agile-operations",
+        "title": "Gestión Ágil de Proyectos y Liderazgo Operativo",
+        "issuers": ["CertiProf", "ESIT", "Organización de los Estados Americanos (OEA)"],
+        "highlights": [
+          "CertiProf y ESIT: Scrum Product Owner Professional (SPOP), Scrum Product Owner Avanzado, Scrum Master",
+          "Six Sigma Yellow Belt y Maestría en Gestión Ágil de Proyectos",
+          "Certificado en Trabajo Remoto (CertiProf)",
+          "Ejecución de Proyectos Digitales (OEA)"
+        ]
+      },
+      {
+        "id": "specialized-operations",
+        "title": "Operaciones Interfuncionales y Programas Especializados",
+        "issuers": ["IOM / OIM", "DisasterReady", "MARTTI"],
+        "highlights": [
+          "Organización Internacional para las Migraciones (OIM) y DisasterReady: Tendencias de Migración en América Latina, Gestión y Logística Humanitaria",
+          "Interpretación Médica MARTTI: Currículo de Entrenamiento Médico (MTC), Cumplimiento HIPAA, Estándares de Interpretación en Salud"
+        ]
+      }
+    ]
+  }
+}

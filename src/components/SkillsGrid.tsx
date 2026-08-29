@@ -6,6 +6,8 @@ import { FadeIn } from "@/src/components/ui/FadeIn";
 import { SectionLabel } from "@/src/components/ui/SectionLabel";
 import { Target, BarChart3, Cpu, LucideIcon, CheckCircle2 } from "lucide-react";
 
+import { useLanguage } from "@/src/context/LanguageContext";
+
 interface SkillCategory {
   title: string;
   icon?: string;
@@ -19,12 +21,6 @@ const ICON_MAP: Record<string, LucideIcon> = {
   Target,
   BarChart3,
   Cpu,
-};
-
-const PROFICIENCY: Record<string, { label: string }> = {
-  businessCore: { label: "Core Operations" },
-  dataIntelligence: { label: "Data & BI" },
-  technicalTooling: { label: "Tooling & Infra" },
 };
 
 const cardVariants = {
@@ -41,7 +37,20 @@ const SkillCard: React.FC<{ catKey: string; cat: SkillCategory; index: number }>
   cat,
   index,
 }) => {
-  const meta = PROFICIENCY[catKey] ?? { label: "Capability" };
+  const { isSpanish } = useLanguage();
+  const metaLabels: Record<string, string> = isSpanish
+    ? {
+        businessCore: "Operaciones Clave",
+        dataIntelligence: "Datos y BI",
+        technicalTooling: "Herramientas e Infra",
+      }
+    : {
+        businessCore: "Core Operations",
+        dataIntelligence: "Data & BI",
+        technicalTooling: "Tooling & Infra",
+      };
+
+  const label = metaLabels[catKey] || (isSpanish ? "Capacidad" : "Capability");
   const IconComponent = cat.icon ? ICON_MAP[cat.icon] ?? Cpu : Cpu;
 
   return (
@@ -60,7 +69,7 @@ const SkillCard: React.FC<{ catKey: string; cat: SkillCategory; index: number }>
             <IconComponent size={20} />
           </div>
           <span className="shrink-0 px-2.5 py-1 rounded-full text-xs font-body font-semibold border bg-bg-raised text-accent border-border-subtle">
-            {meta.label}
+            {label}
           </span>
         </div>
 
@@ -69,7 +78,7 @@ const SkillCard: React.FC<{ catKey: string; cat: SkillCategory; index: number }>
           {cat.title}
         </h3>
         <p className="text-xs font-body text-text-muted mb-4">
-          {cat.skills.length} core capabilities
+          {isSpanish ? `${cat.skills.length} capacidades clave` : `${cat.skills.length} core capabilities`}
         </p>
 
         {/* Capability Items */}
@@ -90,6 +99,7 @@ const SkillCard: React.FC<{ catKey: string; cat: SkillCategory; index: number }>
 };
 
 export const SkillsGrid: React.FC<{ skillsMatrix: SkillsMatrixData }> = ({ skillsMatrix }) => {
+  const { t } = useLanguage();
   const categories = Object.entries(skillsMatrix);
 
   return (
@@ -97,9 +107,9 @@ export const SkillsGrid: React.FC<{ skillsMatrix: SkillsMatrixData }> = ({ skill
       <div className="mx-auto max-w-6xl px-6">
         <FadeIn>
           <SectionLabel
-            eyebrow="Capabilities"
-            heading="Technical Tooling &amp; Strategy Matrix"
-            description="A disciplined toolkit across workflow automation, data intelligence, CRM architecture, and growth operations."
+            eyebrow={t.skills.eyebrow}
+            heading={t.skills.heading}
+            description={t.skills.description}
           />
         </FadeIn>
 

@@ -53,22 +53,28 @@ const TechTag: React.FC<{ tech: string }> = ({ tech }) => {
   );
 };
 
-export const TrustedStack: React.FC<TrustedStackProps> = ({ stack }) => (
-  <section className="py-12 border-b border-border-subtle bg-bg-base">
-    <div className="mx-auto max-w-6xl px-6">
-      <FadeIn>
-        <div className="flex flex-wrap items-center gap-x-6 gap-y-3">
-          <span className="text-xs font-body font-semibold uppercase tracking-[0.16em] text-accent shrink-0">
-            Core Toolkit
-          </span>
-          <div className="h-px flex-1 bg-border-subtle hidden sm:block" />
-          <div className="flex flex-wrap gap-2">
-            {stack.map((tech) => (
-              <TechTag key={tech} tech={tech} />
-            ))}
+import { useLanguage } from "@/src/context/LanguageContext";
+
+export const TrustedStack: React.FC<TrustedStackProps> = ({ stack }) => {
+  const { isSpanish } = useLanguage();
+
+  return (
+    <section className="py-12 border-b border-border-subtle bg-bg-base">
+      <div className="mx-auto max-w-6xl px-6">
+        <FadeIn>
+          <div className="flex flex-wrap items-center gap-x-6 gap-y-3">
+            <span className="text-xs font-body font-semibold uppercase tracking-[0.16em] text-accent shrink-0">
+              {isSpanish ? "Herramientas Clave" : "Core Toolkit"}
+            </span>
+            <div className="h-px flex-1 bg-border-subtle hidden sm:block" />
+            <div className="flex flex-wrap gap-2">
+              {stack.map((tech) => (
+                <TechTag key={tech} tech={tech} />
+              ))}
+            </div>
           </div>
-        </div>
-      </FadeIn>
-    </div>
-  </section>
-);
+        </FadeIn>
+      </div>
+    </section>
+  );
+};

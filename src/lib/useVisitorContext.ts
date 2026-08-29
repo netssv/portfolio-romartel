@@ -2,8 +2,10 @@
 
 import { useState, useEffect } from "react";
 import { VisitorContext, generateVisitorGreeting, parseOSFromUA, parseLanguageName } from "./visitor-context";
+import { useLanguage } from "@/src/context/LanguageContext";
 
 export function useVisitorContext() {
+  const { locale } = useLanguage();
   const [context, setContext] = useState<VisitorContext | null>(null);
   const [greeting, setGreeting] = useState<string>("");
 
@@ -11,7 +13,7 @@ export function useVisitorContext() {
     let isMounted = true;
 
     async function resolveContext() {
-      const clientLang = typeof navigator !== "undefined" ? navigator.language || "es" : "es";
+      const clientLang = locale || (typeof navigator !== "undefined" ? navigator.language || "en" : "en");
       const clientUA = typeof navigator !== "undefined" ? navigator.userAgent : "";
       const clientOS = parseOSFromUA(clientUA);
       const parsedLang = parseLanguageName(clientLang);
@@ -21,7 +23,7 @@ export function useVisitorContext() {
         country: "El Salvador",
         os: clientOS,
         language: parsedLang.name,
-        languageCode: parsedLang.code,
+        languageCode: locale || parsedLang.code,
       };
 
       try {
@@ -38,10 +40,9 @@ export function useVisitorContext() {
               city: serverData.city,
               os: clientOS !== "Unknown OS" ? clientOS : serverData.os || resolved.os,
               language: parsedLang.name,
-              languageCode: parsedLang.code,
+              languageCode: locale || parsedLang.code,
             };
           } else {
-            // Client-side direct lookup to get actual ISP IP and Country from visitor's browser
             try {
               const clientGeoRes = await fetch("https://ipwho.is/", {
                 signal: AbortSignal.timeout(3000),
@@ -55,12 +56,12 @@ export function useVisitorContext() {
                     city: geo.city || undefined,
                     os: clientOS,
                     language: parsedLang.name,
-                    languageCode: parsedLang.code,
+                    languageCode: locale || parsedLang.code,
                   };
                 }
               }
             } catch {
-              // Graceful fallback if adblocker blocks ipwho.is
+              // Graceful fallback
             }
           }
         }
@@ -79,7 +80,7 @@ export function useVisitorContext() {
     return () => {
       isMounted = false;
     };
-  }, []);
+  }, [locale]);
 
   return { context, greeting };
 }
