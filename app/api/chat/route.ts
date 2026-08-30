@@ -100,27 +100,15 @@ export async function POST(req: NextRequest) {
         const args = (call.args || {}) as { section?: string };
         const target = (args.section || "top").toLowerCase().replace("#", "");
         clientAction = { type: "NAVIGATE", target };
-        return NextResponse.json({
-          reply: isSpanish ? `Te he llevado a la sección de ${target}.` : `Navigated to the ${target} section.`,
-          toolExecuted: call.name,
-          clientAction,
-        });
+        toolResult = { success: true, navigatedTo: target };
       } else if (call.name === "filter_projects") {
         const args = (call.args || {}) as { category?: string; tag?: string };
         clientAction = { type: "FILTER_PROJECTS", category: args.category, tag: args.tag };
-        return NextResponse.json({
-          reply: isSpanish ? "He filtrado los proyectos en la galería." : "Filtered projects in the gallery.",
-          toolExecuted: call.name,
-          clientAction,
-        });
+        toolResult = { success: true, filteredBy: args };
       } else if (call.name === "set_site_preferences") {
         const args = (call.args || {}) as { language?: string; theme?: string };
         clientAction = { type: "SET_PREFERENCES", language: args.language, theme: args.theme };
-        return NextResponse.json({
-          reply: isSpanish ? "Preferencias del sitio actualizadas." : "Site preferences updated.",
-          toolExecuted: call.name,
-          clientAction,
-        });
+        toolResult = { success: true, updatedPreferences: args };
       } else {
         toolResult = { error: `Unknown function ${call.name}` };
       }
