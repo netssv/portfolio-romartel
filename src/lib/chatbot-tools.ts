@@ -8,11 +8,51 @@ export interface SendEmailArgs {
   message: string;
 }
 
-export async function executeSendContactEmail(args: SendEmailArgs) {
-  const { name, email, purpose = "General Inquiry", message } = args;
+const EMAIL_REGEX = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+const emailTimestamps: number[] = [];
+const MAX_EMAILS_PER_WINDOW = 5;
+const WINDOW_MS = 10 * 60 * 1000;
 
-  if (!name || !email || !message) {
-    return { success: false, error: "Missing required fields (name, email, or message)." };
+export async function executeSendContactEmail(args: SendEmailArgs) {
+  const { name, email, purpose = "General Inquiry", message } = args || {};
+
+  const cleanName = (name || "").trim();
+  const cleanEmail = (email || "").trim().toLowerCase();
+  const cleanMessage = (message || "").trim();
+
+  if (!cleanName || cleanName.length < 2) {
+    return { success: false, error: "VALIDATION_ERROR: Missing or invalid name. Ask visitor for their real name." };
+  }
+
+  const isInvalidEmail =
+    !cleanEmail ||
+    !EMAIL_REGEX.test(cleanEmail) ||
+    cleanEmail.endsWith("@example.com") ||
+    cleanEmail.endsWith("@test.com") ||
+    cleanEmail.includes("unknown") ||
+    cleanEmail.includes("placeholder");
+
+  if (isInvalidEmail) {
+    return {
+      success: false,
+      error: "VALIDATION_ERROR: Missing or invalid email address. Please ask the visitor to provide a valid contact email address before sending.",
+    };
+  }
+
+  if (!cleanMessage || cleanMessage.length < 5) {
+    return { success: false, error: "VALIDATION_ERROR: Message is too short. Please ask the visitor for details." };
+  }
+
+  const now = Date.now();
+  const validTimestamps = emailTimestamps.filter((t) => now - t < WINDOW_MS);
+  emailTimestamps.length = 0;
+  emailTimestamps.push(...validTimestamps);
+
+  if (emailTimestamps.length >= MAX_EMAILS_PER_WINDOW) {
+    return {
+      success: false,
+      error: "RATE_LIMIT: Email dispatch rate limit reached. Please wait a few minutes or reach out via LinkedIn.",
+    };
   }
 
   const apiKey = process.env.RESEND_API_KEY;
@@ -28,16 +68,16 @@ export async function executeSendContactEmail(args: SendEmailArgs) {
     const result = await resend.emails.send({
       from: "Portfolio Contact <onboarding@resend.dev>",
       to: "rop.martel@gmail.com",
-      replyTo: email,
-      subject: `[Clippo Chatbot] New Message: ${purpose} from ${name}`,
+      replyTo: cleanEmail,
+      subject: `[Clippo Chatbot] New Message: ${purpose} from ${cleanName}`,
       html: `
         <h2>New Message Received via Clippo Chatbot</h2>
-        <p><strong>From:</strong> ${name}</p>
-        <p><strong>Email:</strong> ${email}</p>
+        <p><strong>From:</strong> ${cleanName}</p>
+        <p><strong>Email:</strong> ${cleanEmail}</p>
         <p><strong>Purpose:</strong> ${purpose}</p>
         <hr />
         <p><strong>Message:</strong></p>
-        <p>${message.replace(/\n/g, "<br>")}</p>
+        <p>${cleanMessage.replace(/\n/g, "<br>")}</p>
       `,
     });
 
@@ -45,6 +85,7 @@ export async function executeSendContactEmail(args: SendEmailArgs) {
       return { success: false, error: result.error.message };
     }
 
+    emailTimestamps.push(now);
     return {
       success: true,
       message: `Email successfully delivered to Rodrigo Martel (rop.martel@gmail.com).`,

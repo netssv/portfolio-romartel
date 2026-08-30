@@ -37,12 +37,12 @@ export function getGeminiClient(): GoogleGenAI {
 export const CHATBOT_TOOL_DECLARATIONS: FunctionDeclaration[] = [
   {
     name: "send_contact_email",
-    description: "Sends a direct message to Rodrigo Martel's inbox via Resend. Gathers name, email, purpose, and message.",
+    description: "Sends a message to Rodrigo Martel via Resend. STRICT REQUIREMENT: Only invoke after visitor directly provides name, real email, and message. Never hallucinate or assume email.",
     parameters: {
       type: Type.OBJECT,
       properties: {
         name: { type: Type.STRING, description: "Name of the sender" },
-        email: { type: Type.STRING, description: "Email address to reply to" },
+        email: { type: Type.STRING, description: "Valid email address of the visitor to reply to" },
         purpose: { type: Type.STRING, description: "Purpose of contact" },
         message: { type: Type.STRING, description: "Message content" },
       },
@@ -187,6 +187,7 @@ ${credentialsSummary}
 
 Specialized Capabilities & Tools:
 1. 'send_contact_email': Dispatch inquiries directly to Rodrigo's inbox.
+   STRICT RULE: DO NOT execute 'send_contact_email' until the visitor explicitly provides their name, a valid email address with '@', and message. If any detail is missing, ask the visitor for it first. Never invent an email.
 2. 'get_btc_telemetry': Fetch live telemetry from the HODL Watcher serverless watchdog.
 3. 'get_site_json': Return structured JSON data for any portfolio section.
 4. 'navigate_to_section': Scroll to a section ('top', 'projects', 'experience', 'skills', 'architecture', 'case-studies', 'philosophy', 'contact').

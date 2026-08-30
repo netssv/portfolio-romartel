@@ -24,7 +24,7 @@ interface ContactData {
 export const ContactSection: React.FC<{ contact: ContactData }> = ({ contact }) => {
   const { t, isSpanish } = useLanguage();
   const [step, setStep] = useState(0);
-  const [formData, setFormData] = useState({ purpose: "", name: "", email: "", message: "" });
+  const [formData, setFormData] = useState({ purpose: "", name: "", email: "", message: "", _hp: "" });
   const [submitted, setSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -139,7 +139,17 @@ export const ContactSection: React.FC<{ contact: ContactData }> = ({ contact }) 
                       />
                     </div>
 
-                    <form onSubmit={handleSubmit} className="min-h-[220px] flex flex-col">
+                    <form onSubmit={handleSubmit} className="min-h-[220px] flex flex-col relative">
+                      <input
+                        type="text"
+                        name="_hp"
+                        value={formData._hp}
+                        onChange={(e) => setFormData({ ...formData, _hp: e.target.value })}
+                        tabIndex={-1}
+                        autoComplete="off"
+                        className="opacity-0 absolute -z-10 pointer-events-none h-0 w-0"
+                        aria-hidden="true"
+                      />
                       <AnimatePresence mode="wait">
                         {step === 0 && (
                           <motion.div key="step0" initial={{ opacity: 0, x: 15 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -15 }} className="flex-1">
