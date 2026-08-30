@@ -131,10 +131,10 @@ export const uiEn = {
     placeholder: "Ask Clippo about projects, systems, or credentials...",
     send: "Send",
     suggestions: [
+      "Schedule a 30-min discovery call",
       "Show Rodrigo's flagship projects",
       "Explain the serverless architecture",
-      "Tell me about CRM integrations",
-      "Send a contact email",
+      "How does the LLM / SEO architecture work?",
     ],
     onlineStatus: "Online & Ready",
     typingStatus: "Thinking...",

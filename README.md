@@ -15,7 +15,8 @@ Engineering-driven portfolio showcasing production codebases, webhook automation
   * **Context Window:** 1,000,000 tokens.
   * **Operating Cost:** $0.00 / month.
 * **Tool Calling & Execution Strategy:**
-  * Native Function Calling (`get_btc_telemetry`, `get_site_json`, `send_contact_email`).
+  * Native Function Calling (`get_btc_telemetry`, `get_site_json`, `send_contact_email`, `navigate_to_section`, `filter_projects`, `set_site_preferences`).
+  * Direct Cal.com 30-Minute Discovery Call Integration (`https://cal.com/rodrigo-martel/30min?overlayCalendar=true`).
   * Preserves Google Gen AI `thought_signature` across conversation turns.
   * Employs strict 1.2s timeout on external microservice calls to prevent cold-start delays.
 * **Client-Side UX & Error Recovery:**
@@ -33,11 +34,16 @@ Engineering-driven portfolio showcasing production codebases, webhook automation
   * Logs events into an In-Memory Ring Buffer (15 execution slots) with zero database overhead.
 * **Frontend Telemetry Bar:**
   * Real-time Binance REST/WebSocket ticker feed.
-  * Integrated **Fear & Greed Market Sentiment Index** via [`/api/hodl-insights`](file:///home/netss/Projects/websites/portfolio-romartel/app/api/hodl-insights/route.ts).
+  * Integrated **Fear & Greed Market Sentiment Index** via [`/api/hodl-insights`](file:///home/netss/Proyectos/websites/portfolio-romartel/app/api/hodl-insights/route.ts).
   * Interactive execution buffer drawer with manual ping testing (`visitor-test`).
 
-### 3. Project Naming Stories & Portfolio Strategy
-* Centralized in [`PROJECT_NAMING_STORIES.md`](file:///home/netss/Projects/websites/portfolio-romartel/PROJECT_NAMING_STORIES.md), documenting authentic problem-solving origins:
+### 3. LLM Discoverability & Generative Engine Optimization (GEO / AEO)
+* **AI Knowledge Feeds:** Serves [`/llms.txt`](file:///home/netss/Proyectos/websites/portfolio-romartel/public/llms.txt) and [`/llms-full.txt`](file:///home/netss/Proyectos/websites/portfolio-romartel/public/llms-full.txt) standard files for token-efficient LLM ingestion by ChatGPT, Gemini, Claude, and Perplexity.
+* **Crawler Directives:** Explicit allow rules configured in [`app/robots.ts`](file:///home/netss/Proyectos/websites/portfolio-romartel/app/robots.ts) for `GPTBot`, `OAI-SearchBot`, `ClaudeBot`, `PerplexityBot`, `Google-Extended`, and `Applebot-Extended`.
+* **Structured Schema Graph:** Complete Schema.org JSON-LD `@graph` linking `Person`, `ProfilePage`, and verified credentials across GitHub, LinkedIn, PyPI, Chrome Web Store, and Cal.com.
+
+### 4. Project Naming Stories & Portfolio Strategy
+* Centralized in [`PROJECT_NAMING_STORIES.md`](file:///home/netss/Proyectos/websites/portfolio-romartel/PROJECT_NAMING_STORIES.md), documenting authentic problem-solving origins:
   * **FIFA World Cup 2026 AI Lab:** Monte Carlo simulation engine with 1M iterations, predicting Spain as champion with 6/10 test accuracy.
   * **HODL Watcher:** Real-time on-chain mempool fee tracker with multi-API fallbacks (Binance, KuCoin).
   * **WhatHappened:** Chrome MV3 triage terminal for edge DNS (DoH), SSL certificate expiration, and network health.
@@ -45,11 +51,12 @@ Engineering-driven portfolio showcasing production codebases, webhook automation
   * **btkey_sync:** Windows-to-Linux Bluetooth LTK encryption key synchronizer eliminating dual-boot re-pairing.
   * **Rebusca:** Android grocery price intelligence engine with defensive scraping and mobile API parsing.
 
-### 4. Web Platform & Observability
+### 5. Web Platform & Observability
 * **Framework:** Next.js 15 (App Router), React 19, TypeScript, Tailwind CSS, Framer Motion.
 * **Modularity Standard:** Strict < 200 lines-of-code limit per modular component, hook, and route handler.
-* **CRO & Analytics:** Custom zero-latency localStorage A/B testing engine, Google Analytics 4 (GA4), Microsoft Clarity heatmaps.
-* **Transactional Email:** Secure serverless routing via Resend API.
+* **CRO & Direct Booking:** Embedded Cal.com 30-min discovery call scheduler, custom zero-latency localStorage A/B testing engine, Google Analytics 4 (GA4), Microsoft Clarity heatmaps.
+* **Transactional Email:** Secure serverless routing via Resend API with honeypot spam protection.
+
 
 ---
 

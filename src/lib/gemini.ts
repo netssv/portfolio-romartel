@@ -12,27 +12,17 @@ if (typeof dns.setDefaultResultOrder === "function") {
 }
 
 function getApiKey(): string {
-  const key =
-    process.env.GEMINI_API_KEY ||
-    process.env.GOOGLE_GENAI_API_KEY ||
-    process.env.GOOGLE_API_KEY;
-
-  if (!key) {
-    throw new Error(
-      "Gemini API key is not configured. Please set GEMINI_API_KEY in .env.local"
-    );
-  }
+  const key = process.env.GEMINI_API_KEY || process.env.GOOGLE_GENAI_API_KEY || process.env.GOOGLE_API_KEY;
+  if (!key) throw new Error("Gemini API key is not configured in .env.local");
   return key;
 }
 
 let cachedClient: GoogleGenAI | null = null;
-
 export function getGeminiClient(): GoogleGenAI {
-  if (!cachedClient) {
-    cachedClient = new GoogleGenAI({ apiKey: getApiKey() });
-  }
+  if (!cachedClient) cachedClient = new GoogleGenAI({ apiKey: getApiKey() });
   return cachedClient;
 }
+
 
 export const CHATBOT_TOOL_DECLARATIONS: FunctionDeclaration[] = [
   {
@@ -69,7 +59,7 @@ export const CHATBOT_TOOL_DECLARATIONS: FunctionDeclaration[] = [
   },
   {
     name: "navigate_to_section",
-    description: "Smoothly scrolls the visitor's page to a section ('top', 'projects', 'experience', 'skills', 'architecture', 'case-studies', 'philosophy', 'contact').",
+    description: "Smoothly scrolls the visitor's page to a section ('top', 'telemetry', 'stack', 'projects', 'metrics', 'experience', 'skills', 'architecture', 'case-studies', 'philosophy', 'contact').",
     parameters: {
       type: Type.OBJECT,
       properties: {
@@ -104,14 +94,18 @@ export const CHATBOT_TOOL_DECLARATIONS: FunctionDeclaration[] = [
 
 const SECTION_CONTEXT_MAP: Record<string, string> = {
   top: "Visitor is viewing Hero / Overview.",
+  telemetry: "Visitor is viewing Real-Time BTC Macro Trend & Watchdog Bar.",
+  stack: "Visitor is viewing Core Toolkit & Tech Stack.",
   projects: "Visitor is viewing Featured Projects (HODL Watcher, FIFA 2026 AI Lab, WhatHappened, caniarun, btkey_sync, Rebusca, Metropolyca).",
+  metrics: "Visitor is viewing Audited Metrics & Operational Impact.",
   experience: "Visitor is viewing Work Experience timeline.",
   skills: "Visitor is viewing Skills Matrix & Credentials (103 verified credentials).",
   architecture: "Visitor is viewing Systems Architecture.",
   "case-studies": "Visitor is viewing Case Studies & Audits.",
   philosophy: "Visitor is viewing Strategic Philosophy.",
-  contact: "Visitor is viewing Contact section.",
+  contact: "Visitor is viewing Contact section & Meeting Scheduler.",
 };
+
 
 export interface VisitorContextPayload {
   ip?: string;

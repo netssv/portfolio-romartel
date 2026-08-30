@@ -108,7 +108,7 @@ export const BtcTrendTelemetryBar: React.FC = () => {
   };
 
   return (
-    <section className="relative -mt-4 sm:-mt-6 mb-12 z-20">
+    <section id="telemetry" className="relative -mt-4 sm:-mt-6 mb-12 z-20 scroll-mt-24">
       <div className="mx-auto max-w-6xl px-6">
         <FadeIn>
           <div className="relative overflow-hidden rounded-2xl border border-border-subtle bg-bg-surface p-4 sm:px-6 sm:py-4 shadow-sm transition-all duration-200 hover:border-border-base">

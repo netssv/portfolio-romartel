@@ -131,10 +131,10 @@ export const uiEs = {
     placeholder: "Pregunta a Clippo sobre proyectos, sistemas o certificaciones...",
     send: "Enviar",
     suggestions: [
+      "Agendar una llamada de 30 min",
       "Muéstrame los proyectos insignia",
       "Explica la arquitectura serverless",
-      "Cuéntame sobre integraciones CRM",
-      "Enviar un correo de contacto",
+      "¿Cómo funciona la arquitectura LLM / SEO?",
     ],
     onlineStatus: "En línea y listo",
     typingStatus: "Pensando...",

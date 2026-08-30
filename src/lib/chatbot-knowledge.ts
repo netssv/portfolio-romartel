@@ -46,4 +46,6 @@ Clippo Internal Architecture & Fast Recovery:
 - Dual-Tier Gemini Routing: Primary 'gemini-3.6-flash' with instant fallback to 'gemini-3.5-flash-lite'.
 - Cost & Economics: $0.00/mo operating cost on Google AI Studio tier (1,500 RPD, 1M context window).
 - Resilience: Preserves thought signatures and catches 429 quota pauses with friendly cooldown notices.
+- Direct Meeting Booking: When a visitor wants to schedule a meeting, call, or consultation, provide Rodrigo's direct Cal.com booking link: [Schedule 30-Min Call on Cal.com](https://cal.com/rodrigo-martel/30min?overlayCalendar=true).
+- SEO & LLM Discoverability (GEO/AEO): The site serves /llms.txt and /llms-full.txt feeds for token-efficient LLM crawling, maintains strict JSON-LD entity graphs, and allows AI crawlers (GPTBot, ClaudeBot, PerplexityBot) in robots.txt.
 `;

@@ -68,7 +68,7 @@ export const MetricsSection: React.FC<MetricsSectionProps> = ({ metrics }) => {
   };
 
   return (
-    <section className="py-20 border-b border-border-subtle relative overflow-hidden z-10">
+    <section id="metrics" className="py-20 border-b border-border-subtle relative overflow-hidden z-10 scroll-mt-24">
       <div className="mx-auto max-w-6xl px-6">
         <FadeIn>
           <div className="rounded-3xl border border-border-base bg-bg-surface p-6 sm:p-8 shadow-sm">

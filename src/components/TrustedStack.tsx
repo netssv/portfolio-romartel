@@ -59,7 +59,7 @@ export const TrustedStack: React.FC<TrustedStackProps> = ({ stack }) => {
   const { isSpanish } = useLanguage();
 
   return (
-    <section className="py-12 border-b border-border-subtle bg-bg-base">
+    <section id="stack" className="py-12 border-b border-border-subtle bg-bg-base scroll-mt-24">
       <div className="mx-auto max-w-6xl px-6">
         <FadeIn>
           <div className="flex flex-wrap items-center gap-x-6 gap-y-3">
