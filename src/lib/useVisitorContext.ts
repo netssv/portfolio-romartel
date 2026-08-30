@@ -17,6 +17,8 @@ export function useVisitorContext() {
       const clientUA = typeof navigator !== "undefined" ? navigator.userAgent : "";
       const clientOS = parseOSFromUA(clientUA);
       const parsedLang = parseLanguageName(clientLang);
+      const clientTimeZone = typeof Intl !== "undefined" ? Intl.DateTimeFormat().resolvedOptions().timeZone : undefined;
+      const clientLocalTime = new Date().toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit", hour12: true });
 
       let resolved: VisitorContext = {
         ip: "127.0.0.1",
@@ -24,6 +26,8 @@ export function useVisitorContext() {
         os: clientOS,
         language: parsedLang.name,
         languageCode: locale || parsedLang.code,
+        timeZone: clientTimeZone,
+        localTime: clientLocalTime,
       };
 
       try {
@@ -33,6 +37,8 @@ export function useVisitorContext() {
           if (parsed.ip && parsed.country) {
             resolved = {
               ...parsed,
+              timeZone: clientTimeZone || parsed.timeZone,
+              localTime: clientLocalTime,
               language: parsedLang.name,
               languageCode: locale || parsedLang.code,
             };
@@ -50,7 +56,7 @@ export function useVisitorContext() {
       try {
         const res = await fetch("/api/visitor-context", {
           headers: { "Cache-Control": "no-cache" },
-          signal: AbortSignal.timeout(2000),
+          signal: AbortSignal.timeout(3000),
         });
 
         if (res.ok) {
@@ -60,6 +66,12 @@ export function useVisitorContext() {
               ip: serverData.ip,
               country: serverData.country,
               city: serverData.city,
+              latitude: serverData.latitude,
+              longitude: serverData.longitude,
+              timeZone: serverData.timeZone || clientTimeZone,
+              localTime: serverData.localTime || clientLocalTime,
+              weather: serverData.weather,
+              rodrigoContext: serverData.rodrigoContext,
               os: clientOS !== "Unknown OS" ? clientOS : serverData.os || resolved.os,
               language: parsedLang.name,
               languageCode: locale || parsedLang.code,
@@ -76,10 +88,36 @@ export function useVisitorContext() {
                     ip: geo.ip || resolved.ip,
                     country: geo.country || resolved.country,
                     city: geo.city || undefined,
+                    latitude: geo.latitude,
+                    longitude: geo.longitude,
+                    timeZone: geo.timezone?.id || clientTimeZone,
+                    localTime: clientLocalTime,
+                    rodrigoContext: serverData.rodrigoContext,
                     os: clientOS,
                     language: parsedLang.name,
                     languageCode: locale || parsedLang.code,
                   };
+
+                  if (geo.latitude && geo.longitude) {
+                    try {
+                      const weatherRes = await fetch(
+                        `https://api.open-meteo.com/v1/forecast?latitude=${geo.latitude}&longitude=${geo.longitude}&current=temperature_2m,weather_code&timezone=auto`,
+                        { signal: AbortSignal.timeout(2000) }
+                      );
+                      if (weatherRes.ok) {
+                        const weatherData = await weatherRes.json();
+                        const temp = weatherData?.current?.temperature_2m;
+                        if (typeof temp === "number") {
+                          resolved.weather = {
+                            tempC: Math.round(temp),
+                            tempF: Math.round((temp * 9) / 5 + 32),
+                          };
+                        }
+                      }
+                    } catch {
+                      // Weather fetch fallback
+                    }
+                  }
                 }
               }
             } catch {

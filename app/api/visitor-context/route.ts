@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { parseOSFromUA, parseLanguageName, VisitorContext } from "@/src/lib/visitor-context";
+import { fetchWeatherForCoords, getRodrigoZoneContext, getLocalTimeString } from "@/src/lib/weather";
 
 export const dynamic = "force-dynamic";
 
@@ -27,18 +28,52 @@ export async function GET(req: NextRequest) {
 
     const vercelCountry = req.headers.get("x-vercel-ip-country");
     const vercelCity = req.headers.get("x-vercel-ip-city");
+    const vercelLat = req.headers.get("x-vercel-ip-latitude");
+    const vercelLon = req.headers.get("x-vercel-ip-longitude");
+    const vercelTimezone = req.headers.get("x-vercel-ip-timezone");
     const cfCountry = req.headers.get("cf-ipcountry");
 
     const country = vercelCountry || cfCountry || "";
     const city = vercelCity ? decodeURIComponent(vercelCity) : "";
+    const latitude = vercelLat ? parseFloat(vercelLat) : undefined;
+    const longitude = vercelLon ? parseFloat(vercelLon) : undefined;
+    const timeZone = vercelTimezone || undefined;
 
     const os = parseOSFromUA(userAgent);
     const langInfo = parseLanguageName(primaryLang);
+
+    const [visitorWeather, rodrigoContext] = await Promise.all([
+      latitude && longitude ? fetchWeatherForCoords(latitude, longitude) : Promise.resolve(null),
+      getRodrigoZoneContext(),
+    ]);
 
     const context: Partial<VisitorContext> & { needsClientGeo?: boolean } = {
       ip: rawIp,
       country: country || undefined,
       city: city || undefined,
+      latitude,
+      longitude,
+      timeZone,
+      localTime: timeZone ? getLocalTimeString(timeZone) : undefined,
+      weather: visitorWeather ? {
+        tempC: visitorWeather.tempC,
+        tempF: visitorWeather.tempF,
+        condition: visitorWeather.condition,
+        conditionEs: visitorWeather.conditionEs,
+        isRain: visitorWeather.isRain,
+        isSnow: visitorWeather.isSnow,
+      } : undefined,
+      rodrigoContext: {
+        city: rodrigoContext.city,
+        country: rodrigoContext.country,
+        timeZone: rodrigoContext.timeZone,
+        localTime: rodrigoContext.localTime,
+        weather: {
+          tempC: rodrigoContext.weather.tempC,
+          condition: rodrigoContext.weather.condition,
+          conditionEs: rodrigoContext.weather.conditionEs,
+        },
+      },
       os,
       language: langInfo.name,
       languageCode: langInfo.code,

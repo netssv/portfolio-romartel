@@ -3,9 +3,32 @@ export interface VisitorContext {
   country: string;
   countryCode?: string;
   city?: string;
+  latitude?: number;
+  longitude?: number;
   os: string;
   language: string;
   languageCode: string;
+  localTime?: string;
+  timeZone?: string;
+  weather?: {
+    tempC?: number;
+    tempF?: number;
+    condition?: string;
+    conditionEs?: string;
+    isRain?: boolean;
+    isSnow?: boolean;
+  };
+  rodrigoContext?: {
+    city: string;
+    country: string;
+    timeZone: string;
+    localTime: string;
+    weather?: {
+      tempC?: number;
+      condition?: string;
+      conditionEs?: string;
+    };
+  };
 }
 
 export function parseOSFromUA(userAgent: string): string {
