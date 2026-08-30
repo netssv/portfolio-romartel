@@ -2,6 +2,7 @@
 
 import React from "react";
 import { Activity } from "lucide-react";
+import { useLanguage } from "@/src/context/LanguageContext";
 
 interface BtcPriceCardProps {
   price: number;
@@ -15,6 +16,14 @@ interface BtcPriceCardProps {
   } | null;
 }
 
+const sentimentEsMap: Record<string, string> = {
+  "Extreme Greed": "Codicia Ext.",
+  "Greed": "Codicia",
+  "Neutral": "Neutral",
+  "Fear": "Miedo",
+  "Extreme Fear": "Miedo Ext.",
+};
+
 export const BtcPriceCard: React.FC<BtcPriceCardProps> = ({
   price,
   changePct,
@@ -23,11 +32,18 @@ export const BtcPriceCard: React.FC<BtcPriceCardProps> = ({
   flash,
   sentiment,
 }) => {
+  const { isSpanish } = useLanguage();
   const isPositive = changePct >= 0;
+
+  const getSentimentLabel = (cls?: string) => {
+    if (!cls) return "";
+    if (!isSpanish) return cls;
+    return sentimentEsMap[cls] || cls;
+  };
 
   return (
     <div
-      className={`flex items-center gap-2.5 rounded-xl px-3 py-1.5 border transition-all duration-200 ${
+      className={`flex items-center gap-2 rounded-xl px-2.5 sm:px-3 py-1.5 border transition-all duration-200 shrink-0 ${
         flash === "up"
           ? "bg-signal-success/15 border-signal-success/40"
           : flash === "down"
@@ -54,15 +70,15 @@ export const BtcPriceCard: React.FC<BtcPriceCardProps> = ({
                 minimumFractionDigits: 2,
                 maximumFractionDigits: 2,
               })}`
-            : "Syncing..."}
+            : isSpanish ? "Sincronizando..." : "Syncing..."}
         </span>
       </div>
 
       {sentiment && (
-        <div className="hidden lg:flex flex-col pl-2.5 border-l border-border-subtle text-[9px] font-mono leading-tight">
-          <span className="text-text-muted">Sentiment</span>
-          <span className="font-bold text-text-primary">
-            {sentiment.fearGreed} ({sentiment.classification})
+        <div className="hidden lg:flex flex-col pl-2 border-l border-border-subtle text-[9px] font-mono leading-tight">
+          <span className="text-text-muted">{isSpanish ? "Sentimiento" : "Sentiment"}</span>
+          <span className="font-bold text-text-primary whitespace-nowrap">
+            {sentiment.fearGreed} ({getSentimentLabel(sentiment.classification)})
           </span>
         </div>
       )}
@@ -80,3 +96,4 @@ export const BtcPriceCard: React.FC<BtcPriceCardProps> = ({
     </div>
   );
 };
+
