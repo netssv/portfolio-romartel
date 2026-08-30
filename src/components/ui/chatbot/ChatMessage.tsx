@@ -17,7 +17,7 @@ interface ChatMessageProps {
 }
 
 function renderFormattedInline(text: string) {
-  const regex = /(\[([^\]]+)\]\((https?:\/\/[^\s)]+|#[a-zA-Z0-9_-]+|mailto:[^\s)]+)\)|\*\*([^*]+)\*\*|`([^`]+)`)/g;
+  const regex = /(\[([^\]]+)\]\((https?:\/\/[^\s)]+|#[a-zA-Z0-9_-]+|mailto:[^\s)]+|action:[^\s)]+)\)|\*\*([^*]+)\*\*|`([^`]+)`)/g;
   const parts: React.ReactNode[] = [];
   let lastIndex = 0;
   let match: RegExpExecArray | null;

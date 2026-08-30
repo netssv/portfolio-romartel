@@ -76,4 +76,32 @@ describe("ActionLinkButton and Dynamic In-Response Link Rendering", () => {
     expect(liveDemoLink).toBeInTheDocument();
     expect(liveDemoLink).toHaveAttribute("href", "https://hodl-watcher.app");
   });
+
+  it("renders interactive action buttons and dispatches clippo:action event on click", () => {
+    const actionListener = vi.fn();
+    window.addEventListener("clippo:action", actionListener);
+
+    const message: MessageItem = {
+      id: "msg-contact-preview",
+      role: "model",
+      text: "¿Está correcto para enviarlo ahora?\n- [Está correcto, enviar](action:send_email)\n- [Deseo corregir datos](action:edit_contact)\n- [Aún no / Cancelar](action:cancel_contact)",
+      timestamp: "12:05 PM",
+    };
+
+    render(<ChatMessage message={message} />);
+
+    const sendButton = screen.getByText(/Está correcto, enviar/i).closest("a");
+    const editButton = screen.getByText(/Deseo corregir datos/i).closest("a");
+    const cancelButton = screen.getByText(/Aún no \/ Cancelar/i).closest("a");
+
+    expect(sendButton).toBeInTheDocument();
+    expect(editButton).toBeInTheDocument();
+    expect(cancelButton).toBeInTheDocument();
+
+    if (sendButton) fireEvent.click(sendButton);
+    expect(actionListener).toHaveBeenCalledTimes(1);
+
+    window.removeEventListener("clippo:action", actionListener);
+  });
 });
+

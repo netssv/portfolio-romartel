@@ -11,6 +11,7 @@ import { useVisitorContext } from "@/src/lib/useVisitorContext";
 import { useLanguage } from "@/src/context/LanguageContext";
 import { useChatBotState } from "./useChatBotState";
 import { useClippoAutoClose } from "./useClippoAutoClose";
+import { useClippoActions } from "./useClippoActions";
 
 export function ChatBot() {
   const activeSection = useActiveSection();
@@ -45,6 +46,21 @@ export function ChatBot() {
     visitorContext,
     onClose: () => setIsOpen(false),
     setCustomPhrase,
+  });
+
+  const onUserSend = (text?: string) => {
+    clearAutoCloseTimer();
+    handleSend(text, activeSection, visitorContext);
+  };
+
+  useClippoActions({
+    isSpanish,
+    setIsOpen,
+    setCustomPhrase,
+    setMessages,
+    inputRef,
+    clearAutoCloseTimer,
+    onUserSend,
   });
 
   // Smart Clippo: Detect active language change and notify visitor
@@ -92,33 +108,6 @@ export function ChatBot() {
       inputRef.current?.focus();
     }
   }, [isOpen, messages]);
-
-  useEffect(() => {
-    const handleContactOpen = () => {
-      setCustomPhrase(null);
-      setIsOpen(true);
-      setMessages((prev) => [
-        ...prev,
-        {
-          id: `contact-${Date.now()}`,
-          role: "model",
-          text: isSpanish
-            ? "¡Veo que te gustaría contactar a Rodrigo! Comparte tu nombre, correo y mensaje aquí, y se lo enviaré directo a su bandeja de entrada."
-            : "I see you would like to reach Rodrigo! Feel free to share your name, email, and a message here, and I will deliver it straight to his inbox.",
-          timestamp: isSpanish ? "Ahora" : "Just now",
-        },
-      ]);
-      setTimeout(() => inputRef.current?.focus(), 150);
-    };
-
-    window.addEventListener("open-clippo-contact", handleContactOpen);
-    return () => window.removeEventListener("open-clippo-contact", handleContactOpen);
-  }, [setMessages, isSpanish]);
-
-  const onUserSend = (text?: string) => {
-    clearAutoCloseTimer();
-    handleSend(text, activeSection, visitorContext);
-  };
 
   return (
     <div className="fixed bottom-5 right-5 z-50 flex flex-col items-end print:hidden">

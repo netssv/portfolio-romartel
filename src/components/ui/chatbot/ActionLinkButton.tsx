@@ -7,6 +7,9 @@ import {
   ArrowDown,
   Mail,
   FileText,
+  Send,
+  Edit3,
+  XCircle,
 } from "lucide-react";
 
 const GithubIcon = ({ size = 12 }: { size?: number }) => (
@@ -34,6 +37,7 @@ interface ActionLinkButtonProps {
 export function ActionLinkButton({ href, label }: ActionLinkButtonProps) {
   const url = href.trim();
   const isHash = url.startsWith("#");
+  const isAction = url.startsWith("action:");
   const isGithub = url.includes("github.com");
   const isCredentials =
     url.includes("credentials") ||
@@ -48,6 +52,10 @@ export function ActionLinkButton({ href, label }: ActionLinkButtonProps) {
     label.toLowerCase().includes("audit") ||
     label.toLowerCase().includes("story");
 
+  const isConfirmAction = isAction && (url.includes("send") || label.toLowerCase().includes("correcto") || label.toLowerCase().includes("enviar"));
+  const isEditAction = isAction && (url.includes("edit") || label.toLowerCase().includes("corregir"));
+  const isCancelAction = isAction && (url.includes("cancel") || label.toLowerCase().includes("aún no") || label.toLowerCase().includes("cancelar"));
+
   const handleClick = (e: React.MouseEvent) => {
     if (isHash) {
       e.preventDefault();
@@ -56,13 +64,25 @@ export function ActionLinkButton({ href, label }: ActionLinkButtonProps) {
       if (elem) {
         elem.scrollIntoView({ behavior: "smooth" });
       }
+    } else if (isAction) {
+      e.preventDefault();
+      window.dispatchEvent(new CustomEvent("clippo:action", { detail: { action: url, label } }));
     }
   };
 
   let icon = <ExternalLink className="w-3 h-3 shrink-0" />;
   let badgeStyle = "bg-accent/10 text-accent border-accent/30 hover:bg-accent/20";
 
-  if (isGithub) {
+  if (isConfirmAction) {
+    icon = <Send className="w-3 h-3 shrink-0 text-emerald-400" />;
+    badgeStyle = "bg-emerald-950/50 text-emerald-300 border-emerald-700/60 hover:bg-emerald-900/60 font-semibold";
+  } else if (isEditAction) {
+    icon = <Edit3 className="w-3 h-3 shrink-0 text-amber-400" />;
+    badgeStyle = "bg-amber-950/50 text-amber-300 border-amber-700/60 hover:bg-amber-900/60";
+  } else if (isCancelAction) {
+    icon = <XCircle className="w-3 h-3 shrink-0 text-rose-400" />;
+    badgeStyle = "bg-rose-950/40 text-rose-300 border-rose-800/50 hover:bg-rose-900/50";
+  } else if (isGithub) {
     icon = <GithubIcon size={12} />;
     badgeStyle = "bg-neutral-800 text-neutral-100 border-neutral-700 hover:bg-neutral-700";
   } else if (isCredentials) {
@@ -82,10 +102,11 @@ export function ActionLinkButton({ href, label }: ActionLinkButtonProps) {
   return (
     <a
       href={href}
-      target={isHash ? undefined : "_blank"}
-      rel={isHash ? undefined : "noopener noreferrer"}
+      target={isHash || isAction ? undefined : "_blank"}
+      rel={isHash || isAction ? undefined : "noopener noreferrer"}
       onClick={handleClick}
-      className={`inline-flex items-center gap-1.5 px-2.5 py-1 my-0.5 rounded-md text-[11px] font-medium border transition-all duration-150 active:scale-95 shadow-sm ${badgeStyle}`}
+      role={isAction ? "button" : undefined}
+      className={`inline-flex items-center gap-1.5 px-2.5 py-1 my-0.5 rounded-md text-[11px] font-medium border transition-all duration-150 active:scale-95 shadow-sm cursor-pointer ${badgeStyle}`}
     >
       {icon}
       <span>{label}</span>

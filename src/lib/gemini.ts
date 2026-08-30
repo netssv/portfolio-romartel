@@ -21,7 +21,7 @@ export function getGeminiClient(): GoogleGenAI {
 export const CHATBOT_TOOL_DECLARATIONS: FunctionDeclaration[] = [
   {
     name: "send_contact_email",
-    description: "Sends a message to Rodrigo Martel via Resend. STRICT REQUIREMENT: Only invoke after visitor directly provides name, real email, and message. Never hallucinate or assume email.",
+    description: "Sends a message to Rodrigo Martel via Resend. STRICT REQUIREMENT: Only invoke after visitor provides contact details AND explicitly confirms the drafted email preview. Never call on first turn or without confirmation.",
     parameters: {
       type: Type.OBJECT,
       properties: {
