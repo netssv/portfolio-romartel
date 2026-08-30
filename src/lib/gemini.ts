@@ -133,10 +133,12 @@ export function buildSystemInstruction(
     .map((cat) => `- ${cat.title} (${cat.issuers.join(", ")}): ${cat.highlights.join("; ")}`)
     .join("\n");
 
+  const isSpanish = visitorContext?.languageCode === "es" || (visitorContext?.language || "").toLowerCase().includes("spanish");
   const activeLanguageName = isSpanish ? "Spanish (Español)" : "English";
   const activeSectionHint = currentSection && SECTION_CONTEXT_MAP[currentSection]
     ? `\nActive Viewport Context: ${SECTION_CONTEXT_MAP[currentSection]}\n`
     : "";
+
 
   return `You are Clippo, the agile and intelligent AI assistant for ${profile.name}'s portfolio (github.com/netssv).
 Your role is to guide recruiters, hiring managers, and prospective clients through Rodrigo's expertise in Technical Solutions, Automation & Data Analytics.

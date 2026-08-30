@@ -17,8 +17,13 @@ Engineering-driven portfolio showcasing production codebases, webhook automation
 * **Tool Calling & Execution Strategy:**
   * Native Function Calling (`get_btc_telemetry`, `get_site_json`, `send_contact_email`, `navigate_to_section`, `filter_projects`, `set_site_preferences`).
   * Direct Cal.com 30-Minute Discovery Call Integration (`https://cal.com/rodrigo-martel/30min?overlayCalendar=true`).
+  * Deep In-Page Redirection via exact `#` anchor tags (`#top`, `#telemetry`, `#stack`, `#projects`, `#metrics`, `#experience`, `#skills`, `#architecture`, `#case-studies`, `#philosophy`, `#contact`) with `scroll-mt-24` offsets.
   * Preserves Google Gen AI `thought_signature` across conversation turns.
   * Employs strict 1.2s timeout on external microservice calls to prevent cold-start delays.
+* **Dynamic Multilingual Intelligence:**
+  * Strict Language Mirroring: Automatically detects and replies in the visitor's input language (Spanish, English, French, Portuguese, etc.).
+  * Natural Site Language Negotiation: Offers to switch the full website language when a visitor speaks a supported language (EN/ES) that differs from the active site view.
+  * Unsupported Language Handling: Answers queries fluently in any language while politely clarifying the website pages are currently presented in English and Spanish.
 * **Client-Side UX & Error Recovery:**
   * Controlled `isLoading` state replacing asynchronous transitions.
   * 45-second `AbortController` safety window for complex multi-turn prompts.
@@ -52,10 +57,11 @@ Engineering-driven portfolio showcasing production codebases, webhook automation
   * **Rebusca:** Android grocery price intelligence engine with defensive scraping and mobile API parsing.
 
 ### 5. Web Platform & Observability
-* **Framework:** Next.js 15 (App Router), React 19, TypeScript, Tailwind CSS, Framer Motion.
+* **Framework:** Next.js 16 (App Router), React 19, TypeScript, Tailwind CSS, Framer Motion.
 * **Modularity Standard:** Strict < 200 lines-of-code limit per modular component, hook, and route handler.
 * **CRO & Direct Booking:** Embedded Cal.com 30-min discovery call scheduler, custom zero-latency localStorage A/B testing engine, Google Analytics 4 (GA4), Microsoft Clarity heatmaps.
 * **Transactional Email:** Secure serverless routing via Resend API with honeypot spam protection.
+
 
 
 ---
