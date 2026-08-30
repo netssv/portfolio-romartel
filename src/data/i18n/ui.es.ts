@@ -116,6 +116,8 @@ export const uiEs = {
     messagePlaceholder: "Describe tu proyecto o consulta...",
     sendButton: "Enviar Mensaje",
     sendingButton: "Enviando mediante API Serverless...",
+    scheduleCall: "Agendar Llamada de 30 Minutos",
+    scheduleCallSubtitle: "Reserva directa en calendario vía Cal.com",
     successMessage: "Mensaje recibido. Rodrigo te responderá a la brevedad.",
     errorMessage: "No fue posible enviar el mensaje. Inténtalo de nuevo o escribe directamente por correo.",
   },

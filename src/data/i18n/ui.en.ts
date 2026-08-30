@@ -116,6 +116,8 @@ export const uiEn = {
     messagePlaceholder: "Describe your project or inquiry...",
     sendButton: "Send Message",
     sendingButton: "Dispatching via Serverless API...",
+    scheduleCall: "Schedule a 30-Min Discovery Call",
+    scheduleCallSubtitle: "Direct calendar reservation via Cal.com",
     successMessage: "Message received. Rodrigo will get back to you shortly.",
     errorMessage: "Unable to dispatch message. Please try again or reach out directly via email.",
   },

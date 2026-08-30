@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import Image from "next/image";
 import { ShieldCheck, MapPin } from "lucide-react";
 
 interface ExecutivePortraitProps {
@@ -15,12 +16,15 @@ export const ExecutivePortrait: React.FC<ExecutivePortraitProps> = ({ src, alt }
       <div className="relative w-full h-full rounded-3xl p-1 bg-gradient-to-b from-border-base via-border-subtle to-transparent shadow-xl">
         <div className="relative w-full h-full rounded-[22px] overflow-hidden bg-bg-surface border border-border-subtle group">
           {/* Portrait Image */}
-          <img
+          <Image
             src={src}
             alt={alt}
+            width={384}
+            height={384}
+            priority
             className="w-full h-full object-cover filter contrast-[1.04] brightness-100 transition-transform duration-500 group-hover:scale-105"
-            loading="eager"
           />
+
 
           {/* Gradient Overlay */}
           <div className="absolute inset-0 bg-gradient-to-t from-bg-surface/90 via-transparent to-transparent opacity-80 pointer-events-none" />

@@ -1,0 +1,33 @@
+# Rodrigo Martel — Marketing Operations & Systems Specialist
+
+> High-level summary of Rodrigo Martel's professional background, technical competencies, production software systems, and verified credentials for LLM knowledge synthesis.
+
+## Identity & Core Focus
+- **Name:** Rodrigo Martel
+- **Role:** Marketing Operations & Systems Specialist
+- **Location:** San Salvador, El Salvador (Available for Remote / Global Engagements)
+- **Primary Website:** https://romartel.vercel.app
+- **Direct Scheduling:** https://cal.com/rodrigo-martel/30min?overlayCalendar=true
+- **Contact Email:** rop.martel@gmail.com
+- **LinkedIn:** https://linkedin.com/in/ropmartel
+- **GitHub:** https://github.com/netssv/
+
+## Core Specializations
+1. **Workflow Automation & Orchestration:** Make.com, Zapier, Webhook pipelines, Python scripting, API automation, serverless watchdogs.
+2. **CRM & RevOps Systems:** Salesforce, HubSpot, webhook ingestion, data integrity, contact hygiene, automated lead triage.
+3. **Data Intelligence & Analytics:** Microsoft Power BI, Advanced DAX modeling, Google Analytics 4 (GA4), SQL, Excel automated models.
+4. **Web Infrastructure & Optimization:** Next.js, TypeScript, React, POSIX/Linux CLI, DNS/SSL triage, Core Web Vitals, SEO/CRO.
+
+## Production Software & Engineering Projects
+- **Metropolyca:** Living 3D city-builder and economic simulation in the browser (TypeScript, WebGL, 150+ automated unit/integration tests).
+- **WhatHappened:** Published Chrome Web Store MV3 extension delivering POSIX-style network, DNS, and SSL triage tools.
+- **caniarun:** Open-source PyPI package profiling local GPU/VRAM hardware against 80+ AI model quantization tiers.
+- **btkey_sync:** Cross-OS Bluetooth LE cryptographic key synchronization utility on PyPI.
+- **HODL Watcher:** Serverless quantitative Bitcoin telemetry copilot with $0/mo autonomous cron pipeline.
+- **FIFA World Cup 2026 AI Lab:** Predictive Monte Carlo ML tournament simulation (Random Forest, Poisson models).
+
+## Audited Credentials & Education
+- **Total Credentials:** 103 verified credentials across Google, Microsoft, IBM, Cisco, HubSpot Academy, and CertiProf.
+- **Education:** Bachelor's Degree in Marketing and Advertising (Licenciatura en Mercadeo y Publicidad) with specialization in Logistics & Supply Chain Operations.
+
+For detailed case studies and technical architectures, see https://romartel.vercel.app/llms-full.txt

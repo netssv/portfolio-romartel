@@ -1,0 +1,71 @@
+# Rodrigo Martel — Technical Portfolio & Case Studies (Full LLM Reference)
+
+## Professional Identity
+- **Name:** Rodrigo Martel
+- **Title:** Marketing Operations & Systems Specialist
+- **Location:** San Salvador, El Salvador (Remote / Global)
+- **Website:** https://romartel.vercel.app
+- **Meeting Scheduler:** https://cal.com/rodrigo-martel/30min?overlayCalendar=true
+- **Email:** rop.martel@gmail.com
+- **LinkedIn:** https://linkedin.com/in/ropmartel
+- **GitHub:** https://github.com/netssv/
+
+---
+
+## Detailed Work History & Operations
+
+### HostPapa (2025 - Present)
+- **Role:** CX Specialist – Infrastructure & Web Hosting
+- **Location:** Remote
+- **Operational Focus:** Web hosting infrastructure triage (DNS, SSL, WordPress, cPanel, Linux environments).
+- **Key Deliverables:** Deployed Python/Bash validation scripts for automated website diagnostics; authored internal knowledge base triage documentation.
+
+### Remote Projects / Consulting (2024 - 2025)
+- **Role:** Marketing Consultant & Freelancer
+- **Operational Focus:** Conversion rate optimization (CRO), keyword research, search intent mapping, and analytics telemetry.
+- **Key Deliverables:** Achieved 18% lift in form submissions across client landing pages through copy testing, UX hierarchy optimization, and CTA restructuring.
+
+### Laboratorios ROMAChemical (2023 - 2025)
+- **Role:** Business & Market Data Analyst
+- **Operational Focus:** Power BI dashboard architecture, cross-department data consolidation, and ERP digitalization.
+- **Key Deliverables:** Automated multi-department reporting pipelines in Python and Power BI, reducing manual spreadsheet bottlenecks by 70%.
+
+### HP via SmartFriend (2021 - 2024)
+- **Role:** Technical Customer Support Supervisor
+- **Operational Focus:** High-volume remote technical support shift management, SLA compliance, and escalation taxonomies.
+- **Key Deliverables:** Authored 40+ root-cause blueprints and incident archetypes; trained and onboarded incoming support agents.
+
+---
+
+## Deep Technical Case Studies
+
+### 1. High-Performance WebGL 3D Simulation Architecture (Metropolyca)
+- **Challenge:** Running complex metropolitan economic simulations and living citizen AI at 60 FPS in a web browser without memory leaks.
+- **Solution:** Engineered modular TypeScript simulation engine with strict state separation, WebGL rendering, and automated regression testing.
+- **Metrics:** Instant 60 FPS rendering, 150+ automated unit and integration tests passed.
+- **Repository:** https://github.com/netssv/metropolyca
+
+### 2. POSIX Edge Network & SSL Triage Terminal (WhatHappened)
+- **Challenge:** Web administrators and marketing ops teams struggle with cumbersome terminal commands for edge DNS, DoH, and SSL certificate inspection during live incidents.
+- **Solution:** Built and published a Manifest V3 Chrome Extension offering a POSIX-style interactive CLI emulator with DNS-over-HTTPS and TLS handshakes.
+- **Store URL:** https://chromewebstore.google.com/detail/whathappened/jkohefabbnobompohkedfaodcnfdplom
+
+### 3. Hardware Profiler for Open-Source AI Quantization (caniarun)
+- **Challenge:** Developers need rapid verification of GPU VRAM capacity against 80+ open LLMs across GGUF quantization tiers (Q4, Q8, FP16).
+- **Solution:** Developed an open-source Python CLI package distributed via PyPI that profiles local CUDA hardware and outputs instant compatibility matrices.
+- **Package URL:** https://pypi.org/project/caniarun/
+
+### 4. Zero-Dollar Serverless Market Telemetry Pipeline (HODL Watcher)
+- **Challenge:** Delivering continuous, real-time market payload ingestion without incurring server infrastructure overhead.
+- **Solution:** Orchestrated Make.com cron watchdogs triggering Python FastAPI microservices on Render cloud with in-memory caching.
+- **Metrics:** Autonomous $0/month operational cloud cost with 99.9% uptime.
+- **Demo:** https://hodl-watcher.vercel.app/
+
+---
+
+## Verified Credential Categories (103 Audited)
+1. **Data Analytics & BI:** Google Data Analytics Professional Certificate, Microsoft Power BI DAX Modeling, IBM SQL & Relational Databases 101, Kodigo Bootcamp.
+2. **Digital Marketing & CRO:** HubSpot Academy (Inbound, Content, Social), MTF Institute Professional Business English.
+3. **Scripting, Automation & AI:** Python Developer (Sololearn, Mimo), Cognitive Class Python for Data Science, Microsoft Azure AI Fundamentals, IBM AI Fundamentals.
+4. **IT Infrastructure & Security:** Cisco Packet Tracer, ITIL Frameworks, ISO 27001 Information Security, HackerMentor Ethical Hacking.
+5. **Agile & Project Operations:** CertiProf Scrum Product Owner (SPOP), Scrum Master, Six Sigma Yellow Belt.

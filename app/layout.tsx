@@ -14,10 +14,14 @@ const spaceGrotesk = Space_Grotesk({ variable: "--font-space-grotesk", subsets: 
 const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"], display: "swap" });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://romartel.vercel.app"),
   title: siteData.metadata.title,
   description: siteData.metadata.description,
   keywords: siteData.metadata.keywords,
   authors: [{ name: siteData.metadata.author }],
+  alternates: {
+    canonical: "https://romartel.vercel.app",
+  },
   openGraph: {
     title: siteData.metadata.title,
     description: siteData.metadata.description,
@@ -25,12 +29,21 @@ export const metadata: Metadata = {
     siteName: siteData.metadata.title,
     locale: "en_US",
     type: "website",
+    images: [
+      {
+        url: "/avatar.webp",
+        width: 800,
+        height: 800,
+        alt: siteData.metadata.title,
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title: siteData.metadata.title,
     description: siteData.metadata.description,
     creator: "@netssv",
+    images: ["/avatar.webp"],
   },
   icons: {
     icon: [
@@ -46,23 +59,59 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   const jsonLd = {
     "@context": "https://schema.org",
-    "@type": "Person",
-    name: siteData.profile.name,
-    jobTitle: siteData.profile.title,
-    url: "https://romartel.vercel.app",
-    sameAs: [
-      siteData.metadata.socialLinks.linkedin,
-      siteData.metadata.socialLinks.github,
-      siteData.metadata.socialLinks.twitter,
+    "@graph": [
+      {
+        "@type": "Person",
+        "@id": "https://romartel.vercel.app/#person",
+        name: siteData.profile.name,
+        jobTitle: siteData.profile.title,
+        url: "https://romartel.vercel.app",
+        image: "https://romartel.vercel.app/avatar.webp",
+        email: `mailto:${siteData.metadata.email}`,
+        sameAs: [
+          siteData.metadata.socialLinks.linkedin,
+          siteData.metadata.socialLinks.github,
+          siteData.metadata.socialLinks.twitter,
+          "https://pypi.org/project/caniarun/",
+          "https://pypi.org/project/Btkey-Sync/",
+          "https://chromewebstore.google.com/detail/whathappened/jkohefabbnobompohkedfaodcnfdplom",
+          "https://cal.com/rodrigo-martel/30min?overlayCalendar=true"
+        ],
+        worksFor: {
+          "@type": "Organization",
+          name: siteData.experience[0].company,
+        },
+        knowsAbout: [
+          "Marketing Operations",
+          "Workflow Automation",
+          "CRM Integrations",
+          "Make.com",
+          "Zapier",
+          "Python Scripting",
+          "Power BI",
+          "Next.js",
+          "Search Engine Optimization",
+          "Conversion Rate Optimization"
+        ]
+      },
+      {
+        "@type": "ProfilePage",
+        "@id": "https://romartel.vercel.app/#webpage",
+        url: "https://romartel.vercel.app",
+        name: siteData.metadata.title,
+        about: { "@id": "https://romartel.vercel.app/#person" },
+        isPartOf: {
+          "@type": "WebSite",
+          "@id": "https://romartel.vercel.app/#website",
+          name: "Rodrigo Martel Systems Hub",
+          url: "https://romartel.vercel.app",
+        },
+      },
     ],
-    alumniOf: "",
-    worksFor: {
-      "@type": "Organization",
-      name: siteData.experience[0].company,
-    },
   };
 
   return (
+
     <html
       lang="en"
       className={`${inter.variable} ${spaceGrotesk.variable} ${geistMono.variable} h-full antialiased`}
@@ -146,5 +195,3 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
     </html>
   );
 }
-
-
