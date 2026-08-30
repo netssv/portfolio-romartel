@@ -62,7 +62,10 @@ export async function POST(req: NextRequest) {
     const PRIMARY_MODEL = "gemini-3.5-flash-lite";
     const FALLBACK_MODEL = "gemini-3.6-flash";
 
-    const generateWithFallback = async (contentPayload: typeof contents, maxTokens = 600) => {
+    const generateWithFallback = async (
+      contentPayload: Parameters<typeof ai.models.generateContent>[0]["contents"],
+      maxTokens = 600
+    ) => {
       const config = {
         systemInstruction,
         temperature: 0.3,
@@ -84,6 +87,8 @@ export async function POST(req: NextRequest) {
       let toolResult: unknown;
       let clientAction: Record<string, unknown> | undefined;
 
+      const isSpanish = visitorContext?.languageCode === "es" || (visitorContext?.language || "").toLowerCase().includes("spanish");
+
       if (call.name === "send_contact_email") {
         toolResult = await executeSendContactEmail(call.args as unknown as SendEmailArgs);
       } else if (call.name === "get_btc_telemetry") {
@@ -94,16 +99,28 @@ export async function POST(req: NextRequest) {
       } else if (call.name === "navigate_to_section") {
         const args = (call.args || {}) as { section?: string };
         const target = (args.section || "top").toLowerCase().replace("#", "");
-        toolResult = { success: true, navigatedTo: target, message: `Navigated viewport to ${target} section.` };
         clientAction = { type: "NAVIGATE", target };
+        return NextResponse.json({
+          reply: isSpanish ? `Te he llevado a la sección de ${target}.` : `Navigated to the ${target} section.`,
+          toolExecuted: call.name,
+          clientAction,
+        });
       } else if (call.name === "filter_projects") {
         const args = (call.args || {}) as { category?: string; tag?: string };
-        toolResult = { success: true, category: args.category, tag: args.tag, message: "Filtered projects gallery." };
         clientAction = { type: "FILTER_PROJECTS", category: args.category, tag: args.tag };
+        return NextResponse.json({
+          reply: isSpanish ? "He filtrado los proyectos en la galería." : "Filtered projects in the gallery.",
+          toolExecuted: call.name,
+          clientAction,
+        });
       } else if (call.name === "set_site_preferences") {
         const args = (call.args || {}) as { language?: string; theme?: string };
-        toolResult = { success: true, language: args.language, theme: args.theme, message: "Site preferences updated." };
         clientAction = { type: "SET_PREFERENCES", language: args.language, theme: args.theme };
+        return NextResponse.json({
+          reply: isSpanish ? "Preferencias del sitio actualizadas." : "Site preferences updated.",
+          toolExecuted: call.name,
+          clientAction,
+        });
       } else {
         toolResult = { error: `Unknown function ${call.name}` };
       }
@@ -125,7 +142,7 @@ export async function POST(req: NextRequest) {
       const secondResponse = await generateWithFallback(toolContents, 800);
 
       return NextResponse.json({
-        reply: secondResponse.text || "Action executed successfully.",
+        reply: secondResponse.text || (isSpanish ? "Acción ejecutada correctamente." : "Action executed successfully."),
         toolExecuted: call.name,
         clientAction,
       });

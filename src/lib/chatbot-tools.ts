@@ -55,7 +55,14 @@ export async function executeSendContactEmail(args: SendEmailArgs) {
   }
 }
 
+let cachedTelemetry: Record<string, unknown> | null = null;
+let cachedTelemetryTime = 0;
+const TELEMETRY_CACHE_TTL = 60000;
+
 export async function executeGetBtcTelemetry() {
+  if (cachedTelemetry && Date.now() - cachedTelemetryTime < TELEMETRY_CACHE_TTL) {
+    return cachedTelemetry;
+  }
   try {
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), 1200);
@@ -86,7 +93,7 @@ export async function executeGetBtcTelemetry() {
       sentimentData = ctx?.data?.[ctx.data.length - 1] || null;
     }
 
-    return {
+    const result = {
       status: "online",
       pipeline: "HODL Watcher Cloud Pipeline",
       architecture: "$0/mo Serverless Make.com Cron + FastAPI on Render Cloud",
@@ -101,11 +108,14 @@ export async function executeGetBtcTelemetry() {
         : { fearGreed: 68, classification: "Greed", dxy: 104.2 },
       telemetry: telemetryData,
     };
+    cachedTelemetry = result;
+    cachedTelemetryTime = Date.now();
+    return result;
   } catch {
     // Return static telemetry fallback
   }
 
-  return {
+  const fallback = {
     status: "online",
     pipeline: "HODL Watcher Cloud Pipeline",
     architecture: "$0/mo Serverless Make.com Cron + FastAPI on Render Cloud",
@@ -113,6 +123,9 @@ export async function executeGetBtcTelemetry() {
     summary: "Verifying Bitcoin on-chain mempool fees and order book telemetry every 15 minutes.",
     sentiment: { fearGreed: 68, classification: "Greed", dxy: 104.2 },
   };
+  cachedTelemetry = fallback;
+  cachedTelemetryTime = Date.now();
+  return fallback;
 }
 
 export function executeGetSiteJson(section?: string) {

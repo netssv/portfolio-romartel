@@ -25,8 +25,13 @@ function getApiKey(): string {
   return key;
 }
 
+let cachedClient: GoogleGenAI | null = null;
+
 export function getGeminiClient(): GoogleGenAI {
-  return new GoogleGenAI({ apiKey: getApiKey() });
+  if (!cachedClient) {
+    cachedClient = new GoogleGenAI({ apiKey: getApiKey() });
+  }
+  return cachedClient;
 }
 
 export const CHATBOT_TOOL_DECLARATIONS: FunctionDeclaration[] = [

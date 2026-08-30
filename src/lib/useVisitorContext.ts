@@ -27,6 +27,27 @@ export function useVisitorContext() {
       };
 
       try {
+        const cached = sessionStorage.getItem("clippo_visitor_ctx");
+        if (cached) {
+          const parsed = JSON.parse(cached) as VisitorContext;
+          if (parsed.ip && parsed.country) {
+            resolved = {
+              ...parsed,
+              language: parsedLang.name,
+              languageCode: locale || parsedLang.code,
+            };
+            if (isMounted) {
+              setContext(resolved);
+              setGreeting(generateVisitorGreeting(resolved));
+            }
+            return;
+          }
+        }
+      } catch {
+        // Ignore sessionStorage read error
+      }
+
+      try {
         const res = await fetch("/api/visitor-context", {
           headers: { "Cache-Control": "no-cache" },
           signal: AbortSignal.timeout(2000),
@@ -73,6 +94,11 @@ export function useVisitorContext() {
       if (isMounted) {
         setContext(resolved);
         setGreeting(generateVisitorGreeting(resolved));
+        try {
+          sessionStorage.setItem("clippo_visitor_ctx", JSON.stringify(resolved));
+        } catch {
+          // Ignore sessionStorage write error
+        }
       }
     }
 
