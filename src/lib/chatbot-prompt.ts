@@ -31,28 +31,36 @@ function formatEnvironmentContext(visitorContext?: VisitorContextPayload): strin
     weather: { tempC: 28, condition: "Partly cloudy", conditionEs: "Parcialmente nublado" },
   };
 
+  const visitorIp = visitorContext?.ip || "Unknown IP";
+  const visitorOs = visitorContext?.os || "Unknown OS";
   const visitorCity = visitorContext?.city ? `${visitorContext.city}, ` : "";
   const visitorCountry = visitorContext?.country || "Earth";
   const visitorTime = visitorContext?.localTime ? `${visitorContext.localTime} (${visitorContext.timeZone || "Local"})` : "Unknown";
   const visitorWeatherDesc = visitorContext?.weather?.condition
-    ? `${visitorContext.weather.condition} (${visitorContext.weather.tempC}°C / ${visitorContext.weather.tempF}°F)`
-    : "Not available";
+    ? `${visitorContext.weather.condition} (~${visitorContext.weather.tempC}°C / ${visitorContext.weather.tempF}°F)`
+    : "Forecast unavailable";
 
   const hostWeatherDesc = host.weather?.condition
-    ? `${host.weather.condition} (${host.weather.tempC}°C)`
+    ? `${host.weather.condition} (~${host.weather.tempC}°C)`
     : "Warm (~28°C)";
 
   return `
-Host & Visitor Environment Telemetry (Recruiter Icebreakers & Context):
+Host & Visitor Environment Telemetry:
 - Rodrigo's Base: ${host.city}, ${host.country} | Timezone: ${host.timeZone} (CST/UTC-6) | Rodrigo's Time: ${host.localTime} | Weather: ${hostWeatherDesc}
-- Visitor Location: ${visitorCity}${visitorCountry} | Visitor Time: ${visitorTime} | Visitor Weather: ${visitorWeatherDesc}
+- Visitor Telemetry: IP \`${visitorIp}\` | OS: ${visitorOs} | Location: ${visitorCity}${visitorCountry} | Local Time: ${visitorTime} | Weather Radar: ${visitorWeatherDesc}
 
-Conversational Empathy & Recruiter Rapport Guidelines:
-- You have real-time awareness of both the visitor's location/weather/time and Rodrigo's in San Salvador (CST).
-- Use this organically to build charming, natural rapport and icebreakers with recruiters and prospective clients (e.g. comparing weather when it's raining or snowing where they are vs San Salvador, or acknowledging timezone differences for meetings).
-- Example: If it is raining or snowing where the recruiter writes from, or if it's late/early in their timezone, make a subtle, polite remark before transitioning smoothly to Rodrigo's solutions.
-- Maintain professional balance: Do not force weather/time remarks when the user asks direct technical or urgent questions.
-- Never use emojis anywhere.`;
+Context & Interactivity Rules:
+1. Visitor Identity & "What do you know about me?" questions:
+   - When asked what you know about the visitor ("¿Qué sabes de mí?", "¿Qué me dices de mí?", "Who am I?"), report the detected telemetry with friendly transparency: IP (\`${visitorIp}\`), OS (${visitorOs}), approximate location, local time, and estimated weather.
+2. Time & Daypart Nuance:
+   - Respect proper dayparts: 06:00-11:59 is morning ("mañana"), 12:00-18:59 is afternoon ("tarde"), 19:00-05:59 is evening/night ("noche"). 7:00 PM+ is strictly night/evening, never afternoon.
+3. Weather Phrasing (Probabilistic & Natural):
+   - Never assert current local weather as an absolute fact. Always use probabilistic, radar-based phrasing:
+     * Spanish: "según los reportes del clima parece que...", "quizá esté lloviznando o con algo de viento...", "el pronóstico marca...", "parece haber cielo despejado..."
+     * English: "weather reports suggest it might be raining...", "seems like there might be a breeze...", "radar shows around 26°C with possible drizzle..."
+4. Recruiter & Client Rapport:
+   - When relevant (greetings, icebreakers, scheduling), compare visitor's location/weather/time with Rodrigo's in San Salvador (CST). Keep it light and smoothly guide them toward Rodrigo's projects and technical skills.
+5. Emojis: Strictly forbidden in all responses.`;
 }
 
 export function buildSystemInstruction(

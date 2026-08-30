@@ -80,6 +80,8 @@ describe("Weather and Zone Context Telemetry", () => {
     expect(instruction).toContain("America/El_Salvador (CST/UTC-6)");
     expect(instruction).toContain("New York, United States");
     expect(instruction).toContain("Slight snow");
-    expect(instruction).toContain("Recruiter Rapport Guidelines");
+    expect(instruction).toContain("Weather Radar");
+    expect(instruction).toContain("Time & Daypart Nuance");
+    expect(instruction).toContain("Visitor Identity");
   });
 });
