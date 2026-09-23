@@ -92,27 +92,33 @@ export const TelemetryLogDrawer: React.FC<TelemetryLogDrawerProps> = ({
 
     {/* Logs List */}
     <div className="max-h-48 overflow-y-auto space-y-2 pr-1.5 text-xs font-body">
-      {events.map((evt) => {
-        const badge = getSourceBadge(evt.source);
-        return (
-          <div
-            key={evt.id}
-            className="flex items-start justify-between rounded-xl bg-bg-surface hover:bg-bg-raised/60 px-3.5 py-2 border border-border-subtle hover:border-border-base transition-all"
-          >
-            <div className="flex flex-col gap-0.5">
-              <div className="flex items-center gap-2">
-                <span className={`inline-flex items-center gap-1 rounded-md px-1.5 py-0.5 text-[10px] font-semibold border ${badge.bg}`}>
-                  {badge.icon}
-                  <span>{badge.label}</span>
-                </span>
-                <span className="text-text-primary font-medium text-xs">{evt.task}</span>
+      {events.length === 0 ? (
+        <div className="rounded-xl border border-border-subtle bg-bg-surface/70 px-4 py-6 text-center text-xs font-body text-text-muted">
+          No telemetry events recorded in current buffer.
+        </div>
+      ) : (
+        events.map((evt) => {
+          const badge = getSourceBadge(evt.source);
+          return (
+            <div
+              key={evt.id}
+              className="flex items-start justify-between rounded-xl bg-bg-surface hover:bg-bg-raised/60 px-3.5 py-2 border border-border-subtle hover:border-border-base transition-all"
+            >
+              <div className="flex flex-col gap-0.5">
+                <div className="flex items-center gap-2">
+                  <span className={`inline-flex items-center gap-1 rounded-md px-1.5 py-0.5 text-[10px] font-semibold border ${badge.bg}`}>
+                    {badge.icon}
+                    <span>{badge.label}</span>
+                  </span>
+                  <span className="text-text-primary font-medium text-xs">{evt.task}</span>
+                </div>
+                {evt.details && <div className="text-text-muted text-[11px] pl-1">{evt.details}</div>}
               </div>
-              {evt.details && <div className="text-text-muted text-[11px] pl-1">{evt.details}</div>}
+              <span className="text-text-muted whitespace-nowrap ml-3 text-[11px] shrink-0 font-mono">{formatTime(evt.timestamp)}</span>
             </div>
-            <span className="text-text-muted whitespace-nowrap ml-3 text-[11px] shrink-0 font-mono">{formatTime(evt.timestamp)}</span>
-          </div>
-        );
-      })}
+          );
+        })
+      )}
     </div>
   </motion.div>
 );

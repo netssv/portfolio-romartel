@@ -3,6 +3,17 @@ import { NextResponse } from "next/server";
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
+/**
+ * ARCHITECTURAL NOTICE (Serverless Lifecycle & In-Memory Cache):
+ * In serverless environments (e.g., Vercel Lambda / Edge), module-scoped memory
+ * (`memoryCache`) is ephemeral and isolated to the active container instance.
+ * It is NOT persistent across cold starts or across distinct serverless regions.
+ *
+ * If this specific instance has served a recent 200 response, it retains `lastTimestamp`
+ * for best-effort fallback display. However, on a fresh cold container encountering an
+ * upstream failure, `last_real_data_timestamp` will be null.
+ * Callers and client components must never assume persistence exists.
+ */
 interface TelemetryMemoryCache {
   lastData: unknown | null;
   lastTimestamp: string | null;
@@ -37,14 +48,14 @@ export async function GET() {
           last_real_data_timestamp: memoryCache.lastTimestamp,
           count: memoryCache.lastData ? (memoryCache.lastData as { count?: number }).count ?? 0 : 0,
           events: memoryCache.lastData ? (memoryCache.lastData as { events?: unknown[] }).events ?? [] : [],
-          message: "Render free tier instance is spinning up from idle state.",
+          message: "Upstream service unavailable, possibly initializing.",
         },
         { status: 200 }
       );
     }
 
     if (!res.ok) {
-      throw new Error(`Render HTTP status ${res.status}`);
+      throw new Error(`Upstream HTTP status ${res.status}`);
     }
 
     const data = await res.json();
@@ -75,8 +86,8 @@ export async function GET() {
         events: memoryCache.lastData ? (memoryCache.lastData as { events?: unknown[] }).events ?? [] : [],
         message:
           honestStatus === "waking_up"
-            ? "Upstream cold start in progress. Service waking up."
-            : "Telemetry API service is unreachable.",
+            ? "Upstream service unavailable, possibly initializing."
+            : "Upstream service unreachable.",
       },
       { status: 200 }
     );

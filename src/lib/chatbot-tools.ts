@@ -87,7 +87,7 @@ export async function executeGetBtcTelemetry() {
     }
 
     return {
-      status: "online",
+      status: telemetryData ? "live" : "waking_up",
       pipeline: "HODL Watcher Cloud Pipeline",
       architecture: "$0/mo Serverless Make.com Cron + FastAPI on Render Cloud",
       watchdog: "Mempool Fee & Order Flow Watchdog",
@@ -106,7 +106,7 @@ export async function executeGetBtcTelemetry() {
   }
 
   return {
-    status: "online",
+    status: "offline",
     pipeline: "HODL Watcher Cloud Pipeline",
     architecture: "$0/mo Serverless Make.com Cron + FastAPI on Render Cloud",
     watchdog: "Mempool Fee & Order Flow Watchdog",

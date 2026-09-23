@@ -41,7 +41,7 @@ export async function GET() {
 
     return NextResponse.json(
       {
-        status: "online",
+        status: "live",
         timestamp: new Date().toISOString(),
         sentiment: {
           fearGreed: latestContext?.fear_greed ?? 68,
@@ -63,7 +63,7 @@ export async function GET() {
     clearTimeout(timeoutId);
     return NextResponse.json(
       {
-        status: "cached",
+        status: "offline",
         timestamp: new Date().toISOString(),
         sentiment: {
           fearGreed: 68,
