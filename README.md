@@ -31,10 +31,12 @@ Engineering-driven portfolio showcasing production codebases, webhook automation
   * Eliminates free-tier idle sleep (cold starts) by keeping the FastAPI instance active 24/7 at $0/mo.
   * Verifies Bitcoin on-chain mempool fees and order flow telemetry.
   * Logs events into an In-Memory Ring Buffer (15 execution slots) with zero database overhead.
-* **Frontend Telemetry Bar:**
-  * Real-time Binance REST/WebSocket ticker feed.
+* **Frontend Telemetry Bar & Serverless Lifecycle:**
+  * Real-time Binance REST/WebSocket ticker feed with neutral loading skeleton and visible states (`Live`, `Waking up`, `Offline`).
+  * Route handler (`/api/telemetry`) strictly maps upstream status to explicit honest states (`live`, `waking_up`, `offline`) without synthetic mock data.
+  * Serverless execution notice: Vercel functions are stateless and ephemeral; in-memory buffer caches are retained only per active container instance and never promised as persistent storage.
   * Integrated **Fear & Greed Market Sentiment Index** via [`/api/hodl-insights`](file:///home/netss/Projects/websites/portfolio-romartel/app/api/hodl-insights/route.ts).
-  * Interactive execution buffer drawer with manual ping testing (`visitor-test`).
+  * Interactive execution buffer drawer with manual ping testing (`visitor-test`) and clear empty-state handling.
 
 ### 3. Project Naming Stories & Portfolio Strategy
 * Centralized in [`PROJECT_NAMING_STORIES.md`](file:///home/netss/Projects/websites/portfolio-romartel/PROJECT_NAMING_STORIES.md), documenting authentic problem-solving origins:

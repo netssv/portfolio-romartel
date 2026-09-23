@@ -60,10 +60,14 @@ export const TelemetryStatusBadge: React.FC<TelemetryStatusBadgeProps> = ({
   const renderDescription = () => {
     const lastSeen = lastRealDataTimestamp ? ` (${formatTimeAgo(lastRealDataTimestamp, isSpanish)})` : "";
     if (status === "waking_up") {
-      return isSpanish ? `Reactivando instancia Render...${lastSeen}` : `Spinning up Render instance...${lastSeen}`;
+      return isSpanish
+        ? `Servicio upstream no disponible, posiblemente iniciando...${lastSeen}`
+        : `Upstream service unavailable, possibly initializing...${lastSeen}`;
     }
     if (status === "offline") {
-      return isSpanish ? `Servicio en espera o fuera de línea${lastSeen}` : `Service standby or offline${lastSeen}`;
+      return isSpanish
+        ? `Servicio upstream no disponible o fuera de línea${lastSeen}`
+        : `Upstream service unreachable or offline${lastSeen}`;
     }
     if (latestEvent) {
       return (
