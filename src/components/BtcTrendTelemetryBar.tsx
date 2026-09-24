@@ -72,10 +72,10 @@ export const BtcTrendTelemetryBar: React.FC = () => {
       void fetchBtcPrice();
       void fetchTelemetry();
       void fetchInsights();
-    }, 0);
+    }, 1200);
 
-    const btcInt = setInterval(() => void fetchBtcPrice(), 8000);
-    const telInt = setInterval(() => void fetchTelemetry(), 25000);
+    const btcInt = setInterval(() => void fetchBtcPrice(), 20000);
+    const telInt = setInterval(() => void fetchTelemetry(), 35000);
     const insInt = setInterval(() => void fetchInsights(), 60000);
 
     return () => {
@@ -97,7 +97,7 @@ export const BtcTrendTelemetryBar: React.FC = () => {
   };
 
   return (
-    <section className="relative -mt-4 sm:-mt-6 mb-12 z-20">
+    <section className="relative mt-8 sm:mt-12 mb-16 z-20">
       <div className="mx-auto max-w-6xl px-6">
         <FadeIn>
           <div className="relative overflow-hidden rounded-2xl border border-border-subtle bg-bg-surface p-4 sm:px-6 sm:py-4 shadow-sm transition-all duration-200 hover:border-border-base">
@@ -105,12 +105,12 @@ export const BtcTrendTelemetryBar: React.FC = () => {
               {/* Left Column: Live Status */}
               <div className="flex items-center gap-3 min-w-0">
                 <div className="relative flex h-3 w-3 shrink-0 items-center justify-center">
-                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-accent-signal opacity-75" />
-                  <span className="relative inline-flex h-2 w-2 rounded-full bg-accent-signal" />
+                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-signal-success opacity-75" />
+                  <span className="relative inline-flex h-2 w-2 rounded-full bg-signal-success" />
                 </div>
                 <div className="min-w-0">
                   <div className="flex items-center gap-2">
-                    <span className="font-body text-xs font-bold uppercase tracking-wider text-accent-signal">
+                    <span className="font-body text-xs font-bold uppercase tracking-wider text-text-primary">
                       {isSpanish ? "Telemetría en Vivo" : "Live Telemetry"}
                     </span>
                     <span className="rounded-md bg-bg-raised px-2 py-0.5 text-[11px] font-body text-text-secondary font-medium border border-border-subtle">
@@ -130,7 +130,7 @@ export const BtcTrendTelemetryBar: React.FC = () => {
               </div>
 
               {/* Center + Right Group */}
-              <div className="flex flex-wrap items-center justify-between xl:justify-end gap-3 pt-3 xl:pt-0 border-t xl:border-t-0 border-border-subtle">
+              <div className="flex flex-wrap items-center justify-between xl:justify-end gap-3 pt-3 xl:pt-0 border-t xl:border-t-0 border-border-subtle pr-0 xl:pr-8">
                 <BtcPriceCard
                   price={btcTicker.price}
                   changePct={btcTicker.priceChangePercent}

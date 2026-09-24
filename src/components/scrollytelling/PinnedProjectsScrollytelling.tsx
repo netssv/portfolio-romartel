@@ -45,13 +45,30 @@ export const PinnedProjectsScrollytelling: React.FC<{ items: PinnedProjectItem[]
     }
   });
 
+  const [isInView, setIsInView] = useState(false);
   const active = items[activeIndex] || items[0];
 
   useEffect(() => {
-    if (videoRef.current && active.videoSrc) {
+    const el = containerRef.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsInView(entry.isIntersecting);
+      },
+      { threshold: 0.1 }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    if (!videoRef.current || !active.videoSrc) return;
+    if (isInView && isPlaying) {
       videoRef.current.play().catch(() => {});
+    } else {
+      videoRef.current.pause();
     }
-  }, [activeIndex, active.videoSrc]);
+  }, [activeIndex, active.videoSrc, isInView, isPlaying]);
 
   const togglePlay = () => {
     if (!videoRef.current) return;

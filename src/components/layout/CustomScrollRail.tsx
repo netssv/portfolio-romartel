@@ -56,7 +56,7 @@ export const CustomScrollRail: React.FC = () => {
   return (
     <aside
       aria-label="Section navigation"
-      className="fixed right-3 sm:right-4 top-1/2 -translate-y-1/2 z-40 hidden md:flex flex-col items-center gap-2.5 p-2 rounded-full bg-bg-surface/85 border border-border-subtle backdrop-blur-md shadow-lg transition-all duration-200"
+      className="fixed right-3 sm:right-4 top-1/2 -translate-y-1/2 z-40 hidden xl:flex flex-col items-center gap-2 p-1.5 rounded-full bg-bg-surface/80 border border-border-subtle backdrop-blur-md shadow-xs opacity-40 hover:opacity-100 transition-opacity duration-300"
     >
       {SECTIONS.map((sec) => {
         const isActive = activeSection === sec.id;

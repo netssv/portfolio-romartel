@@ -1,47 +1,38 @@
 "use client";
 
-import React, { useEffect } from "react";
-import { motion, useMotionValue, useSpring } from "framer-motion";
+import React, { useEffect, useState } from "react";
 
+/**
+ * Subtle, restrained architectural spotlight that avoids generic neon/electric glows
+ * and replaces heavy spring physics with lightweight passive mouse tracking.
+ */
 export const SpotlightCursor: React.FC = () => {
-  // Motion values avoid React state re-renders for smooth 120Hz tracking
-  const mouseX = useMotionValue(0);
-  const mouseY = useMotionValue(0);
-
-  // Easing spring configuration for heavy/expensive organic movement
-  const springConfig = { damping: 35, stiffness: 250, mass: 0.5 };
-  const cursorX = useSpring(mouseX, springConfig);
-  const cursorY = useSpring(mouseY, springConfig);
+  const [pos, setPos] = useState({ x: -1000, y: -1000 });
 
   useEffect(() => {
+    let rafId: number;
     const handleMouseMove = (e: MouseEvent) => {
-      mouseX.set(e.clientX - 175); // offset by half width (350/2)
-      mouseY.set(e.clientY - 175);
+      cancelAnimationFrame(rafId);
+      rafId = requestAnimationFrame(() => {
+        setPos({ x: e.clientX, y: e.clientY });
+      });
     };
 
-    window.addEventListener("mousemove", handleMouseMove);
+    window.addEventListener("mousemove", handleMouseMove, { passive: true });
     return () => {
       window.removeEventListener("mousemove", handleMouseMove);
+      cancelAnimationFrame(rafId);
     };
-  }, [mouseX, mouseY]);
+  }, []);
 
   return (
-    <motion.div
-      className="pointer-events-none fixed inset-0 z-30 hidden lg:block"
+    <div
+      data-testid="spotlight-cursor"
+      className="pointer-events-none fixed inset-0 z-30 hidden lg:block overflow-hidden"
       style={{
-        // Use transform3d for hardware GPU acceleration
-        x: cursorX,
-        y: cursorY,
-        width: 350,
-        height: 350,
+        background: `radial-gradient(350px circle at ${pos.x}px ${pos.y}px, rgba(255, 255, 255, 0.02), transparent 70%)`,
       }}
-    >
-      <div 
-        className="w-full h-full rounded-full opacity-[0.08]"
-        style={{
-          background: "radial-gradient(circle, var(--accent) 0%, transparent 70%)",
-        }}
-      />
-    </motion.div>
+      aria-hidden="true"
+    />
   );
 };

@@ -3,50 +3,50 @@
 /* ─── Custom Dark Variant explicitly tied to .theme-dark class ─── */
 @custom-variant dark (&:where(.theme-dark, .theme-dark *));
 
-/* ─── Design Tokens (Day Light Mode - Azul Istmo Editorial Base) ── */
+/* ─── Design Tokens (Day Light Mode - Architectural Editorial) ── */
 :root {
-  --bg-base:        #FAFAF8;
+  --bg-base:        #F9FAFB;
   --bg-surface:     #FFFFFF;
-  --bg-raised:      #F0F1ED;
-  --text-primary:   #0B1F3A;
-  --text-secondary: #3D5470;
-  --text-muted:     #6B7C93;
-  --accent:         #1E4B8F;
-  --accent-hover:   #163A70;
-  --accent-signal:  #C81E3A;
-  --border-subtle:  rgba(11, 31, 58, 0.08);
-  --border-base:    rgba(11, 31, 58, 0.14);
+  --bg-raised:      #F3F4F6;
+  --text-primary:   #111827;
+  --text-secondary: #4B5563;
+  --text-muted:     #6B7280;
+  --accent:         #21426E;
+  --accent-hover:   #1A3557;
+  --accent-signal:  #4B5563;
+  --border-subtle:  rgba(0, 0, 0, 0.06);
+  --border-base:    rgba(0, 0, 0, 0.11);
   
   --bg-glass:       rgba(255, 255, 255, 0.92);
-  --grid-color:     rgba(30, 75, 143, 0.04);
+  --grid-color:     rgba(0, 0, 0, 0.025);
 
   --signal-success: #059669;
   --emerald-text:   #065F46;
-  --emerald-bg:     rgba(5, 150, 105, 0.10);
-  --emerald-border: rgba(5, 150, 105, 0.25);
+  --emerald-bg:     rgba(5, 150, 105, 0.08);
+  --emerald-border: rgba(5, 150, 105, 0.18);
 }
 
-/* ─── Design Tokens (Night Dark Mode - Deep Oceanic Obsidian) ── */
+/* ─── Design Tokens (Night Dark Mode - Restrained Obsidian Slate) ── */
 .theme-dark {
-  --bg-base:        #0A1220;
-  --bg-surface:     #101A2E;
-  --bg-raised:      #182437;
-  --text-primary:   #F7F7F5;
-  --text-secondary: #C5CBD6;
-  --text-muted:     #8B96A8;
-  --accent:         #4A7FC9;
-  --accent-hover:   #6897DC;
-  --accent-signal:  #E0435C;
-  --border-subtle:  rgba(255, 255, 255, 0.08);
-  --border-base:    rgba(255, 255, 255, 0.15);
+  --bg-base:        #0D0F12;
+  --bg-surface:     #14171D;
+  --bg-raised:      #1C2028;
+  --text-primary:   #F3F4F6;
+  --text-secondary: #9CA3AF;
+  --text-muted:     #6B7280;
+  --accent:         #4876AB;
+  --accent-hover:   #5B8ABF;
+  --accent-signal:  #9CA3AF;
+  --border-subtle:  rgba(255, 255, 255, 0.07);
+  --border-base:    rgba(255, 255, 255, 0.12);
   
-  --bg-glass:       rgba(16, 26, 46, 0.88);
-  --grid-color:     rgba(74, 127, 201, 0.08);
+  --bg-glass:       rgba(20, 23, 29, 0.88);
+  --grid-color:     rgba(255, 255, 255, 0.035);
 
   --signal-success: #10B981;
   --emerald-text:   #34D399;
-  --emerald-bg:     rgba(16, 185, 129, 0.12);
-  --emerald-border: rgba(16, 185, 129, 0.25);
+  --emerald-bg:     rgba(16, 185, 129, 0.10);
+  --emerald-border: rgba(16, 185, 129, 0.20);
 }
 
 /* ─── Tailwind v4 Theme Extension ─────────────────────── */
@@ -146,19 +146,6 @@ html.lenis, html.lenis body {
 /* ─── Executive Reflection ────────────────────────────── */
 .mirror-reflect-base {
   position: relative;
-}
-
-.mirror-reflect-base::after {
-  content: '';
-  position: absolute;
-  top: 100%;
-  left: 5%;
-  right: 5%;
-  height: 40px;
-  background: radial-gradient(ellipse at top, rgba(30, 75, 143, 0.15), transparent 70%);
-  filter: blur(8px);
-  pointer-events: none;
-  z-index: -1;
 }
 
 /* ─── Minimalist Custom Scrollbar ─────────────────────── */

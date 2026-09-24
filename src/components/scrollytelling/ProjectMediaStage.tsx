@@ -69,15 +69,15 @@ export const ProjectMediaStage: React.FC<ProjectMediaStageProps> = ({
           zIndex: isHoverExpanded ? 40 : 10,
         }}
         transition={{ type: "spring", stiffness: 260, damping: 26 }}
-        className={`relative overflow-hidden border border-border-subtle bg-bg-surface shadow-2xl mirror-reflect-base transition-all duration-500 ${
-          isHoverExpanded ? "ring-2 ring-accent shadow-[0_30px_100px_rgba(0,0,0,0.6)]" : ""
+        className={`relative overflow-hidden border border-border-subtle bg-bg-surface shadow-xl transition-all duration-500 ${
+          isHoverExpanded ? "border-border-base shadow-2xl" : ""
         } ${
           isPhoneMockup
-            ? "w-[240px] sm:w-[280px] lg:w-[300px] aspect-[9/18] max-h-[52vh] sm:max-h-[58vh] lg:max-h-[460px] rounded-[32px] ring-2 ring-border-subtle shadow-[0_0_40px_rgba(30,75,143,0.15)]"
+            ? "w-[240px] sm:w-[280px] lg:w-[300px] aspect-[9/18] max-h-[52vh] sm:max-h-[58vh] lg:max-h-[460px] rounded-[32px] border-border-base shadow-md"
             : "w-full aspect-video max-h-[36vh] sm:max-h-[42vh] lg:max-h-none rounded-2xl"
         }`}
       >
-        <CornerReticle size={8} color="rgba(74, 127, 201, 0.4)" />
+        <CornerReticle size={8} color="var(--border-base)" />
 
         {/* Dynamic notch for smartphone card */}
         {isPhoneMockup && (
@@ -94,9 +94,9 @@ export const ProjectMediaStage: React.FC<ProjectMediaStageProps> = ({
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -4 }}
               transition={{ duration: 0.2 }}
-              className="absolute top-3 right-3 z-40 px-2 py-1 rounded-md bg-black/85 backdrop-blur-md border border-white/20 text-[10px] font-mono text-accent flex items-center gap-1 shadow-xl pointer-events-none"
+              className="absolute top-3 right-3 z-40 px-2 py-1 rounded-md bg-black/85 backdrop-blur-md border border-white/20 text-[10px] font-mono text-text-primary flex items-center gap-1 shadow-lg pointer-events-none"
             >
-              <Maximize2 size={10} className="text-accent" />
+              <Maximize2 size={10} className="text-text-muted" />
               <span>Expanded</span>
             </motion.div>
           )}
@@ -109,11 +109,10 @@ export const ProjectMediaStage: React.FC<ProjectMediaStageProps> = ({
                 ref={videoRef}
                 src={active.videoSrc}
                 poster={active.imageSrc || "/projects/metropolyca.png"}
-                autoPlay
                 loop
                 muted={isMuted}
                 playsInline
-                preload="auto"
+                preload="none"
                 onLoadedMetadata={(e) => {
                   setIsVerticalMedia(e.currentTarget.videoHeight > e.currentTarget.videoWidth);
                 }}

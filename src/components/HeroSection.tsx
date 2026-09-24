@@ -2,7 +2,7 @@
 
 import React, { useRef } from "react";
 import { ArrowUpRight, ArrowDown, MapPin, MessageSquare } from "lucide-react";
-import { motion, useInView } from "framer-motion";
+import { motion } from "framer-motion";
 import { ExecutivePortrait } from "@/src/components/ui/ExecutivePortrait";
 import { useLanguage } from "@/src/context/LanguageContext";
 
@@ -24,8 +24,6 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
 }) => {
   const { t, isSpanish } = useLanguage();
   const heroRef = useRef<HTMLDivElement>(null);
-  const imgRef = useRef<HTMLDivElement>(null);
-  const imgInView = useInView(imgRef, { once: true, margin: "-50px" });
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -83,7 +81,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
 
           {/* Subtitle / Role */}
           <motion.p
-            className="text-lg sm:text-xl font-heading font-semibold text-accent mb-5 leading-snug"
+            className="text-lg sm:text-xl font-heading font-medium text-text-secondary mb-5 leading-snug"
             variants={itemVariants}
           >
             {title}
@@ -91,7 +89,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
 
           {/* Bio */}
           <motion.p
-            className="text-sm sm:text-base font-body text-text-secondary leading-[1.8] max-w-xl mb-9"
+            className="text-sm sm:text-base font-body text-text-secondary leading-[1.85] max-w-lg mb-8"
             variants={itemVariants}
           >
             {bio}
@@ -125,18 +123,10 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
         </motion.div>
 
         {/* Portrait Image Column */}
-        <div ref={imgRef} className="lg:col-span-5 flex justify-center lg:justify-end z-10">
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95, y: 16 }}
-            animate={
-              imgInView
-                ? { opacity: 1, scale: 1, y: 0, transition: { duration: 0.4 } }
-                : { opacity: 0, scale: 0.95, y: 16 }
-            }
-            className="relative z-10 flex flex-col items-center"
-          >
+        <div className="lg:col-span-5 flex justify-center lg:justify-end z-10">
+          <div className="relative z-10 flex flex-col items-center">
             <ExecutivePortrait src={avatar.src} alt={avatar.alt} />
-          </motion.div>
+          </div>
         </div>
       </div>
     </section>

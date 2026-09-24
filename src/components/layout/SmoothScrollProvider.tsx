@@ -1,6 +1,6 @@
 "use client";
 
-import React, { createContext, useContext, useEffect, useRef, useState } from "react";
+import React, { createContext, useContext, useEffect, useRef } from "react";
 import Lenis from "lenis";
 
 interface ScrollContextValue {
@@ -19,7 +19,7 @@ export const useSmoothScroll = () => useContext(ScrollContext);
 
 export const SmoothScrollProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const lenisRef = useRef<Lenis | null>(null);
-  const [scrollState, setScrollState] = useState({ progress: 0, velocity: 0 });
+  const scrollMetricsRef = useRef({ progress: 0, velocity: 0 });
   const rafRef = useRef<number | null>(null);
 
   useEffect(() => {
@@ -44,7 +44,7 @@ export const SmoothScrollProvider: React.FC<{ children: React.ReactNode }> = ({ 
     lenisRef.current = lenis;
 
     const onScroll = (e: { progress: number; velocity: number }) => {
-      setScrollState({ progress: e.progress, velocity: e.velocity });
+      scrollMetricsRef.current = { progress: e.progress, velocity: e.velocity };
     };
 
     lenis.on("scroll", onScroll);
@@ -67,8 +67,8 @@ export const SmoothScrollProvider: React.FC<{ children: React.ReactNode }> = ({ 
     <ScrollContext.Provider
       value={{
         getLenis: () => lenisRef.current,
-        progress: scrollState.progress,
-        velocity: scrollState.velocity,
+        progress: scrollMetricsRef.current.progress,
+        velocity: scrollMetricsRef.current.velocity,
       }}
     >
       {children}

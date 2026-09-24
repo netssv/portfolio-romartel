@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { X } from "lucide-react";
 import { ClippoAvatar } from "./ClippoAvatar";
 import { SectionId } from "@/src/lib/useActiveSection";
 import { getSectionChatbotConfig } from "@/src/lib/chatbot-section-data";
@@ -24,13 +25,15 @@ export function ClippoFloatingTrigger({
 }: ClippoFloatingTriggerProps) {
   const { isSpanish } = useLanguage();
   const [phraseIndex, setPhraseIndex] = useState(0);
+  const [isDismissed, setIsDismissed] = useState(false);
 
   const activeConfig = getSectionChatbotConfig(sectionId, isSpanish);
   const phrases = activeConfig.speechPhrases;
 
   useEffect(() => {
     setPhraseIndex(0);
-  }, [isSpanish, sectionId]);
+    setIsDismissed(false);
+  }, [isSpanish, sectionId, customPhrase]);
 
   useEffect(() => {
     if (isOpen || isThinking || customPhrase || phrases.length <= 1) return;
@@ -50,21 +53,34 @@ export function ClippoFloatingTrigger({
     <div className="relative flex flex-col items-end select-none">
       {/* Dynamic Speech / Thought Bubble */}
       <AnimatePresence mode="wait">
-        <motion.div
-          key={isThinking ? "thinking" : customPhrase ? `custom-${customPhrase}` : `${isSpanish ? "es" : "en"}-${sectionId}-${phraseIndex}`}
-          initial={{ opacity: 0, y: 12, scale: 0.9 }}
-          animate={{ opacity: 1, y: 0, scale: 1 }}
-          exit={{ opacity: 0, y: -8, scale: 0.9 }}
-          transition={{ duration: 0.3 }}
-          onClick={onToggle}
-          className={`cursor-pointer max-w-[245px] bg-bg-surface text-text-primary text-xs font-medium px-3.5 py-2.5 rounded-2xl rounded-br-sm border shadow-2xl mb-2 backdrop-blur-md relative transition-all duration-200 ${
-            isThinking
-              ? "border-accent/60 shadow-accent/20 ring-1 ring-accent/30"
-              : customPhrase
-              ? "border-accent/80 shadow-accent/20 ring-1 ring-accent/40"
-              : "border-border-base hover:border-accent hover:shadow-accent/10"
-          }`}
-        >
+        {!isDismissed && (
+          <motion.div
+            key={isThinking ? "thinking" : customPhrase ? `custom-${customPhrase}` : `${isSpanish ? "es" : "en"}-${sectionId}-${phraseIndex}`}
+            initial={{ opacity: 0, y: 12, scale: 0.9 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: -8, scale: 0.9 }}
+            transition={{ duration: 0.3 }}
+            onClick={onToggle}
+            className={`cursor-pointer max-w-[245px] bg-bg-surface text-text-primary text-xs font-medium px-3.5 py-2.5 rounded-2xl rounded-br-sm border shadow-2xl mb-2 backdrop-blur-md relative transition-all duration-200 ${
+              isThinking
+                ? "border-accent/60 shadow-accent/20 ring-1 ring-accent/30"
+                : customPhrase
+                ? "border-accent/80 shadow-accent/20 ring-1 ring-accent/40"
+                : "border-border-base hover:border-accent hover:shadow-accent/10"
+            }`}
+          >
+            {/* Dismiss X button */}
+            <button
+              type="button"
+              onClick={(e) => {
+                e.stopPropagation();
+                setIsDismissed(true);
+              }}
+              className="absolute -top-1.5 -left-1.5 w-4 h-4 rounded-full bg-bg-surface border border-border-base flex items-center justify-center text-text-muted hover:text-text-primary transition-colors shadow-xs cursor-pointer"
+              aria-label={isSpanish ? "Cerrar mensaje" : "Dismiss message"}
+            >
+              <X size={10} />
+            </button>
           {isThinking ? (
             <div className="flex items-center gap-2 text-accent">
               <span className="flex gap-1 items-center">
@@ -83,6 +99,7 @@ export function ClippoFloatingTrigger({
           {/* Pointer tail pointing down to Clippo */}
           <div className="absolute -bottom-1.5 right-6 w-3 h-3 bg-bg-surface border-r border-b border-border-base transform rotate-45" />
         </motion.div>
+      )}
       </AnimatePresence>
 
       {/* Pure Animated Clippo Character Trigger */}

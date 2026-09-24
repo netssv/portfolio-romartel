@@ -1,8 +1,7 @@
 "use client";
 
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { ArrowUpRight, Play, Pause, Volume2, VolumeX, ShieldCheck, Gamepad2 } from "lucide-react";
-import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 import { useLanguage } from "@/src/context/LanguageContext";
 
 const GithubIcon = ({ size = 14 }: { size?: number }) => (
@@ -13,52 +12,34 @@ const GithubIcon = ({ size = 14 }: { size?: number }) => (
 );
 
 export interface FlagshipProjectProps {
-  id: string;
-  title: string;
-  subtitle: string;
-  eyebrow: string;
-  description: string;
-  orchestrationStory: string;
-  status: string;
-  category: string;
+  id: string; title: string; subtitle: string; eyebrow: string; description: string;
+  orchestrationStory: string; status: string; category: string;
   metrics: { label: string; value: string }[];
-  tags: string[];
-  links: { demo: string; github: string };
-  videoSrc?: string;
+  tags: string[]; links: { demo: string; github: string }; videoSrc?: string;
 }
 
 export const FlagshipProjectCard: React.FC<FlagshipProjectProps> = ({
-  title,
-  subtitle,
-  description,
-  orchestrationStory,
-  metrics,
-  tags,
-  links,
-  videoSrc = "/metro.mp4",
+  title, subtitle, description, orchestrationStory, metrics, tags, links, videoSrc = "/metro.mp4",
 }) => {
   const { isSpanish } = useLanguage();
   const videoRef = useRef<HTMLVideoElement>(null);
-  const [isPlaying, setIsPlaying] = useState(true);
+  const [isPlaying, setIsPlaying] = useState(false);
   const [isMuted, setIsMuted] = useState(true);
 
-  const x = useMotionValue(0);
-  const y = useMotionValue(0);
-  const mouseXSpring = useSpring(x, { stiffness: 350, damping: 28 });
-  const mouseYSpring = useSpring(y, { stiffness: 350, damping: 28 });
-  const rotateX = useTransform(mouseYSpring, [-0.5, 0.5], ["3deg", "-3deg"]);
-  const rotateY = useTransform(mouseXSpring, [-0.5, 0.5], ["-3deg", "3deg"]);
-
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    const rect = e.currentTarget.getBoundingClientRect();
-    x.set((e.clientX - rect.left) / rect.width - 0.5);
-    y.set((e.clientY - rect.top) / rect.height - 0.5);
-  };
-
-  const handleMouseLeave = () => {
-    x.set(0);
-    y.set(0);
-  };
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+    const observer = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) {
+        video.play().then(() => setIsPlaying(true)).catch(() => {});
+      } else {
+        video.pause();
+        setIsPlaying(false);
+      }
+    }, { threshold: 0.2 });
+    observer.observe(video);
+    return () => observer.disconnect();
+  }, []);
 
   const togglePlay = () => {
     if (!videoRef.current) return;
@@ -78,23 +59,17 @@ export const FlagshipProjectCard: React.FC<FlagshipProjectProps> = ({
   };
 
   return (
-    <div style={{ perspective: "1500px" }}>
-      <motion.div
-        className="relative rounded-3xl border border-border-base bg-bg-surface p-6 sm:p-8 lg:p-10 shadow-xl overflow-hidden mb-12 group transition-all duration-200 hover:border-accent"
-        onMouseMove={handleMouseMove}
-        onMouseLeave={handleMouseLeave}
-        style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}
-      >
-        <div className="relative z-10 flex flex-col gap-6">
-          {/* Header Badge */}
+    <div className="w-full">
+      <div className="relative rounded-3xl border border-border-base bg-bg-surface p-6 sm:p-8 lg:p-10 shadow-sm overflow-hidden mb-12 group transition-all duration-200 hover:border-border-base">
+        <div className="flex flex-col gap-8">
           <div className="flex flex-wrap items-center justify-between gap-3">
             <div className="flex flex-wrap items-center gap-2">
-              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg text-xs font-body font-bold bg-accent/10 text-accent border border-accent/20">
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg text-xs font-body font-semibold bg-bg-raised text-text-primary border border-border-subtle">
                 <Gamepad2 size={13} className="text-accent" />
                 {isSpanish ? "SIMULACIÓN INSIGNIA" : "FLAGSHIP SIMULATION"}
               </span>
-              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg text-xs font-body font-semibold bg-bg-raised text-text-secondary border border-border-subtle">
-                <span className="w-2 h-2 rounded-full bg-accent-signal animate-pulse" />
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg text-xs font-body font-medium bg-bg-raised text-text-secondary border border-border-subtle">
+                <span className="w-2 h-2 rounded-full bg-signal-success" />
                 {isSpanish ? "Acceso Anticipado en Vivo" : "Early Access Live"}
               </span>
             </div>
@@ -103,21 +78,23 @@ export const FlagshipProjectCard: React.FC<FlagshipProjectProps> = ({
             </span>
           </div>
 
-          {/* Video Mockup */}
-          <div className="relative rounded-2xl overflow-hidden border border-border-base bg-black aspect-video shadow-lg group/video">
+          {/* Video Mockup with lazy preload and poster */}
+          <div className="relative rounded-2xl overflow-hidden border border-border-base bg-black aspect-video shadow-md group/video">
             <video
               ref={videoRef}
               src={videoSrc}
-              autoPlay
+              poster="/projects/metropolyca.png"
               loop
               muted={isMuted}
               playsInline
+              preload="none"
               className="w-full h-full object-cover cursor-pointer"
               onClick={togglePlay}
             />
 
             <div className="absolute bottom-3.5 right-3.5 z-20 flex items-center gap-2">
               <button
+                type="button"
                 onClick={togglePlay}
                 className="p-2 rounded-xl bg-black/75 backdrop-blur-md border border-white/15 text-white hover:text-accent transition-all cursor-pointer"
                 aria-label={isPlaying ? "Pause" : "Play"}
@@ -125,6 +102,7 @@ export const FlagshipProjectCard: React.FC<FlagshipProjectProps> = ({
                 {isPlaying ? <Pause size={14} /> : <Play size={14} className="fill-current" />}
               </button>
               <button
+                type="button"
                 onClick={toggleMute}
                 className="px-3 py-1.5 rounded-xl bg-black/75 backdrop-blur-md border border-white/15 text-xs font-body text-white hover:text-accent transition-all flex items-center gap-1.5 cursor-pointer"
                 aria-label={isMuted ? "Unmute" : "Mute"}
@@ -139,10 +117,10 @@ export const FlagshipProjectCard: React.FC<FlagshipProjectProps> = ({
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
             <div className="lg:col-span-8 flex flex-col gap-3.5">
               <div>
-                <h3 className="text-2xl sm:text-3xl font-heading font-bold tracking-tight text-text-primary group-hover:text-accent transition-colors duration-150">
+                <h3 className="text-2xl sm:text-3xl font-heading font-bold tracking-tight text-text-primary transition-colors duration-150">
                   {title}
                 </h3>
-                <p className="text-sm font-body font-semibold text-accent mt-0.5">{subtitle}</p>
+                <p className="text-sm font-body font-medium text-text-secondary mt-0.5">{subtitle}</p>
               </div>
               <p className="text-sm font-body text-text-secondary leading-relaxed">{description}</p>
               <div className="rounded-xl border border-border-subtle bg-bg-raised/70 p-3.5 flex items-start gap-2.5">
@@ -171,7 +149,7 @@ export const FlagshipProjectCard: React.FC<FlagshipProjectProps> = ({
                 {metrics.map((m, i) => (
                   <div key={i} className="flex items-center justify-between px-3 py-2 rounded-lg bg-bg-surface border border-border-subtle text-xs font-body">
                     <span className="text-text-secondary">{m.label}</span>
-                    <span className="font-mono font-bold text-accent">{m.value}</span>
+                    <span className="font-mono font-bold text-text-primary">{m.value}</span>
                   </div>
                 ))}
               </div>
@@ -199,7 +177,7 @@ export const FlagshipProjectCard: React.FC<FlagshipProjectProps> = ({
             </div>
           </div>
         </div>
-      </motion.div>
+      </div>
     </div>
   );
 };

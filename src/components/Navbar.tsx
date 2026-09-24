@@ -62,11 +62,7 @@ export const Navbar: React.FC<NavbarProps> = ({ navItems, authorName }) => {
       const lenis = getLenis();
 
       if (path === "/" || path === "#" || targetId === "top") {
-        if (lenis) {
-          lenis.scrollTo(0, { duration: 1.2 });
-        } else {
-          window.scrollTo({ top: 0, behavior: "smooth" });
-        }
+        lenis ? lenis.scrollTo(0, { duration: 1.2 }) : window.scrollTo({ top: 0, behavior: "smooth" });
         return;
       }
 
@@ -109,17 +105,11 @@ export const Navbar: React.FC<NavbarProps> = ({ navItems, authorName }) => {
     return () => observer.disconnect();
   }, [navItems]);
 
-  const initials = authorName
-    .split(" ")
-    .map((w) => w[0])
-    .join("");
+  const initials = authorName.split(" ").map((w) => w[0]).join("");
 
   return (
     <motion.header
-      variants={{
-        visible: { y: 0 },
-        hidden: { y: "-100%" },
-      }}
+      variants={{ visible: { y: 0 }, hidden: { y: "-100%" } }}
       animate={hidden ? "hidden" : "visible"}
       transition={{ duration: 0.25, ease: "easeInOut" }}
       className={`fixed top-0 z-50 w-full transition-colors duration-200 ${
@@ -159,7 +149,7 @@ export const Navbar: React.FC<NavbarProps> = ({ navItems, authorName }) => {
             type="button"
             onClick={toggleTheme}
             aria-label="Toggle dark/light theme"
-            className="h-9 w-9 flex items-center justify-center rounded-xl border border-border-subtle bg-bg-surface text-text-secondary hover:text-text-primary hover:border-accent transition-colors cursor-pointer shadow-xs"
+            className="h-9 w-9 flex items-center justify-center rounded-full border border-border-subtle bg-bg-surface text-text-secondary hover:text-text-primary hover:border-accent transition-colors cursor-pointer shadow-xs"
           >
             {theme === "night" ? <Sun size={14} className="text-accent" /> : <Moon size={14} className="text-accent" />}
           </button>
@@ -170,7 +160,7 @@ export const Navbar: React.FC<NavbarProps> = ({ navItems, authorName }) => {
               e.preventDefault();
               scrollToPath("#contact");
             }}
-            className="hidden sm:inline-flex h-9 px-3.5 items-center gap-1.5 rounded-xl text-xs font-body font-semibold text-white bg-accent hover:bg-accent-hover transition-colors shadow-xs"
+            className="hidden sm:inline-flex h-9 px-4 items-center gap-1.5 rounded-full text-xs font-body font-semibold text-white bg-accent hover:bg-accent-hover transition-colors shadow-xs"
           >
             <span>{t.nav.contact}</span>
             <ArrowUpRight size={13} />
