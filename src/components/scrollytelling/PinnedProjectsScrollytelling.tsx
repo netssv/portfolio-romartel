@@ -1,7 +1,7 @@
 "use client";
 
-import React, { useRef, useState, useEffect } from "react";
-import { useScroll, useMotionValueEvent } from "framer-motion";
+import React, { useRef, useState } from "react";
+import { useScroll, useMotionValueEvent, useMotionValue } from "framer-motion";
 import { ProjectsShowcaseStage } from "./ProjectsShowcaseStage";
 
 export interface PinnedProjectItem {
@@ -23,6 +23,7 @@ export interface PinnedProjectItem {
 export const PinnedProjectsScrollytelling: React.FC<{ items: PinnedProjectItem[] }> = ({ items }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const [activeIndex, setActiveIndex] = useState(0);
+  const transitionProgress = useMotionValue(0);
 
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -31,7 +32,10 @@ export const PinnedProjectsScrollytelling: React.FC<{ items: PinnedProjectItem[]
 
   useMotionValueEvent(scrollYProgress, "change", (latest) => {
     const total = items.length;
-    const index = Math.min(total - 1, Math.max(0, Math.floor(latest * total)));
+    const raw = latest * (total - 1);
+    const index = Math.min(total - 1, Math.max(0, Math.floor(raw)));
+    const frac = raw - index;
+    transitionProgress.set(frac);
     if (index !== activeIndex) {
       setActiveIndex(index);
     }
@@ -46,15 +50,14 @@ export const PinnedProjectsScrollytelling: React.FC<{ items: PinnedProjectItem[]
   };
 
   return (
-    <div ref={containerRef} className="relative h-[480vh] w-full">
-      <div className="sticky top-0 h-screen w-full flex items-center justify-center overflow-hidden z-20 px-3 sm:px-6 py-4 sm:py-6">
-        <div className="w-full max-w-7xl">
-          <ProjectsShowcaseStage
-            items={items}
-            activeIndex={activeIndex}
-            jumpToProject={jumpToProject}
-          />
-        </div>
+    <div ref={containerRef} className="relative h-[480vh] w-full bg-[#21426E] dark:bg-[#162C4E]">
+      <div className="sticky top-0 h-screen w-full flex flex-col justify-center overflow-hidden z-20">
+        <ProjectsShowcaseStage
+          items={items}
+          activeIndex={activeIndex}
+          jumpToProject={jumpToProject}
+          transitionProgress={transitionProgress}
+        />
       </div>
     </div>
   );

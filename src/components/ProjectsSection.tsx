@@ -73,24 +73,38 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
       : projects.filter((p) => p.category === selectedCategory);
 
   return (
-    <section id="projects" className="relative border-b border-border-subtle">
+    <section
+      id="projects"
+      className={`relative transition-colors duration-500 ${
+        viewMode === "cinematic"
+          ? "bg-[#21426E] dark:bg-[#162C4E] text-white border-b border-white/20"
+          : "border-b border-border-subtle"
+      }`}
+    >
       {/* Section Introduction */}
-      <div className="mx-auto max-w-6xl px-6 pt-24 pb-8">
+      <div className={`mx-auto max-w-6xl px-6 pt-20 sm:pt-24 pb-8 transition-colors ${viewMode === "cinematic" ? "text-white" : ""}`}>
         <FadeIn>
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-6">
             <SectionLabel
               index="02"
+              variant={viewMode === "cinematic" ? "onDark" : "default"}
               eyebrow={t.projects.eyebrow}
               heading={t.projects.heading}
               description={t.projects.description}
             />
             {/* View Mode Toggle */}
-            <div className="flex items-center gap-1 p-1 rounded-xl bg-bg-raised border border-border-subtle shrink-0 self-start md:self-auto shadow-xs">
+            <div
+              className={`flex items-center gap-1 p-1 rounded-xl shrink-0 self-start md:self-auto shadow-xs backdrop-blur-md ${
+                viewMode === "cinematic"
+                  ? "bg-white/10 border border-white/20 text-white"
+                  : "bg-bg-raised border border-border-subtle"
+              }`}
+            >
               <button
                 onClick={() => setViewMode("cinematic")}
                 className={`px-3 py-1.5 rounded-lg text-xs font-body font-semibold flex items-center gap-1.5 transition-all cursor-pointer ${
                   viewMode === "cinematic"
-                    ? "bg-accent text-white shadow-xs"
+                    ? "bg-white text-[#21426E] shadow-xs font-bold"
                     : "text-text-secondary hover:text-text-primary"
                 }`}
               >
@@ -101,7 +115,9 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
                 onClick={() => setViewMode("grid")}
                 className={`px-3 py-1.5 rounded-lg text-xs font-body font-semibold flex items-center gap-1.5 transition-all cursor-pointer ${
                   viewMode === "grid"
-                    ? "bg-accent text-white shadow-xs"
+                    ? "bg-accent text-white shadow-xs font-bold"
+                    : viewMode === "cinematic"
+                    ? "text-blue-200 hover:text-white"
                     : "text-text-secondary hover:text-text-primary"
                 }`}
               >

@@ -76,24 +76,26 @@
 }
 
 /* ─── Base Styles ─────────────────────────────────────── */
-html {
-  scroll-behavior: smooth;
-  font-size: 16px;
-}
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    font-size: 16px;
+  }
 
-body {
-  background-color: var(--bg-base);
-  color: var(--text-secondary);
-  font-family: var(--font-inter), system-ui, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  line-height: 1.6;
-}
+  body {
+    background-color: var(--bg-base);
+    color: var(--text-secondary);
+    font-family: var(--font-inter), system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    line-height: 1.6;
+  }
 
-h1, h2, h3, h4, h5, h6 {
-  font-family: var(--font-space-grotesk), system-ui, sans-serif;
-  color: var(--text-primary);
-  line-height: 1.25;
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-space-grotesk), system-ui, sans-serif;
+    color: var(--text-primary);
+    line-height: 1.25;
+  }
 }
 
 ::selection {
