@@ -27,6 +27,10 @@ A rigorous evaluation framework for personal websites and portfolios. It identif
   - If a metric cannot be backed by context or proof, recommend removing it.
   - If valid, recommend anchoring it with baseline, timeframe, and concrete business outcomes.
 - Proof Assets: Ensure social proof, client references, open-source repositories, or live artifacts back up key achievements.
+- Telemetry & Live Data Honesty:
+  - Verify that live feeds, telemetry bars, and pipeline status badges truthfully reflect upstream system states without synthetic health checks.
+  - Flag any hardcoded "online" badges that mask dormant serverless or cold-start conditions.
+  - Ensure initial data fetches utilize neutral loading skeletons (`animate-pulse`) to prevent Cumulative Layout Shift (CLS).
 
 ### 3. Technical Performance & Rendering Efficiency
 - Concrete Measurement: Report empirical Lighthouse scores and Core Web Vitals (LCP, CLS, INP, FCP) rather than subjective impressions.
