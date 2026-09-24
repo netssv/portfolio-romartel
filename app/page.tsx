@@ -3,7 +3,9 @@
 import { useLanguage } from "@/src/context/LanguageContext";
 import { Navbar } from "@/src/components/Navbar";
 import { HeroSection } from "@/src/components/HeroSection";
+import { AboutMeSection } from "@/src/components/AboutMeSection";
 import { BtcTrendTelemetryBar } from "@/src/components/BtcTrendTelemetryBar";
+import { SloganSection } from "@/src/components/SloganSection";
 import { TrustedStack } from "@/src/components/TrustedStack";
 import { ProjectsSection } from "@/src/components/ProjectsSection";
 import { MetricsSection } from "@/src/components/MetricsSection";
@@ -11,6 +13,7 @@ import { ExperienceTimeline } from "@/src/components/ExperienceTimeline";
 import { SkillsGrid } from "@/src/components/SkillsGrid";
 import { PhilosophySection } from "@/src/components/PhilosophySection";
 import { ArchitectureSection } from "@/src/components/ArchitectureSection";
+import { CertificationsSection } from "@/src/components/CertificationsSection";
 import { CaseStudiesSection } from "@/src/components/CaseStudiesSection";
 import { ContactSection } from "@/src/components/ContactSection";
 import { CustomScrollRail } from "@/src/components/layout/CustomScrollRail";
@@ -37,6 +40,7 @@ export default function Home() {
 
   const navItems = [
     { name: t.nav.home, path: "#top" },
+    { name: t.nav.about, path: "#about" },
     { name: t.nav.projects, path: "#projects" },
     { name: t.nav.experience, path: "#experience" },
     { name: t.nav.insights, path: "#skills" },
@@ -57,20 +61,31 @@ export default function Home() {
         <HeroSection
           name={profile.name}
           title={profile.title}
+          tagline={profile.tagline}
           bio={profile.bio}
           location={profile.location}
           avatar={profile.avatar}
           email={contact.email}
         />
 
+        {/* ── [01] About Me (Editorial Narrative & Bitcoin Enthusiast) ── */}
+        <div className="content-auto">
+          <AboutMeSection />
+        </div>
+
         {/* ── Real-Time BTC Macro Trend & Automation Watchdog Bar ── */}
         <BtcTrendTelemetryBar />
 
+        {/* ── Think Big, Start Small: Kinetic Architectural Transition ── */}
+        <div className="content-auto">
+          <SloganSection />
+        </div>
+
+        {/* ── [02] Projects Showcase (AlejandroHA Split Architectural Stage) ── */}
+        <ProjectsSection flagship={flagshipProject} projects={sideProjects} />
+
         {/* ── Tech Stack ─────────────────────────────── */}
         <TrustedStack stack={trustedStack} />
-
-        {/* ── Projects Showcase ──────────────────────── */}
-        <ProjectsSection flagship={flagshipProject} projects={sideProjects} />
 
         {/* ── Metrics ────────────────────────────────── */}
         <MetricsSection metrics={metrics} />
@@ -78,14 +93,19 @@ export default function Home() {
         {/* ── Experience Timeline ────────────────────── */}
         <ExperienceTimeline items={experience} />
 
-        {/* ── Skills & Capabilities ──────────────────── */}
-        <div className="content-auto">
+        {/* ── Skills & Capabilities (Architectural Contrast Canvas) ── */}
+        <div className="content-auto bg-[#F4F5F7] dark:bg-[#12161E] pt-16 sm:pt-24 border-t border-border-subtle transition-colors duration-700">
           <SkillsGrid skillsMatrix={skillsMatrix} />
         </div>
 
         {/* ── Architecture & Strategy ────────────────── */}
-        <div className="content-auto">
+        <div className="content-auto bg-[#F4F5F7] dark:bg-[#12161E] pb-16 sm:pb-24 border-b border-border-subtle transition-colors duration-700">
           <ArchitectureSection />
+        </div>
+
+        {/* ── Certifications & Credentials (Monumental Scatter Convergence) ── */}
+        <div className="content-auto">
+          <CertificationsSection />
         </div>
 
         {/* ── Case Studies ───────────────────────────── */}
@@ -113,7 +133,7 @@ export default function Home() {
               href={metadata.socialLinks.github}
               target="_blank"
               rel="noopener noreferrer"
-              className="hover:text-text-primary transition-colors duration-150"
+              className="directional-underline hover:text-text-primary transition-colors duration-150"
             >
               GitHub
             </a>
@@ -121,13 +141,13 @@ export default function Home() {
               href={metadata.socialLinks.linkedin}
               target="_blank"
               rel="noopener noreferrer"
-              className="hover:text-text-primary transition-colors duration-150"
+              className="directional-underline hover:text-text-primary transition-colors duration-150"
             >
               LinkedIn
             </a>
             <a
               href="#top"
-              className="hover:text-accent transition-colors duration-150"
+              className="directional-underline hover:text-accent transition-colors duration-150"
             >
               {t.footer.topLink}
             </a>

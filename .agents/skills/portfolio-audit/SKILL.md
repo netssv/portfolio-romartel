@@ -15,6 +15,7 @@ A rigorous evaluation framework for personal websites and portfolios. It identif
 
 ### 1. Positioning Check (Hero & Narrative Alignment)
 - Target Role & Audience Fit: Verify that the hero statement, subheadings, and career timeline directly address the target role or audience.
+- Above-the-Fold Heading Hierarchy: Confirm the primary `<h1>` is prominently placed above the fold in the Hero rather than buried in downstream sections (e.g., `#about`).
 - Mismatch Detection: Flag contradictions between stated goals and site narrative (for example, positioning as a high-level strategist when targeting technical operations, or vice versa).
 - Scope Calibration: Ensure experience descriptions emphasize hands-on, practical problem solving rather than inflated corporate buzzwords or vague generalizations.
 - Continuity: Confirm that project case studies and skills validate the primary role claimed in the hero section.
@@ -49,6 +50,7 @@ A rigorous evaluation framework for personal websites and portfolios. It identif
 - Primary Action Clarity: Confirm the presence of exactly one primary conversion goal (e.g., schedule a consultation, email contact, hire inquiry).
 - Hierarchy & Visual Weight: Ensure secondary actions (e.g., GitHub link, resume PDF, social icons) do not compete visually with the primary CTA.
 - Friction Analysis: Evaluate form fields, contact pathways, and external redirect hops. The primary action should require minimal effort and zero confusing steps.
+- Direct Scheduling Integration: Verify whether high-intent prospects have direct, in-page calendar scheduling paths rather than being bounced exclusively to external messaging links.
 
 ## Audit Workflow
 

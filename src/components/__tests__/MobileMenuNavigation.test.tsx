@@ -33,8 +33,9 @@ describe("MobileMenuDropdown Component", () => {
     expect(handleNavigate).toHaveBeenCalledWith("#projects");
   });
 
-  it("handles Connect CTA button click", () => {
+  it("handles Schedule Call CTA and renders WhatsApp link", () => {
     const handleNavigate = vi.fn();
+    const eventSpy = vi.spyOn(window, "dispatchEvent");
     render(
       <MobileMenuDropdown
         navItems={NAV_ITEMS}
@@ -43,9 +44,17 @@ describe("MobileMenuDropdown Component", () => {
       />
     );
 
-    const connectButton = screen.getByText("Let's Connect");
-    fireEvent.click(connectButton);
+    const scheduleButton = screen.getByText("Schedule Call");
+    fireEvent.click(scheduleButton);
 
-    expect(handleNavigate).toHaveBeenCalledWith("#contact");
+    expect(handleNavigate).toHaveBeenCalledWith("");
+    expect(eventSpy).toHaveBeenCalledWith(expect.objectContaining({ type: "open-clippo-schedule" }));
+
+    const whatsappLink = screen.getByText("WhatsApp");
+    expect(whatsappLink.closest("a")).toHaveAttribute(
+      "href",
+      "https://api.whatsapp.com/send/?phone=50378748247&text&type=phone_number&app_absent=0"
+    );
+    eventSpy.mockRestore();
   });
 });

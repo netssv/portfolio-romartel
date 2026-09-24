@@ -1,15 +1,30 @@
 export const uiEs = {
   nav: {
     home: "Inicio",
+    about: "Sobre mí",
     projects: "Proyectos",
     experience: "Experiencia",
     insights: "Habilidades",
     architecture: "Arquitectura",
     caseStudies: "Casos de Estudio",
     contact: "Conectemos",
+    scheduleCall: "Agendar Llamada",
+    whatsapp: "WhatsApp",
     toggleTheme: "Cambiar tema",
     toggleLang: "Cambiar a Inglés",
     languageName: "ES",
+  },
+  about: {
+    eyebrow: "Perfil y Enfoque",
+    heading: "Sobre mí",
+    scheduleCta: "Agendar Llamada",
+    whatsappCta: "WhatsApp",
+  },
+  slogan: {
+    line1: "Think Big.",
+    line2: "Start Small.",
+    tag: "Sistemas & Ejecución",
+    subtitle: "Construyendo flujos de trabajo automatizados y eficientes que escalan sin fricción desde el primer día.",
   },
   hero: {
     statusBadge: "Disponible para Proyectos de Sistemas, Automatización y Analítica",
@@ -97,6 +112,12 @@ export const uiEs = {
     eyebrow: "Principios Rectores",
     heading: "Filosofía de Ingeniería y Operaciones",
   },
+  certifications: {
+    eyebrow: "Credenciales Verificadas",
+    title: "Certificaciones & Credenciales",
+    subtitle: "Certificado en Google Data Analytics y Microsoft Power BI con 103 credenciales técnicas auditadas. Aprendizaje continuo aplicado directamente a pipelines de producción, ML predictivo y sistemas de datos de alta confiabilidad.",
+    archiveBtn: "Explorar las 103 Credenciales en Archivo Verificado",
+  },
   contact: {
     eyebrow: "Ponte en Contacto",
     heading: "Construyamos Sistemas Confiables Juntos",
@@ -139,3 +160,5 @@ export const uiEs = {
     clearHistory: "Limpiar chat",
   },
 };
+
+export const uiTranslationsEs = uiEs;

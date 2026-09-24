@@ -9,10 +9,12 @@ interface SectionTick {
 
 const SECTIONS: SectionTick[] = [
   { id: "top", label: "Top" },
+  { id: "about", label: "About" },
   { id: "projects", label: "Projects" },
   { id: "experience", label: "Experience" },
   { id: "skills", label: "Insights" },
   { id: "architecture", label: "Architecture" },
+  { id: "certifications", label: "Credentials" },
   { id: "case-studies", label: "Case Studies" },
   { id: "contact", label: "Contact" },
 ];

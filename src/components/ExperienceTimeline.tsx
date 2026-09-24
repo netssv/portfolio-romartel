@@ -12,6 +12,7 @@ export const ExperienceTimeline: React.FC<{ items: ExperienceItem[] }> = ({ item
       <div className="mx-auto max-w-5xl px-6 pt-24 pb-6">
         <FadeIn>
           <SectionLabel
+            index="05"
             eyebrow="Career Timeline"
             heading="Operations &amp; Technical Leadership"
             description="A track record spanning web infrastructure, marketing technology, workflow automation, and cross-functional operations management."

@@ -1,15 +1,30 @@
 export const uiEn = {
   nav: {
     home: "Home",
+    about: "About",
     projects: "Projects",
     experience: "Experience",
     insights: "Insights",
     architecture: "Architecture",
     caseStudies: "Case Studies",
     contact: "Let's Connect",
+    scheduleCall: "Schedule Call",
+    whatsapp: "WhatsApp",
     toggleTheme: "Toggle theme",
     toggleLang: "Switch to Spanish",
     languageName: "EN",
+  },
+  about: {
+    eyebrow: "Background & Philosophy",
+    heading: "About me",
+    scheduleCta: "Schedule Call",
+    whatsappCta: "WhatsApp",
+  },
+  slogan: {
+    line1: "Think Big.",
+    line2: "Start Small.",
+    tag: "Systems & Execution",
+    subtitle: "Building lean, automated workflows that scale seamlessly from day one.",
   },
   hero: {
     statusBadge: "Available for Systems, Automation & Analytics Projects",
@@ -97,6 +112,12 @@ export const uiEn = {
     eyebrow: "Guiding Principles",
     heading: "Engineering & Operations Philosophy",
   },
+  certifications: {
+    eyebrow: "Verified Credentials",
+    title: "Certifications & Credentials",
+    subtitle: "Google Data Analytics & Microsoft Power BI Certified with 103 audited technical credentials. Continuous learning applied directly to production pipelines, predictive ML, and high-reliability data systems.",
+    archiveBtn: "Explore All 103 Credentials in Verified Archive",
+  },
   contact: {
     eyebrow: "Get In Touch",
     heading: "Let's Build Reliable Systems Together",
@@ -139,3 +160,5 @@ export const uiEn = {
     clearHistory: "Clear chat",
   },
 };
+
+export const uiTranslationsEn = uiEn;

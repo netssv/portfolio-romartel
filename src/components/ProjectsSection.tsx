@@ -79,6 +79,7 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
         <FadeIn>
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-6">
             <SectionLabel
+              index="02"
               eyebrow={t.projects.eyebrow}
               heading={t.projects.heading}
               description={t.projects.description}

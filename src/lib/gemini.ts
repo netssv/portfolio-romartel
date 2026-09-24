@@ -36,7 +36,7 @@ export const CHATBOT_TOOL_DECLARATIONS: FunctionDeclaration[] = [
         email: { type: Type.STRING, description: "Email address of the sender to reply to" },
         purpose: {
           type: Type.STRING,
-          description: "Purpose of contact (e.g. Consulting, Job Opportunity, General Inquiry)",
+          description: "Purpose of contact (e.g. Call / Meeting Scheduling, Consulting, Job Opportunity, General Inquiry)",
         },
         message: { type: Type.STRING, description: "The content of the message to deliver to Rodrigo" },
       },
@@ -177,7 +177,7 @@ Audited Credential Domains:
 ${credentialsSummary}
 
 Specialized Capabilities & Tools:
-1. 'send_contact_email': Dispatch inquiries directly to Rodrigo's inbox via Resend.
+1. 'send_contact_email': Dispatch inquiries or call/meeting requests directly to Rodrigo's inbox via Resend.
 2. 'get_btc_telemetry': Fetch live telemetry from the HODL Watcher serverless watchdog.
 3. 'get_site_json': Return structured JSON data for any portfolio section.`;
 }

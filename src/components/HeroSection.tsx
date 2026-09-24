@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useRef } from "react";
-import { ArrowUpRight, ArrowDown, MapPin, MessageSquare } from "lucide-react";
+import { ArrowUpRight, ArrowDown, MessageSquare, Award, Globe } from "lucide-react";
 import { motion } from "framer-motion";
 import { ExecutivePortrait } from "@/src/components/ui/ExecutivePortrait";
 import { useLanguage } from "@/src/context/LanguageContext";
@@ -9,17 +9,21 @@ import { useLanguage } from "@/src/context/LanguageContext";
 interface HeroSectionProps {
   name: string;
   title: string;
-  bio: string;
-  location: string;
+  tagline?: string;
+  bio?: string;
+  location?: string;
   avatar: { src: string; alt: string };
   email?: string;
 }
 
+const CREDENTIALS_ARCHIVE_URL =
+  "https://1drv.ms/f/c/c9136ada8a51a610/IgAQplGK2moTIIDJJKsAAAAAAd9ni2_70w9-q00a4Majbqk?e=AdFVPs";
+
 export const HeroSection: React.FC<HeroSectionProps> = ({
   name,
   title,
+  tagline,
   bio,
-  location,
   avatar,
 }) => {
   const { t, isSpanish } = useLanguage();
@@ -29,7 +33,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
-      transition: { staggerChildren: 0.1, delayChildren: 0.1 },
+      transition: { staggerChildren: 0.1, delayChildren: 0.05 },
     },
   };
 
@@ -43,91 +47,97 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
   };
 
   return (
-    <section id="top" className="relative pt-24 pb-12 lg:pt-32 lg:pb-20 overflow-hidden z-10">
+    <section id="top" className="relative pt-24 pb-16 lg:pt-28 lg:pb-24 overflow-hidden z-10">
       <div
         ref={heroRef}
-        className="relative mx-auto max-w-6xl px-6 grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center z-10"
+        className="relative mx-auto max-w-7xl px-4 sm:px-6 flex flex-col items-center z-10"
       >
         <motion.div
-          className="lg:col-span-7 flex flex-col z-10"
+          className="w-full flex flex-col items-center z-10"
           variants={containerVariants}
           initial="hidden"
           animate="visible"
         >
-          {/* Eyebrow & Status Badge */}
-          <motion.div className="inline-flex flex-wrap items-center gap-3 mb-6" variants={itemVariants}>
-            <span className="relative inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-bg-raised border border-border-subtle shadow-xs">
-              <span className="relative flex h-2 w-2">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-signal-success opacity-75" />
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-signal-success" />
-              </span>
-              <span className="text-xs font-body font-semibold text-text-primary">
-                {isSpanish ? "Disponible para Proyectos" : "Available for Work"}
-              </span>
-            </span>
 
-            <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-bg-surface border border-border-subtle text-xs font-body text-text-muted shadow-xs">
-              <MapPin size={12} className="text-accent" />
-              <span>{location}</span>
-            </span>
-          </motion.div>
-
-          {/* Name Headline */}
-          <motion.div className="mb-4" variants={itemVariants}>
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-heading font-extrabold text-text-primary tracking-tight leading-[1.08]">
-              {name}
-            </h1>
-          </motion.div>
-
-          {/* Subtitle / Role */}
-          <motion.p
-            className="text-lg sm:text-xl font-heading font-medium text-text-secondary mb-5 leading-snug"
-            variants={itemVariants}
-          >
-            {title}
-          </motion.p>
-
-          {/* Bio */}
-          <motion.p
-            className="text-sm sm:text-base font-body text-text-secondary leading-[1.85] max-w-lg mb-8"
-            variants={itemVariants}
-          >
-            {bio}
-          </motion.p>
-
-          {/* Action CTAs */}
+          {/* Monumental Name Hero Target Anchor */}
           <motion.div
-            className="flex flex-col sm:flex-row gap-3.5 items-stretch sm:items-center"
+            id="hero-name-target"
+            className="w-full h-16 sm:h-24 lg:h-28 mb-4 sm:mb-6 flex items-center justify-center pointer-events-none select-none"
             variants={itemVariants}
           >
-            <a
-              href="#projects"
-              className="h-11 px-6 flex items-center justify-center gap-2 rounded-xl bg-accent text-white text-xs font-body font-semibold hover:bg-accent-hover transition-colors shadow-xs group"
-            >
-              <span>{t.hero.viewProjects}</span>
-              <ArrowDown size={13} className="group-hover:translate-y-0.5 transition-transform" />
-            </a>
+            <h1 className="sr-only">{name}</h1>
+          </motion.div>
 
+          {/* Centered Executive Portrait */}
+          <motion.div className="relative mb-8 flex justify-center z-10" variants={itemVariants}>
+            <ExecutivePortrait src={avatar.src} alt={avatar.alt} />
+          </motion.div>
+
+          {/* Subtitle & Role Tag */}
+          <motion.div className="inline-flex items-center gap-2 mb-3" variants={itemVariants}>
+            <span className="text-xs font-mono text-accent uppercase tracking-widest font-semibold">
+              [00]
+            </span>
+            <span className="text-base sm:text-lg font-heading font-semibold text-text-primary text-center">
+              {title}
+            </span>
+          </motion.div>
+
+          {/* Tagline / Subtitle */}
+          <motion.p
+            className="text-sm sm:text-base font-body text-text-secondary leading-relaxed max-w-2xl text-center mb-8"
+            variants={itemVariants}
+          >
+            {tagline || bio}
+          </motion.p>
+
+          {/* Primary Action Buttons */}
+          <motion.div
+            className="flex flex-wrap items-center justify-center gap-3.5 mb-14"
+            variants={itemVariants}
+          >
             <button
               type="button"
               onClick={() => {
                 window.dispatchEvent(new CustomEvent("open-clippo-contact"));
               }}
-              className="h-11 px-5 flex items-center justify-center gap-2 rounded-xl border border-border-base bg-bg-surface text-xs font-body font-medium text-text-secondary hover:text-text-primary hover:border-accent transition-colors shadow-xs group cursor-pointer"
+              className="h-11 px-6 flex items-center justify-center gap-2 rounded-full bg-accent text-white text-xs font-body font-semibold hover:bg-accent-hover transition-colors shadow-xs group cursor-pointer"
             >
-              <MessageSquare size={14} className="text-accent" />
+              <MessageSquare size={13} />
               <span>{isSpanish ? "Mensaje Rápido" : "Quick Message"}</span>
-              <ArrowUpRight size={13} className="text-text-muted group-hover:text-accent group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all" />
+              <ArrowUpRight size={13} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
             </button>
+
+            <a
+              href="#projects"
+              className="h-11 px-6 flex items-center justify-center gap-2 rounded-full border border-border-base bg-bg-surface text-xs font-body font-medium text-text-secondary hover:text-text-primary hover:border-accent transition-colors shadow-xs group"
+            >
+              <span>{t.hero.viewProjects}</span>
+              <ArrowDown size={13} className="group-hover:translate-y-0.5 transition-transform" />
+            </a>
+          </motion.div>
+
+          {/* Bottom Horizon Metadata Bar */}
+          <motion.div
+            className="w-full pt-6 border-t border-border-subtle/70 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-body text-text-muted"
+            variants={itemVariants}
+          >
+            <a
+              href="#certifications"
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-border-base bg-bg-surface/80 hover:border-accent text-text-primary text-[11px] font-mono tracking-wider uppercase transition-colors shadow-xs group"
+              title={isSpanish ? "Ver sección de credenciales verificadas" : "View verified credentials section"}
+            >
+              <Award size={13} className="text-accent" />
+              <span>{isSpanish ? "103 Credenciales Verificadas" : "103 Verified Credentials"}</span>
+              <ArrowDown size={11} className="text-text-muted group-hover:text-accent group-hover:translate-y-0.5 transition-transform" />
+            </a>
+
+            <div className="flex items-center gap-2 text-text-secondary text-[11px] font-mono tracking-wider uppercase">
+              <Globe size={13} className="text-accent" />
+              <span>{isSpanish ? "San Salvador, El Salvador • Remoto Global" : "San Salvador, El Salvador • Working Globally"}</span>
+            </div>
           </motion.div>
         </motion.div>
-
-        {/* Portrait Image Column */}
-        <div className="lg:col-span-5 flex justify-center lg:justify-end z-10">
-          <div className="relative z-10 flex flex-col items-center">
-            <ExecutivePortrait src={avatar.src} alt={avatar.alt} />
-          </div>
-        </div>
       </div>
     </section>
   );

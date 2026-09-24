@@ -2,8 +2,7 @@
 
 import React, { useRef, useState, useEffect } from "react";
 import { useScroll, useMotionValueEvent } from "framer-motion";
-import { ProjectMediaStage } from "./ProjectMediaStage";
-import { PinnedProjectDetails } from "./PinnedProjectDetails";
+import { ProjectsShowcaseStage } from "./ProjectsShowcaseStage";
 
 export interface PinnedProjectItem {
   id: string;
@@ -24,11 +23,6 @@ export interface PinnedProjectItem {
 export const PinnedProjectsScrollytelling: React.FC<{ items: PinnedProjectItem[] }> = ({ items }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const [activeIndex, setActiveIndex] = useState(0);
-  const [isPlaying, setIsPlaying] = useState(true);
-  const [isMuted, setIsMuted] = useState(true);
-  const [isDeepDiveOpen, setIsDeepDiveOpen] = useState(false);
-  const [isVerticalMedia, setIsVerticalMedia] = useState(false);
-  const videoRef = useRef<HTMLVideoElement>(null);
 
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -40,46 +34,8 @@ export const PinnedProjectsScrollytelling: React.FC<{ items: PinnedProjectItem[]
     const index = Math.min(total - 1, Math.max(0, Math.floor(latest * total)));
     if (index !== activeIndex) {
       setActiveIndex(index);
-      setIsDeepDiveOpen(false);
-      setIsVerticalMedia(false);
     }
   });
-
-  const [isInView, setIsInView] = useState(false);
-  const active = items[activeIndex] || items[0];
-
-  useEffect(() => {
-    const el = containerRef.current;
-    if (!el) return;
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        setIsInView(entry.isIntersecting);
-      },
-      { threshold: 0.1 }
-    );
-    observer.observe(el);
-    return () => observer.disconnect();
-  }, []);
-
-  useEffect(() => {
-    if (!videoRef.current || !active.videoSrc) return;
-    if (isInView && isPlaying) {
-      videoRef.current.play().catch(() => {});
-    } else {
-      videoRef.current.pause();
-    }
-  }, [activeIndex, active.videoSrc, isInView, isPlaying]);
-
-  const togglePlay = () => {
-    if (!videoRef.current) return;
-    if (isPlaying) {
-      videoRef.current.pause();
-      setIsPlaying(false);
-    } else {
-      videoRef.current.play();
-      setIsPlaying(true);
-    }
-  };
 
   const jumpToProject = (index: number) => {
     if (!containerRef.current) return;
@@ -91,28 +47,12 @@ export const PinnedProjectsScrollytelling: React.FC<{ items: PinnedProjectItem[]
 
   return (
     <div ref={containerRef} className="relative h-[480vh] w-full">
-      <div className="sticky top-0 h-screen w-full flex items-center justify-center overflow-hidden z-20 px-4 sm:px-6 py-4 sm:py-8">
-        <div className="mx-auto max-w-6xl w-full flex flex-col-reverse lg:grid lg:grid-cols-12 gap-5 lg:gap-10 items-center">
-          
-          <PinnedProjectDetails
-            active={active}
-            activeIndex={activeIndex}
-            totalItems={items.length}
+      <div className="sticky top-0 h-screen w-full flex items-center justify-center overflow-hidden z-20 px-3 sm:px-6 py-4 sm:py-6">
+        <div className="w-full max-w-7xl">
+          <ProjectsShowcaseStage
             items={items}
+            activeIndex={activeIndex}
             jumpToProject={jumpToProject}
-            isDeepDiveOpen={isDeepDiveOpen}
-            setIsDeepDiveOpen={setIsDeepDiveOpen}
-          />
-
-          <ProjectMediaStage
-            active={active}
-            videoRef={videoRef}
-            isPlaying={isPlaying}
-            isMuted={isMuted}
-            togglePlay={togglePlay}
-            toggleMute={() => setIsMuted((m) => !m)}
-            isVerticalMedia={isVerticalMedia}
-            setIsVerticalMedia={setIsVerticalMedia}
           />
         </div>
       </div>

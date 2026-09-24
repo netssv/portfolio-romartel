@@ -88,6 +88,7 @@ export const FlagshipProjectCard: React.FC<FlagshipProjectProps> = ({
               muted={isMuted}
               playsInline
               preload="none"
+              suppressHydrationWarning
               className="w-full h-full object-cover cursor-pointer"
               onClick={togglePlay}
             />

@@ -113,6 +113,7 @@ export const ProjectMediaStage: React.FC<ProjectMediaStageProps> = ({
                 muted={isMuted}
                 playsInline
                 preload="none"
+                suppressHydrationWarning
                 onLoadedMetadata={(e) => {
                   setIsVerticalMedia(e.currentTarget.videoHeight > e.currentTarget.videoWidth);
                 }}

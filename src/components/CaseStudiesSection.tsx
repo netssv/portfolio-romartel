@@ -21,6 +21,7 @@ export const CaseStudiesSection: React.FC = () => {
       <div className="mx-auto max-w-6xl px-6 relative z-10">
         <FadeIn>
           <SectionLabel
+            index="02"
             eyebrow={t.caseStudies.eyebrow}
             heading={t.caseStudies.heading}
             description={t.caseStudies.description}

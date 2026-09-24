@@ -2,7 +2,7 @@
 
 import React from "react";
 import { motion } from "framer-motion";
-import { ArrowUpRight } from "lucide-react";
+import { Calendar, MessageCircle } from "lucide-react";
 import { useLanguage } from "@/src/context/LanguageContext";
 
 interface NavItem {
@@ -29,7 +29,7 @@ export const MobileMenuDropdown: React.FC<MobileMenuDropdownProps> = ({
       animate={{ opacity: 1, height: "auto" }}
       exit={{ opacity: 0, height: 0 }}
       transition={{ duration: 0.2 }}
-      className="lg:hidden border-b border-border-subtle bg-bg-surface/95 backdrop-blur-xl px-6 py-4 flex flex-col gap-2 shadow-xl"
+      className="lg:hidden border-b border-border-subtle bg-bg-glass backdrop-blur-xl px-6 py-4 flex flex-col gap-2 shadow-xl"
     >
       {navItems.map((item) => {
         const isActive = activeSection === item.name;
@@ -51,17 +51,29 @@ export const MobileMenuDropdown: React.FC<MobileMenuDropdownProps> = ({
           </a>
         );
       })}
-      <a
-        href="#contact"
-        onClick={(e) => {
-          e.preventDefault();
-          onNavigate("#contact");
-        }}
-        className="sm:hidden mt-2 h-10 flex items-center justify-center gap-1.5 rounded-xl text-xs font-body font-semibold text-white bg-accent hover:bg-accent-hover transition-colors shadow-xs"
-      >
-        <span>{t.nav.contact}</span>
-        <ArrowUpRight size={13} />
-      </a>
+      <div className="sm:hidden mt-2 pt-2 border-t border-border-subtle flex flex-col gap-2">
+        <button
+          type="button"
+          onClick={() => {
+            onNavigate("");
+            window.dispatchEvent(new CustomEvent("open-clippo-schedule"));
+          }}
+          className="h-10 flex items-center justify-center gap-1.5 rounded-xl text-xs font-body font-semibold text-white bg-accent hover:bg-accent-hover transition-colors shadow-xs cursor-pointer"
+        >
+          <Calendar size={13} className="shrink-0" />
+          <span>{t.nav.scheduleCall}</span>
+        </button>
+
+        <a
+          href="https://api.whatsapp.com/send/?phone=50378748247&text&type=phone_number&app_absent=0"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="h-10 flex items-center justify-center gap-1.5 rounded-xl text-xs font-body font-medium border border-border-subtle bg-bg-surface text-text-primary hover:border-accent transition-colors shadow-xs"
+        >
+          <MessageCircle size={14} className="text-signal-success shrink-0" />
+          <span>{t.nav.whatsapp}</span>
+        </a>
+      </div>
     </motion.div>
   );
 };

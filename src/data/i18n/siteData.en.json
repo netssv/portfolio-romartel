@@ -21,11 +21,13 @@
     "socialLinks": {
       "linkedin": "https://linkedin.com/in/ropmartel",
       "github": "https://github.com/netssv/",
-      "twitter": "https://x.com/netssv"
+      "twitter": "https://x.com/netssv",
+      "whatsapp": "https://api.whatsapp.com/send/?phone=50378748247&text&type=phone_number&app_absent=0"
     }
   },
   "navigation": [
     { "name": "Resume", "path": "/" },
+    { "name": "About", "path": "#about" },
     { "name": "Projects", "path": "#projects" },
     { "name": "Experience", "path": "#experience" },
     { "name": "Insights", "path": "#skills" },
@@ -33,6 +35,24 @@
     { "name": "Case Studies", "path": "#case-studies" },
     { "name": "Contact", "path": "#contact" }
   ],
+  "about": {
+    "eyebrow": "Background & Philosophy",
+    "heading": "About me",
+    "paragraphs": [
+      "I'm Rodrigo, a Marketing Operations & Systems Specialist who likes building things that make work simpler, more reliable, and easier to scale.",
+      "I work across no-code/low-code automation (Make, Zapier, Python), CRM integrations (Salesforce, HubSpot, Webhooks), and practical data analytics. My focus is turning messy processes into systems that actually work—and making sure the data behind them stays clean and reliable.",
+      "I don't really believe in one-size-fits-all solutions. I prefer building workflows, automations, and telemetry systems around the actual problem and the way a business operates.",
+      "I'm based in San Salvador, El Salvador, and I'm also into Bitcoin, sound money, decentralized technology, and automated telemetry. Whether I'm optimizing a marketing workflow or building a serverless watchdog, I approach things with curiosity, precision, and a systems mindset."
+    ],
+    "cta": "Schedule Call",
+    "whatsappCta": "WhatsApp"
+  },
+  "slogan": {
+    "line1": "Think Big.",
+    "line2": "Start Small.",
+    "tag": "Systems & Execution",
+    "subtitle": "Building lean, automated workflows that scale seamlessly from day one."
+  },
   "profile": {
     "name": "Rodrigo Martel",
     "title": "Marketing Operations & Systems Specialist",
@@ -360,6 +380,11 @@
         "name": "Twitter / X",
         "url": "https://x.com/netssv",
         "display": "x.com/netssv"
+      },
+      {
+        "name": "WhatsApp",
+        "url": "https://api.whatsapp.com/send/?phone=50378748247&text&type=phone_number&app_absent=0",
+        "display": "+503 7874 8247"
       }
     ]
   },

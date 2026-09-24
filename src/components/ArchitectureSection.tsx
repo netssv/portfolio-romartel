@@ -18,6 +18,7 @@ export const ArchitectureSection: React.FC = () => {
       <div className="mx-auto max-w-6xl px-6 relative z-10">
         <FadeIn>
           <SectionLabel
+            index="03"
             eyebrow={eyebrow}
             heading={heading}
             description={description}

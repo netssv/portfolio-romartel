@@ -1,13 +1,13 @@
 "use client";
 
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, useRef } from "react";
 import { motion, useScroll, useMotionValueEvent, AnimatePresence } from "framer-motion";
-import { ArrowUpRight, Menu, X, Sun, Moon } from "lucide-react";
+import { MessageCircle, Calendar, Menu, X } from "lucide-react";
 import { useSmoothScroll } from "./layout/SmoothScrollProvider";
 import { DesktopNav } from "./layout/DesktopNav";
 import { MobileMenuDropdown } from "./layout/MobileMenuDropdown";
-import { LanguageToggle } from "./ui/LanguageToggle";
 import { useLanguage } from "@/src/context/LanguageContext";
+import { useHeroBrandScroll } from "@/src/lib/useHeroBrandScroll";
 
 interface NavItem {
   name: string;
@@ -20,120 +20,88 @@ interface NavbarProps {
 }
 
 export const Navbar: React.FC<NavbarProps> = ({ navItems, authorName }) => {
-  const { t } = useLanguage();
+  const { t, isSpanish } = useLanguage();
   const { scrollY } = useScroll();
   const { getLenis } = useSmoothScroll();
   const [hidden, setHidden] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState("Home");
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [theme, setTheme] = useState<"day" | "night">("day");
 
-  useEffect(() => {
-    const isDark = document.documentElement.classList.contains("theme-dark");
-    if (isDark) {
-      const frame = requestAnimationFrame(() => setTheme("night"));
-      return () => cancelAnimationFrame(frame);
-    }
-  }, []);
+  const brandAnchorRef = useRef<HTMLDivElement>(null);
+  const logoRef = useRef<HTMLAnchorElement>(null);
 
-  const toggleTheme = () => {
-    const isNight = theme === "day";
-    setTheme(isNight ? "night" : "day");
-    document.documentElement.classList.toggle("theme-dark", isNight);
-    localStorage.setItem("theme-override", isNight ? "night" : "day");
-  };
+  const nameParts = authorName.trim().split(" ");
+  const firstName = nameParts[0] || authorName;
+  const lastName = nameParts.slice(1).join(" ");
 
   useMotionValueEvent(scrollY, "change", (latest) => {
     const previous = scrollY.getPrevious() || 0;
-    setScrolled(latest > 24);
-
-    if (latest > previous && latest > 150 && !mobileMenuOpen) {
-      setHidden(true);
-    } else if (latest < previous) {
-      setHidden(false);
-    }
+    setScrolled(latest > 20);
+    if (latest > previous && latest > 260 && !mobileMenuOpen) setHidden(true);
+    else if (latest < previous) setHidden(false);
   });
 
-  const scrollToPath = useCallback(
-    (path: string) => {
-      setMobileMenuOpen(false);
-      const targetId = path.startsWith("#") ? path.slice(1) : path;
-      const lenis = getLenis();
-
-      if (path === "/" || path === "#" || targetId === "top") {
-        lenis ? lenis.scrollTo(0, { duration: 1.2 }) : window.scrollTo({ top: 0, behavior: "smooth" });
-        return;
-      }
-
-      const targetEl = document.getElementById(targetId) || document.querySelector(path);
-      if (targetEl) {
-        if (lenis) {
-          lenis.scrollTo(targetEl as HTMLElement, { offset: -70, duration: 1.2 });
-        } else {
-          const top = (targetEl as HTMLElement).getBoundingClientRect().top + window.scrollY - 70;
-          window.scrollTo({ top, behavior: "smooth" });
-        }
-      }
-    },
-    [getLenis]
-  );
+  const scrollToPath = useCallback((path: string) => {
+    setMobileMenuOpen(false);
+    const targetId = path.startsWith("#") ? path.slice(1) : path;
+    const lenis = getLenis();
+    if (path === "/" || path === "#" || targetId === "top") {
+      lenis ? lenis.scrollTo(0, { duration: 1.2 }) : window.scrollTo({ top: 0, behavior: "smooth" });
+      return;
+    }
+    const targetEl = document.getElementById(targetId) || document.querySelector(path);
+    if (targetEl) {
+      const offset = -70;
+      lenis
+        ? lenis.scrollTo(targetEl as HTMLElement, { offset, duration: 1.2 })
+        : window.scrollTo({ top: (targetEl as HTMLElement).getBoundingClientRect().top + window.scrollY + offset, behavior: "smooth" });
+    }
+  }, [getLenis]);
 
   useEffect(() => {
-    const sections = navItems.map((item) => {
-      const id = item.path.substring(1);
-      return id === "top" ? document.body : document.getElementById(id);
-    });
+    const sections = navItems.map((item) => item.path.substring(1) === "top" ? document.body : document.getElementById(item.path.substring(1)));
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          const match = navItems.find((item) => item.path === `#${entry.target.id || "top"}`);
+          if (match) setActiveSection(match.name);
+        }
+      });
+    }, { root: null, rootMargin: "-40% 0px -50% 0px", threshold: 0 });
 
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            const id = entry.target.id || "top";
-            const match = navItems.find((item) => item.path === `#${id}`);
-            if (match) setActiveSection(match.name);
-          }
-        });
-      },
-      { root: null, rootMargin: "-40% 0px -50% 0px", threshold: 0 }
-    );
-
-    sections.forEach((section) => {
-      if (section) observer.observe(section);
-    });
-
+    sections.forEach((section) => { if (section) observer.observe(section); });
     return () => observer.disconnect();
   }, [navItems]);
 
-  const initials = authorName.split(" ").map((w) => w[0]).join("");
+  useHeroBrandScroll({ brandLogoRef: logoRef, anchorWrapperRef: brandAnchorRef, getLenis });
 
   return (
     <motion.header
       variants={{ visible: { y: 0 }, hidden: { y: "-100%" } }}
       animate={hidden ? "hidden" : "visible"}
       transition={{ duration: 0.25, ease: "easeInOut" }}
-      className={`fixed top-0 z-50 w-full transition-colors duration-200 ${
+      className={`fixed top-0 z-50 w-full transition-all duration-300 ${
         scrolled || mobileMenuOpen
-          ? "bg-bg-surface/90 backdrop-blur-md border-b border-border-subtle shadow-xs"
-          : "bg-transparent border-b border-transparent"
+          ? "bg-bg-glass backdrop-blur-xl backdrop-saturate-150 border-b border-border-subtle shadow-xs"
+          : "bg-bg-glass/50 backdrop-blur-md border-b border-transparent"
       }`}
     >
-      <div className="mx-auto max-w-6xl px-4 sm:px-6 h-16 flex items-center justify-between gap-4">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6 h-16 flex items-center justify-between gap-4">
+        <div ref={brandAnchorRef} className="w-44 sm:w-52 h-9 shrink-0 relative flex items-center" />
+
         <a
+          ref={logoRef}
           href="#top"
-          onClick={(e) => {
-            e.preventDefault();
-            scrollToPath("#top");
-          }}
+          onClick={(e) => { e.preventDefault(); scrollToPath("#top"); }}
           aria-label="Home"
-          className="flex items-center gap-2.5 shrink-0"
+          className="fixed z-50 flex items-center justify-center select-none cursor-pointer will-change-[left,top,width,height] group"
         >
-          <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-accent text-white text-xs font-heading font-bold shadow-xs">
-            {initials}
-          </span>
-          <span className="text-sm font-heading font-bold text-text-primary tracking-tight truncate max-w-[140px] sm:max-w-none">
-            {authorName}
-          </span>
+          <svg viewBox="0 0 1140 125" width="100%" height="100%" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full overflow-visible">
+            <text x="50%" y="94" textAnchor="middle" className="fill-text-primary font-heading font-black tracking-[-0.04em] text-[106px] uppercase">
+              {firstName} <tspan className="fill-accent font-mono font-light opacity-60">[</tspan>{lastName}<tspan className="fill-accent font-mono font-light opacity-60">]</tspan>
+            </text>
+          </svg>
         </a>
 
         <DesktopNav
@@ -143,28 +111,27 @@ export const Navbar: React.FC<NavbarProps> = ({ navItems, authorName }) => {
         />
 
         <div className="flex items-center gap-2 shrink-0">
-          <LanguageToggle />
+          <a
+            href="https://api.whatsapp.com/send/?phone=50378748247&text&type=phone_number&app_absent=0"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="WhatsApp"
+            className="hidden md:inline-flex h-9 px-3.5 items-center gap-1.5 rounded-full text-xs font-body font-medium border border-border-subtle bg-bg-surface text-text-secondary hover:text-text-primary hover:border-accent transition-colors shadow-xs"
+          >
+            <MessageCircle size={14} className="text-signal-success shrink-0" />
+            <span>{t.nav.whatsapp}</span>
+          </a>
 
           <button
             type="button"
-            onClick={toggleTheme}
-            aria-label="Toggle dark/light theme"
-            className="h-9 w-9 flex items-center justify-center rounded-full border border-border-subtle bg-bg-surface text-text-secondary hover:text-text-primary hover:border-accent transition-colors cursor-pointer shadow-xs"
-          >
-            {theme === "night" ? <Sun size={14} className="text-accent" /> : <Moon size={14} className="text-accent" />}
-          </button>
-
-          <a
-            href="#contact"
-            onClick={(e) => {
-              e.preventDefault();
-              scrollToPath("#contact");
+            onClick={() => {
+              window.dispatchEvent(new CustomEvent("open-clippo-schedule"));
             }}
-            className="hidden sm:inline-flex h-9 px-4 items-center gap-1.5 rounded-full text-xs font-body font-semibold text-white bg-accent hover:bg-accent-hover transition-colors shadow-xs"
+            className="hidden sm:inline-flex h-9 px-4 items-center gap-1.5 rounded-full text-xs font-body font-semibold text-white bg-accent hover:bg-accent-hover transition-colors shadow-xs cursor-pointer"
           >
-            <span>{t.nav.contact}</span>
-            <ArrowUpRight size={13} />
-          </a>
+            <Calendar size={13} className="shrink-0" />
+            <span>{t.nav.scheduleCall}</span>
+          </button>
 
           <button
             type="button"

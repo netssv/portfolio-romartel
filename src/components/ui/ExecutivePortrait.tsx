@@ -16,17 +16,17 @@ export const ExecutivePortrait: React.FC<ExecutivePortraitProps> = ({ src, alt }
   return (
     <div className="flex flex-col items-center select-none">
       {/* Outer frame */}
-      <div className="relative w-72 h-72 sm:w-80 sm:h-80 lg:w-96 lg:h-96 rounded-3xl p-1 bg-gradient-to-b from-border-base via-border-subtle to-transparent shadow-xl">
+      <div className="relative w-full max-w-lg sm:max-w-xl md:max-w-2xl aspect-[16/10] rounded-3xl p-1 bg-gradient-to-b from-border-base via-border-subtle to-transparent shadow-xl">
         <div className="relative w-full h-full rounded-[22px] overflow-hidden bg-bg-surface border border-border-subtle group">
           {/* Portrait Image with Next.js optimization */}
           <Image
             src={src}
             alt={alt}
-            width={384}
-            height={384}
+            width={1024}
+            height={637}
             priority
-            sizes="(max-width: 640px) 288px, (max-width: 1024px) 320px, 384px"
-            className="w-full h-full object-cover filter contrast-[1.04] brightness-100 transition-transform duration-500 group-hover:scale-105"
+            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 576px, 672px"
+            className="w-full h-full object-cover filter contrast-[1.03] brightness-100 transition-transform duration-500 group-hover:scale-[1.02]"
           />
 
           {/* Gradient Overlay */}
@@ -53,44 +53,6 @@ export const ExecutivePortrait: React.FC<ExecutivePortraitProps> = ({ src, alt }
               <span>Remote</span>
             </div>
           </div>
-        </div>
-      </div>
-
-      {/* Verifiable Credentials Chips (Two Rows matching reference design) */}
-      <div className="mt-3.5 flex flex-col items-center gap-2 w-full max-w-sm">
-        <div className="flex flex-wrap justify-center gap-2">
-          <a
-            href={CREDENTIALS_ARCHIVE_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center gap-1 px-3 py-1 rounded-full bg-bg-surface border border-border-subtle hover:border-accent text-xs font-body text-text-secondary hover:text-text-primary transition-all shadow-xs group"
-            title="Google Data Analytics Professional Certificate"
-          >
-            <span>Google Data Analytics</span>
-            <ArrowUpRight size={11} className="text-text-muted group-hover:text-accent shrink-0" />
-          </a>
-          <a
-            href={CREDENTIALS_ARCHIVE_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center gap-1 px-3 py-1 rounded-full bg-bg-surface border border-border-subtle hover:border-accent text-xs font-body text-text-secondary hover:text-text-primary transition-all shadow-xs group"
-            title="Microsoft Power BI Data Analyst"
-          >
-            <span>Microsoft Power BI</span>
-            <ArrowUpRight size={11} className="text-text-muted group-hover:text-accent shrink-0" />
-          </a>
-        </div>
-        <div className="flex justify-center">
-          <a
-            href={CREDENTIALS_ARCHIVE_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center gap-1 px-3 py-1 rounded-full bg-bg-surface border border-border-subtle hover:border-accent text-xs font-body text-text-secondary hover:text-text-primary transition-all shadow-xs group"
-            title="HubSpot Inbound Marketing"
-          >
-            <span>HubSpot Inbound</span>
-            <ArrowUpRight size={11} className="text-text-muted group-hover:text-accent shrink-0" />
-          </a>
         </div>
       </div>
     </div>

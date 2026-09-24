@@ -21,11 +21,13 @@
     "socialLinks": {
       "linkedin": "https://linkedin.com/in/ropmartel",
       "github": "https://github.com/netssv/",
-      "twitter": "https://x.com/netssv"
+      "twitter": "https://x.com/netssv",
+      "whatsapp": "https://api.whatsapp.com/send/?phone=50378748247&text&type=phone_number&app_absent=0"
     }
   },
   "navigation": [
     { "name": "Inicio", "path": "/" },
+    { "name": "Sobre mí", "path": "#about" },
     { "name": "Proyectos", "path": "#projects" },
     { "name": "Experiencia", "path": "#experience" },
     { "name": "Habilidades", "path": "#skills" },
@@ -33,6 +35,24 @@
     { "name": "Casos de Estudio", "path": "#case-studies" },
     { "name": "Contacto", "path": "#contact" }
   ],
+  "about": {
+    "eyebrow": "Perfil y Enfoque",
+    "heading": "Sobre mí",
+    "paragraphs": [
+      "Soy Rodrigo, especialista en operaciones de marketing y sistemas, a quien le gusta construir soluciones que hagan el trabajo más simple, confiable y fácil de escalar.",
+      "Trabajo con automatización no-code/low-code (Make, Zapier, Python), integraciones CRM (Salesforce, HubSpot, Webhooks) y analítica práctica de datos. Mi enfoque es transformar procesos desordenados en sistemas que realmente funcionen, asegurando que los datos detrás de ellos se mantengan limpios y confiables.",
+      "No creo en soluciones universales de talla única. Prefiero construir flujos de trabajo, automatizaciones y sistemas de telemetría adaptados al problema real y a la dinámica operativa de cada negocio.",
+      "Estoy radicado en San Salvador, El Salvador, y también me apasiona Bitcoin, el dinero sólido, la tecnología descentralizada y la telemetría automatizada. Ya sea optimizando un flujo de marketing o construyendo un watchdog serverless, abordo cada reto con curiosidad, precisión y una mentalidad de sistemas."
+    ],
+    "cta": "Agendar Llamada",
+    "whatsappCta": "WhatsApp"
+  },
+  "slogan": {
+    "line1": "Think Big.",
+    "line2": "Start Small.",
+    "tag": "Sistemas & Ejecución",
+    "subtitle": "Construyendo flujos de trabajo automatizados y eficientes que escalan sin fricción desde el primer día."
+  },
   "profile": {
     "name": "Rodrigo Martel",
     "title": "Especialista en Operaciones de Marketing y Sistemas",
@@ -360,6 +380,11 @@
         "name": "Twitter / X",
         "url": "https://x.com/netssv",
         "display": "x.com/netssv"
+      },
+      {
+        "name": "WhatsApp",
+        "url": "https://api.whatsapp.com/send/?phone=50378748247&text&type=phone_number&app_absent=0",
+        "display": "+503 7874 8247"
       }
     ]
   },

@@ -107,6 +107,7 @@ export const SkillsGrid: React.FC<{ skillsMatrix: SkillsMatrixData }> = ({ skill
       <div className="mx-auto max-w-6xl px-6">
         <FadeIn>
           <SectionLabel
+            index="04"
             eyebrow={t.skills.eyebrow}
             heading={t.skills.heading}
             description={t.skills.description}

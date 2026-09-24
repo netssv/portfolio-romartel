@@ -17,7 +17,7 @@
   --border-subtle:  rgba(0, 0, 0, 0.06);
   --border-base:    rgba(0, 0, 0, 0.11);
   
-  --bg-glass:       rgba(255, 255, 255, 0.92);
+  --bg-glass:       rgba(255, 255, 255, 0.70);
   --grid-color:     rgba(0, 0, 0, 0.025);
 
   --signal-success: #059669;
@@ -40,7 +40,7 @@
   --border-subtle:  rgba(255, 255, 255, 0.07);
   --border-base:    rgba(255, 255, 255, 0.12);
   
-  --bg-glass:       rgba(20, 23, 29, 0.88);
+  --bg-glass:       rgba(20, 23, 29, 0.70);
   --grid-color:     rgba(255, 255, 255, 0.035);
 
   --signal-success: #10B981;
@@ -180,3 +180,31 @@ html.lenis, html.lenis body {
   content-visibility: auto;
   contain-intrinsic-size: 0 750px;
 }
+
+
+/* ─── Interactive Directional Link Underline ────────────── */
+.directional-underline {
+  position: relative;
+  text-decoration: none;
+}
+
+.directional-underline::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -2px;
+  width: 100%;
+  height: 1.5px;
+  background-color: currentColor;
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .directional-underline:hover::before {
+    transform: scaleX(1);
+    transform-origin: left;
+  }
+}
+

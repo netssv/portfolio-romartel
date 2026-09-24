@@ -43,8 +43,10 @@ export const PinnedProjectDetails: React.FC<PinnedProjectDetailsProps> = ({
           {ICONS[active.icon || ""] || <Layers size={13} className="text-accent" />}
           <span>{active.eyebrow}</span>
         </span>
-        <span className="text-xs font-body text-text-muted font-medium">
-          {activeIndex + 1} of {totalItems}
+        <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-bg-raised border border-border-subtle font-mono text-[11px] font-bold text-text-secondary tracking-tight">
+          <span className="text-text-primary">{String(activeIndex + 1).padStart(2, "0")}</span>
+          <span className="text-text-muted">/</span>
+          <span className="text-text-muted">{String(totalItems).padStart(2, "0")}</span>
         </span>
 
         {/* Project Jump Dots */}

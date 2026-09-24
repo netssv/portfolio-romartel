@@ -9,13 +9,16 @@ import { ClippoFloatingTrigger } from "./ClippoFloatingTrigger";
 import { useActiveSection } from "@/src/lib/useActiveSection";
 import { useVisitorContext } from "@/src/lib/useVisitorContext";
 import { useLanguage } from "@/src/context/LanguageContext";
+import { useDesign } from "@/src/context/DesignContext";
 import { useChatBotState } from "./useChatBotState";
 import { useClippoAutoClose } from "./useClippoAutoClose";
+import { useClippoSystemCommands } from "./useClippoSystemCommands";
 
 export function ChatBot() {
   const activeSection = useActiveSection();
   const { context: visitorContext, greeting } = useVisitorContext();
-  const { locale, isSpanish } = useLanguage();
+  const { locale, isSpanish, toggleLocale } = useLanguage();
+  const { theme, setTheme } = useDesign();
   const [isOpen, setIsOpen] = useState(false);
   const [customPhrase, setCustomPhrase] = useState<string | null>(null);
 
@@ -23,15 +26,7 @@ export function ChatBot() {
   const isInitialMount = useRef(true);
 
   const {
-    messages,
-    setMessages,
-    input,
-    setInput,
-    isLoading,
-    error,
-    dispatchChat,
-    handleSend,
-    handleReset,
+    messages, setMessages, input, setInput, isLoading, error, dispatchChat, handleSend, handleReset,
   } = useChatBotState(greeting);
 
   const messagesEndRef = useRef<HTMLDivElement>(null);
@@ -57,16 +52,12 @@ export function ChatBot() {
 
     if (prevLocaleRef.current !== locale) {
       prevLocaleRef.current = locale;
-
       const smartPhrase = isSpanish
         ? "Veo que cambiaste al español. ¿Te gustaría seguir así o cambiamos al inglés?"
         : "I noticed you switched to English! Would you like to continue in English or switch to Spanish?";
 
       setCustomPhrase(smartPhrase);
-
-      const timer = setTimeout(() => {
-        setCustomPhrase((curr) => (curr === smartPhrase ? null : curr));
-      }, 10000);
+      const timer = setTimeout(() => setCustomPhrase((curr) => (curr === smartPhrase ? null : curr)), 10000);
 
       if (isOpen) {
         setMessages((prev) => [
@@ -81,7 +72,6 @@ export function ChatBot() {
           },
         ]);
       }
-
       return () => clearTimeout(timer);
     }
   }, [locale, isSpanish, isOpen, setMessages]);
@@ -94,31 +84,47 @@ export function ChatBot() {
   }, [isOpen, messages]);
 
   useEffect(() => {
-    const handleContactOpen = () => {
+    const openWithPrompt = (idPrefix: string, text: string) => {
       setCustomPhrase(null);
       setIsOpen(true);
       setMessages((prev) => [
         ...prev,
         {
-          id: `contact-${Date.now()}`,
+          id: `${idPrefix}-${Date.now()}`,
           role: "model",
-          text: isSpanish
-            ? "¡Veo que te gustaría contactar a Rodrigo! Comparte tu nombre, correo y mensaje aquí, y se lo enviaré directo a su bandeja de entrada."
-            : "I see you would like to reach Rodrigo! Feel free to share your name, email, and a message here, and I will deliver it straight to his inbox.",
+          text,
           timestamp: isSpanish ? "Ahora" : "Just now",
         },
       ]);
       setTimeout(() => inputRef.current?.focus(), 150);
     };
 
-    window.addEventListener("open-clippo-contact", handleContactOpen);
-    return () => window.removeEventListener("open-clippo-contact", handleContactOpen);
+    const handleContact = () => openWithPrompt(
+      "contact",
+      isSpanish
+        ? "¡Veo que te gustaría contactar a Rodrigo! Comparte tu nombre, correo y mensaje aquí, y se lo enviaré directo a su bandeja de entrada."
+        : "I see you would like to reach Rodrigo! Feel free to share your name, email, and a message here, and I will deliver it straight to his inbox."
+    );
+
+    const handleSchedule = () => openWithPrompt(
+      "schedule",
+      isSpanish
+        ? "¡Hola! Con gusto te ayudo a agendar una llamada con Rodrigo. Déjame tu nombre, correo y tu fecha/horario de preferencia o tema a tratar, y coordinamos la sesión."
+        : "Hi! I would be delighted to help you schedule a call with Rodrigo. Please share your name, email, and your preferred date/time or topic, and we will coordinate right away."
+    );
+
+    window.addEventListener("open-clippo-contact", handleContact);
+    window.addEventListener("open-clippo-schedule", handleSchedule);
+    return () => {
+      window.removeEventListener("open-clippo-contact", handleContact);
+      window.removeEventListener("open-clippo-schedule", handleSchedule);
+    };
   }, [setMessages, isSpanish]);
 
-  const onUserSend = (text?: string) => {
-    clearAutoCloseTimer();
-    handleSend(text, activeSection, visitorContext);
-  };
+  const { onUserSend } = useClippoSystemCommands({
+    isSpanish, toggleLocale, theme, setTheme, setMessages, setInput,
+    handleSend, clearAutoCloseTimer, activeSection, visitorContext, input,
+  });
 
   return (
     <div className="fixed bottom-5 right-5 z-50 flex flex-col items-end print:hidden">
@@ -137,14 +143,8 @@ export function ChatBot() {
           >
             <ChatHeader
               isLoading={isLoading}
-              onReset={() => {
-                clearAutoCloseTimer();
-                handleReset();
-              }}
-              onClose={() => {
-                clearAutoCloseTimer();
-                setIsOpen(false);
-              }}
+              onReset={() => { clearAutoCloseTimer(); handleReset(); }}
+              onClose={() => { clearAutoCloseTimer(); setIsOpen(false); }}
             />
 
             <ChatMessageList
