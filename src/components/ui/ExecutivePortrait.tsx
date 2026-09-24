@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import Image from "next/image";
 import { Award, Globe, ArrowUpRight } from "lucide-react";
 
@@ -13,20 +13,31 @@ const CREDENTIALS_ARCHIVE_URL =
   "https://1drv.ms/f/c/c9136ada8a51a610/IgAQplGK2moTIIDJJKsAAAAAAd9ni2_70w9-q00a4Majbqk?e=AdFVPs";
 
 export const ExecutivePortrait: React.FC<ExecutivePortraitProps> = ({ src, alt }) => {
+  const [imgSrc, setImgSrc] = useState(src);
+  const [isFallback, setIsFallback] = useState(false);
+
   return (
-    <div className="flex flex-col items-center select-none">
+    <div className="w-full flex flex-col items-center select-none">
       {/* Outer frame */}
       <div className="relative w-full max-w-lg sm:max-w-xl md:max-w-2xl aspect-[16/10] rounded-3xl p-1 bg-gradient-to-b from-border-base via-border-subtle to-transparent shadow-xl">
-        <div className="relative w-full h-full rounded-[22px] overflow-hidden bg-bg-surface border border-border-subtle group">
-          {/* Portrait Image with Next.js optimization */}
+        <div className="relative w-full h-full rounded-[22px] overflow-hidden bg-bg-surface border border-border-subtle group isolate [transform:translateZ(0)] [-webkit-mask-image:-webkit-radial-gradient(white,black)]">
+          {/* Portrait Image with Next.js optimization and bulletproof WebKit fallback */}
           <Image
-            src={src}
+            src={imgSrc}
             alt={alt}
             width={1024}
             height={637}
             priority
+            unoptimized={isFallback}
+            onError={() => {
+              if (!isFallback) {
+                setIsFallback(true);
+                setImgSrc("/avatar.png");
+              }
+            }}
             sizes="(max-width: 640px) 100vw, (max-width: 1024px) 576px, 672px"
-            className="w-full h-full object-cover filter contrast-[1.03] brightness-100 transition-transform duration-500 group-hover:scale-[1.02]"
+            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.02]"
+            suppressHydrationWarning
           />
 
           {/* Gradient Overlay */}

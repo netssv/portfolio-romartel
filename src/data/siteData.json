@@ -47,7 +47,7 @@
     },
     {
       "name": "Contact",
-      "path": "/contact"
+      "path": "#contact"
     }
   ],
   "profile": {

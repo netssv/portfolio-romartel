@@ -74,20 +74,31 @@ export const Navbar: React.FC<NavbarProps> = ({ navItems, authorName }) => {
     return () => observer.disconnect();
   }, [navItems]);
 
-  useHeroBrandScroll({ brandLogoRef: logoRef, anchorWrapperRef: brandAnchorRef, getLenis });
+  useEffect(() => {
+    window.dispatchEvent(
+      new CustomEvent("mobile-nav-toggle", { detail: { open: mobileMenuOpen } })
+    );
+  }, [mobileMenuOpen]);
+
+  useHeroBrandScroll({
+    brandLogoRef: logoRef,
+    anchorWrapperRef: brandAnchorRef,
+    getLenis,
+    isMenuOpen: mobileMenuOpen,
+  });
 
   return (
     <motion.header
       variants={{ visible: { y: 0 }, hidden: { y: "-100%" } }}
       animate={hidden ? "hidden" : "visible"}
       transition={{ duration: 0.25, ease: "easeInOut" }}
-      className={`fixed top-0 z-50 w-full transition-all duration-300 ${
+      className={`fixed top-0 ${mobileMenuOpen ? "z-[60]" : "z-50"} w-full transition-all duration-300 ${
         scrolled || mobileMenuOpen
           ? "bg-bg-glass backdrop-blur-xl backdrop-saturate-150 border-b border-border-subtle shadow-xs"
           : "bg-bg-glass/50 backdrop-blur-md border-b border-transparent"
       }`}
     >
-        <div className="mx-auto max-w-6xl px-4 sm:px-6 h-16 flex items-center justify-between gap-4">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
         <div ref={brandAnchorRef} className="w-44 sm:w-52 h-9 shrink-0 relative flex items-center" />
 
         <a
@@ -116,7 +127,7 @@ export const Navbar: React.FC<NavbarProps> = ({ navItems, authorName }) => {
             target="_blank"
             rel="noopener noreferrer"
             aria-label="WhatsApp"
-            className="hidden md:inline-flex h-9 px-3.5 items-center gap-1.5 rounded-full text-xs font-body font-medium border border-border-subtle bg-bg-surface text-text-secondary hover:text-text-primary hover:border-accent transition-colors shadow-xs"
+            className="hidden sm:inline-flex h-9 px-3.5 items-center gap-1.5 rounded-full text-xs font-body font-medium border border-border-subtle bg-bg-surface text-text-secondary hover:text-text-primary hover:border-accent transition-colors shadow-xs whitespace-nowrap shrink-0"
           >
             <MessageCircle size={14} className="text-signal-success shrink-0" />
             <span>{t.nav.whatsapp}</span>
@@ -127,7 +138,7 @@ export const Navbar: React.FC<NavbarProps> = ({ navItems, authorName }) => {
             onClick={() => {
               window.dispatchEvent(new CustomEvent("open-clippo-schedule"));
             }}
-            className="hidden sm:inline-flex h-9 px-4 items-center gap-1.5 rounded-full text-xs font-body font-semibold text-white bg-accent hover:bg-accent-hover transition-colors shadow-xs cursor-pointer"
+            className="hidden sm:inline-flex h-9 px-3.5 xl:px-4 items-center gap-1.5 rounded-full text-xs font-body font-semibold text-white bg-accent hover:bg-accent-hover transition-colors shadow-xs cursor-pointer whitespace-nowrap shrink-0"
           >
             <Calendar size={13} className="shrink-0" />
             <span>{t.nav.scheduleCall}</span>
@@ -137,7 +148,7 @@ export const Navbar: React.FC<NavbarProps> = ({ navItems, authorName }) => {
             type="button"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
-            className="lg:hidden h-9 w-9 flex items-center justify-center rounded-xl border border-border-subtle bg-bg-surface text-text-primary hover:border-accent transition-colors cursor-pointer shadow-xs"
+            className="xl:hidden h-9 w-9 flex items-center justify-center rounded-xl border border-border-subtle bg-bg-surface text-text-primary hover:border-accent transition-colors cursor-pointer shadow-xs shrink-0"
           >
             {mobileMenuOpen ? <X size={16} /> : <Menu size={16} />}
           </button>

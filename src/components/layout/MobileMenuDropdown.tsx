@@ -29,7 +29,7 @@ export const MobileMenuDropdown: React.FC<MobileMenuDropdownProps> = ({
       animate={{ opacity: 1, height: "auto" }}
       exit={{ opacity: 0, height: 0 }}
       transition={{ duration: 0.2 }}
-      className="lg:hidden border-b border-border-subtle bg-bg-glass backdrop-blur-xl px-6 py-4 flex flex-col gap-2 shadow-xl"
+      className="xl:hidden border-b border-border-subtle bg-bg-base/95 dark:bg-bg-base/95 backdrop-blur-2xl px-6 py-4 flex flex-col gap-2 shadow-2xl max-h-[calc(100dvh-4.5rem)] overflow-y-auto overscroll-contain"
     >
       {navItems.map((item) => {
         const isActive = activeSection === item.name;

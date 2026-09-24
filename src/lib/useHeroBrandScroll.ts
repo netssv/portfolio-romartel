@@ -7,12 +7,14 @@ interface UseHeroBrandScrollOptions {
   brandLogoRef: RefObject<HTMLElement | null>;
   anchorWrapperRef: RefObject<HTMLElement | null>;
   getLenis: () => Lenis | null;
+  isMenuOpen?: boolean;
 }
 
 export function useHeroBrandScroll({
   brandLogoRef,
   anchorWrapperRef,
   getLenis,
+  isMenuOpen = false,
 }: UseHeroBrandScrollOptions) {
   useEffect(() => {
     const brandEl = brandLogoRef.current;
@@ -29,7 +31,7 @@ export function useHeroBrandScroll({
       const heroTargetRect = heroTarget?.getBoundingClientRect();
 
       const isMobile = window.innerWidth < 640;
-      const isTablet = window.innerWidth >= 640 && window.innerWidth < 1024;
+      const isTablet = window.innerWidth >= 640 && window.innerWidth < 1280;
 
       const heroWidth = isMobile
         ? Math.min(window.innerWidth * 0.90, 400)
@@ -61,7 +63,7 @@ export function useHeroBrandScroll({
       // Clamp navTop during interpolation so negative translation does not corrupt position
       const navTop = navRect.top <= 0 || progress >= 1 ? dockedTop : navRect.top;
 
-      if (progress >= 1) {
+      if (isMenuOpen || progress >= 1) {
         brandEl.style.position = "fixed";
         brandEl.style.left = `${navLeft}px`;
         brandEl.style.top = `${dockedTop}px`;
@@ -100,5 +102,5 @@ export function useHeroBrandScroll({
       window.removeEventListener("resize", scheduleUpdate);
       if (lenis) lenis.off("scroll", scheduleUpdate);
     };
-  }, [brandLogoRef, anchorWrapperRef, getLenis]);
+  }, [brandLogoRef, anchorWrapperRef, getLenis, isMenuOpen]);
 }

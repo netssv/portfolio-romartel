@@ -69,7 +69,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
           </motion.div>
 
           {/* Centered Executive Portrait */}
-          <motion.div className="relative mb-8 flex justify-center z-10" variants={itemVariants}>
+          <motion.div className="w-full relative mb-8 flex justify-center z-10" variants={itemVariants}>
             <ExecutivePortrait src={avatar.src} alt={avatar.alt} />
           </motion.div>
 

@@ -29,10 +29,17 @@ export function ClippoFloatingTrigger({
   const [phraseIndex, setPhraseIndex] = useState(0);
   const [isDismissed, setIsDismissed] = useState(false);
   const [isNightTime, setIsNightTime] = useState(false);
+  const [isNavOpen, setIsNavOpen] = useState(false);
 
   useEffect(() => {
     const hour = new Date().getHours();
     setIsNightTime(hour >= 19 || hour < 6);
+  }, []);
+
+  useEffect(() => {
+    const handleNav = (e: Event) => setIsNavOpen(Boolean((e as CustomEvent).detail?.open));
+    window.addEventListener("mobile-nav-toggle", handleNav);
+    return () => window.removeEventListener("mobile-nav-toggle", handleNav);
   }, []);
 
   const activeConfig = getSectionChatbotConfig(sectionId, isSpanish);
@@ -74,7 +81,7 @@ export function ClippoFloatingTrigger({
     return () => clearInterval(interval);
   }, [isOpen, isThinking, customPhrase, phrases.length]);
 
-  if (isOpen) return null;
+  if (isOpen || isNavOpen) return null;
 
   const currentPhrase = customPhrase || phrases[phraseIndex % phrases.length] || phrases[0];
   const isNightAction = !customPhrase && (currentPhrase.includes("tono nocturno") || currentPhrase.includes("dark mode"));
