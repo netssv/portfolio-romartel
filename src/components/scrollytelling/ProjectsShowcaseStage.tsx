@@ -85,11 +85,11 @@ export const ProjectsShowcaseStage: React.FC<ProjectsShowcaseStageProps> = ({
 
       {/* Collapsible Split Stage: Narrative + Media (Collapses to 0 as scroll advances) */}
       <motion.div style={{ height: visualHeight }} className="overflow-hidden">
-        <div className="grid grid-cols-1 lg:grid-cols-12 min-h-[480px] sm:min-h-[540px]">
+        <div className="grid grid-cols-1 lg:grid-cols-12 min-h-0 sm:min-h-[540px]">
           {/* Narrative Left Column */}
           <motion.div
             style={{ x: narrativeX, opacity: narrativeOpacity }}
-            className="col-span-1 lg:col-span-5 p-6 sm:p-8 lg:p-10 flex flex-col justify-between border-b lg:border-b-0 lg:border-r border-white/15"
+            className="col-span-1 lg:col-span-5 p-4 sm:p-6 lg:p-10 flex flex-col justify-between border-b lg:border-b-0 lg:border-r border-white/15"
           >
             <AnimatePresence mode="wait">
               <motion.div
@@ -98,29 +98,29 @@ export const ProjectsShowcaseStage: React.FC<ProjectsShowcaseStageProps> = ({
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -15 }}
                 transition={{ duration: 0.35, ease: "easeOut" }}
-                className="space-y-4"
+                className="space-y-2.5 sm:space-y-4"
               >
                 <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-mono uppercase tracking-wider bg-white/10 border border-white/20 text-blue-200">
                   <Sparkles size={11} className="text-blue-300" />
                   <span>{active.category}</span>
                 </div>
-                <div className="space-y-2">
+                <div className="space-y-1 sm:space-y-2">
                   <p style={{ color: "#BFDBFE" }} className="font-mono text-xs uppercase tracking-widest text-blue-200 font-medium">
                     {active.subtitle || active.title}
                   </p>
-                  <p style={{ color: "#FFFFFF" }} className="text-sm sm:text-base text-white leading-relaxed font-body">
+                  <p style={{ color: "#FFFFFF" }} className="text-xs sm:text-base text-white leading-relaxed font-body line-clamp-2 sm:line-clamp-none">
                     {active.description}
                   </p>
                 </div>
                 {active.story && (
-                  <div className="border-l-2 border-blue-300/40 pl-3 py-0.5">
+                  <div className="hidden sm:block border-l-2 border-blue-300/40 pl-3 py-0.5">
                     <p className="text-xs text-blue-100/80 font-body leading-relaxed italic">{active.story}</p>
                   </div>
                 )}
                 {active.tags && active.tags.length > 0 && (
-                  <div className="flex flex-wrap gap-1.5 pt-2">
-                    {active.tags.map((tag) => (
-                      <span key={tag} className="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-mono bg-white/10 text-white/90 border border-white/15">
+                  <div className="flex flex-wrap gap-1.5 pt-1">
+                    {active.tags.slice(0, 4).map((tag) => (
+                      <span key={tag} className="inline-flex items-center px-2 py-0.5 rounded text-[10px] sm:text-[11px] font-mono bg-white/10 text-white/90 border border-white/15">
                         {tag}
                       </span>
                     ))}
@@ -130,7 +130,7 @@ export const ProjectsShowcaseStage: React.FC<ProjectsShowcaseStageProps> = ({
             </AnimatePresence>
 
             {/* Action Links & Stepper */}
-            <div className="pt-6 mt-4 border-t border-white/15 flex flex-wrap items-center justify-between gap-4">
+            <div className="pt-3 sm:pt-6 mt-2 sm:mt-4 border-t border-white/15 flex flex-wrap items-center justify-between gap-3">
               <div className="flex items-center gap-3">
                 {active.links.demo && (
                   <a href={active.links.demo} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg text-xs font-semibold bg-white text-[#21426E] hover:bg-white/90 shadow-md transition-all">

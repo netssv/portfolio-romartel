@@ -38,7 +38,7 @@ export const SmoothScrollProvider: React.FC<{ children: React.ReactNode }> = ({ 
       gestureOrientation: "vertical",
       smoothWheel: true,
       wheelMultiplier: 0.9,
-      touchMultiplier: 1.5,
+      syncTouch: false,
     });
 
     lenisRef.current = lenis;

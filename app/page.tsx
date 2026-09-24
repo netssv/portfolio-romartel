@@ -69,17 +69,13 @@ export default function Home() {
         />
 
         {/* ── [01] About Me (Editorial Narrative & Bitcoin Enthusiast) ── */}
-        <div className="content-auto">
-          <AboutMeSection />
-        </div>
+        <AboutMeSection />
 
         {/* ── Real-Time BTC Macro Trend & Automation Watchdog Bar ── */}
         <BtcTrendTelemetryBar />
 
         {/* ── Think Big, Start Small: Kinetic Architectural Transition ── */}
-        <div className="content-auto">
-          <SloganSection />
-        </div>
+        <SloganSection />
 
         {/* ── [02] Projects Showcase (AlejandroHA Split Architectural Stage) ── */}
         <ProjectsSection flagship={flagshipProject} projects={sideProjects} />
@@ -94,29 +90,23 @@ export default function Home() {
         <ExperienceTimeline items={experience} />
 
         {/* ── Skills & Capabilities (Architectural Contrast Canvas) ── */}
-        <div className="content-auto bg-[#F4F5F7] dark:bg-[#12161E] pt-16 sm:pt-24 border-t border-border-subtle transition-colors duration-700">
+        <div className="bg-[#F4F5F7] dark:bg-[#12161E] pt-16 sm:pt-24 border-t border-border-subtle transition-colors duration-700">
           <SkillsGrid skillsMatrix={skillsMatrix} />
         </div>
 
         {/* ── Architecture & Strategy ────────────────── */}
-        <div className="content-auto bg-[#F4F5F7] dark:bg-[#12161E] pb-16 sm:pb-24 border-b border-border-subtle transition-colors duration-700">
+        <div className="bg-[#F4F5F7] dark:bg-[#12161E] pb-16 sm:pb-24 border-b border-border-subtle transition-colors duration-700">
           <ArchitectureSection />
         </div>
 
         {/* ── Certifications & Credentials (Monumental Scatter Convergence) ── */}
-        <div className="content-auto">
-          <CertificationsSection />
-        </div>
+        <CertificationsSection />
 
         {/* ── Case Studies ───────────────────────────── */}
-        <div className="content-auto">
-          <CaseStudiesSection />
-        </div>
+        <CaseStudiesSection />
 
         {/* ── Philosophy & Vision ────────────────────── */}
-        <div className="content-auto">
-          <PhilosophySection quote={philosophy.quote} focus={philosophy.focus} />
-        </div>
+        <PhilosophySection quote={philosophy.quote} focus={philosophy.focus} />
 
         {/* ── Contact Funnel ─────────────────────────── */}
         <ContactSection contact={contact} />

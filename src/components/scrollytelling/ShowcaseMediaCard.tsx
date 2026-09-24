@@ -41,7 +41,7 @@ export const ShowcaseMediaCard: React.FC<ShowcaseMediaCardProps> = ({
   }, []);
 
   return (
-    <div className="col-span-1 lg:col-span-7 relative p-4 sm:p-8 lg:p-10 flex items-center justify-center overflow-hidden">
+    <div className="col-span-1 lg:col-span-7 relative p-2 sm:p-6 lg:p-10 flex items-center justify-center overflow-hidden">
       {/* Active Front Card: minimizes to the left side and fades out */}
       <AnimatePresence mode="wait">
         <motion.div
@@ -61,7 +61,7 @@ export const ShowcaseMediaCard: React.FC<ShowcaseMediaCardProps> = ({
             transition: { duration: 0.4, ease: [0.65, 0, 0.35, 1] },
           }}
           transition={{ duration: 0.45, ease: "easeOut" }}
-          className="relative w-full max-w-xl sm:max-w-2xl rounded-2xl border border-white/20 bg-white/5 backdrop-blur-md shadow-[0_25px_60px_-15px_rgba(0,0,0,0.5)] overflow-hidden z-10 group"
+          className="relative w-full max-w-sm sm:max-w-xl lg:max-w-2xl rounded-xl sm:rounded-2xl border border-white/20 bg-white/5 backdrop-blur-md shadow-[0_25px_60px_-15px_rgba(0,0,0,0.5)] overflow-hidden z-10 group"
         >
           {/* Media Viewport */}
           <div className="relative aspect-[16/10] w-full overflow-hidden bg-black/20">

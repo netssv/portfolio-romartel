@@ -177,11 +177,6 @@ html.lenis, html.lenis body {
   scrollbar-color: var(--text-muted) var(--bg-base);
 }
 
-/* ─── Content Containment ─────────────────────────────── */
-.content-auto {
-  content-visibility: auto;
-  contain-intrinsic-size: 0 750px;
-}
 
 
 /* ─── Interactive Directional Link Underline ────────────── */

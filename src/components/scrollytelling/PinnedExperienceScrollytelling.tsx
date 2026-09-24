@@ -46,9 +46,8 @@ export const PinnedExperienceScrollytelling: React.FC<{ items: ExperienceItem[] 
 
   return (
     <div ref={containerRef} className="relative h-[380vh] w-full">
-      <div className="sticky top-0 h-screen w-full flex items-center justify-center overflow-hidden z-20 px-4 sm:px-6 py-4 sm:py-8">
+      <div className="sticky top-0 h-[100dvh] w-full flex items-center justify-center overflow-hidden z-20 px-4 sm:px-6 py-4 sm:py-8">
         <div className="mx-auto max-w-5xl w-full flex flex-col justify-center">
-          
           {/* ── 1. Chronological Timeline Ribbon ── */}
           <div className="relative mb-6">
             <div className="absolute top-1/2 left-0 right-0 h-[2px] -translate-y-1/2 bg-border-base" />
@@ -56,13 +55,11 @@ export const PinnedExperienceScrollytelling: React.FC<{ items: ExperienceItem[] 
               className="absolute top-1/2 left-0 h-[2px] -translate-y-1/2 bg-accent transition-all duration-200"
               style={{ width: `${(activeIndex / (items.length - 1)) * 100}%` }}
             />
-
             <div className="relative flex justify-between items-center z-10">
               {items.map((job, idx) => {
                 const isActive = idx === activeIndex;
                 const isPast = idx <= activeIndex;
                 const startYear = job.period.split(" - ")[0].trim();
-
                 return (
                   <button
                     key={idx}
@@ -81,12 +78,7 @@ export const PinnedExperienceScrollytelling: React.FC<{ items: ExperienceItem[] 
                     >
                       <Briefcase size={12} className={isActive ? "text-white" : "text-current"} />
                     </div>
-
-                    <span
-                      className={`text-xs font-body font-semibold mt-2 transition-colors ${
-                        isActive ? "text-accent" : isPast ? "text-text-primary" : "text-text-muted"
-                      }`}
-                    >
+                    <span className={`text-xs font-body font-semibold mt-2 transition-colors ${isActive ? "text-accent" : isPast ? "text-text-primary" : "text-text-muted"}`}>
                       {startYear}
                     </span>
                     <span className="text-[11px] font-body text-text-muted hidden sm:block max-w-[90px] truncate">
@@ -100,12 +92,9 @@ export const PinnedExperienceScrollytelling: React.FC<{ items: ExperienceItem[] 
 
           {/* ── 2. Experience Card Stage ── */}
           <div className="relative w-full">
-            <div
-              key={activeIndex}
-              className="bg-bg-surface border border-border-base rounded-2xl overflow-hidden shadow-xl"
-            >
+            <div key={activeIndex} className="bg-bg-surface border border-border-base rounded-2xl overflow-hidden shadow-xl max-h-[85dvh] flex flex-col">
               {/* Header */}
-              <div className="flex items-center justify-between px-5 sm:px-6 py-3 border-b border-border-subtle bg-bg-raised/50">
+              <div className="flex items-center justify-between px-5 sm:px-6 py-3 border-b border-border-subtle bg-bg-raised/50 shrink-0">
                 <div className="flex items-center gap-2">
                   <span className="h-2 w-2 rounded-full bg-accent" />
                   <span className="text-xs font-body font-semibold text-text-secondary uppercase tracking-wider">
@@ -119,7 +108,7 @@ export const PinnedExperienceScrollytelling: React.FC<{ items: ExperienceItem[] 
               </div>
 
               {/* Title & Metadata */}
-              <div className="p-5 sm:p-6 border-b border-border-subtle bg-bg-surface">
+              <div className="p-5 sm:p-6 border-b border-border-subtle bg-bg-surface shrink-0">
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                   <div>
                     <h3 className="text-xl sm:text-2xl lg:text-3xl font-heading font-bold text-text-primary tracking-tight leading-tight">
@@ -137,7 +126,7 @@ export const PinnedExperienceScrollytelling: React.FC<{ items: ExperienceItem[] 
               </div>
 
               {/* Summary Narrative */}
-              <div className="px-5 sm:px-6 py-4 border-b border-border-subtle bg-bg-surface/50 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+              <div className="px-5 sm:px-6 py-4 border-b border-border-subtle bg-bg-surface/50 flex flex-col sm:flex-row sm:items-center justify-between gap-4 shrink-0">
                 <p className="text-xs sm:text-sm font-body text-text-secondary leading-relaxed max-w-2xl">
                   {active.description}
                 </p>
@@ -165,7 +154,7 @@ export const PinnedExperienceScrollytelling: React.FC<{ items: ExperienceItem[] 
                     transition={{ duration: 0.2, ease: "easeOut" }}
                     className="overflow-hidden"
                   >
-                    <div className="p-5 sm:p-6 grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-6 bg-bg-raised/40 border-b border-border-subtle">
+                    <div className="p-4 sm:p-6 grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 bg-bg-raised/40 border-b border-border-subtle max-h-60 sm:max-h-80 overflow-y-auto">
                       <div>
                         <p className="text-xs font-body font-bold uppercase tracking-wider text-accent mb-2.5 flex items-center gap-1.5">
                           <CheckCircle2 size={13} className="text-accent" />
@@ -180,7 +169,6 @@ export const PinnedExperienceScrollytelling: React.FC<{ items: ExperienceItem[] 
                           ))}
                         </ul>
                       </div>
-
                       <div>
                         <p className="text-xs font-body font-bold uppercase tracking-wider text-text-primary mb-2.5 flex items-center gap-1.5">
                           <Briefcase size={13} className="text-accent" />
@@ -201,7 +189,7 @@ export const PinnedExperienceScrollytelling: React.FC<{ items: ExperienceItem[] 
               </AnimatePresence>
 
               {/* Footer */}
-              <div className="px-5 sm:px-6 py-3 border-t border-border-subtle bg-bg-raised/30 flex items-center justify-between text-xs font-body text-text-muted">
+              <div className="px-5 sm:px-6 py-3 border-t border-border-subtle bg-bg-raised/30 flex items-center justify-between text-xs font-body text-text-muted shrink-0">
                 <span>Timeline Stage: <strong className="text-text-primary font-semibold">{activeIndex + 1} of {items.length}</strong></span>
                 <span className="text-accent font-medium hidden sm:inline">Scroll to advance milestones</span>
               </div>

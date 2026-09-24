@@ -7,6 +7,7 @@ interface ScatterCharProps {
   char: string;
   index: number;
   scrollYProgress: MotionValue<number>;
+  isMobile?: boolean;
 }
 
 // Deterministic pseudo-random helper for consistent SSR/client hydration
@@ -15,13 +16,13 @@ function pseudoRandom(seed: number) {
   return x - Math.floor(x);
 }
 
-function ScatterChar({ char, index, scrollYProgress }: ScatterCharProps) {
+function ScatterChar({ char, index, scrollYProgress, isMobile = false }: ScatterCharProps) {
   const seed = index + 1;
   const randX = (pseudoRandom(seed * 1.3) - 0.5) * 140;
   const randY = (pseudoRandom(seed * 2.7) - 0.5) * 150;
   const randRotate = (pseudoRandom(seed * 3.1) - 0.5) * 110;
   const randScale = 0.6 + pseudoRandom(seed * 4.9) * 0.8;
-  const randBlur = 8 + pseudoRandom(seed * 5.3) * 10;
+  const randBlur = isMobile ? 0 : 8 + pseudoRandom(seed * 5.3) * 10;
 
   // As the section scrolls from viewport entrance to center, assemble characters
   const x = useTransform(scrollYProgress, [0, 0.85], [randX, 0]);
@@ -30,7 +31,7 @@ function ScatterChar({ char, index, scrollYProgress }: ScatterCharProps) {
   const scale = useTransform(scrollYProgress, [0, 0.85], [randScale, 1]);
   const blurVal = useTransform(scrollYProgress, [0, 0.85], [randBlur, 0]);
   const opacity = useTransform(scrollYProgress, [0, 0.35, 0.85], [0.3, 0.7, 1]);
-  const filter = useTransform(blurVal, (b) => `blur(${b.toFixed(1)}px)`);
+  const filter = useTransform(blurVal, (b) => (isMobile ? "none" : `blur(${b.toFixed(1)}px)`));
 
   if (char === " ") {
     return <span className="inline-block w-[0.28em]">&nbsp;</span>;
@@ -45,9 +46,9 @@ function ScatterChar({ char, index, scrollYProgress }: ScatterCharProps) {
         y,
         rotate,
         scale,
-        filter,
+        ...(isMobile ? {} : { filter }),
         opacity,
-        willChange: "transform, filter, opacity",
+        willChange: isMobile ? "transform, opacity" : "transform, filter, opacity",
       }}
       className="select-none tracking-normal"
     >
@@ -63,6 +64,7 @@ interface ScatterTitleProps {
 
 export function ScatterTitle({ text, className = "" }: ScatterTitleProps) {
   const [isMounted, setIsMounted] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
   const containerRef = useRef<HTMLHeadingElement>(null);
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -71,6 +73,10 @@ export function ScatterTitle({ text, className = "" }: ScatterTitleProps) {
 
   useEffect(() => {
     setIsMounted(true);
+    setIsMobile(window.innerWidth < 768);
+    const onResize = () => setIsMobile(window.innerWidth < 768);
+    window.addEventListener("resize", onResize, { passive: true });
+    return () => window.removeEventListener("resize", onResize);
   }, []);
 
   const chars = useMemo(() => text.split(""), [text]);
@@ -88,6 +94,7 @@ export function ScatterTitle({ text, className = "" }: ScatterTitleProps) {
               char={char}
               index={index}
               scrollYProgress={scrollYProgress}
+              isMobile={isMobile}
             />
           ))
         : text}

@@ -59,7 +59,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
       className={`${inter.variable} ${spaceGrotesk.variable} ${geistMono.variable} h-full antialiased`}
       suppressHydrationWarning
     >
-      <body className="min-h-full flex flex-col bg-bg-base text-text-secondary overflow-x-hidden relative">
+      <body className="min-h-full flex flex-col bg-bg-base text-text-secondary relative">
         {/* Structured data */}
         <script
           type="application/ld+json"

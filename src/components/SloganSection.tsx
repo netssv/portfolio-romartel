@@ -31,17 +31,17 @@ export const SloganSection: React.FC = () => {
   const primaryTextColor = useTransform(
     scrollYProgress,
     [0.2, 0.42],
-    ["var(--text-primary)", "#FFFFFF"]
+    ["#111827", "#FFFFFF"]
   );
   const secondaryTextColor = useTransform(
     scrollYProgress,
     [0.2, 0.42],
-    ["var(--text-secondary)", "rgba(255, 255, 255, 0.82)"]
+    ["#4B5563", "rgba(255, 255, 255, 0.82)"]
   );
   const tagColor = useTransform(
     scrollYProgress,
     [0.2, 0.42],
-    ["var(--accent)", "#93C5FD"]
+    ["#21426E", "#93C5FD"]
   );
 
   if (!slogan) return null;
