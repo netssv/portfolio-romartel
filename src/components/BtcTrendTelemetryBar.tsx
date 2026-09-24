@@ -117,6 +117,7 @@ export const BtcTrendTelemetryBar: React.FC = () => {
       <div className="mx-auto max-w-6xl px-6">
         <FadeIn>
           <div className="relative overflow-hidden rounded-2xl border border-border-subtle bg-bg-surface p-4 sm:px-6 sm:py-4 shadow-sm transition-all duration-200 hover:border-border-base">
+            <div className="flex flex-col xl:flex-row xl:items-center xl:justify-between gap-4">
               <TelemetryStatusBadge
                 status={telemetryStatus}
                 isSpanish={isSpanish}
