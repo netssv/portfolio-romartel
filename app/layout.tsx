@@ -3,6 +3,7 @@ import { Inter, Space_Grotesk, Geist_Mono } from "next/font/google";
 import Script from "next/script";
 import "./globals.css";
 import siteData from "@/src/data/siteData.json";
+import { getStructuredData } from "@/src/lib/jsonLd";
 import { NoiseOverlay } from "@/src/components/animations/NoiseOverlay";
 import { SpotlightCursor } from "@/src/components/animations/SpotlightCursor";
 import { DesignProvider } from "@/src/context/DesignContext";
@@ -14,6 +15,10 @@ const spaceGrotesk = Space_Grotesk({ variable: "--font-space-grotesk", subsets: 
 const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"], display: "swap" });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://romartel.vercel.app"),
+  alternates: {
+    canonical: "https://romartel.vercel.app",
+  },
   title: siteData.metadata.title,
   description: siteData.metadata.description,
   keywords: siteData.metadata.keywords,
@@ -25,33 +30,26 @@ export const metadata: Metadata = {
     siteName: siteData.metadata.title,
     locale: "en_US",
     type: "website",
+    images: [
+      {
+        url: "/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: `${siteData.profile.name} | ${siteData.profile.title}`,
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title: siteData.metadata.title,
     description: siteData.metadata.description,
     creator: "@netssv",
+    images: ["/og-image.png"],
   },
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
-  const jsonLd = {
-    "@context": "https://schema.org",
-    "@type": "Person",
-    name: siteData.profile.name,
-    jobTitle: siteData.profile.title,
-    url: "https://romartel.vercel.app",
-    sameAs: [
-      siteData.metadata.socialLinks.linkedin,
-      siteData.metadata.socialLinks.github,
-      siteData.metadata.socialLinks.twitter,
-    ],
-    alumniOf: "",
-    worksFor: {
-      "@type": "Organization",
-      name: siteData.experience[0].company,
-    },
-  };
+  const jsonLd = getStructuredData();
 
   return (
     <html
