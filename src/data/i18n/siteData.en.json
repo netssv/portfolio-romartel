@@ -30,8 +30,7 @@
     { "name": "About", "path": "#about" },
     { "name": "Projects", "path": "#projects" },
     { "name": "Experience", "path": "#experience" },
-    { "name": "Insights", "path": "#skills" },
-    { "name": "Architecture", "path": "#architecture" },
+    { "name": "Credentials", "path": "#certifications" },
     { "name": "Case Studies", "path": "#case-studies" },
     { "name": "Contact", "path": "#contact" }
   ],
@@ -277,38 +276,56 @@
   "skillsMatrix": {
     "businessCore": {
       "title": "Systems Strategy & Client Operations",
+      "focus": "Automating lifecycle funnels, CRM architectures, and resilient webhook pipelines.",
       "icon": "Target",
+      "tools": [
+        "HubSpot",
+        "Salesforce",
+        "Make.com",
+        "Zapier",
+        "Webhooks",
+        "REST APIs"
+      ],
       "skills": [
-        "CRM & Platform Integrations (Salesforce, HubSpot, Webhooks)",
-        "Systems Audits & Onboarding Technical Discovery",
-        "Workflow QA & Integration Reliability Testing",
-        "Client Walkthroughs & Technical Runbook Delivery",
-        "Escalation & Incident Root-Cause Management",
-        "SLA & Performance KPI Monitoring"
+        "Cross-platform CRM sync & webhook integrations",
+        "Automated onboarding workflows & reliability QA",
+        "Operational SLA monitoring & root-cause incident response"
       ]
     },
     "dataIntelligence": {
       "title": "Data, BI & Dashboards",
+      "focus": "Transforming multi-source business data into actionable executive dashboards and ETL models.",
       "icon": "BarChart3",
+      "tools": [
+        "Power BI",
+        "DAX",
+        "SQL Basics",
+        "Excel Modeling",
+        "ETL Validation",
+        "Google Analytics 4"
+      ],
       "skills": [
-        "Power BI Dashboard Design & DAX",
-        "Excel & Google Sheets Automated Modeling",
-        "Data Migration & ETL Validation",
-        "SQL & Relational Data Flow Basics",
-        "Marketing Analytics & Conversion Tracking",
-        "Operational Visibility & KPI Tracking"
+        "Power BI dashboards with custom DAX measures",
+        "Automated spreadsheet modeling & relational ETL flows",
+        "Marketing analytics, conversion tracking & KPI reporting"
       ]
     },
     "technicalTooling": {
       "title": "Automation Tooling & Infrastructure",
+      "focus": "Building production web applications, automated scripts, and continuous serverless monitoring.",
       "icon": "Cpu",
+      "tools": [
+        "Next.js",
+        "TypeScript",
+        "React",
+        "Python",
+        "Serverless",
+        "Git & CI/CD"
+      ],
       "skills": [
-        "Make.com & Zapier Webhook Orchestration",
-        "Python Scripting (Automation, APIs & Data Validation)",
-        "ClickUp, Asana & Agile Sprint Coordination",
-        "Bash & Serverless Cloud Watchdogs",
-        "Next.js, TypeScript & React",
-        "Git, CI/CD & Test-Driven QA"
+        "Full-stack modern web applications (Next.js & TypeScript)",
+        "Python scripting for API workflows & data validation",
+        "Serverless cloud watchdogs & automated uptime alerting"
       ]
     }
   },
@@ -328,27 +345,27 @@
   "metrics": [
     {
       "value": "70%",
-      "label": "Reporting Velocity",
-      "subtitle": "Automated Data Pipelines",
-      "details": "Engineered automated Python ingestion scripts and interactive Power BI dashboards, eliminating manual multi-department spreadsheet bottlenecks."
+      "label": "Faster Reporting",
+      "subtitle": "Live Dashboards",
+      "details": "Automated manual spreadsheet exports into live Power BI dashboards, saving over 15 hours a week across marketing and operational teams."
     },
     {
       "value": "40+",
-      "label": "Incident Archetypes",
-      "subtitle": "Root-Cause Blueprints",
-      "details": "Authored systematic triage taxonomies and automated remediation SOPs across high-volume technical support shifts."
+      "label": "Optimized Workflows",
+      "subtitle": "Playbooks & SOPs",
+      "details": "Documented and standardized recurring operational tasks into clear playbooks, reducing response times and team friction."
     },
     {
       "value": "6+",
-      "label": "Production Systems",
-      "subtitle": "Web, CLI & Packages",
-      "details": "Architected and shipped live software spanning 3D WebGL simulations, Chrome MV3 network terminals, and PyPI automation packages."
+      "label": "Custom Tools Built",
+      "subtitle": "Automation & Web",
+      "details": "Built practical automation utilities, web applications, and browser tools to eliminate real bottlenecks in daily marketing workflows."
     },
     {
       "value": "150+",
-      "label": "Automated Tests",
-      "subtitle": "Continuous QA Coverage",
-      "details": "Engineered comprehensive unit and integration test suites with CI/CD automation ensuring regression-free production releases."
+      "label": "Quality Checks",
+      "subtitle": "Clean Data Tracking",
+      "details": "Automated validation routines ensuring marketing data, webhooks, and analytics reports remain clean, accurate, and reliable."
     }
   ],
   "philosophy": {
@@ -361,8 +378,8 @@
     ]
   },
   "contact": {
-    "title": "Let's Connect",
-    "description": "Interested in automating workflows, scaling data pipelines, or optimizing your digital transformation strategies? Get in touch to discuss technical solutions.",
+    "title": "Let's Talk Growth",
+    "description": "Have a marketing challenge, a pipeline to automate, or analytics to structure? Let's talk directly or chat with my assistant.",
     "email": "rop.martel@gmail.com",
     "location": "San Salvador, El Salvador",
     "social": [
@@ -422,8 +439,8 @@
   },
   "credentials": {
     "totalCount": 103,
-    "archiveUrl": "https://1drv.ms/f/c/c9136ada8a51a610/IgAQplGK2moTIIDJJKsAAAAAAd9ni2_70w9-q00a4Majbqk?e=AdFVPs",
-    "summary": "103 verified credentials audited across data analytics, digital marketing, AI automation, IT infrastructure, agile leadership, and specialized operations.",
+    "archiveUrl": "https://onedrive.live.com/?id=%2Fpersonal%2Fc9136ada8a51a610%2FDocuments%2FDocumentos%2FRO%2FCurriculums%2Fcertificates&listurl=%2Fpersonal%2Fc9136ada8a51a610%2FDocuments&ithint=folder&e=AdFVPs&migratedtospo=true&redeem=aHR0cHM6Ly8xZHJ2Lm1zL2YvYy9jOTEzNmFkYThhNTFhNjEwL0lnQVFwbEdLMm1vVElJREpKS3NBQUFBQUFkOW5pMl83MHc5LXEwMGE0TWFqYnFrP2U9QWRGVlBz&ga=1",
+    "summary": "Verified credentials audited across data analytics, digital marketing, AI automation, IT infrastructure, agile leadership, and specialized operations.",
     "categories": [
       {
         "id": "data-analytics",

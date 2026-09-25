@@ -4,15 +4,8 @@ import { useLanguage } from "@/src/context/LanguageContext";
 import { Navbar } from "@/src/components/Navbar";
 import { HeroSection } from "@/src/components/HeroSection";
 import { AboutMeSection } from "@/src/components/AboutMeSection";
-import { BtcTrendTelemetryBar } from "@/src/components/BtcTrendTelemetryBar";
-import { SloganSection } from "@/src/components/SloganSection";
-import { TrustedStack } from "@/src/components/TrustedStack";
 import { ProjectsSection } from "@/src/components/ProjectsSection";
-import { MetricsSection } from "@/src/components/MetricsSection";
 import { ExperienceTimeline } from "@/src/components/ExperienceTimeline";
-import { SkillsGrid } from "@/src/components/SkillsGrid";
-import { PhilosophySection } from "@/src/components/PhilosophySection";
-import { ArchitectureSection } from "@/src/components/ArchitectureSection";
 import { CertificationsSection } from "@/src/components/CertificationsSection";
 import { CaseStudiesSection } from "@/src/components/CaseStudiesSection";
 import { ContactSection } from "@/src/components/ContactSection";
@@ -30,10 +23,7 @@ export default function Home() {
     experience,
     flagshipProject,
     sideProjects,
-    skillsMatrix,
     contact,
-    trustedStack,
-    metrics,
     philosophy,
     metadata,
   } = data;
@@ -43,8 +33,7 @@ export default function Home() {
     { name: t.nav.about, path: "#about" },
     { name: t.nav.projects, path: "#projects" },
     { name: t.nav.experience, path: "#experience" },
-    { name: t.nav.insights, path: "#skills" },
-    { name: t.nav.architecture, path: "#architecture" },
+    { name: t.nav.credentials, path: "#certifications" },
     { name: t.nav.caseStudies, path: "#case-studies" },
   ];
 
@@ -68,48 +57,23 @@ export default function Home() {
           email={contact.email}
         />
 
-        {/* ── [01] About Me (Editorial Narrative & Bitcoin Enthusiast) ── */}
+        {/* ── [01] About Me (Editorial Narrative, CTAs & Borderless Telemetry) ── */}
         <AboutMeSection />
 
-        {/* ── Real-Time BTC Macro Trend & Automation Watchdog Bar ── */}
-        <BtcTrendTelemetryBar />
-
-        {/* ── Think Big, Start Small: Kinetic Architectural Transition ── */}
-        <SloganSection />
-
-        {/* ── [02] Projects Showcase (AlejandroHA Split Architectural Stage) ── */}
+        {/* ── [02] Projects Showcase (Think Big, Start Small with KPIs + Scrollytelling) ── */}
         <ProjectsSection flagship={flagshipProject} projects={sideProjects} />
 
-        {/* ── Tech Stack ─────────────────────────────── */}
-        <TrustedStack stack={trustedStack} />
-
-        {/* ── Metrics ────────────────────────────────── */}
-        <MetricsSection metrics={metrics} />
-
-        {/* ── Experience Timeline ────────────────────── */}
+        {/* ── [03] Experience Timeline ────────────────────── */}
         <ExperienceTimeline items={experience} />
 
-        {/* ── Skills & Capabilities (Architectural Contrast Canvas) ── */}
-        <div className="bg-[#F4F5F7] dark:bg-[#12161E] pt-16 sm:pt-24 border-t border-border-subtle transition-colors duration-700">
-          <SkillsGrid skillsMatrix={skillsMatrix} />
-        </div>
-
-        {/* ── Architecture & Strategy ────────────────── */}
-        <div className="bg-[#F4F5F7] dark:bg-[#12161E] pb-16 sm:pb-24 border-b border-border-subtle transition-colors duration-700">
-          <ArchitectureSection />
-        </div>
-
-        {/* ── Certifications & Credentials (Monumental Scatter Convergence) ── */}
+        {/* ── [04] Certifications & Practical Toolkit (Monumental Scatter Convergence) ── */}
         <CertificationsSection />
 
-        {/* ── Case Studies ───────────────────────────── */}
+        {/* ── [05] Case Studies: Strategy & Growth ───── */}
         <CaseStudiesSection />
 
-        {/* ── Philosophy & Vision ────────────────────── */}
-        <PhilosophySection quote={philosophy.quote} focus={philosophy.focus} />
-
-        {/* ── Contact Funnel ─────────────────────────── */}
-        <ContactSection contact={contact} />
+        {/* ── [06] Contact & Operating Manifesto ────── */}
+        <ContactSection contact={contact} manifesto={philosophy.quote} />
       </main>
 
       {/* ── Footer ─────────────────────────────────── */}

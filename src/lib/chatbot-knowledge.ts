@@ -47,3 +47,39 @@ Clippo Internal Architecture & Fast Recovery:
 - Cost & Economics: $0.00/mo operating cost on Google AI Studio tier (1,500 RPD, 1M context window).
 - Resilience: Preserves thought signatures and catches 429 quota pauses with friendly cooldown notices.
 `;
+
+export const PORTFOLIO_ARCHITECTURE_KNOWLEDGE = `
+Portfolio Technical Architecture & Infrastructure Strategy ("Bajo el Capó" / "Under the Hood"):
+When visitors, recruiters, or hiring managers ask about this website's infrastructure, performance engineering, technical stack, or what's under the hood, explain these 6 core pillars:
+1. Next.js 15 App Router & React 19:
+   - Server-Side Rendering (SSR) for instant first contentful paint (FCP < 0.4s) and zero client hydration delta.
+2. Zero-Latency Client-Side A/B Engine:
+   - Lightweight, deterministic localStorage-driven engine routing instant variant experiences without external blocking SDKs or layout shifts (CLS = 0).
+3. Dynamic UTM Context Personalization:
+   - Reads incoming URL parameters on load to adapt copy and value propositions based on traffic source (LinkedIn, GitHub, ads).
+4. Strict Technical Indexing & JSON-LD:
+   - Dynamic XML sitemaps, semantic OpenGraph / Twitter metadata, and structured Schema.org schemas for search engine indexation.
+5. Serverless Form & Email Security:
+   - Next.js Route Handlers proxying contact submissions with Resend API, strict rate-limiting, and error fallbacks.
+6. GA4 Measurement Protocol & Telemetry:
+   - Custom event telemetry tracking scroll depth, outbound links, and user interactions without script bloat.
+`;
+
+export const SECTION_CONTEXT_MAP: Record<string, string> = {
+  top: "The visitor is viewing the Hero / Overview section.",
+  projects:
+    "The visitor is viewing the Featured Projects section (HODL Watcher, FIFA 2026 AI Lab, WhatHappened, caniarun, btkey_sync, Rebusca, Metropolyca). Frame projects as pragmatic tools and data systems built to solve real-world problems.",
+  experience:
+    "The visitor is viewing the Work Experience timeline. Emphasize Rodrigo's commercial operations, CRM integration, and practical automation background.",
+  certifications:
+    "The visitor is viewing the Certifications & Practical Toolkit section. Highlight accredited credentials (Google, Microsoft, HubSpot), marketing automation pipelines (Make, Zapier, Python), and data analytics.",
+  architecture:
+    "The visitor is viewing the Systems Architecture section. Focus on lightweight portfolio performance, serverless pipelines, and resilient fallbacks.",
+  "case-studies":
+    "The visitor is viewing the Case Studies & Audits section. Focus on practical ROI, conversion rate optimization, and eliminating operational bottlenecks.",
+  philosophy:
+    "The visitor is viewing the Strategic Philosophy section. Highlight strategic discipline, growth telemetry, and practical automation.",
+  contact:
+    "The visitor is viewing the Contact section. Guide them to schedule a call, chat via WhatsApp, or send a direct inquiry.",
+};
+

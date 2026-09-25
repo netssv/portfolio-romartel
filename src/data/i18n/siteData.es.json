@@ -30,8 +30,7 @@
     { "name": "Sobre mí", "path": "#about" },
     { "name": "Proyectos", "path": "#projects" },
     { "name": "Experiencia", "path": "#experience" },
-    { "name": "Habilidades", "path": "#skills" },
-    { "name": "Arquitectura", "path": "#architecture" },
+    { "name": "Credenciales", "path": "#certifications" },
     { "name": "Casos de Estudio", "path": "#case-studies" },
     { "name": "Contacto", "path": "#contact" }
   ],
@@ -276,39 +275,57 @@
   ],
   "skillsMatrix": {
     "businessCore": {
-      "title": "Estrategia de Sistemas y Operaciones con Clientes",
+      "title": "Estrategia de Sistemas y Operaciones",
+      "focus": "Automatización de embudos de ciclo de vida, arquitecturas CRM y pipelines de webhooks resilientes.",
       "icon": "Target",
+      "tools": [
+        "HubSpot",
+        "Salesforce",
+        "Make.com",
+        "Zapier",
+        "Webhooks",
+        "REST APIs"
+      ],
       "skills": [
-        "Integraciones CRM y Plataformas (Salesforce, HubSpot, Webhooks)",
-        "Auditorías Técnicas de Sistemas y Descubrimiento en Onboarding",
-        "QA de Flujos de Trabajo y Pruebas de Fiabilidad de Integración",
-        "Sesiones Técnicas con Clientes y Entrega de Runbooks",
-        "Gestión de Escalaciones y Análisis Causa-Raíz de Incidentes",
-        "Monitoreo de SLAs y KPIs de Rendimiento"
+        "Sincronización multiplataforma de CRM e integraciones de webhooks",
+        "Flujos automatizados de onboarding y control de calidad de fiabilidad",
+        "Monitoreo operativo de SLAs y respuesta a incidentes de causa-raíz"
       ]
     },
     "dataIntelligence": {
       "title": "Datos, BI y Paneles de Control",
+      "focus": "Transformación de datos empresariales de múltiples fuentes en tableros ejecutivos y modelos ETL.",
       "icon": "BarChart3",
+      "tools": [
+        "Power BI",
+        "DAX",
+        "Fundamentos SQL",
+        "Modelado en Excel",
+        "Validación ETL",
+        "Google Analytics 4"
+      ],
       "skills": [
-        "Diseño de Dashboards en Power BI y Modelado DAX",
-        "Modelado Automatizado en Excel y Google Sheets",
-        "Migración de Datos y Validación ETL",
-        "Fundamentos de SQL y Flujos de Datos Relacionales",
-        "Analítica de Marketing y Seguimiento de Conversiones",
-        "Visibilidad Operativa y Seguimiento de KPIs"
+        "Dashboards en Power BI con medidas DAX personalizadas",
+        "Modelado automatizado de hojas de cálculo y flujos ETL relacionales",
+        "Analítica de marketing, seguimiento de conversiones y reportes de KPIs"
       ]
     },
     "technicalTooling": {
       "title": "Herramientas de Automatización e Infraestructura",
+      "focus": "Desarrollo de aplicaciones web modernas, scripts de automatización y monitoreo continuo serverless.",
       "icon": "Cpu",
+      "tools": [
+        "Next.js",
+        "TypeScript",
+        "React",
+        "Python",
+        "Serverless",
+        "Git y CI/CD"
+      ],
       "skills": [
-        "Orquestación con Make.com y Webhooks de Zapier",
-        "Scripts en Python (Automatización, APIs y Validación de Datos)",
-        "Coordinación de Sprints Ágiles en ClickUp y Asana",
-        "Watchdogs en la Nube con Bash y Serverless",
-        "Next.js, TypeScript y React",
-        "Git, CI/CD y QA Dirigido por Pruebas"
+        "Aplicaciones web modernas full-stack (Next.js y TypeScript)",
+        "Scripts en Python para flujos con APIs y validación de datos",
+        "Watchdogs en la nube serverless y alertas automatizadas de operatividad"
       ]
     }
   },
@@ -328,27 +345,27 @@
   "metrics": [
     {
       "value": "70%",
-      "label": "Velocidad de Reportes",
-      "subtitle": "Pipelines de Datos Automatizados",
-      "details": "Desarrollé scripts de ingesta en Python y dashboards interactivos en Power BI, eliminando cuellos de botella manuales con hojas de cálculo."
+      "label": "Menos Tiempo en Reportes",
+      "subtitle": "Dashboards en Vivo",
+      "details": "Automaticé reportes manuales en hojas de cálculo hacia dashboards en vivo en Power BI, ahorrando más de 15 horas a la semana a los equipos."
     },
     {
       "value": "40+",
-      "label": "Arquetipos de Incidentes",
-      "subtitle": "Planos Causa-Raíz",
-      "details": "Diseñé taxonomías sistemáticas de triaje y procedimientos estandarizados de resolución para turnos de soporte de alto volumen."
+      "label": "Procesos Optimizados",
+      "subtitle": "Guías y Playbooks",
+      "details": "Documenté y estandaricé tareas operativas en guías claras y repetibles, reduciendo tiempos de respuesta y errores del día a día."
     },
     {
       "value": "6+",
-      "label": "Sistemas en Producción",
-      "subtitle": "Web, CLI y Paquetes",
-      "details": "Arquitecté y publiqué software en vivo incluyendo simulaciones WebGL 3D, terminales de red en Chrome MV3 y paquetes en PyPI."
+      "label": "Herramientas Creadas",
+      "subtitle": "Automatización y Web",
+      "details": "Diseñé y lancé utilidades de automatización, herramientas web y extensiones para resolver cuellos de botella reales de trabajo."
     },
     {
       "value": "150+",
-      "label": "Pruebas Automatizadas",
-      "subtitle": "Cobertura Continua de QA",
-      "details": "Diseñé suites completas de pruebas unitarias y de integración con automatización CI/CD para lanzamientos libres de regresiones."
+      "label": "Pruebas de Calidad",
+      "subtitle": "Datos Limpios",
+      "details": "Revisiones automatizadas que aseguran que los datos de marketing, webhooks y reportes de analítica se mantengan limpios y confiables."
     }
   ],
   "philosophy": {
@@ -361,8 +378,8 @@
     ]
   },
   "contact": {
-    "title": "Conectemos",
-    "description": "¿Interesado en automatizar flujos de trabajo, escalar pipelines de datos u optimizar estrategias de transformación digital? Conversemos sobre soluciones técnicas.",
+    "title": "Hablemos de Crecimiento",
+    "description": "¿Tienes un proyecto de marketing, un pipeline por automatizar o analítica por estructurar? Conversemos de forma directa o interactúa con mi asistente.",
     "email": "rop.martel@gmail.com",
     "location": "San Salvador, El Salvador",
     "social": [
@@ -422,8 +439,8 @@
   },
   "credentials": {
     "totalCount": 103,
-    "archiveUrl": "https://1drv.ms/f/c/c9136ada8a51a610/IgAQplGK2moTIIDJJKsAAAAAAd9ni2_70w9-q00a4Majbqk?e=AdFVPs",
-    "summary": "103 certificaciones auditadas en analítica de datos, marketing digital, automatización con IA, infraestructura TI, liderazgo ágil y operaciones especializadas.",
+    "archiveUrl": "https://onedrive.live.com/?id=%2Fpersonal%2Fc9136ada8a51a610%2FDocuments%2FDocumentos%2FRO%2FCurriculums%2Fcertificates&listurl=%2Fpersonal%2Fc9136ada8a51a610%2FDocuments&ithint=folder&e=AdFVPs&migratedtospo=true&redeem=aHR0cHM6Ly8xZHJ2Lm1zL2YvYy9jOTEzNmFkYThhNTFhNjEwL0lnQVFwbEdLMm1vVElJREpKS3NBQUFBQUFkOW5pMl83MHc5LXEwMGE0TWFqYnFrP2U9QWRGVlBz&ga=1",
+    "summary": "Certificaciones técnicas auditadas en analítica de datos, marketing digital, automatización con IA, infraestructura TI, liderazgo ágil y operaciones especializadas.",
     "categories": [
       {
         "id": "data-analytics",

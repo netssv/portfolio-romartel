@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useRef } from "react";
-import { ArrowUpRight, ArrowDown, MessageSquare, Award, Globe } from "lucide-react";
+import { ArrowUpRight, ArrowDown, MessageSquare } from "lucide-react";
 import { motion } from "framer-motion";
 import { ExecutivePortrait } from "@/src/components/ui/ExecutivePortrait";
 import { useLanguage } from "@/src/context/LanguageContext";
@@ -15,9 +15,6 @@ interface HeroSectionProps {
   avatar: { src: string; alt: string };
   email?: string;
 }
-
-const CREDENTIALS_ARCHIVE_URL =
-  "https://1drv.ms/f/c/c9136ada8a51a610/IgAQplGK2moTIIDJJKsAAAAAAd9ni2_70w9-q00a4Majbqk?e=AdFVPs";
 
 export const HeroSection: React.FC<HeroSectionProps> = ({
   name,
@@ -47,10 +44,10 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
   };
 
   return (
-    <section id="top" className="relative pt-24 pb-16 lg:pt-28 lg:pb-24 overflow-hidden z-10">
+    <section id="top" className="relative pt-20 sm:pt-24 lg:pt-28 pb-12 lg:pb-16 overflow-hidden z-10">
       <div
         ref={heroRef}
-        className="relative mx-auto max-w-7xl px-4 sm:px-6 flex flex-col items-center z-10"
+        className="relative mx-auto w-full px-4 sm:px-6 lg:px-8 xl:px-12 flex flex-col items-center z-10"
       >
         <motion.div
           className="w-full flex flex-col items-center z-10"
@@ -62,8 +59,11 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
           {/* Monumental Name Hero Target Anchor */}
           <motion.div
             id="hero-name-target"
-            className="w-full h-16 sm:h-24 lg:h-28 mb-4 sm:mb-6 flex items-center justify-center pointer-events-none select-none"
-            variants={itemVariants}
+            className="w-full h-16 sm:h-24 md:h-32 lg:h-40 xl:h-48 mb-8 sm:mb-12 lg:mb-16 flex items-center justify-start pointer-events-none select-none"
+            variants={{
+              hidden: { opacity: 0 },
+              visible: { opacity: 1, transition: { duration: 0.1 } },
+            }}
           >
             <h1 className="sr-only">{name}</h1>
           </motion.div>
@@ -93,7 +93,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
 
           {/* Primary Action Buttons */}
           <motion.div
-            className="flex flex-wrap items-center justify-center gap-3.5 mb-14"
+            className="flex flex-wrap items-center justify-center gap-3.5"
             variants={itemVariants}
           >
             <button
@@ -115,27 +115,6 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
               <span>{t.hero.viewProjects}</span>
               <ArrowDown size={13} className="group-hover:translate-y-0.5 transition-transform" />
             </a>
-          </motion.div>
-
-          {/* Bottom Horizon Metadata Bar */}
-          <motion.div
-            className="w-full pt-6 border-t border-border-subtle/70 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-body text-text-muted"
-            variants={itemVariants}
-          >
-            <a
-              href="#certifications"
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-border-base bg-bg-surface/80 hover:border-accent text-text-primary text-[11px] font-mono tracking-wider uppercase transition-colors shadow-xs group"
-              title={isSpanish ? "Ver sección de credenciales verificadas" : "View verified credentials section"}
-            >
-              <Award size={13} className="text-accent" />
-              <span>{isSpanish ? "103 Credenciales Verificadas" : "103 Verified Credentials"}</span>
-              <ArrowDown size={11} className="text-text-muted group-hover:text-accent group-hover:translate-y-0.5 transition-transform" />
-            </a>
-
-            <div className="flex items-center gap-2 text-text-secondary text-[11px] font-mono tracking-wider uppercase">
-              <Globe size={13} className="text-accent" />
-              <span>{isSpanish ? "San Salvador, El Salvador • Remoto Global" : "San Salvador, El Salvador • Working Globally"}</span>
-            </div>
           </motion.div>
         </motion.div>
       </div>

@@ -43,9 +43,10 @@ function normalizeContents(messages: IncomingMessage[]) {
 }
 
 export async function POST(req: NextRequest) {
+  let rawMessages: IncomingMessage[] = [];
   try {
     const body = await req.json();
-    const rawMessages: IncomingMessage[] = body.messages || [];
+    rawMessages = body.messages || [];
     const currentSection = typeof body.currentSection === "string" ? body.currentSection : undefined;
     const visitorContext = body.visitorContext && typeof body.visitorContext === "object" ? body.visitorContext : undefined;
 
@@ -167,8 +168,12 @@ export async function POST(req: NextRequest) {
     const isRateLimit = typeof err?.message === "string" && (err.message.includes("429") || err.message.includes("quota") || err.message.includes("RESOURCE_EXHAUSTED"));
 
     if (isRateLimit) {
+      const lastUserMsg = rawMessages.filter((m) => m.role === "user").pop()?.text || "";
+      const isSpanish = /([áéíóúñ¿¡]|\b(hola|que|quien|como|gracias|proyectos|experiencia|contacto|llamada)\b)/i.test(lastUserMsg);
       return NextResponse.json({
-        reply: "Soy Clippo. El servicio de IA recibió muchas consultas simultáneas y está en una breve pausa de enfriamiento de unos segundos. Por favor intenta preguntarme de nuevo en un instante.",
+        reply: isSpanish
+          ? "Soy Clippo. El servicio de IA recibió muchas consultas simultáneas y está en una breve pausa de enfriamiento de unos segundos. Por favor intenta preguntarme de nuevo en un instante."
+          : "I am Clippo. The AI service is currently handling high traffic and is taking a brief cooldown pause. Please try asking again in a few seconds.",
       });
     }
 

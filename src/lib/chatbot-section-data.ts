@@ -70,11 +70,11 @@ export const SECTION_CHATBOT_CONFIG_EN: Record<SectionId, SectionChatbotConfig> 
     sectionName: "Skills & Credentials",
     speechPhrases: [
       "Exploring the skills matrix? Ask me about his automation & QA tools.",
-      "Curious about his 103 verified credentials across 6 domains?",
+      "Curious about his accredited credentials across Google, Microsoft & HubSpot?",
       "Ask me about his Make.com, Zapier, Python, and Bash toolchains.",
     ],
     suggestions: [
-      { text: "What are his 103 verified credentials?", icon: Award },
+      { text: "What are his accredited credentials?", icon: Award },
       { text: "Which automation platforms does he use?", icon: Workflow },
       { text: "How does he enforce pre-delivery QA checklists?", icon: CheckCircle2 },
     ],
@@ -143,7 +143,7 @@ export const SECTION_CHATBOT_CONFIG_ES: Record<SectionId, SectionChatbotConfig> 
     ],
     suggestions: [
       { text: "¿Cómo aborda Rodrigo el CRM y la automatización?", icon: Sparkles },
-      { text: "¿Cuáles son sus 103 certificaciones verificadas?", icon: Award },
+      { text: "¿Cuáles son sus credenciales verificadas?", icon: Award },
       { text: "Enviar un correo a Rodrigo", icon: Mail },
     ],
   },
@@ -177,7 +177,7 @@ export const SECTION_CHATBOT_CONFIG_ES: Record<SectionId, SectionChatbotConfig> 
     sectionName: "Habilidades y Certificaciones",
     speechPhrases: [
       "¿Explorando la matriz de habilidades? Pregúntame sobre automatización y QA.",
-      "¿Interesado en sus 103 certificaciones auditadas?",
+      "¿Interesado en sus certificaciones técnicas auditadas?",
       "Pregúntame sobre Make.com, Zapier, Python y Bash.",
     ],
     suggestions: [

@@ -23,7 +23,6 @@ export const Navbar: React.FC<NavbarProps> = ({ navItems, authorName }) => {
   const { t, isSpanish } = useLanguage();
   const { scrollY } = useScroll();
   const { getLenis } = useSmoothScroll();
-  const [hidden, setHidden] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState("Home");
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -36,26 +35,31 @@ export const Navbar: React.FC<NavbarProps> = ({ navItems, authorName }) => {
   const lastName = nameParts.slice(1).join(" ");
 
   useMotionValueEvent(scrollY, "change", (latest) => {
-    const previous = scrollY.getPrevious() || 0;
     setScrolled(latest > 20);
-    if (latest > previous && latest > 260 && !mobileMenuOpen) setHidden(true);
-    else if (latest < previous) setHidden(false);
   });
 
   const scrollToPath = useCallback((path: string) => {
     setMobileMenuOpen(false);
     const targetId = path.startsWith("#") ? path.slice(1) : path;
     const lenis = getLenis();
+    const quarticEasing = (t: number) =>
+      t < 0.5 ? 8 * t * t * t * t : 1 - Math.pow(-2 * t + 2, 4) / 2;
+
     if (path === "/" || path === "#" || targetId === "top") {
-      lenis ? lenis.scrollTo(0, { duration: 1.2 }) : window.scrollTo({ top: 0, behavior: "smooth" });
+      lenis
+        ? lenis.scrollTo(0, { duration: 1.2, easing: quarticEasing })
+        : window.scrollTo({ top: 0, behavior: "smooth" });
       return;
     }
     const targetEl = document.getElementById(targetId) || document.querySelector(path);
     if (targetEl) {
       const offset = -70;
       lenis
-        ? lenis.scrollTo(targetEl as HTMLElement, { offset, duration: 1.2 })
-        : window.scrollTo({ top: (targetEl as HTMLElement).getBoundingClientRect().top + window.scrollY + offset, behavior: "smooth" });
+        ? lenis.scrollTo(targetEl as HTMLElement, { offset, duration: 1.2, easing: quarticEasing })
+        : window.scrollTo({
+            top: (targetEl as HTMLElement).getBoundingClientRect().top + window.scrollY + offset,
+            behavior: "smooth",
+          });
     }
   }, [getLenis]);
 
@@ -85,31 +89,44 @@ export const Navbar: React.FC<NavbarProps> = ({ navItems, authorName }) => {
     anchorWrapperRef: brandAnchorRef,
     getLenis,
     isMenuOpen: mobileMenuOpen,
+    isSpanish,
   });
 
   return (
-    <motion.header
-      variants={{ visible: { y: 0 }, hidden: { y: "-100%" } }}
-      animate={hidden ? "hidden" : "visible"}
-      transition={{ duration: 0.25, ease: "easeInOut" }}
-      className={`fixed top-0 ${mobileMenuOpen ? "z-[60]" : "z-50"} w-full transition-all duration-300 ${
-        scrolled || mobileMenuOpen
-          ? "bg-bg-glass backdrop-blur-xl backdrop-saturate-150 border-b border-border-subtle shadow-xs"
-          : "bg-bg-glass/50 backdrop-blur-md border-b border-transparent"
-      }`}
+    <header
+      className={`fixed top-0 ${mobileMenuOpen ? "z-[60]" : "z-50"} w-full bg-transparent`}
     >
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
-        <div ref={brandAnchorRef} className="w-44 sm:w-52 h-9 shrink-0 relative flex items-center" />
+      <div
+        className={`absolute inset-x-0 top-0 h-20 sm:h-24 pointer-events-none transition-opacity duration-500 backdrop-blur-xl [mask-image:linear-gradient(to_bottom,black_0%,black_35%,transparent_100%)] [-webkit-mask-image:linear-gradient(to_bottom,black_0%,black_35%,transparent_100%)] ${
+          scrolled || mobileMenuOpen ? "opacity-100" : "opacity-0"
+        }`}
+      />
+
+      <div className="relative w-full px-4 sm:px-6 lg:px-8 xl:px-12 h-16 flex items-center justify-between gap-4">
+        <div ref={brandAnchorRef} className="w-52 sm:w-60 h-9 shrink-0 relative flex items-center" />
 
         <a
           ref={logoRef}
           href="#top"
           onClick={(e) => { e.preventDefault(); scrollToPath("#top"); }}
           aria-label="Home"
-          className="fixed z-50 flex items-center justify-center select-none cursor-pointer will-change-[left,top,width,height] group"
+          className="fixed z-50 flex items-center justify-start select-none cursor-pointer will-change-[transform,width,height] group [transform-origin:0_0]"
         >
-          <svg viewBox="0 0 1140 125" width="100%" height="100%" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full overflow-visible">
-            <text x="50%" y="94" textAnchor="middle" className="fill-text-primary font-heading font-black tracking-[-0.04em] text-[106px] uppercase">
+          <svg
+            viewBox="0 0 1040 105"
+            width="100%"
+            height="100%"
+            fill="none"
+            preserveAspectRatio="xMinYMid meet"
+            xmlns="http://www.w3.org/2000/svg"
+            className="w-full h-full overflow-visible"
+          >
+            <text
+              x="0"
+              y="86"
+              textAnchor="start"
+              className="fill-text-primary font-heading font-black tracking-[-0.035em] text-[100px] uppercase select-none"
+            >
               {firstName} <tspan className="fill-accent font-mono font-light opacity-60">[</tspan>{lastName}<tspan className="fill-accent font-mono font-light opacity-60">]</tspan>
             </text>
           </svg>
@@ -164,6 +181,6 @@ export const Navbar: React.FC<NavbarProps> = ({ navItems, authorName }) => {
           />
         )}
       </AnimatePresence>
-    </motion.header>
+    </header>
   );
 };

@@ -58,11 +58,13 @@ function ScatterChar({ char, index, scrollYProgress, isMobile = false }: Scatter
 }
 
 interface ScatterTitleProps {
-  text: string;
+  text?: string;
+  lines?: string[];
+  as?: "h1" | "h2";
   className?: string;
 }
 
-export function ScatterTitle({ text, className = "" }: ScatterTitleProps) {
+export function ScatterTitle({ text, lines, as: Tag = "h1", className = "" }: ScatterTitleProps) {
   const [isMounted, setIsMounted] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   const containerRef = useRef<HTMLHeadingElement>(null);
@@ -79,25 +81,63 @@ export function ScatterTitle({ text, className = "" }: ScatterTitleProps) {
     return () => window.removeEventListener("resize", onResize);
   }, []);
 
-  const chars = useMemo(() => text.split(""), [text]);
+  const lineArray = useMemo(() => {
+    if (lines && lines.length > 0) return lines;
+    if (text) return text.split("\n");
+    return [];
+  }, [lines, text]);
+
+  let globalCharIndex = 0;
 
   return (
-    <h2
+    <Tag
       ref={containerRef}
       suppressHydrationWarning
-      className={`text-center font-heading font-black tracking-[-0.03em] uppercase leading-[1.05] text-3xl sm:text-5xl md:text-6xl lg:text-7xl text-text-primary px-4 overflow-visible ${className}`}
+      className={`text-center font-heading font-black tracking-[-0.04em] uppercase leading-[0.92] sm:leading-[0.88] text-5xl sm:text-7xl md:text-8xl lg:text-9xl xl:text-[8rem] text-text-primary px-2 overflow-visible ${className}`}
     >
       {isMounted
-        ? chars.map((char, index) => (
-            <ScatterChar
-              key={index}
-              char={char}
-              index={index}
-              scrollYProgress={scrollYProgress}
-              isMobile={isMobile}
-            />
-          ))
-        : text}
-    </h2>
+        ? lineArray.map((lineStr, lineIdx) => {
+            const words = lineStr.split(" ");
+            return (
+              <span key={lineIdx} className="block">
+                {words.map((word, wordIdx) => {
+                  const chars = word.split("");
+                  const wordChars = chars.map((char) => {
+                    const idx = globalCharIndex++;
+                    return (
+                      <ScatterChar
+                        key={idx}
+                        char={char}
+                        index={idx}
+                        scrollYProgress={scrollYProgress}
+                        isMobile={isMobile}
+                      />
+                    );
+                  });
+
+                  if (wordIdx < words.length - 1) {
+                    globalCharIndex++;
+                  }
+
+                  return (
+                    <React.Fragment key={wordIdx}>
+                      <span className="inline-block whitespace-nowrap">
+                        {wordChars}
+                      </span>
+                      {wordIdx < words.length - 1 && (
+                        <span className="inline-block w-[0.28em]">&nbsp;</span>
+                      )}
+                    </React.Fragment>
+                  );
+                })}
+              </span>
+            );
+          })
+        : lineArray.map((lineStr, idx) => (
+            <span key={idx} className="block">
+              {lineStr}
+            </span>
+          ))}
+    </Tag>
   );
 }

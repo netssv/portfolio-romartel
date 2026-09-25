@@ -2,37 +2,34 @@
 
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Play, Pause, Volume2, VolumeX, ExternalLink } from "lucide-react";
+import { Play, Pause, Volume2, VolumeX } from "lucide-react";
 import type { PinnedProjectItem } from "./PinnedProjectsScrollytelling";
 
 interface ShowcaseMediaCardProps {
   active: PinnedProjectItem;
-  nextItem?: PinnedProjectItem;
-  nextIndex: number;
   jumpToProject: (index: number) => void;
   videoRef: React.RefObject<HTMLVideoElement | null>;
   isPlaying: boolean;
   isMuted: boolean;
   togglePlay: () => void;
   toggleMute: () => void;
-  mediaX?: any;
   mediaScale?: any;
   mediaOpacity?: any;
+  mediaX?: any;
+  clipPath?: any;
+  isActive?: boolean;
 }
 
 export const ShowcaseMediaCard: React.FC<ShowcaseMediaCardProps> = ({
   active,
-  nextItem,
-  nextIndex,
-  jumpToProject,
   videoRef,
   isPlaying,
   isMuted,
   togglePlay,
   toggleMute,
-  mediaX,
-  mediaScale,
   mediaOpacity,
+  mediaX,
+  clipPath,
 }) => {
   const [isMounted, setIsMounted] = useState(false);
 
@@ -40,45 +37,68 @@ export const ShowcaseMediaCard: React.FC<ShowcaseMediaCardProps> = ({
     setIsMounted(true);
   }, []);
 
+  useEffect(() => {
+    if (!isMounted || !videoRef.current || !active.videoSrc) return;
+    const video = videoRef.current;
+    video.muted = isMuted;
+
+    // Autoplay on mount
+    video.play().catch(() => {});
+
+    // Loop continuously until no longer visible on screen
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          video.play().catch(() => {});
+        } else {
+          video.pause();
+        }
+      },
+      { threshold: 0.02 }
+    );
+
+    observer.observe(video);
+    return () => observer.disconnect();
+  }, [isMounted, isMuted, active.videoSrc]);
+
   return (
-    <div className="col-span-1 lg:col-span-7 relative p-2 sm:p-6 lg:p-10 flex items-center justify-center overflow-hidden">
-      {/* Active Front Card: minimizes to the left side and fades out */}
+    <div className="col-span-1 lg:col-span-8 relative p-2 sm:p-4 lg:p-6 flex items-center justify-start w-full overflow-hidden">
+      {/* Aligned media card: reveals from left to right on entrance, disappears towards right on exit */}
       <AnimatePresence mode="wait">
         <motion.div
           key={`card-${active.id}`}
           style={{
-            x: mediaX,
-            scale: mediaScale,
             opacity: mediaOpacity,
-            transformOrigin: "left center",
+            x: mediaX,
+            clipPath: clipPath,
           }}
-          initial={{ opacity: 0, scale: 0.92, y: 35, x: 20 }}
-          animate={{ opacity: 1, scale: 1, y: 0, x: 0 }}
-          exit={{
-            opacity: 0,
-            scale: 0.78,
-            x: -95,
-            transition: { duration: 0.4, ease: [0.65, 0, 0.35, 1] },
-          }}
-          transition={{ duration: 0.45, ease: "easeOut" }}
-          className="relative w-full max-w-sm sm:max-w-xl lg:max-w-2xl rounded-xl sm:rounded-2xl border border-white/20 bg-white/5 backdrop-blur-md shadow-[0_25px_60px_-15px_rgba(0,0,0,0.5)] overflow-hidden z-10 group"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0, transition: { duration: 0.3 } }}
+          transition={{ duration: 0.35, ease: "easeOut" }}
+          className="relative w-full aspect-[16/10] max-h-[calc(100dvh-6rem)] rounded-none border border-white/20 bg-white/5 backdrop-blur-md shadow-[0_25px_60px_-15px_rgba(0,0,0,0.5)] overflow-hidden z-10 group"
         >
-          {/* Media Viewport */}
-          <div className="relative aspect-[16/10] w-full overflow-hidden bg-black/20">
+          {/* Media Viewport: Widescreen visual with sharp borders */}
+          <div className="relative w-full h-full overflow-hidden bg-black/20 rounded-none">
             {isMounted && active.videoSrc ? (
               <div className="relative w-full h-full" suppressHydrationWarning>
                 <video
                   ref={videoRef}
                   src={active.videoSrc}
                   poster={active.imageSrc || "/projects/metropolyca.png"}
-                  preload="none"
+                  autoPlay
+                  preload="auto"
                   muted={isMuted}
                   loop
                   playsInline
+                  onEnded={(e) => {
+                    e.currentTarget.currentTime = 0;
+                    e.currentTarget.play().catch(() => {});
+                  }}
                   suppressHydrationWarning
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.02]"
+                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.02] rounded-none"
                 />
-                <div className="absolute bottom-3 right-3 flex items-center gap-2 bg-black/60 backdrop-blur-md px-2.5 py-1.5 rounded-full text-white border border-white/15">
+                <div className="absolute bottom-3 right-3 flex items-center gap-2 bg-black/60 backdrop-blur-md px-2.5 py-1.5 rounded-none text-white border border-white/15">
                   <button
                     type="button"
                     onClick={togglePlay}
@@ -101,29 +121,12 @@ export const ShowcaseMediaCard: React.FC<ShowcaseMediaCardProps> = ({
               <img
                 src={active.imageSrc || "/projects/metropolyca.png"}
                 alt={active.title}
-                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.02]"
+                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.02] rounded-none"
               />
             )}
           </div>
         </motion.div>
       </AnimatePresence>
-
-      {/* Layered Peeking Next Card on the Right */}
-      {nextItem && (
-        <div
-          onClick={() => jumpToProject(nextIndex)}
-          className="absolute right-[-10%] lg:right-[-6%] w-full max-w-sm sm:max-w-md rounded-2xl border border-white/15 bg-white/5 backdrop-blur-sm shadow-[0_20px_50px_-15px_rgba(0,0,0,0.35)] overflow-hidden opacity-35 hover:opacity-85 scale-90 translate-x-6 transition-all hidden md:block cursor-pointer select-none"
-          title={`Next: ${nextItem.title}`}
-        >
-          <div className="aspect-[16/10] bg-black/20 overflow-hidden">
-            <img
-              src={nextItem.imageSrc || "/projects/metropolyca.png"}
-              alt={nextItem.title}
-              className="w-full h-full object-cover opacity-60 hover:opacity-80 transition-opacity"
-            />
-          </div>
-        </div>
-      )}
     </div>
   );
 };

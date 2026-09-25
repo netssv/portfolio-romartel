@@ -6,6 +6,7 @@ import { ChatMessage, MessageItem } from "./ChatMessage";
 import { ChatSuggestions } from "./ChatSuggestions";
 import { ClippoAvatar } from "./ClippoAvatar";
 import { SectionId } from "@/src/lib/useActiveSection";
+import { useContainerScrollTrap } from "@/src/lib/useContainerScrollTrap";
 
 interface ChatMessageListProps {
   messages: MessageItem[];
@@ -26,8 +27,14 @@ export function ChatMessageList({
   onRetry,
   messagesEndRef,
 }: ChatMessageListProps) {
+  const { containerRef, scrollTrapProps } = useContainerScrollTrap<HTMLDivElement>();
+
   return (
-    <div data-lenis-prevent className="flex-1 overflow-y-auto p-4 space-y-3.5 overscroll-contain">
+    <div
+      ref={containerRef}
+      {...scrollTrapProps}
+      className="flex-1 overflow-y-auto p-4 space-y-3.5 overscroll-contain"
+    >
       {messages.map((msg) => (
         <ChatMessage key={msg.id} message={msg} />
       ))}

@@ -1,13 +1,11 @@
 "use client";
 
-import React, { useState } from "react";
-import { FadeIn } from "@/src/components/ui/FadeIn";
-import { SectionLabel } from "@/src/components/ui/SectionLabel";
-import { FlagshipProjectCard, FlagshipProjectProps } from "./FlagshipProjectCard";
-import { ProjectCard, ProjectCardProps } from "./ProjectCard";
+import React from "react";
+import { FlagshipProjectProps } from "./FlagshipProjectCard";
+import { ProjectCardProps } from "./ProjectCard";
 import { PinnedProjectsScrollytelling, PinnedProjectItem } from "./scrollytelling/PinnedProjectsScrollytelling";
-import { LayoutGrid, Layers } from "lucide-react";
 import { useLanguage } from "@/src/context/LanguageContext";
+import { SloganSection } from "./SloganSection";
 
 interface ProjectsSectionProps {
   flagship: FlagshipProjectProps;
@@ -18,11 +16,8 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
   flagship,
   projects,
 }) => {
-  const { t, isSpanish } = useLanguage();
-  const [viewMode, setViewMode] = useState<"cinematic" | "grid">("cinematic");
-  const [selectedCategory, setSelectedCategory] = useState<string>("All");
+  const { isSpanish } = useLanguage();
 
-  const allLabel = isSpanish ? "Todos" : "All";
   const defaultStory = isSpanish
     ? "Arquitectura de simulación espacial 3D con automatización de QA continuo y 60 FPS estables."
     : "Architected 3D spatial simulation with continuous QA automation, responsive physics, and 60fps performance.";
@@ -49,7 +44,11 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
       eyebrow: p.category.split("&")[0].trim(),
       category: p.category,
       description: p.description,
-      story: p.valueProp || (isSpanish ? "Pipelines de automatización escalables con cobertura de pruebas y telemetría." : "Engineered scalable automation pipelines with high test coverage and real-time telemetry."),
+      story:
+        p.valueProp ||
+        (isSpanish
+          ? "Pipelines de automatización escalables con cobertura de pruebas y telemetría."
+          : "Engineered scalable automation pipelines with high test coverage and real-time telemetry."),
       metrics: [
         { label: isSpanish ? "Arquitectura" : "Architecture", value: (p.tags && p.tags[0]) || "TypeScript" },
         { label: isSpanish ? "Despliegue" : "Deployment", value: isSpanish ? "Producción Activa" : "Production Active" },
@@ -62,120 +61,13 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
     })),
   ];
 
-  const categories = [
-    allLabel,
-    ...Array.from(new Set(projects.map((p) => p.category))),
-  ];
-
-  const filteredProjects =
-    selectedCategory === allLabel || selectedCategory === "All" || selectedCategory === "Todos"
-      ? projects
-      : projects.filter((p) => p.category === selectedCategory);
-
   return (
-    <section
-      id="projects"
-      className={`relative transition-colors duration-500 ${
-        viewMode === "cinematic"
-          ? "bg-[#21426E] dark:bg-[#162C4E] text-white border-b border-white/20"
-          : "border-b border-border-subtle"
-      }`}
-    >
-      {/* Section Introduction */}
-      <div className={`mx-auto max-w-6xl px-6 pt-20 sm:pt-24 pb-8 transition-colors ${viewMode === "cinematic" ? "text-white" : ""}`}>
-        <FadeIn>
-          <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-6">
-            <SectionLabel
-              index="02"
-              variant={viewMode === "cinematic" ? "onDark" : "default"}
-              eyebrow={t.projects.eyebrow}
-              heading={t.projects.heading}
-              description={t.projects.description}
-            />
-            {/* View Mode Toggle */}
-            <div
-              className={`flex items-center gap-1 p-1 rounded-xl shrink-0 self-start md:self-auto shadow-xs backdrop-blur-md ${
-                viewMode === "cinematic"
-                  ? "bg-white/10 border border-white/20 text-white"
-                  : "bg-bg-raised border border-border-subtle"
-              }`}
-            >
-              <button
-                onClick={() => setViewMode("cinematic")}
-                className={`px-3 py-1.5 rounded-lg text-xs font-body font-semibold flex items-center gap-1.5 transition-all cursor-pointer ${
-                  viewMode === "cinematic"
-                    ? "bg-white text-[#21426E] shadow-xs font-bold"
-                    : "text-text-secondary hover:text-text-primary"
-                }`}
-              >
-                <Layers size={13} />
-                <span>{isSpanish ? "Destacados" : "Showcase"}</span>
-              </button>
-              <button
-                onClick={() => setViewMode("grid")}
-                className={`px-3 py-1.5 rounded-lg text-xs font-body font-semibold flex items-center gap-1.5 transition-all cursor-pointer ${
-                  viewMode === "grid"
-                    ? "bg-accent text-white shadow-xs font-bold"
-                    : viewMode === "cinematic"
-                    ? "text-blue-200 hover:text-white"
-                    : "text-text-secondary hover:text-text-primary"
-                }`}
-              >
-                <LayoutGrid size={13} />
-                <span>{isSpanish ? "Cuadrícula" : "Grid View"}</span>
-              </button>
-            </div>
-          </div>
-        </FadeIn>
-      </div>
+    <section id="projects" className="relative bg-[#21426E] dark:bg-[#162C4E] text-white">
+      {/* Slogan Transition Header & Projects Title */}
+      <SloganSection />
 
-      {/* Main Scrollytelling Pinned Stage OR Grid View */}
-      {viewMode === "cinematic" ? (
-        <PinnedProjectsScrollytelling items={pinnedItems} />
-      ) : (
-        <div className="mx-auto max-w-6xl px-6 pb-24">
-          <div className="mb-12">
-            <FlagshipProjectCard {...flagship} />
-          </div>
-
-          {/* Category Filter Tabs */}
-          <div className="flex flex-wrap items-center justify-between gap-4 mb-8 pt-4">
-            <div className="flex flex-wrap items-center gap-2" role="tablist">
-              {categories.map((cat) => {
-                const isActive = selectedCategory === cat || (cat === allLabel && (selectedCategory === "All" || selectedCategory === "Todos"));
-                return (
-                  <button
-                    key={cat}
-                    role="tab"
-                    aria-selected={isActive}
-                    onClick={() => setSelectedCategory(cat)}
-                    className={`px-3.5 py-1.5 rounded-xl text-xs font-body transition-all duration-150 cursor-pointer ${
-                      isActive
-                        ? "bg-accent text-white font-semibold shadow-xs"
-                        : "bg-bg-surface border border-border-subtle text-text-secondary hover:text-text-primary hover:border-border-base"
-                    }`}
-                  >
-                    {cat}
-                  </button>
-                );
-              })}
-            </div>
-            <span className="text-xs font-body text-text-muted">
-              {isSpanish
-                ? `Mostrando ${filteredProjects.length} proyecto${filteredProjects.length !== 1 ? "s" : ""}`
-                : `Showing ${filteredProjects.length} project${filteredProjects.length !== 1 ? "s" : ""}`}
-            </span>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {filteredProjects.map((project, i) => (
-              <FadeIn key={project.id} delay={i * 80}>
-                <ProjectCard {...project} />
-              </FadeIn>
-            ))}
-          </div>
-        </div>
-      )}
+      {/* Main Scrollytelling Pinned Stage */}
+      <PinnedProjectsScrollytelling items={pinnedItems} />
     </section>
   );
 };

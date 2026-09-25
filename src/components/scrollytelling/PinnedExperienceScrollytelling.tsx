@@ -157,8 +157,7 @@ export const PinnedExperienceScrollytelling: React.FC<{ items: ExperienceItem[] 
                     <div className="p-4 sm:p-6 grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 bg-bg-raised/40 border-b border-border-subtle max-h-60 sm:max-h-80 overflow-y-auto">
                       <div>
                         <p className="text-xs font-body font-bold uppercase tracking-wider text-accent mb-2.5 flex items-center gap-1.5">
-                          <CheckCircle2 size={13} className="text-accent" />
-                          <span>Key Technical Impact</span>
+                          <CheckCircle2 size={13} className="text-accent" /><span>Key Technical Impact</span>
                         </p>
                         <ul className="space-y-2">
                           {(active.impact || []).map((item, i) => (
@@ -171,14 +170,12 @@ export const PinnedExperienceScrollytelling: React.FC<{ items: ExperienceItem[] 
                       </div>
                       <div>
                         <p className="text-xs font-body font-bold uppercase tracking-wider text-text-primary mb-2.5 flex items-center gap-1.5">
-                          <Briefcase size={13} className="text-accent" />
-                          <span>Operational Scope</span>
+                          <Briefcase size={13} className="text-accent" /><span>Operational Scope</span>
                         </p>
                         <ul className="space-y-2">
                           {(active.operations || []).map((item, i) => (
                             <li key={i} className="flex items-start gap-2 text-xs font-body text-text-muted leading-relaxed">
-                              <span className="h-1.5 w-1.5 rounded-full bg-border-base mt-1.5 shrink-0" />
-                              <span>{item}</span>
+                              <span className="h-1.5 w-1.5 rounded-full bg-border-base mt-1.5 shrink-0" /><span>{item}</span>
                             </li>
                           ))}
                         </ul>

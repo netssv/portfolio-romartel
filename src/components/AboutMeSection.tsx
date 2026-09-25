@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import { Calendar, MessageCircle, ArrowUpRight } from "lucide-react";
 import { SectionLabel } from "@/src/components/ui/SectionLabel";
 import { useLanguage } from "@/src/context/LanguageContext";
+import { BtcTrendTelemetryBar } from "@/src/components/BtcTrendTelemetryBar";
 
 export const AboutMeSection: React.FC = () => {
   const { data, t } = useLanguage();
@@ -15,7 +16,7 @@ export const AboutMeSection: React.FC = () => {
   return (
     <section
       id="about"
-      className="py-20 sm:py-28 lg:py-32 relative overflow-hidden bg-bg-surface/50 border-t border-border-subtle"
+      className="py-16 sm:py-24 relative overflow-hidden bg-bg-surface/50 border-t border-border-subtle"
     >
       <div className="mx-auto max-w-4xl px-4 sm:px-6 relative z-10">
         {/* Architectural Section Index & Bracketed Heading */}
@@ -41,13 +42,24 @@ export const AboutMeSection: React.FC = () => {
           ))}
         </div>
 
-        {/* Action Pairing: Conversational Booking & WhatsApp */}
+        {/* 1. Live Telemetry Bar (Before buttons & Aligned to the Right) */}
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.45, delay: 0.2 }}
+          className="mt-10 sm:mt-12 w-full flex justify-end"
+        >
+          <BtcTrendTelemetryBar />
+        </motion.div>
+
+        {/* 2. Action Pairing: Conversational Booking & WhatsApp (Always Centered) */}
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.45, delay: 0.28 }}
-          className="mt-10 flex flex-wrap items-center gap-4"
+          className="mt-8 flex flex-wrap items-center justify-center gap-3.5"
         >
           <button
             type="button"

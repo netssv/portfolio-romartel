@@ -3,15 +3,16 @@
 import React from "react";
 import { FadeIn } from "@/src/components/ui/FadeIn";
 import { SectionLabel } from "@/src/components/ui/SectionLabel";
-import { ContactFunnelForm } from "@/src/components/ui/ContactFunnelForm";
-import { Calendar, ArrowUpRight } from "lucide-react";
 import { useLanguage } from "@/src/context/LanguageContext";
+import { ContactTerminal } from "./contact/ContactTerminal";
+import { ContactActionLinks } from "./contact/ContactActionLinks";
 
 interface SocialLink {
   name: string;
   url: string;
   display: string;
 }
+
 interface ContactData {
   title: string;
   description: string;
@@ -20,15 +21,28 @@ interface ContactData {
   social: SocialLink[];
 }
 
-export const ContactSection: React.FC<{ contact: ContactData }> = ({ contact }) => {
+interface ContactSectionProps {
+  contact: ContactData;
+  manifesto?: string;
+}
+
+export const ContactSection: React.FC<ContactSectionProps> = ({
+  contact,
+  manifesto,
+}) => {
   const { t, isSpanish } = useLanguage();
 
+  const leftWord = isSpanish ? "HABLE" : "LET'S";
+  const rightWord = isSpanish ? "MOS" : "TALK";
+
   return (
-    <section id="contact" className="py-24 bg-bg-base border-t border-border-subtle">
-      <div className="mx-auto max-w-6xl px-6 grid grid-cols-1 lg:grid-cols-12 gap-16">
-        {/* Left Info Column */}
-        <div className="lg:col-span-5">
-          <FadeIn>
+    <section id="contact" className="py-24 bg-bg-base border-t border-border-subtle relative overflow-hidden">
+      {/* Background architectural glow */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-accent/5 rounded-full blur-3xl pointer-events-none" />
+
+      <div className="mx-auto max-w-7xl px-6 relative z-10">
+        <FadeIn>
+          <div className="text-center max-w-3xl mx-auto mb-12">
             <SectionLabel
               index="06"
               eyebrow={t.contact.eyebrow}
@@ -36,56 +50,63 @@ export const ContactSection: React.FC<{ contact: ContactData }> = ({ contact }) 
               description={contact.description}
             />
 
-            <div className="space-y-4 mt-4">
-              <a
-                href={`mailto:${contact.email}`}
-                className="block text-sm font-body font-semibold text-accent hover:underline"
-              >
-                {contact.email}
-              </a>
-              <p className="text-xs font-body text-text-muted">{contact.location}</p>
-
-              {/* Instant Scheduling Option (Inspired by streamlined calendar scheduling) */}
-              <div className="pt-2">
-                <button
-                  type="button"
-                  onClick={() => {
-                    window.dispatchEvent(new CustomEvent("open-clippo-schedule"));
-                  }}
-                  className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-accent/10 border border-accent/20 hover:border-accent text-accent text-xs font-body font-semibold transition-all cursor-pointer shadow-xs group"
-                >
-                  <Calendar size={13} className="shrink-0" />
-                  <span>{isSpanish ? "Agendar Llamada con Asistente" : "Schedule Call via Clippo"}</span>
-                  <ArrowUpRight size={12} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-                </button>
+            {/* Strategic Manifesto Callout (Integrated from Philosophy) */}
+            {manifesto && (
+              <div className="mt-8 p-6 rounded-2xl border border-border-subtle bg-bg-surface/60 backdrop-blur-xs relative overflow-hidden">
+                <span className="text-[10px] font-mono uppercase tracking-[0.2em] text-accent block mb-2 font-semibold">
+                  {isSpanish ? "Manifiesto Operativo" : "Operating Manifesto"}
+                </span>
+                <blockquote className="text-sm sm:text-base font-heading font-medium text-text-primary leading-relaxed italic">
+                  &ldquo;{manifesto}&rdquo;
+                </blockquote>
+                <div className="flex flex-wrap items-center justify-center gap-2 mt-4 text-[11px] font-mono text-text-muted">
+                  <span className="px-2.5 py-1 rounded-md bg-bg-raised/70 border border-border-subtle">
+                    {isSpanish ? "Fiabilidad de Sistemas" : "Systems Reliability"}
+                  </span>
+                  <span>·</span>
+                  <span className="px-2.5 py-1 rounded-md bg-bg-raised/70 border border-border-subtle">
+                    {isSpanish ? "Telemetría de Crecimiento" : "Growth Telemetry"}
+                  </span>
+                  <span>·</span>
+                  <span className="px-2.5 py-1 rounded-md bg-bg-raised/70 border border-border-subtle">
+                    {isSpanish ? "Automatización Pragmática" : "Pragmatic Automation"}
+                  </span>
+                </div>
               </div>
+            )}
+          </div>
+        </FadeIn>
 
-              <div className="pt-4 flex flex-col gap-2.5">
-                {contact.social.map((link) => (
-                  <a
-                    key={link.name}
-                    href={link.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center justify-between text-xs font-body text-text-secondary hover:text-text-primary transition-colors py-1"
-                  >
-                    <span>{link.name}</span>
-                    <span className="text-text-muted text-[11px]">
-                      {link.display} ↗
-                    </span>
-                  </a>
-                ))}
-              </div>
-            </div>
-          </FadeIn>
+        {/* Flanking Monumental Typography + Center Terminal */}
+        <div className="relative flex flex-col lg:flex-row items-center justify-center gap-4 lg:gap-8 my-4">
+          <div className="hidden lg:flex flex-1 items-center justify-end select-none pointer-events-none">
+            <span className="text-7xl xl:text-8xl 2xl:text-9xl font-black uppercase tracking-tight text-accent/25 hover:text-accent/40 transition-colors">
+              {leftWord}
+            </span>
+          </div>
+
+          <div className="lg:hidden text-center select-none mb-2">
+            <span className="text-5xl sm:text-6xl font-black uppercase tracking-tight text-accent/30">
+              {leftWord} {rightWord}
+            </span>
+          </div>
+
+          <div className="w-full lg:max-w-xl z-10">
+            <ContactTerminal />
+          </div>
+
+          <div className="hidden lg:flex flex-1 items-center justify-start select-none pointer-events-none">
+            <span className="text-7xl xl:text-8xl 2xl:text-9xl font-black uppercase tracking-tight text-accent/25 hover:text-accent/40 transition-colors">
+              {rightWord}
+            </span>
+          </div>
         </div>
 
-        {/* Right Interactive Funnel */}
-        <div className="lg:col-span-7 flex flex-col justify-center">
-          <FadeIn delay={100} className="h-full">
-            <ContactFunnelForm />
-          </FadeIn>
-        </div>
+        {/* High-Intent Direct Action Pairing */}
+        <ContactActionLinks
+          email={contact.email}
+          social={contact.social}
+        />
       </div>
     </section>
   );

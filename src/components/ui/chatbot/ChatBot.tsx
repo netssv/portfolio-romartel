@@ -102,8 +102,8 @@ export function ChatBot() {
     const handleContact = () => openWithPrompt(
       "contact",
       isSpanish
-        ? "¡Veo que te gustaría contactar a Rodrigo! Comparte tu nombre, correo y mensaje aquí, y se lo enviaré directo a su bandeja de entrada."
-        : "I see you would like to reach Rodrigo! Feel free to share your name, email, and a message here, and I will deliver it straight to his inbox."
+        ? "¡Veo que te gustaría contactar a Rodrigo! Puedes dejarme tu mensaje aquí para enviárselo, o escribirle directo: [Abrir correo en Gmail](https://mail.google.com/mail/?view=cm&fs=1&to=rop.martel@gmail.com) o por WhatsApp (+503 7874 8247)."
+        : "I see you would like to reach Rodrigo! Feel free to leave a message here, or reach out directly: [Open in Gmail](https://mail.google.com/mail/?view=cm&fs=1&to=rop.martel@gmail.com) or on WhatsApp (+503 7874 8247)."
     );
 
     const handleSchedule = () => openWithPrompt(
@@ -126,8 +126,14 @@ export function ChatBot() {
     handleSend, clearAutoCloseTimer, activeSection, visitorContext, input,
   });
 
+  const isAtContact = activeSection === "contact";
+
   return (
-    <div className="fixed bottom-5 right-5 z-50 flex flex-col items-end print:hidden">
+    <motion.div
+      className="fixed bottom-5 right-5 z-50 flex flex-col items-end print:hidden"
+      animate={isAtContact ? { opacity: 0, scale: 0.75, y: 35, pointerEvents: "none" } : { opacity: 1, scale: 1, y: 0, pointerEvents: "auto" }}
+      transition={{ duration: 0.35, ease: "easeInOut" }}
+    >
       <AnimatePresence>
         {isOpen && (
           <motion.div
@@ -187,6 +193,6 @@ export function ChatBot() {
           customPhrase={customPhrase}
         />
       )}
-    </div>
+    </motion.div>
   );
 }

@@ -50,13 +50,13 @@ export const PinnedProjectsScrollytelling: React.FC<{ items: PinnedProjectItem[]
   };
 
   return (
-    <div ref={containerRef} className="relative h-[480vh] w-full bg-[#21426E] dark:bg-[#162C4E]">
-      <div className="sticky top-0 h-[100dvh] w-full flex flex-col justify-center overflow-hidden z-20">
+    <div ref={containerRef} className="relative h-[560vh] w-full bg-[#21426E] dark:bg-[#162C4E]">
+      <div className="sticky top-0 h-[100dvh] w-full flex flex-col justify-start overflow-hidden z-20">
         <ProjectsShowcaseStage
           items={items}
           activeIndex={activeIndex}
           jumpToProject={jumpToProject}
-          transitionProgress={transitionProgress}
+          scrollYProgress={scrollYProgress}
         />
       </div>
     </div>
