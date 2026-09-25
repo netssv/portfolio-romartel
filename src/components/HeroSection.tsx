@@ -52,7 +52,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
         <motion.div
           className="w-full flex flex-col items-center z-10"
           variants={containerVariants}
-          initial="hidden"
+          initial={false}
           animate="visible"
         >
 

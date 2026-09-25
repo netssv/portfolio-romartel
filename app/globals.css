@@ -150,31 +150,29 @@ html.lenis, html.lenis body {
   position: relative;
 }
 
-/* ─── Minimalist Custom Scrollbar ─────────────────────── */
-::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
+/* ─── Global Scrollbar Suppression ─────────────────────── */
+html,
+body {
+  scrollbar-width: none !important;
+  -ms-overflow-style: none !important;
 }
 
-::-webkit-scrollbar-track {
-  background: var(--bg-base);
+html::-webkit-scrollbar,
+body::-webkit-scrollbar {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
 }
 
-::-webkit-scrollbar-thumb {
-  background: var(--border-base);
-  border-radius: 9999px;
-  border: 1px solid var(--border-subtle);
-  transition: background-color 0.2s ease;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: var(--accent);
-}
-
-/* Firefox */
 * {
-  scrollbar-width: thin;
-  scrollbar-color: var(--text-muted) var(--bg-base);
+  scrollbar-width: none !important;
+  -ms-overflow-style: none !important;
+}
+
+*::-webkit-scrollbar {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
 }
 
 /* ─── Hide Scrollbar Utility ────────────────────────────── */

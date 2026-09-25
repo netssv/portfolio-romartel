@@ -1,13 +1,14 @@
 "use client";
 
 import React, { useState, useEffect, useCallback, useRef } from "react";
-import { motion, useScroll, useMotionValueEvent, AnimatePresence } from "framer-motion";
+import { useScroll, useMotionValueEvent, AnimatePresence } from "framer-motion";
 import { MessageCircle, Calendar, Menu, X } from "lucide-react";
 import { useSmoothScroll } from "./layout/SmoothScrollProvider";
 import { DesktopNav } from "./layout/DesktopNav";
 import { MobileMenuDropdown } from "./layout/MobileMenuDropdown";
 import { useLanguage } from "@/src/context/LanguageContext";
 import { useHeroBrandScroll } from "@/src/lib/useHeroBrandScroll";
+import { useDarkBackground } from "@/src/lib/useDarkBackground";
 
 interface NavItem {
   name: string;
@@ -26,6 +27,7 @@ export const Navbar: React.FC<NavbarProps> = ({ navItems, authorName }) => {
   const [scrolled, setScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState("Home");
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const isDarkBg = useDarkBackground(() => 36);
 
   const brandAnchorRef = useRef<HTMLDivElement>(null);
   const logoRef = useRef<HTMLAnchorElement>(null);
@@ -34,21 +36,16 @@ export const Navbar: React.FC<NavbarProps> = ({ navItems, authorName }) => {
   const firstName = nameParts[0] || authorName;
   const lastName = nameParts.slice(1).join(" ");
 
-  useMotionValueEvent(scrollY, "change", (latest) => {
-    setScrolled(latest > 20);
-  });
+  useMotionValueEvent(scrollY, "change", (latest) => setScrolled(latest > 20));
 
   const scrollToPath = useCallback((path: string) => {
     setMobileMenuOpen(false);
     const targetId = path.startsWith("#") ? path.slice(1) : path;
     const lenis = getLenis();
-    const quarticEasing = (t: number) =>
-      t < 0.5 ? 8 * t * t * t * t : 1 - Math.pow(-2 * t + 2, 4) / 2;
+    const quarticEasing = (t: number) => (t < 0.5 ? 8 * t * t * t * t : 1 - Math.pow(-2 * t + 2, 4) / 2);
 
     if (path === "/" || path === "#" || targetId === "top") {
-      lenis
-        ? lenis.scrollTo(0, { duration: 1.2, easing: quarticEasing })
-        : window.scrollTo({ top: 0, behavior: "smooth" });
+      lenis ? lenis.scrollTo(0, { duration: 1.2, easing: quarticEasing }) : window.scrollTo({ top: 0, behavior: "smooth" });
       return;
     }
     const targetEl = document.getElementById(targetId) || document.querySelector(path);
@@ -56,15 +53,12 @@ export const Navbar: React.FC<NavbarProps> = ({ navItems, authorName }) => {
       const offset = -70;
       lenis
         ? lenis.scrollTo(targetEl as HTMLElement, { offset, duration: 1.2, easing: quarticEasing })
-        : window.scrollTo({
-            top: (targetEl as HTMLElement).getBoundingClientRect().top + window.scrollY + offset,
-            behavior: "smooth",
-          });
+        : window.scrollTo({ top: (targetEl as HTMLElement).getBoundingClientRect().top + window.scrollY + offset, behavior: "smooth" });
     }
   }, [getLenis]);
 
   useEffect(() => {
-    const sections = navItems.map((item) => item.path.substring(1) === "top" ? document.body : document.getElementById(item.path.substring(1)));
+    const sections = navItems.map((item) => (item.path.substring(1) === "top" ? document.body : document.getElementById(item.path.substring(1))));
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
@@ -79,9 +73,7 @@ export const Navbar: React.FC<NavbarProps> = ({ navItems, authorName }) => {
   }, [navItems]);
 
   useEffect(() => {
-    window.dispatchEvent(
-      new CustomEvent("mobile-nav-toggle", { detail: { open: mobileMenuOpen } })
-    );
+    window.dispatchEvent(new CustomEvent("mobile-nav-toggle", { detail: { open: mobileMenuOpen } }));
   }, [mobileMenuOpen]);
 
   useHeroBrandScroll({
@@ -93,9 +85,7 @@ export const Navbar: React.FC<NavbarProps> = ({ navItems, authorName }) => {
   });
 
   return (
-    <header
-      className={`fixed top-0 ${mobileMenuOpen ? "z-[60]" : "z-50"} w-full bg-transparent`}
-    >
+    <header className={`fixed top-0 ${mobileMenuOpen ? "z-[60]" : "z-50"} w-full bg-transparent`}>
       <div
         className={`absolute inset-x-0 top-0 h-20 sm:h-24 pointer-events-none transition-opacity duration-500 backdrop-blur-xl [mask-image:linear-gradient(to_bottom,black_0%,black_35%,transparent_100%)] [-webkit-mask-image:linear-gradient(to_bottom,black_0%,black_35%,transparent_100%)] ${
           scrolled || mobileMenuOpen ? "opacity-100" : "opacity-0"
@@ -112,31 +102,24 @@ export const Navbar: React.FC<NavbarProps> = ({ navItems, authorName }) => {
           aria-label="Home"
           className="fixed z-50 flex items-center justify-start select-none cursor-pointer will-change-[transform,width,height] group [transform-origin:0_0]"
         >
-          <svg
-            viewBox="0 0 1040 105"
-            width="100%"
-            height="100%"
-            fill="none"
-            preserveAspectRatio="xMinYMid meet"
-            xmlns="http://www.w3.org/2000/svg"
-            className="w-full h-full overflow-visible"
-          >
+          <svg viewBox="0 0 1040 105" width="100%" height="100%" fill="none" preserveAspectRatio="xMinYMid meet" xmlns="http://www.w3.org/2000/svg" className="w-full h-full overflow-visible">
             <text
               x="0"
               y="86"
               textAnchor="start"
-              className="fill-text-primary font-heading font-black tracking-[-0.035em] text-[100px] uppercase select-none"
+              className={`${
+                isDarkBg ? "fill-white" : "fill-text-primary"
+              } font-heading font-black tracking-[-0.035em] text-[100px] uppercase select-none transition-colors duration-300`}
             >
-              {firstName} <tspan className="fill-accent font-mono font-light opacity-60">[</tspan>{lastName}<tspan className="fill-accent font-mono font-light opacity-60">]</tspan>
+              {firstName}{" "}
+              <tspan className={`${isDarkBg ? "fill-blue-300" : "fill-accent"} font-mono font-light opacity-60 transition-colors duration-300`}>[</tspan>
+              {lastName}
+              <tspan className={`${isDarkBg ? "fill-blue-300" : "fill-accent"} font-mono font-light opacity-60 transition-colors duration-300`}>]</tspan>
             </text>
           </svg>
         </a>
 
-        <DesktopNav
-          navItems={navItems}
-          activeSection={activeSection}
-          onNavigate={scrollToPath}
-        />
+        <DesktopNav navItems={navItems} activeSection={activeSection} onNavigate={scrollToPath} isDarkBg={isDarkBg} />
 
         <div className="flex items-center gap-2 shrink-0">
           <a
@@ -144,7 +127,11 @@ export const Navbar: React.FC<NavbarProps> = ({ navItems, authorName }) => {
             target="_blank"
             rel="noopener noreferrer"
             aria-label="WhatsApp"
-            className="hidden sm:inline-flex h-9 px-3.5 items-center gap-1.5 rounded-full text-xs font-body font-medium border border-border-subtle bg-bg-surface text-text-secondary hover:text-text-primary hover:border-accent transition-colors shadow-xs whitespace-nowrap shrink-0"
+            className={`hidden sm:inline-flex h-9 px-3.5 items-center gap-1.5 rounded-full text-xs font-body font-medium transition-all shadow-xs whitespace-nowrap shrink-0 ${
+              isDarkBg
+                ? "border border-white/20 bg-white/10 text-white hover:bg-white/20 hover:border-white/30"
+                : "border border-border-subtle bg-bg-surface text-text-secondary hover:text-text-primary hover:border-accent"
+            }`}
           >
             <MessageCircle size={14} className="text-signal-success shrink-0" />
             <span>{t.nav.whatsapp}</span>
@@ -152,10 +139,12 @@ export const Navbar: React.FC<NavbarProps> = ({ navItems, authorName }) => {
 
           <button
             type="button"
-            onClick={() => {
-              window.dispatchEvent(new CustomEvent("open-clippo-schedule"));
-            }}
-            className="hidden sm:inline-flex h-9 px-3.5 xl:px-4 items-center gap-1.5 rounded-full text-xs font-body font-semibold text-white bg-accent hover:bg-accent-hover transition-colors shadow-xs cursor-pointer whitespace-nowrap shrink-0"
+            onClick={() => window.dispatchEvent(new CustomEvent("open-clippo-schedule"))}
+            className={`hidden sm:inline-flex h-9 px-3.5 xl:px-4 items-center gap-1.5 rounded-full text-xs font-body font-semibold transition-all shadow-xs cursor-pointer whitespace-nowrap shrink-0 ${
+              isDarkBg
+                ? "bg-white text-[#21426E] hover:bg-blue-50 font-bold shadow-md"
+                : "text-white bg-accent hover:bg-accent-hover"
+            }`}
           >
             <Calendar size={13} className="shrink-0" />
             <span>{t.nav.scheduleCall}</span>
@@ -165,7 +154,11 @@ export const Navbar: React.FC<NavbarProps> = ({ navItems, authorName }) => {
             type="button"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
-            className="xl:hidden h-9 w-9 flex items-center justify-center rounded-xl border border-border-subtle bg-bg-surface text-text-primary hover:border-accent transition-colors cursor-pointer shadow-xs shrink-0"
+            className={`xl:hidden h-9 w-9 flex items-center justify-center rounded-xl transition-all cursor-pointer shadow-xs shrink-0 ${
+              isDarkBg
+                ? "border border-white/20 bg-white/10 text-white hover:bg-white/20"
+                : "border border-border-subtle bg-bg-surface text-text-primary hover:border-accent"
+            }`}
           >
             {mobileMenuOpen ? <X size={16} /> : <Menu size={16} />}
           </button>

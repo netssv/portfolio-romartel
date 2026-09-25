@@ -112,7 +112,7 @@ export const BtcTrendTelemetryBar: React.FC = () => {
   const events = telemetry?.events || [];
 
   return (
-    <div className="w-full flex flex-col items-end gap-3">
+    <div className="w-full flex flex-col items-center gap-3">
       <TelemetryStatusBadge
         status={telemetryStatus}
         isSpanish={isSpanish}
@@ -120,7 +120,7 @@ export const BtcTrendTelemetryBar: React.FC = () => {
         lastRealDataTimestamp={telemetry?.last_real_data_timestamp}
       />
 
-      <div className="flex flex-wrap items-center justify-end gap-2.5 sm:gap-3">
+      <div className="flex flex-wrap items-center justify-center gap-2.5 sm:gap-3">
         <BtcPriceCard
           price={btcTicker.price}
           changePct={btcTicker.priceChangePercent}

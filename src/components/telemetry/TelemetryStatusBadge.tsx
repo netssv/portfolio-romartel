@@ -85,9 +85,9 @@ export const TelemetryStatusBadge: React.FC<TelemetryStatusBadgeProps> = ({
   };
 
   return (
-    <div className="flex flex-wrap items-center justify-end gap-2.5 sm:gap-3 text-right">
+    <div className="flex flex-wrap items-center justify-center gap-2.5 sm:gap-3 text-center">
       <div className="flex items-center gap-2">{renderIndicator()}</div>
-      <div className="flex flex-wrap items-center justify-end gap-2">
+      <div className="flex flex-wrap items-center justify-center gap-2">
         <span className="rounded-md bg-bg-raised px-2 py-0.5 text-[11px] font-body text-text-secondary font-medium border border-border-subtle">
           {isSpanish ? "Watchdog Python y Cron $0/mes" : "$0/mo Python & Cron Watchdog"}
         </span>

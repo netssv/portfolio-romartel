@@ -42,13 +42,13 @@ export const AboutMeSection: React.FC = () => {
           ))}
         </div>
 
-        {/* 1. Live Telemetry Bar (Before buttons & Aligned to the Right) */}
+        {/* 1. Live Telemetry Bar (Centered) */}
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.45, delay: 0.2 }}
-          className="mt-10 sm:mt-12 w-full flex justify-end"
+          className="mt-10 sm:mt-12 w-full flex justify-center"
         >
           <BtcTrendTelemetryBar />
         </motion.div>
