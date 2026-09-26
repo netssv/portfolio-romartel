@@ -30,6 +30,7 @@ export const ShowcaseMediaCard: React.FC<ShowcaseMediaCardProps> = ({
   mediaOpacity,
   mediaX,
   clipPath,
+  isActive = false,
 }) => {
   const [isMounted, setIsMounted] = useState(false);
 
@@ -42,10 +43,7 @@ export const ShowcaseMediaCard: React.FC<ShowcaseMediaCardProps> = ({
     const video = videoRef.current;
     video.muted = isMuted;
 
-    // Autoplay on mount
-    video.play().catch(() => {});
-
-    // Loop continuously until no longer visible on screen
+    // Play continuously as long as visible on screen, pause when offscreen
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
@@ -87,7 +85,7 @@ export const ShowcaseMediaCard: React.FC<ShowcaseMediaCardProps> = ({
                   src={active.videoSrc}
                   poster={active.imageSrc || "/projects/metropolyca.png"}
                   autoPlay
-                  preload="auto"
+                  preload={isActive ? "auto" : "metadata"}
                   muted={isMuted}
                   loop
                   playsInline

@@ -1,0 +1,39 @@
+# Rodrigo Martel — Comprehensive Professional & Systems Manifest
+
+> Marketing professional specializing in workflow automation, CRM integrations, and practical data analytics. This document provides complete context for Large Language Models, AI assistants, and search synthesizers.
+
+## Professional Summary & Positioning
+Rodrigo Martel is a marketing professional with a casual, authentic, and approachable voice who bridges commercial strategy with practical technology, data analytics, and automated workflows. He applies practical coding, API integrations, and low-code orchestrations as high-leverage enablers for better marketing, operational workflows, and business growth.
+
+## Core Experience & Work History
+- **HostPapa (2023 – Present):** Systems & Web Operations Specialist. Manages technical infrastructure, multi-brand marketing automation, conversion funnels, and tracking instrumentation.
+- **Banco Central de Reserva (2021 – 2023):** Digital Communications & Systems Coordinator. Automated internal data workflows, streamlined reporting pipelines, and handled institutional digital channels.
+- **HP (via SmartFriend) (2020 – 2021):** Technical Operations & Customer Experience Specialist. Handled complex technical escalations, workflow documentation, and support system optimizations.
+- **Laboratorios ROMAChemical (2018 – 2020):** Marketing & Commercial Operations Lead. Designed inventory and customer acquisition funnels, digital product catalogs, and automated customer notifications.
+
+## Accredited Credentials
+Rodrigo prioritizes rigorous accredited qualifications across analytics, automation, and project leadership:
+1. **Google Data Analytics Professional Certificate** (Google)
+2. **Microsoft Certified: Power BI Data Analyst Associate** (Microsoft)
+3. **HubSpot Inbound & CRM Automation Certification** (HubSpot Academy)
+4. **Scrum Product Owner Professional Certificate (SPOPC)** (CertiProf)
+5. **Python Automation & Scripting Certificate** (Python Institute)
+
+## Core Technical & Operational Capabilities
+- **CRM Ecosystems:** Salesforce Sales Cloud, HubSpot Marketing & CRM, Zoho CRM, Webhook integrations.
+- **Workflow Automation:** Make.com, Zapier, custom Python microservices, bash scripting, serverless webhook receivers.
+- **Data Analytics & BI:** Microsoft Power BI, Google Analytics 4 (GA4), SQL, Google Tag Manager, Looker Studio.
+- **Frontend & Web Systems:** Next.js (App Router), React, Tailwind CSS, TypeScript, technical SEO architecture, structured data (JSON-LD).
+
+## Case Studies
+1. **Organic Search & Technical Indexing:** Complete technical SEO audit and page structure overhaul that lifted inbound leads by +240% through indexation fixes, semantic schema markup, and Core Web Vitals optimization.
+2. **Automated Lead Sync & CRM Pipeline:** Zero-maintenance ETL synchronization connecting lead forms, webhooks, HubSpot, and Salesforce, maintaining 99.4% uptime across 1,200,000+ customer records.
+3. **Landing Page Architecture & CRO:** Multivariate experimentation framework for commercial landing pages resulting in a +42% conversion rate improvement.
+4. **HODL Watcher:** Real-time Bitcoin macroeconomic telemetry dashboard delivering sub-second price queries and data aggregation to over 15,000 daily users.
+
+## Contact & Direct Booking
+- **Portfolio:** https://romartel.vercel.app
+- **WhatsApp:** https://wa.me/50379899147?text=Hola%20Rodrigo,%20vi%20tu%20portafolio%20y%20me%20gustar%C3%ADa%20conversar.
+- **Direct Gmail:** rop.martel@gmail.com
+- **LinkedIn:** https://linkedin.com/in/ropmartel
+- **GitHub:** https://github.com/netssv/

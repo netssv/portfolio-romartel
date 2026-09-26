@@ -38,6 +38,7 @@ export const ChatInput = forwardRef<HTMLInputElement, ChatInputProps>(
           disabled={!input.trim() || isLoading}
           className="p-2 rounded-xl bg-accent text-white hover:bg-accent-hover disabled:opacity-40 transition-colors cursor-pointer"
           title={isSpanish ? "Enviar mensaje" : "Send message"}
+          aria-label={isSpanish ? "Enviar mensaje" : "Send message"}
         >
           {isLoading ? <Loader2 className="w-4 h-4 animate-spin" /> : <Send className="w-4 h-4" />}
         </button>

@@ -122,6 +122,7 @@ export function ClippoAvatar({
 
         {/* Dynamic Inner Wire Loop - Thinking Question/Curl */}
         <motion.path
+          d="M 50 42 C 50 34 56 28 64 28 C 72 28 78 34 78 42 L 78 75"
           stroke="url(#clippoWireGrad)"
           strokeWidth="7"
           strokeLinecap="round"

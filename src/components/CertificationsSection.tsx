@@ -39,9 +39,9 @@ export function CertificationsSection() {
           </span>
         </div>
 
-        {/* Monumental Interactive Title (H1) */}
+        {/* Monumental Interactive Title (H2 for singular page H1 hierarchy) */}
         <div className="w-full max-w-5xl mb-6 sm:mb-8 flex justify-center">
-          <ScatterTitle as="h1" lines={titleLines} />
+          <ScatterTitle as="h2" lines={titleLines} />
         </div>
 
         {/* Narrative Subtitle */}

@@ -159,6 +159,7 @@ export const ContactTerminal: React.FC = () => {
         <button
           type="submit"
           disabled={isLoading || !input.trim()}
+          aria-label={isSpanish ? "Enviar consulta al asistente" : "Send query to assistant"}
           className="p-2 rounded-xl bg-accent text-white hover:opacity-90 disabled:opacity-40 transition-opacity cursor-pointer shadow-xs"
         >
           <CornerDownLeft size={14} />

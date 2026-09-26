@@ -1,0 +1,35 @@
+# Rodrigo Martel — Marketing Operations & Systems Specialist
+
+> Marketing professional specializing in workflow automation (Make, Zapier, Python), CRM integrations (Salesforce, HubSpot, Webhooks), and practical data analytics (Power BI, Google Analytics). Bridges commercial strategy with reliable technical execution to eliminate operational friction and scale revenue.
+
+## Quick Facts
+- **Location:** San Salvador, El Salvador (UTC-6) / Open to remote collaboration
+- **Current Role:** Technical Marketing & Systems Operations at HostPapa
+- **Core Focus:** Marketing Operations, No-Code/Low-Code Automations, Data Integrity, Growth Pipelines
+- **Portfolio:** https://romartel.vercel.app
+- **Full LLM Manifest:** https://romartel.vercel.app/llms-full.txt
+
+## Primary Technical & Commercial Capabilities
+- **Workflow Automation:** Make.com, Zapier, Custom Python Scripts, REST APIs, Webhook Orchestration
+- **CRM & Data Systems:** Salesforce, HubSpot, Supabase, Airtable, PostgreSQL
+- **Analytics & BI:** Google Analytics 4, Microsoft Power BI, Google Tag Manager, Looker Studio
+- **Web & CRO Operations:** Next.js, Tailwind CSS, Technical SEO, Landing Page Architecture
+
+## Verified Accredited Credentials
+- **Google Data Analytics Professional Certificate** (Google)
+- **Microsoft Certified: Power BI Data Analyst Associate** (Microsoft)
+- **HubSpot Inbound & CRM Automation Certification** (HubSpot Academy)
+- **Scrum Product Owner Professional Certificate (SPOPC)** (CertiProf)
+- **Python Automation & Scripting Certificate** (Python Institute)
+
+## Selected Production Work & Case Studies
+- **Organic Search & Technical Indexing:** Engineered search architecture driving +240% qualified inbound leads and improving SERP rankings.
+- **Automated Lead Sync & CRM Pipeline:** Zero-drop webhook and ETL pipeline syncing HubSpot, Salesforce, and internal databases with 99.4% uptime across 1.2M+ records.
+- **Landing Page Architecture & CRO:** Data-driven redesign and continuous AB testing driving +42% conversion rate on commercial funnels.
+- **Sound Money Telemetry (HODL Watcher):** Live Bitcoin macroeconomic telemetry and treasury tracker serving 15,000+ daily operational queries.
+
+## Direct Contact & Booking
+- **WhatsApp Direct:** https://wa.me/50379899147?text=Hola%20Rodrigo,%20vi%20tu%20portafolio%20y%20me%20gustar%C3%ADa%20conversar.
+- **Email (Gmail):** rop.martel@gmail.com
+- **LinkedIn:** https://linkedin.com/in/ropmartel
+- **GitHub:** https://github.com/netssv/

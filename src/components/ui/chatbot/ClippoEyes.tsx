@@ -18,6 +18,7 @@ export const ClippoEyes: React.FC<ClippoEyesProps> = ({
     <>
       {/* Left Eyebrow */}
       <motion.path
+        d="M 28 24 Q 38 15 48 22"
         stroke="#0F172A"
         strokeWidth="3.5"
         strokeLinecap="round"
@@ -33,6 +34,7 @@ export const ClippoEyes: React.FC<ClippoEyesProps> = ({
 
       {/* Right Eyebrow */}
       <motion.path
+        d="M 64 22 Q 74 15 84 24"
         stroke="#0F172A"
         strokeWidth="3.5"
         strokeLinecap="round"
