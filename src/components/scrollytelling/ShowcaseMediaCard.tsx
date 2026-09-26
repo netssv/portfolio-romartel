@@ -33,6 +33,7 @@ export const ShowcaseMediaCard: React.FC<ShowcaseMediaCardProps> = ({
   isActive = false,
 }) => {
   const [isMounted, setIsMounted] = useState(false);
+  const [isInViewport, setIsInViewport] = useState(false);
 
   useEffect(() => {
     setIsMounted(true);
@@ -47,6 +48,7 @@ export const ShowcaseMediaCard: React.FC<ShowcaseMediaCardProps> = ({
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
+          setIsInViewport(true);
           video.play().catch(() => {});
         } else {
           video.pause();
@@ -82,10 +84,10 @@ export const ShowcaseMediaCard: React.FC<ShowcaseMediaCardProps> = ({
               <div className="relative w-full h-full" suppressHydrationWarning>
                 <video
                   ref={videoRef}
-                  src={active.videoSrc}
+                  src={isInViewport ? active.videoSrc : undefined}
                   poster={active.imageSrc || "/projects/metropolyca.png"}
-                  autoPlay={isActive}
-                  preload={isActive ? "auto" : "none"}
+                  autoPlay={isActive && isInViewport}
+                  preload={isActive && isInViewport ? "auto" : "none"}
                   muted={isMuted}
                   loop
                   playsInline

@@ -24,10 +24,10 @@ export const ClippoEyes: React.FC<ClippoEyesProps> = ({
         strokeLinecap="round"
         animate={
           isThinking
-            ? { d: ["M 28 16 Q 38 8 48 18", "M 28 13 Q 38 6 48 16", "M 28 16 Q 38 8 48 18"] }
+            ? { y: [-4, 0, -4], rotate: [-4, 2, -4] }
             : isMouseMoving
-            ? { d: ["M 28 22 Q 38 13 48 20"] }
-            : { d: ["M 28 24 Q 38 15 48 22", "M 28 21 Q 38 14 48 20", "M 28 24 Q 38 15 48 22"] }
+            ? { y: -2, rotate: 2 }
+            : { y: [0, -2, 0] }
         }
         transition={{ duration: isThinking ? 2 : 3, repeat: isMouseMoving ? 0 : Infinity, ease: "easeInOut" }}
       />
@@ -40,10 +40,10 @@ export const ClippoEyes: React.FC<ClippoEyesProps> = ({
         strokeLinecap="round"
         animate={
           isThinking
-            ? { d: ["M 64 25 Q 74 20 84 27", "M 64 27 Q 74 22 84 29", "M 64 25 Q 74 20 84 27"] }
+            ? { y: [-3, 1, -3], rotate: [3, -2, 3] }
             : isMouseMoving
-            ? { d: ["M 64 20 Q 74 13 84 22"] }
-            : { d: ["M 64 22 Q 74 15 84 24", "M 64 19 Q 74 12 84 22", "M 64 22 Q 74 15 84 24"] }
+            ? { y: -2, rotate: -2 }
+            : { y: [0, -2, 0] }
         }
         transition={{ duration: isThinking ? 2 : 3, repeat: isMouseMoving ? 0 : Infinity, ease: "easeInOut" }}
       />
