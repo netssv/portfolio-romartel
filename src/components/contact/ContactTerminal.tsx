@@ -2,10 +2,11 @@
 
 import React, { useState, useRef, useEffect } from "react";
 import { motion } from "framer-motion";
-import { CornerDownLeft, RotateCcw, Loader2 } from "lucide-react";
+import { CornerDownLeft, Loader2 } from "lucide-react";
 import { useLanguage } from "@/src/context/LanguageContext";
-import { ClippoAvatar } from "@/src/components/ui/chatbot/ClippoAvatar";
 import { useContainerScrollTrap } from "@/src/lib/useContainerScrollTrap";
+import { ContactQuickPrompts } from "./ContactQuickPrompts";
+import { ContactTerminalHeader } from "./ContactTerminalHeader";
 
 interface TerminalMessage {
   id: string;
@@ -90,42 +91,13 @@ export const ContactTerminal: React.FC = () => {
   return (
     <div className="w-full max-w-xl mx-auto rounded-3xl border border-border-base bg-bg-surface/90 shadow-2xl p-6 sm:p-7 backdrop-blur-xl relative overflow-hidden flex flex-col justify-between">
       {/* Top Bar with Clippo Integration */}
-      <div className="flex items-center justify-between pb-3.5 mb-3.5 border-b border-border-subtle">
-        <div className="flex items-center gap-3">
-          <motion.div
-            initial={{ scale: 0, rotate: -20 }}
-            animate={{ scale: 1, rotate: 0 }}
-            transition={{ type: "spring", stiffness: 380, damping: 18 }}
-            className="w-8 h-8 flex items-center justify-center shrink-0 cursor-pointer"
-            whileHover={{ scale: 1.15, rotate: 6 }}
-            whileTap={{ scale: 0.95 }}
-          >
-            <ClippoAvatar size={32} isThinking={isLoading} />
-          </motion.div>
-          <div className="flex items-center gap-2">
-            <span className="relative flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
-            </span>
-            <span className="font-mono text-xs font-bold text-emerald-500 tracking-wider">
-              {t.contact.terminalStatus}
-            </span>
-            <span className="text-text-muted text-xs font-mono">·</span>
-            <span className="text-xs font-mono font-medium text-text-primary">
-              {t.contact.terminalBadge}
-            </span>
-          </div>
-        </div>
-
-        <button
-          type="button"
-          onClick={handleReset}
-          className="text-text-muted hover:text-text-primary p-1.5 rounded-lg hover:bg-bg-raised transition-colors cursor-pointer"
-          title={isSpanish ? "Reiniciar conversación" : "Reset conversation"}
-        >
-          <RotateCcw size={13} />
-        </button>
-      </div>
+      <ContactTerminalHeader
+        isLoading={isLoading}
+        status={t.contact.terminalStatus}
+        badge={t.contact.terminalBadge}
+        onReset={handleReset}
+        resetTitle={isSpanish ? "Reiniciar conversación" : "Reset conversation"}
+      />
 
       {/* Terminal Conversation Body with Wheel Scroll Trap */}
       <div
@@ -161,18 +133,10 @@ export const ContactTerminal: React.FC = () => {
 
       {/* Quick-Action Prompt Chips */}
       {messages.length <= 2 && (
-        <div className="pt-3.5 flex flex-wrap gap-1.5">
-          {t.contact.quickPrompts.map((prompt, idx) => (
-            <button
-              key={idx}
-              type="button"
-              onClick={() => handleChipClick(prompt, idx)}
-              className="text-left text-[11px] font-body text-text-secondary hover:text-text-primary bg-bg-raised/60 hover:bg-bg-raised border border-border-subtle hover:border-accent/40 px-2.5 py-1.5 rounded-xl transition-all cursor-pointer"
-            >
-              • {prompt}
-            </button>
-          ))}
-        </div>
+        <ContactQuickPrompts
+          prompts={t.contact.quickPrompts}
+          onChipClick={handleChipClick}
+        />
       )}
 
       {/* Terminal Input Bar */}

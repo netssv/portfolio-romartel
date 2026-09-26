@@ -107,11 +107,11 @@ export function ClippoFloatingTrigger({
                 : "border-border-base hover:border-accent hover:shadow-accent/10"
             }`}
           >
-            {/* Dismiss X button */}
+            {/* Dismiss X button with expanded touch target */}
             <button
               type="button"
               onClick={(e) => { e.stopPropagation(); setIsDismissed(true); }}
-              className="absolute -top-1.5 -left-1.5 w-4 h-4 rounded-full bg-bg-surface border border-border-base flex items-center justify-center text-text-muted hover:text-text-primary transition-colors shadow-xs cursor-pointer"
+              className="absolute -top-1.5 -left-1.5 w-4 h-4 rounded-full bg-bg-surface border border-border-base flex items-center justify-center text-text-muted hover:text-text-primary transition-colors shadow-xs cursor-pointer before:absolute before:-inset-2.5 before:content-['']"
               aria-label={isSpanish ? "Cerrar mensaje" : "Dismiss message"}
             >
               <X size={10} />
@@ -119,9 +119,9 @@ export function ClippoFloatingTrigger({
           {isThinking ? (
             <div className="flex items-center gap-2 text-accent">
               <span className="flex gap-1 items-center">
-                <span className="w-1.5 h-1.5 rounded-full bg-accent animate-bounce" style={{ animationDelay: "0ms" }} />
-                <span className="w-1.5 h-1.5 rounded-full bg-accent animate-bounce" style={{ animationDelay: "150ms" }} />
-                <span className="w-1.5 h-1.5 rounded-full bg-accent animate-bounce" style={{ animationDelay: "300ms" }} />
+                <span className="w-1.5 h-1.5 rounded-full bg-accent animate-pulse" style={{ animationDuration: "1s", animationDelay: "0ms" }} />
+                <span className="w-1.5 h-1.5 rounded-full bg-accent animate-pulse" style={{ animationDuration: "1s", animationDelay: "200ms" }} />
+                <span className="w-1.5 h-1.5 rounded-full bg-accent animate-pulse" style={{ animationDuration: "1s", animationDelay: "400ms" }} />
               </span>
               <span className="text-text-primary text-[11px] font-semibold">
                 {isSpanish ? "Clippo está pensando..." : "Clippo is thinking..."}

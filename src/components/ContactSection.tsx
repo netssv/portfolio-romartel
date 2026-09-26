@@ -2,7 +2,6 @@
 
 import React from "react";
 import { FadeIn } from "@/src/components/ui/FadeIn";
-import { SectionLabel } from "@/src/components/ui/SectionLabel";
 import { useLanguage } from "@/src/context/LanguageContext";
 import { ContactTerminal } from "./contact/ContactTerminal";
 import { ContactActionLinks } from "./contact/ContactActionLinks";
@@ -41,39 +40,15 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-accent/5 rounded-full blur-3xl pointer-events-none" />
 
       <div className="mx-auto max-w-7xl px-6 relative z-10">
+        {/* Section Architectural Index */}
         <FadeIn>
-          <div className="text-center max-w-3xl mx-auto mb-12">
-            <SectionLabel
-              index="06"
-              eyebrow={t.contact.eyebrow}
-              heading={t.contact.heading}
-              description={contact.description}
-            />
-
-            {/* Strategic Manifesto Callout (Integrated from Philosophy) */}
-            {manifesto && (
-              <div className="mt-8 p-6 rounded-2xl border border-border-subtle bg-bg-surface/60 backdrop-blur-xs relative overflow-hidden">
-                <span className="text-[10px] font-mono uppercase tracking-[0.2em] text-accent block mb-2 font-semibold">
-                  {isSpanish ? "Manifiesto Operativo" : "Operating Manifesto"}
-                </span>
-                <blockquote className="text-sm sm:text-base font-heading font-medium text-text-primary leading-relaxed italic">
-                  &ldquo;{manifesto}&rdquo;
-                </blockquote>
-                <div className="flex flex-wrap items-center justify-center gap-2 mt-4 text-[11px] font-mono text-text-muted">
-                  <span className="px-2.5 py-1 rounded-md bg-bg-raised/70 border border-border-subtle">
-                    {isSpanish ? "Fiabilidad de Sistemas" : "Systems Reliability"}
-                  </span>
-                  <span>·</span>
-                  <span className="px-2.5 py-1 rounded-md bg-bg-raised/70 border border-border-subtle">
-                    {isSpanish ? "Telemetría de Crecimiento" : "Growth Telemetry"}
-                  </span>
-                  <span>·</span>
-                  <span className="px-2.5 py-1 rounded-md bg-bg-raised/70 border border-border-subtle">
-                    {isSpanish ? "Automatización Pragmática" : "Pragmatic Automation"}
-                  </span>
-                </div>
-              </div>
-            )}
+          <div className="flex items-center justify-center gap-2 mb-6 sm:mb-8 text-center select-none">
+            <span className="inline-flex items-center px-2 py-0.5 rounded-md text-[11px] font-mono font-bold tracking-tighter bg-accent/10 border border-accent/20 text-accent shadow-xs">
+              [06]
+            </span>
+            <span className="text-xs font-mono uppercase tracking-[0.2em] font-semibold text-text-muted">
+              {t.contact.eyebrow}
+            </span>
           </div>
         </FadeIn>
 

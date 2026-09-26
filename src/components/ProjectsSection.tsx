@@ -1,8 +1,36 @@
 "use client";
 
 import React from "react";
-import { FlagshipProjectProps } from "./FlagshipProjectCard";
-import { ProjectCardProps } from "./ProjectCard";
+export interface FlagshipProjectProps {
+  id: string;
+  title: string;
+  subtitle: string;
+  eyebrow: string;
+  description: string;
+  orchestrationStory: string;
+  status: string;
+  category: string;
+  metrics: { label: string; value: string }[];
+  tags: string[];
+  links: { demo: string; github: string };
+  videoSrc?: string;
+}
+
+export interface ProjectCardProps {
+  id: string;
+  title: string;
+  subtitle: string;
+  description: string;
+  valueProp?: string;
+  category: string;
+  status: string;
+  icon?: string;
+  image?: string;
+  videoSrc?: string;
+  tags?: string[];
+  links: { github: string; demo: string };
+}
+
 import { PinnedProjectsScrollytelling, PinnedProjectItem } from "./scrollytelling/PinnedProjectsScrollytelling";
 import { useLanguage } from "@/src/context/LanguageContext";
 import { SloganSection } from "./SloganSection";

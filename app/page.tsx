@@ -24,7 +24,6 @@ export default function Home() {
     flagshipProject,
     sideProjects,
     contact,
-    philosophy,
     metadata,
   } = data;
 
@@ -72,8 +71,8 @@ export default function Home() {
         {/* ── [05] Case Studies: Strategy & Growth ───── */}
         <CaseStudiesSection />
 
-        {/* ── [06] Contact & Operating Manifesto ────── */}
-        <ContactSection contact={contact} manifesto={philosophy.quote} />
+        {/* ── [06] Contact ────────────────────────────── */}
+        <ContactSection contact={contact} />
       </main>
 
       {/* ── Footer ─────────────────────────────────── */}

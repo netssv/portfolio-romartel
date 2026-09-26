@@ -38,10 +38,10 @@
     "eyebrow": "Background & Philosophy",
     "heading": "About me",
     "paragraphs": [
-      "I'm Rodrigo, a Marketing Operations & Systems Specialist who likes building things that make work simpler, more reliable, and easier to scale.",
-      "I work across no-code/low-code automation (Make, Zapier, Python), CRM integrations (Salesforce, HubSpot, Webhooks), and practical data analytics. My focus is turning messy processes into systems that actually work—and making sure the data behind them stays clean and reliable.",
-      "I don't really believe in one-size-fits-all solutions. I prefer building workflows, automations, and telemetry systems around the actual problem and the way a business operates.",
-      "I'm based in San Salvador, El Salvador, and I'm also into Bitcoin, sound money, decentralized technology, and automated telemetry. Whether I'm optimizing a marketing workflow or building a serverless watchdog, I approach things with curiosity, precision, and a systems mindset."
+      "Hi, I'm Rodrigo, a marketer working at the intersection of **marketing, operations, and technology**. My focus is understanding how a business operates, identifying points of friction, and using practical tech to turn complex processes into simple, measurable, and reliable workflows.",
+      "I work with tools like **Make, Zapier, Python, Salesforce, HubSpot, Claude CLI, and Codex**, but for me, the tool is just a means to an end. What matters most is listening to what teams need, translating those needs into real solutions, and ensuring the data behind every process stays clean and actionable.",
+      "Based in **El Salvador**, I'm passionate about **Bitcoin**, decentralized systems, and automated telemetry. I connect marketing with practical engineering around a single principle: **measuring what happens, understanding why it occurs, and building systems that simply work.**",
+      "I also build and experiment with **Open Source** projects to test ideas in production and keep learning. If you'd like to get a better sense of how I think and work, feel free to explore my projects."
     ],
     "cta": "Schedule Call",
     "whatsappCta": "WhatsApp"

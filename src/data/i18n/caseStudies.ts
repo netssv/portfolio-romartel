@@ -8,6 +8,7 @@ export interface CaseStudy {
   subtitle: string;
   highlight: string;
   challenge: string;
+  solution: string;
   kpis: { value: string; label: string }[];
   steps: string[];
   tools: string[];
@@ -21,7 +22,8 @@ export const CASE_STUDIES_EN: CaseStudy[] = [
     title: "Organic Search & Technical Indexing",
     subtitle: "E-commerce · Latin American Market",
     highlight: "+40% Crawl Efficiency",
-    challenge: "High reliance on paid search with zero organic visibility across 40+ category lines.",
+    challenge: "High reliance on paid search with zero organic visibility across 40+ category lines and broken canonicals.",
+    solution: "Full technical re-indexing: fixed duplicate tags, repaired internal link architecture, and deployed structured Schema templates.",
     kpis: [
       { value: "40+", label: "Pages Restructured" },
       { value: "100%", label: "Crawl Issues Resolved" },
@@ -41,7 +43,8 @@ export const CASE_STUDIES_EN: CaseStudy[] = [
     title: "Landing Page Architecture & CRO",
     subtitle: "B2B SaaS · Paid Acquisition Funnel",
     highlight: "+18% Form Conversion Lift",
-    challenge: "High ad traffic bounce rate due to generic homepage routing without intent match.",
+    challenge: "High ad traffic bounce rate because paid campaigns sent visitors to a generic homepage without message-to-intent match.",
+    solution: "Designed and built dedicated modular landing pages with above-the-fold CTA, custom GA4 event tracking, and A/B tested value propositions.",
     kpis: [
       { value: "+18%", label: "Conversion Lift" },
       { value: "5", label: "GA4 Custom Telemetry Events" },
@@ -61,7 +64,8 @@ export const CASE_STUDIES_EN: CaseStudy[] = [
     title: "Multi-Platform Content Automation",
     subtitle: "Professional Services · Brand Scaling",
     highlight: "90+ Content Assets Produced",
-    challenge: "Fragmented social scheduling and lack of structured editorial pipelines.",
+    challenge: "Fragmented, irregular publishing schedule with zero editorial pipeline and no structured way to evaluate social ROI.",
+    solution: "Established 3 core content pillars, automated research workflows with Claude CLI and Notion, and delivered a sustained 90-day publishing cadence.",
     kpis: [
       { value: "90+", label: "Assets Published" },
       { value: "3", label: "Core Content Pillars" },
@@ -81,7 +85,8 @@ export const CASE_STUDIES_EN: CaseStudy[] = [
     title: "Automated Lead Sync & CRM Pipeline",
     subtitle: "Client Operations · Inbound Routing",
     highlight: "<1.5s Instant Lead Routing",
-    challenge: "Manual lead copy-pasting from web forms causing 24-48hr delays and dropped inquiries.",
+    challenge: "Commercial team manually copy-pasted leads from web forms into spreadsheets, causing 24-48hr follow-up delays and lost inquiries.",
+    solution: "Engineered automated webhook pipelines directly into CRM and Slack with instant fallback logging, dropping response time to <1.5 seconds.",
     kpis: [
       { value: "<1.5s", label: "Lead Routing Latency" },
       { value: "100%", label: "Zero Dropped Inquiries" },
@@ -104,7 +109,8 @@ export const CASE_STUDIES_ES: CaseStudy[] = [
     title: "Búsqueda Orgánica e Indexación Técnica",
     subtitle: "Comercio Electrónico · Mercado Latinoamericano",
     highlight: "+40% Eficiencia de Rastreo",
-    challenge: "Alta dependencia de pauta publicitaria sin visibilidad orgánica en más de 40 categorías.",
+    challenge: "Alta dependencia de pauta pagada sin tráfico orgánico en más de 40 categorías y múltiples errores de rastreo de catálogo.",
+    solution: "Reestructuración técnica integral: corrección de canonicals, jerarquía de enlaces internos y plantillas Schema estructuradas por intención de búsqueda.",
     kpis: [
       { value: "40+", label: "Páginas Reestructuradas" },
       { value: "100%", label: "Errores de Rastreo Resueltos" },
@@ -124,7 +130,8 @@ export const CASE_STUDIES_ES: CaseStudy[] = [
     title: "Arquitectura de Landing Pages y CRO",
     subtitle: "B2B SaaS · Embudo de Adquisición Pagada",
     highlight: "+18% en Conversión de Formularios",
-    challenge: "Alta tasa de rebote en pauta debido a redirección a páginas genéricas sin coincidencia de intención.",
+    challenge: "Alta tasa de rebote en pauta digital debido a redirección hacia una home genérica sin coincidencia de intención de compra.",
+    solution: "Desarrollo de landing pages modulares con propuesta de valor clara y CTA visible, medición de eventos en GA4 y pruebas A/B de mensajes.",
     kpis: [
       { value: "+18%", label: "Incremento en Conversión" },
       { value: "5", label: "Eventos de Telemetría GA4" },
@@ -144,7 +151,8 @@ export const CASE_STUDIES_ES: CaseStudy[] = [
     title: "Automatización de Contenido Multiplataforma",
     subtitle: "Servicios Profesionales · Escalabilidad de Marca",
     highlight: "Más de 90 Piezas Producidas",
-    challenge: "Programación fragmentada en redes y falta de un pipeline editorial estructurado.",
+    challenge: "Publicación fragmentada e irregular en redes, sin pipeline editorial estructurado ni medición del retorno del contenido.",
+    solution: "Definición de 3 pilares estratégicos de contenido, automatización de flujos de investigación con Claude CLI y Notion, y ejecución continua a 90 días.",
     kpis: [
       { value: "90+", label: "Publicaciones Ejecutadas" },
       { value: "3", label: "Pilares Estratégicos de Contenido" },
@@ -164,7 +172,8 @@ export const CASE_STUDIES_ES: CaseStudy[] = [
     title: "Sincronización Automatizada de Leads y CRM",
     subtitle: "Operaciones con Clientes · Enrutamiento Inbound",
     highlight: "<1.5s Enrutamiento Instantáneo",
-    challenge: "Copia manual de prospectos desde formularios web causando retrasos de 24-48h y pérdidas de consultas.",
+    challenge: "Copia manual de prospectos desde formularios web a hojas de cálculo, generando retrasos de 24-48h y pérdidas de oportunidades comerciales.",
+    solution: "Flujo automatizado por webhooks conectando el formulario directo a Salesforce/HubSpot y Slack con registro de respaldo, reduciendo la latencia a <1.5s.",
     kpis: [
       { value: "<1.5s", label: "Latencia de Enrutamiento" },
       { value: "100%", label: "Cero Consultas Perdidas" },
