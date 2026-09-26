@@ -44,7 +44,7 @@ describe("ChatBot Auto-close behavior on outside unfocus / scroll / click", () =
     vi.restoreAllMocks();
   });
 
-  it("auto-closes 1s after outside click and displays the departure reminder in Spanish", () => {
+  it("auto-closes after outside click and displays the departure reminder in Spanish", () => {
     render(
       <div>
         <div data-testid="outside-area">Outside Content</div>
@@ -60,15 +60,15 @@ describe("ChatBot Auto-close behavior on outside unfocus / scroll / click", () =
     const outsideArea = screen.getByTestId("outside-area");
     fireEvent.mouseDown(outsideArea);
 
-    // Fast-forward 900ms - should still be open
+    // Fast-forward 2000ms (< 2500ms) - should still be open
     act(() => {
-      vi.advanceTimersByTime(900);
+      vi.advanceTimersByTime(2000);
     });
     expect(screen.getByPlaceholderText(/Ask about systems/i)).toBeInTheDocument();
 
-    // Fast-forward remaining 200ms (total 1.1s > 1s)
+    // Fast-forward remaining 600ms (total 2.6s > 2.5s)
     act(() => {
-      vi.advanceTimersByTime(200);
+      vi.advanceTimersByTime(600);
     });
 
     // Chat should now be closed and floating bubble displays departure reminder
@@ -102,7 +102,7 @@ describe("ChatBot Auto-close behavior on outside unfocus / scroll / click", () =
     fireEvent.mouseDown(outsideArea);
 
     act(() => {
-      vi.advanceTimersByTime(1100);
+      vi.advanceTimersByTime(2600);
     });
 
     expect(screen.queryByPlaceholderText(/Ask about systems/i)).not.toBeInTheDocument();
@@ -111,7 +111,7 @@ describe("ChatBot Auto-close behavior on outside unfocus / scroll / click", () =
     ).toBeInTheDocument();
   });
 
-  it("auto-closes 1s after scrolling / wheeling outside the chat", () => {
+  it("auto-closes after scrolling / wheeling outside the chat", () => {
     render(
       <div>
         <div data-testid="outside-area">Outside Content</div>
@@ -126,9 +126,9 @@ describe("ChatBot Auto-close behavior on outside unfocus / scroll / click", () =
     // Scroll outside
     fireEvent.scroll(window);
 
-    // Fast-forward 1.1s
+    // Fast-forward 2.6s
     act(() => {
-      vi.advanceTimersByTime(1100);
+      vi.advanceTimersByTime(2600);
     });
 
     expect(screen.queryByPlaceholderText(/Ask about systems/i)).not.toBeInTheDocument();
@@ -137,7 +137,7 @@ describe("ChatBot Auto-close behavior on outside unfocus / scroll / click", () =
     ).toBeInTheDocument();
   });
 
-  it("cancels auto-close if user clicks inside the chat container before 1s", () => {
+  it("cancels auto-close if user clicks inside the chat container before timeout", () => {
     render(
       <div>
         <div data-testid="outside-area">Outside Content</div>
@@ -152,18 +152,18 @@ describe("ChatBot Auto-close behavior on outside unfocus / scroll / click", () =
     const outsideArea = screen.getByTestId("outside-area");
     fireEvent.mouseDown(outsideArea);
 
-    // Advance 500ms
+    // Advance 1000ms
     act(() => {
-      vi.advanceTimersByTime(500);
+      vi.advanceTimersByTime(1000);
     });
 
     // Click back inside chat input
     const input = screen.getByPlaceholderText(/Ask about systems/i);
     fireEvent.mouseDown(input);
 
-    // Advance another 800ms (total 1.3s since outside click, but cancelled)
+    // Advance another 2000ms (total 3s since outside click, but cancelled)
     act(() => {
-      vi.advanceTimersByTime(800);
+      vi.advanceTimersByTime(2000);
     });
 
     // Chat remains open

@@ -10,6 +10,7 @@ import {
   FileText,
   Search,
   ExternalLink,
+  Calendar,
   LucideIcon,
 } from "lucide-react";
 import { SectionId } from "./useActiveSection";
@@ -37,7 +38,7 @@ export const SECTION_CHATBOT_CONFIG_EN: Record<SectionId, SectionChatbotConfig> 
     suggestions: [
       { text: "How does Rodrigo approach CRM & automation?", icon: Sparkles },
       { text: "What verified certifications does he hold?", icon: Award },
-      { text: "Send an email to Rodrigo", icon: Mail },
+      { text: "Schedule a call with Rodrigo", icon: Calendar },
     ],
   },
   projects: {

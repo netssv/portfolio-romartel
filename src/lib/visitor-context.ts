@@ -76,15 +76,14 @@ export function generateVisitorGreeting(context: VisitorContext): string {
   const langMeta = parseLanguageName(languageCode);
   const osRemark = getOsRemark(os, langMeta.isSpanish);
 
-  const displayIp = ip || "127.0.0.1";
   const displayCountry = country || "El Salvador";
   const displayOs = os || "System";
 
   if (langMeta.isSpanish) {
-    return `Hola IP \`${displayIp}\`, veo que nos escribes desde **${displayCountry}** en **${displayOs}**. ${osRemark}\n\nDetecté tu navegador en **${langMeta.name}**, así que continuaremos en este idioma. Soy Clippo, el asistente de Rodrigo Martel. ¿En qué proyecto, arquitectura o certificación te gustaría que te guíe hoy?`;
+    return `¡Hola! Veo que nos visitas desde **${displayCountry}** en **${displayOs}**. ${osRemark}\n\nDetecté tu navegador en **${langMeta.name}**, así que continuaremos en este idioma. Soy Clippo, el asistente de Rodrigo Martel. ¿En qué proyecto, arquitectura o certificación te gustaría que te guíe hoy?`;
   }
 
-  return `Hello IP \`${displayIp}\`, I see you are visiting from **${displayCountry}** on **${displayOs}**. ${osRemark}\n\nSince your browser is set to **${langMeta.name}**, we can chat in this language. I am Clippo, Rodrigo Martel's AI assistant. Which project, system architecture, or credential would you like to explore?`;
+  return `Hello! I see you are visiting from **${displayCountry}** on **${displayOs}**. ${osRemark}\n\nSince your browser is set to **${langMeta.name}**, we can chat in this language. I am Clippo, Rodrigo Martel's AI assistant. Which project, system architecture, or credential would you like to explore?`;
 }
 
 export function detectConversationLanguage(

@@ -10,6 +10,7 @@ import {
   FileText,
   Search,
   ExternalLink,
+  Calendar,
 } from "lucide-react";
 import { SectionId } from "./useActiveSection";
 import { SectionChatbotConfig } from "./chatbot-section-data";
@@ -26,7 +27,7 @@ export const SECTION_CHATBOT_CONFIG_ES: Record<SectionId, SectionChatbotConfig> 
     suggestions: [
       { text: "¿Cómo aborda Rodrigo el CRM y la automatización?", icon: Sparkles },
       { text: "¿Cuáles son sus credenciales verificadas?", icon: Award },
-      { text: "Enviar un correo a Rodrigo", icon: Mail },
+      { text: "Agendar una llamada con Rodrigo", icon: Calendar },
     ],
   },
   projects: {

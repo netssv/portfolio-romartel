@@ -13,6 +13,8 @@ interface UseClippoAutoCloseOptions {
   setCustomPhrase: (phrase: string | null) => void;
 }
 
+export const CLIPPO_AUTO_CLOSE_DELAY_MS = 2500;
+
 export function useClippoAutoClose({
   isOpen,
   messages,
@@ -62,7 +64,7 @@ export function useClippoAutoClose({
       if (!autoCloseTimerRef.current) {
         autoCloseTimerRef.current = setTimeout(() => {
           triggerAutoClose();
-        }, 1000);
+        }, CLIPPO_AUTO_CLOSE_DELAY_MS);
       }
     };
 

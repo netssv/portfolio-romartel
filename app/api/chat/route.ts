@@ -21,8 +21,8 @@ function normalizeContents(messages: IncomingMessage[]) {
   const firstUserIndex = messages.findIndex((m) => m.role === "user");
   if (firstUserIndex === -1) return [];
 
-  // Limit context to last 6 messages for faster generation
-  const recentMessages = messages.slice(firstUserIndex).slice(-6);
+  // Retain up to 12 turns for robust multi-step flows (collecting name, email, topic, inquiry)
+  const recentMessages = messages.slice(firstUserIndex).slice(-12);
   const contents: Array<{ role: "user" | "model"; parts: Array<{ text: string }> }> = [];
 
   for (const m of recentMessages) {

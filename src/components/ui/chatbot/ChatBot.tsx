@@ -126,12 +126,12 @@ export function ChatBot() {
     handleSend, clearAutoCloseTimer, activeSection, visitorContext, input,
   });
 
-  const isAtContact = activeSection === "contact";
+  const isHidden = activeSection === "contact" && !isOpen;
 
   return (
     <motion.div
       className="fixed bottom-5 right-5 z-50 flex flex-col items-end print:hidden"
-      animate={isAtContact ? { opacity: 0, scale: 0.75, y: 35, pointerEvents: "none" } : { opacity: 1, scale: 1, y: 0, pointerEvents: "auto" }}
+      animate={isHidden ? { opacity: 0, scale: 0.75, y: 35, pointerEvents: "none" } : { opacity: 1, scale: 1, y: 0, pointerEvents: "auto" }}
       transition={{ duration: 0.35, ease: "easeInOut" }}
     >
       <AnimatePresence>

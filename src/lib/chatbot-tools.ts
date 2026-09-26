@@ -15,6 +15,11 @@ export async function executeSendContactEmail(args: SendEmailArgs) {
     return { success: false, error: "Missing required fields (name, email, or message)." };
   }
 
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!emailRegex.test(email.trim())) {
+    return { success: false, error: "Invalid email address format. Please provide a valid email." };
+  }
+
   const apiKey = process.env.RESEND_API_KEY;
   if (!apiKey) {
     return {
@@ -91,18 +96,20 @@ export async function executeGetBtcTelemetry() {
       pipeline: "HODL Watcher Cloud Pipeline",
       architecture: "$0/mo Serverless Make.com Cron + FastAPI on Render Cloud",
       watchdog: "Mempool Fee & Order Flow Watchdog",
-      summary: "Verifying Bitcoin on-chain mempool fees and order book telemetry every 15 minutes.",
+      summary: telemetryData
+        ? "Verifying Bitcoin on-chain mempool fees and order book telemetry every 15 minutes."
+        : "Pipeline server is waking up on Render Cloud. Telemetry buffer pending.",
       sentiment: sentimentData
         ? {
             fearGreed: sentimentData.fear_greed,
             classification: sentimentData.fear_greed_classification,
             dxy: sentimentData.dxy,
           }
-        : { fearGreed: 68, classification: "Greed", dxy: 104.2 },
+        : null,
       telemetry: telemetryData,
     };
   } catch {
-    // Return static telemetry fallback
+    // Return honest offline telemetry without synthetic numbers (Rule 16)
   }
 
   return {
@@ -110,8 +117,9 @@ export async function executeGetBtcTelemetry() {
     pipeline: "HODL Watcher Cloud Pipeline",
     architecture: "$0/mo Serverless Make.com Cron + FastAPI on Render Cloud",
     watchdog: "Mempool Fee & Order Flow Watchdog",
-    summary: "Verifying Bitcoin on-chain mempool fees and order book telemetry every 15 minutes.",
-    sentiment: { fearGreed: 68, classification: "Greed", dxy: 104.2 },
+    summary: "Upstream pipeline is currently offline or warming up. No synthetic metrics reported.",
+    sentiment: null,
+    telemetry: null,
   };
 }
 

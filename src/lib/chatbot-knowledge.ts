@@ -43,7 +43,7 @@ Case Studies & Real-World Impact (Simple & Clear Explanations):
 export const CLIPPO_INTERNALS_KNOWLEDGE = `
 Clippo Internal Architecture & Fast Recovery:
 - Framework: Next.js 15 App Router (/api/chat), React 19, Tailwind CSS.
-- Dual-Tier Gemini Routing: Primary 'gemini-3.6-flash' with instant fallback to 'gemini-3.5-flash-lite'.
+- Dual-Tier Gemini Routing: Primary ultra-low latency 'gemini-3.5-flash-lite' with resilient fallback to 'gemini-3.6-flash'.
 - Cost & Economics: $0.00/mo operating cost on Google AI Studio tier (1,500 RPD, 1M context window).
 - Resilience: Preserves thought signatures and catches 429 quota pauses with friendly cooldown notices.
 `;

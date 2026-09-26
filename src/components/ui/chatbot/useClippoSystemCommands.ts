@@ -43,12 +43,21 @@ export function useClippoSystemCommands({
     if (!query) return;
 
     const lower = query.toLowerCase();
+    const isQuestion = /[?¿]|^(c[oó]mo|how|por\s*qu[eé]|why|cu[aá]l|what|explica|tell\s+me)/i.test(query);
 
-    if (
-      lower.includes("tono nocturno") ||
-      lower.includes("dark mode") ||
-      lower.includes("modo oscuro")
-    ) {
+    const isNightCommand =
+      !isQuestion &&
+      /^(activar|poner|cambiar\s+a(l)?|toggle|switch\s+to|enable)?\s*(el\s+)?(tono\s+nocturno|dark\s+mode|modo\s+oscuro)$/i.test(lower);
+
+    const isDayCommand =
+      !isQuestion &&
+      /^(activar|poner|cambiar\s+a(l)?|toggle|switch\s+to|enable)?\s*(el\s+)?(tono\s+claro|light\s+mode|modo\s+claro)$/i.test(lower);
+
+    const isLangCommand =
+      !isQuestion &&
+      /^(cambiar|switch|toggle)?\s*(el\s+)?(idioma(\s+a\s+(ingl[eé]s|español))?|language(\s+to\s+(english|spanish))?|a\s+ingl[eé]s|to\s+spanish)$/i.test(lower);
+
+    if (isNightCommand) {
       setTheme("night");
       const userMsg: MessageItem = {
         id: `u-${Date.now()}`,
@@ -69,11 +78,7 @@ export function useClippoSystemCommands({
       return;
     }
 
-    if (
-      lower.includes("tono claro") ||
-      lower.includes("light mode") ||
-      lower.includes("modo claro")
-    ) {
+    if (isDayCommand) {
       setTheme("day");
       const userMsg: MessageItem = {
         id: `u-${Date.now()}`,
@@ -94,12 +99,7 @@ export function useClippoSystemCommands({
       return;
     }
 
-    if (
-      lower.includes("cambiar idioma") ||
-      lower.includes("switch language") ||
-      lower.includes("cambiar a inglés") ||
-      lower.includes("switch to spanish")
-    ) {
+    if (isLangCommand) {
       toggleLocale();
       const userMsg: MessageItem = {
         id: `u-${Date.now()}`,
