@@ -35,10 +35,17 @@ describe("Sitemap and Robots Route Metadata", () => {
   it("generates robots.txt referencing correct sitemap url and rules", () => {
     const rob = robots();
     expect(rob.sitemap).toBe("https://romartel.vercel.app/sitemap.xml");
-    expect(rob.rules).toEqual({
-      userAgent: "*",
-      allow: "/",
-      disallow: ["/private/", "/api/"],
-    });
+    expect(rob.rules).toEqual([
+      {
+        userAgent: "*",
+        allow: "/",
+        disallow: ["/private/", "/api/"],
+      },
+      {
+        userAgent: ["GPTBot", "ClaudeBot", "PerplexityBot", "Google-Extended", "Amazonbot"],
+        allow: ["/", "/llms.txt", "/llms-full.txt"],
+        disallow: ["/private/", "/api/"],
+      },
+    ]);
   });
 });

@@ -84,8 +84,8 @@ export const ShowcaseMediaCard: React.FC<ShowcaseMediaCardProps> = ({
                   ref={videoRef}
                   src={active.videoSrc}
                   poster={active.imageSrc || "/projects/metropolyca.png"}
-                  autoPlay
-                  preload={isActive ? "auto" : "metadata"}
+                  autoPlay={isActive}
+                  preload={isActive ? "auto" : "none"}
                   muted={isMuted}
                   loop
                   playsInline

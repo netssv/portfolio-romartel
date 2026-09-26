@@ -28,12 +28,12 @@ function IlluminatedPhrase({
   const start = pStart + (index / Math.max(1, total)) * pSpan * 0.88;
   const end = Math.min(pEnd, start + (1.3 / Math.max(1, total)) * pSpan);
 
-  // Pure functional interpolation (Rule 21: WAAPI-safe)
+  // Pure functional interpolation (Rule 21: WAAPI-safe) with calibrated WCAG contrast
   const opacity = useTransform(scrollYProgress, (s) => {
-    if (s <= start) return 0.32;
+    if (s <= start) return 0.52;
     if (s >= end) return 1.0;
     const progress = (s - start) / (end - start);
-    return 0.32 + progress * 0.68;
+    return 0.52 + progress * 0.48;
   });
 
   const textShadow = useTransform(scrollYProgress, (s) => {
@@ -45,7 +45,7 @@ function IlluminatedPhrase({
   });
 
   const color = useTransform(scrollYProgress, (s) => {
-    if (s <= start) return "var(--color-text-muted)";
+    if (s <= start) return "var(--color-text-secondary)";
     return "var(--color-text-primary)";
   });
 
