@@ -100,7 +100,7 @@ export const Navbar: React.FC<NavbarProps> = ({ navItems, authorName }) => {
           href="#top"
           onClick={(e) => { e.preventDefault(); scrollToPath("#top"); }}
           aria-label="Home"
-          className="fixed z-50 flex items-center justify-start select-none cursor-pointer will-change-[transform,width,height] group [transform-origin:0_0]"
+          className="fixed z-50 flex items-center justify-start select-none cursor-pointer will-change-[transform,width,height] group [transform-origin:0_0] left-4 sm:left-6 lg:left-8 xl:left-12 top-[94px] sm:top-[114px] md:top-[124px] lg:top-[144px] xl:top-[140px] w-[calc(100vw-2rem)] sm:w-[calc(100vw-3rem)] lg:w-[calc(100vw-4rem)] xl:w-[calc(100vw-6rem)] aspect-[1040/105]"
         >
           <svg viewBox="0 0 1040 105" width="100%" height="100%" fill="none" preserveAspectRatio="xMinYMid meet" xmlns="http://www.w3.org/2000/svg" className="w-full h-full overflow-visible">
             <text
