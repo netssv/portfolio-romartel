@@ -133,19 +133,20 @@ export function ChatMessage({ message }: ChatMessageProps) {
       >
         <FormattedContent text={message.text} isModel={isModel} />
 
-        <div className="flex items-center justify-between gap-2 mt-1.5 pt-1 border-t border-black/5 dark:border-white/5 text-[10px] opacity-70">
+        <div className="flex items-center justify-between gap-2 mt-1.5 pt-1 border-t border-border-subtle text-[10px] opacity-75">
           <span>{message.timestamp}</span>
           {isModel && (
             <button
               type="button"
               onClick={handleCopy}
               title="Copy message"
-              className="hover:opacity-100 transition-opacity p-0.5 rounded"
+              aria-label="Copy message"
+              className="p-1 -mr-1 rounded hover:bg-bg-surface hover:text-text-primary transition-all cursor-pointer opacity-80 hover:opacity-100 flex items-center justify-center"
             >
               {copied ? (
-                <Check className="w-3 h-3 text-green-500" />
+                <Check className="w-3.5 h-3.5 text-emerald-500" />
               ) : (
-                <Copy className="w-3 h-3" />
+                <Copy className="w-3.5 h-3.5" />
               )}
             </button>
           )}

@@ -53,6 +53,7 @@ describe("i18n Content Parity & Integrity Rule", () => {
       const esStudy = CASE_STUDIES_ES[idx];
       expect(esStudy.kpis.length).toBe(enStudy.kpis.length);
       expect(esStudy.steps.length).toBe(enStudy.steps.length);
+      expect(esStudy.frictions.length).toBe(enStudy.frictions.length);
       expect(esStudy.tools).toEqual(enStudy.tools);
     });
   });

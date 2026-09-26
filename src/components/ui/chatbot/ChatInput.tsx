@@ -31,7 +31,7 @@ export const ChatInput = forwardRef<HTMLInputElement, ChatInputProps>(
               : "Ask about systems, automations, or experience..."
           }
           disabled={isLoading}
-          className="flex-1 bg-bg-surface border border-border-base rounded-xl px-3 py-2 text-xs text-text-primary placeholder:text-text-muted focus:outline-none focus:border-accent transition-all"
+          className="flex-1 bg-bg-surface border border-border-base rounded-xl px-3 py-2 text-base sm:text-xs text-text-primary placeholder:text-text-muted focus:outline-none focus:border-accent transition-all"
         />
         <button
           type="submit"

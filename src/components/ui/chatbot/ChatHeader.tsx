@@ -37,7 +37,8 @@ export function ChatHeader({ isLoading, onReset, onClose }: ChatHeaderProps) {
           type="button"
           onClick={onReset}
           title={isSpanish ? "Reiniciar conversación" : "Reset conversation"}
-          className="p-1.5 rounded-lg text-text-muted hover:text-text-primary hover:bg-bg-raised transition-colors cursor-pointer"
+          aria-label={isSpanish ? "Reiniciar conversación" : "Reset conversation"}
+          className="w-8 h-8 rounded-lg flex items-center justify-center text-text-muted hover:text-text-primary hover:bg-bg-raised transition-colors cursor-pointer"
         >
           <RotateCcw className="w-3.5 h-3.5" />
         </button>
@@ -45,7 +46,8 @@ export function ChatHeader({ isLoading, onReset, onClose }: ChatHeaderProps) {
           type="button"
           onClick={onClose}
           title={isSpanish ? "Cerrar chat" : "Close chat"}
-          className="p-1.5 rounded-lg text-text-muted hover:text-text-primary hover:bg-bg-raised transition-colors cursor-pointer"
+          aria-label={isSpanish ? "Cerrar chat" : "Close chat"}
+          className="w-8 h-8 rounded-lg flex items-center justify-center text-text-muted hover:text-text-primary hover:bg-bg-raised transition-colors cursor-pointer"
         >
           <X className="w-4 h-4" />
         </button>

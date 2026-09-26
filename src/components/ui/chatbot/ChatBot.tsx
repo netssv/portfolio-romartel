@@ -145,7 +145,7 @@ export function ChatBot() {
             onMouseEnter={clearAutoCloseTimer}
             onFocusCapture={clearAutoCloseTimer}
             data-lenis-prevent
-            className="w-[calc(100vw-2.5rem)] sm:w-[380px] h-[520px] max-h-[80vh] flex flex-col bg-bg-surface border border-border-base rounded-2xl shadow-2xl overflow-hidden mb-3 overscroll-contain"
+            className="w-[calc(100vw-2.5rem)] sm:w-[380px] h-[520px] max-h-[78dvh] sm:max-h-[80vh] flex flex-col bg-bg-surface border border-border-base rounded-2xl shadow-2xl overflow-hidden mb-3 overscroll-contain"
           >
             <ChatHeader
               isLoading={isLoading}

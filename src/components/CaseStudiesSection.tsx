@@ -20,6 +20,10 @@ export const CaseStudiesSection: React.FC = () => {
       id="case-studies"
       className="py-24 border-b border-border-subtle relative overflow-hidden bg-bg-base"
     >
+      {/* ── Atmospheric Radial Spotlight & Architectural Watermark Grid ── */}
+      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[720px] h-[450px] bg-accent/12 rounded-full blur-[130px] pointer-events-none" />
+      <div className="absolute inset-0 bg-[linear-gradient(to_right,var(--border-subtle)_1px,transparent_1px),linear-gradient(to_bottom,var(--border-subtle)_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_40%,black_30%,transparent_80%)] pointer-events-none opacity-40 dark:opacity-20" />
+
       <div className="mx-auto max-w-5xl px-6 relative z-10">
         <FadeIn>
           <SectionLabel
@@ -50,7 +54,7 @@ export const CaseStudiesSection: React.FC = () => {
                 className={`relative flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-mono transition-all duration-200 cursor-pointer ${
                   isActive
                     ? "text-white font-semibold"
-                    : "text-text-secondary hover:text-text-primary bg-bg-surface/50 border border-border-subtle hover:border-border-base"
+                    : "text-text-secondary hover:text-text-primary bg-bg-surface/60 border border-border-subtle hover:border-border-base"
                 }`}
               >
                 {isActive && (
@@ -68,8 +72,8 @@ export const CaseStudiesSection: React.FC = () => {
           })}
         </div>
 
-        {/* ── Visual Antes vs Después Stage ── */}
-        <div className="rounded-2xl border border-border-subtle bg-bg-surface/50 p-6 sm:p-8 backdrop-blur-xs relative overflow-hidden">
+        {/* ── Visual Antes vs Después Stage with Highlight Accent ── */}
+        <div className="rounded-3xl border border-border-base/70 bg-bg-surface/85 dark:bg-bg-surface/60 p-6 sm:p-9 backdrop-blur-md shadow-2xl relative overflow-hidden before:absolute before:inset-x-0 before:top-0 before:h-px before:bg-gradient-to-r before:from-transparent before:via-accent/40 before:to-transparent">
           <AnimatePresence mode="wait">
             <CaseStudyStage
               key={`${isSpanish ? "es" : "en"}-${activeStudy.id}`}
@@ -88,8 +92,13 @@ export const CaseStudiesSection: React.FC = () => {
               <h3 itemProp="name">{study.title}</h3>
               <p itemProp="abstract">{study.challenge}</p>
               <ul>
+                {study.frictions.map((friction, idx) => (
+                  <li key={`friction-${idx}`}>{friction}</li>
+                ))}
+              </ul>
+              <ul>
                 {study.steps.map((step, idx) => (
-                  <li key={idx}>{step}</li>
+                  <li key={`step-${idx}`}>{step}</li>
                 ))}
               </ul>
               <span>{study.highlight}</span>
@@ -101,4 +110,3 @@ export const CaseStudiesSection: React.FC = () => {
     </section>
   );
 };
-

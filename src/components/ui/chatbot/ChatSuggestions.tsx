@@ -72,7 +72,7 @@ export function ChatSuggestions({
           <Sparkles className="w-3 h-3 text-accent" />
           <span>{isSpanish ? "Acciones rápidas" : "Quick actions"}</span>
         </div>
-        <span className="text-[9px] text-accent/80 font-mono lowercase tracking-normal">
+        <span className="text-[10px] text-accent/90 font-mono lowercase tracking-normal font-medium">
           {config.sectionName}
         </span>
       </div>
